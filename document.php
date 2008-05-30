@@ -32,8 +32,6 @@
  * @see _send_document()
  * @see redirect()
  */
-
-
 abstract class PLIB_Document extends PLIB_FullObject
 {
 	/**
