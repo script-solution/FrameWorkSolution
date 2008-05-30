@@ -1,0 +1,50 @@
+/**
+ * Contains the colorpicker-style-sheets
+ *
+ * @version			$Id: colorpicker.css 710 2008-05-16 07:00:16Z nasmussen $
+ * @package			PHPLib
+ * @subpackage	js
+ * @author			Nils Asmussen <nils@script-solution.de>
+ * @copyright		2003-2007 Nils Asmussen
+ * @link				http://www.script-solution.de
+ */
+
+div#plib_colorpicker table {
+	border: 1px solid #888;
+	background-color: #fff;
+	border-spacing: 0px;
+	padding: 1px;
+}
+
+div#plib_colorpicker * td {
+	width: 12px;
+	height: 12px;
+	font-size: 1px;
+	line-height: 1px;
+	border: 1px solid #fff;
+}
+
+div#plib_colorpicker * td:hover {
+	border: 1px solid #111;
+	cursor: pointer;
+}
+
+div#plib_colorpicker * td#plib_cp_preview, div#plib_colorpicker * td#plib_cp_close {
+	font-size: 11px;
+	line-height: 100%;
+	border: 1px solid #888;
+}
+div#plib_colorpicker * td#plib_cp_preview:hover, div#plib_colorpicker * td#plib_cp_close:hover {
+	border: 1px solid #888;
+	cursor: default;
+}
+
+div#plib_colorpicker * td#plib_cp_close {
+	border-left: 0px;
+	text-align: center;
+}
+div#plib_colorpicker * td#plib_cp_close:hover {
+	background-color: #A00000;
+	color: #fff;
+	cursor: pointer;
+}
