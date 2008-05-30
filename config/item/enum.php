@@ -2,7 +2,7 @@
 /**
  * Contains the config-item-enum class
  *
- * @version			$Id: enum.php 801 2008-05-29 20:56:24Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>

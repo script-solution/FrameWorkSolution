@@ -2,7 +2,7 @@
 /**
  * Contains the xml-language-class
  *
- * @version			$Id: xml.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	highlighting.language
  * @author			Nils Asmussen <nils@script-solution.de>

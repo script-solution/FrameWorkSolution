@@ -2,7 +2,7 @@
 /**
  * Contains the text-view-class
  *
- * @version			$Id: text.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>

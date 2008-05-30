@@ -4,7 +4,7 @@
  * this file at first! Note that you have to define the constant 'PLIB_PATH' which is the path
  * to the folder of the library before including this file.
  *
- * @version			$Id: init.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

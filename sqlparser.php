@@ -2,7 +2,7 @@
 /**
  * Contains the SQL-parser-class
  *
- * @version			$Id: sqlparser.php 684 2008-05-10 14:48:24Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

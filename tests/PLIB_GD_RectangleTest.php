@@ -2,7 +2,7 @@
 /**
  * Contains the PLIB_GD_Rectangle test
  *
- * @version			$Id: PLIB_GD_RectangleTest.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

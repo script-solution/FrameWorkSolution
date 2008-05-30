@@ -2,7 +2,7 @@
 /**
  * Contains the point-class
  * 
- * @version			$Id: image.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>

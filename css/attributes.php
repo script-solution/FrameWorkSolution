@@ -2,7 +2,7 @@
 /**
  * Contains a CSS-attributes-class
  *
- * @version			$Id: attributes.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>

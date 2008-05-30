@@ -2,7 +2,7 @@
 /**
  * Contains the input-class
  *
- * @version			$Id: input.php 794 2008-05-29 06:49:36Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

@@ -2,7 +2,7 @@
 /**
  * Contains the integer-class for the additional-fields
  *
- * @version			$Id: int.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>

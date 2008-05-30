@@ -2,7 +2,7 @@
 /**
  * Contains the javascript-class
  *
- * @version			$Id: javascript.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

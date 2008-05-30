@@ -2,7 +2,7 @@
 /**
  * Contains the singleton-base-class
  *
- * @version			$Id: singleton.php 546 2008-04-10 10:14:49Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

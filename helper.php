@@ -2,7 +2,7 @@
 /**
  * Contains the helper-class
  *
- * @version			$Id: helper.php 740 2008-05-24 09:46:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

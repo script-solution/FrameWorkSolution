@@ -2,7 +2,7 @@
 /**
  * Contains the bbcode-error-backtrace-printer-class
  *
- * @version			$Id: bbcode.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>

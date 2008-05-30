@@ -2,7 +2,7 @@
 /**
  * Contains the diagram-data-interface
  *
- * @version			$Id: diagramdata.php 652 2008-05-03 10:37:24Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>

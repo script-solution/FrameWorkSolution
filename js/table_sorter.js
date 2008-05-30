@@ -1,7 +1,7 @@
 /**
  * Contains the javascript-table-sorter
  *
- * @version			$Id: table_sorter.js 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>

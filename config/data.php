@@ -2,7 +2,7 @@
 /**
  * Contains the config-data class
  *
- * @version			$Id: data.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>

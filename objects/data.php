@@ -2,7 +2,7 @@
 /**
  * Contains the data-object-class
  *
- * @version			$Id: data.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	objects
  * @author			Nils Asmussen <nils@script-solution.de>

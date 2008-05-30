@@ -1,7 +1,7 @@
 /**
  * Contains the table-row-selector-class
  *
- * @version			$Id: table_row_sel.js 605 2008-04-23 22:23:21Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>

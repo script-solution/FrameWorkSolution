@@ -2,7 +2,7 @@
 /**
  * Contains the error-output-interface
  *
- * @version			$Id: output.php 548 2008-04-10 10:15:35Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>

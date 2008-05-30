@@ -2,7 +2,7 @@
 /**
  * This file contains some general adjustments for the library
  *
- * @version			$Id: general.php 710 2008-05-16 07:00:16Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

@@ -2,7 +2,7 @@
 /**
  * Contains the autoloader-class
  *
- * @version			$Id: autoloader.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

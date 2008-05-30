@@ -2,7 +2,7 @@
 /**
  * Contains the progress-manager
  *
- * @version			$Id: manager.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>

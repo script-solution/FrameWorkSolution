@@ -2,7 +2,7 @@
 /**
  * Contains the config-manager-class
  *
- * @version			$Id: manager.php 677 2008-05-09 12:05:36Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>

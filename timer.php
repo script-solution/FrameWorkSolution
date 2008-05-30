@@ -2,7 +2,7 @@
 /**
  * Contains the timer-class
  *
- * @version			$Id: timer.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

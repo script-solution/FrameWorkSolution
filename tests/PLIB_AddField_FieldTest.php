@@ -2,7 +2,7 @@
 /**
  * Contains the PLIB_AddField_Field test
  *
- * @version			$Id: PLIB_AddField_FieldTest.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

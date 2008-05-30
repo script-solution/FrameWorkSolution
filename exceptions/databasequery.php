@@ -2,7 +2,7 @@
 /**
  * Contains the DatabaseQuery-exception
  *
- * @version			$Id: databasequery.php 546 2008-04-10 10:14:49Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>

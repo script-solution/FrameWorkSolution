@@ -2,7 +2,7 @@
 /**
  * Contains the data-class for the additional-fields
  *
- * @version			$Id: data.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>

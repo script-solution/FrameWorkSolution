@@ -2,7 +2,7 @@
 /**
  * Contains the interface for the additional fields
  *
- * @version			$Id: field.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>

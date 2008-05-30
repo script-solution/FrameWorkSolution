@@ -2,7 +2,7 @@
 /**
  * Contains the point-class
  * 
- * @version			$Id: colorfade.php 739 2008-05-24 09:46:09Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>

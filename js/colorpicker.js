@@ -1,7 +1,7 @@
 /**
  * Contains the colorpicker-class
  *
- * @version			$Id: colorpicker.js 710 2008-05-16 07:00:16Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>

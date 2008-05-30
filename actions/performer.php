@@ -2,7 +2,7 @@
 /**
  * Contains the action-performer for the {@link PLIB_Actions_Base}-class
  *
- * @version			$Id: performer.php 788 2008-05-28 16:15:00Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>

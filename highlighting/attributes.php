@@ -2,7 +2,7 @@
 /**
  * Contains the attributes-class for the highlighting
  *
- * @version			$Id: attributes.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>

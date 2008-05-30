@@ -2,7 +2,7 @@
 /**
  * Contains the class to shrink a JS-file
  *
- * @version			$Id: fileshrinker.php 560 2008-04-10 17:14:02Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>

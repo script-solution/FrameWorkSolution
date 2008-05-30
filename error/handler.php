@@ -2,7 +2,7 @@
 /**
  * Contains the debug-class
  *
- * @version			$Id: handler.php 772 2008-05-25 13:58:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>

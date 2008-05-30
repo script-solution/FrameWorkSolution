@@ -2,7 +2,7 @@
 /**
  * Contains the php-mail-class
  *
- * @version			$Id: php.php 804 2008-05-30 07:19:41Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>

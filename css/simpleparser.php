@@ -2,7 +2,7 @@
 /**
  * Contains the simple-css-parser class
  * 
- * @version			$Id: simpleparser.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>

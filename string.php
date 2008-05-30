@@ -2,7 +2,7 @@
 /**
  * Contains a class with string-methods to support multibyte-strings
  *
- * @version			$Id: string.php 744 2008-05-24 15:11:18Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

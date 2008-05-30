@@ -2,7 +2,7 @@
 /**
  * Contains the gd-font-class
  *
- * @version			$Id: gd.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>

@@ -2,7 +2,7 @@
 /**
  * Contains the empty-tree-storage implementation
  *
- * @version			$Id: empty.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	tree.storage
  * @author			Nils Asmussen <nils@script-solution.de>

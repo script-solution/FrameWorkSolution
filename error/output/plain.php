@@ -2,7 +2,7 @@
 /**
  * Contains the plain-error-output-generator-class
  *
- * @version			$Id: plain.php 748 2008-05-24 15:15:20Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>

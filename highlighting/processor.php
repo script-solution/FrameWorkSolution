@@ -2,7 +2,7 @@
 /**
  * Contains the highlighting-processor-class
  *
- * @version			$Id: processor.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>

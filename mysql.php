@@ -2,7 +2,7 @@
 /**
  * Contains the MySQL-class
  *
- * @version			$Id: mysql.php 789 2008-05-28 16:15:08Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen

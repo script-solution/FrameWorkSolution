@@ -2,7 +2,7 @@
 /**
  * Contains the color-class
  * 
- * @version			$Id: color.php 736 2008-05-23 18:24:22Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>

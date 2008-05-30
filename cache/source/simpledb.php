@@ -2,7 +2,7 @@
 /**
  * Contains the simple-db-implementation for the source
  *
- * @version			$Id: simpledb.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	cache.source
  * @author			Nils Asmussen <nils@script-solution.de>

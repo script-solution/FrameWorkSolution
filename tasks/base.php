@@ -2,7 +2,7 @@
 /**
  * Contains the task-base-class
  *
- * @version			$Id: base.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>

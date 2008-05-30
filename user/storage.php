@@ -2,7 +2,7 @@
 /**
  * Contains the interface for all user-storage-types
  *
- * @version			$Id: storage.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>

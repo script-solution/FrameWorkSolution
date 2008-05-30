@@ -2,7 +2,7 @@
 /**
  * Contains the template-parser
  *
- * @version			$Id: parser.php 775 2008-05-26 08:15:32Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>

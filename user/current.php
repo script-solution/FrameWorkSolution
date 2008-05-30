@@ -2,7 +2,7 @@
 /**
  * Contains the class which represents the current user
  *
- * @version			$Id: current.php 672 2008-05-05 21:58:06Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>

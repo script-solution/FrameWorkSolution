@@ -2,7 +2,7 @@
 /**
  * Contains the 2-dimensional cache
  *
- * @version			$Id: 2dim.php 768 2008-05-25 08:36:14Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>

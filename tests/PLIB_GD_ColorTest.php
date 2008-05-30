@@ -2,7 +2,7 @@
 /**
  * Contains the PLIB_GD_Color test
  *
- * @version			$Id: PLIB_GD_ColorTest.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

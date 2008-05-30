@@ -2,7 +2,7 @@
 /**
  * Contains the highlighting-decorator-interface
  *
- * @version			$Id: decorator.php 540 2008-04-10 06:31:52Z nasmussen $
+ * @version			$Id$
  * @package			PHPLib
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
