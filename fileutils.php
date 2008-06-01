@@ -36,6 +36,26 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	}
 	
 	/**
+	 * "Clears" the given filename. That means german umlaute will be replaced to the corresponding
+	 * chars (ae,oe,...) and special-chars will be replaced to '_'.
+	 *
+	 * @param string $name your file-name (will be changed)
+	 * @return string the clean filename
+	 */
+	public static function clean_filename(&$name)
+	{
+		// replace german umlaute
+		$name = str_replace(
+			array('ä','ö','ü','Ä','Ö','Ü','ß'),
+			array('ae','oe','ue','Ae','Oe','Ue','ss'),
+			$name
+		);
+		// replace all other special-chars with '_'
+		$name = preg_replace('/[^a-z0-9_\-\.]+/i','_',$name);
+		return $name;
+	}
+	
+	/**
 	 * Ensures that the given path has a trailing slash
 	 * 
 	 * @param string $path the path (will be changed!)
