@@ -125,8 +125,8 @@ final class PLIB_HTTP extends PLIB_FullObject
 			PLIB_Helper::error('Please provide a valid path (not empty and starting with /)');
 		
 		$out = "GET ".$path." HTTP/1.1\r\n";
-    $out .= "Host: ".$this->_host."\r\n";
-    $out .= "Connection: Close\r\n\r\n";
+		$out .= "Host: ".$this->_host."\r\n";
+		$out .= "Connection: Close\r\n\r\n";
 		return $this->_send_request($out);
 	}
 	
@@ -146,12 +146,12 @@ final class PLIB_HTTP extends PLIB_FullObject
 		
 		$data = $this->_get_post_data($vars);
 		$out = "POST ".$path." HTTP/1.1\r\n";
-    $out .= "Host: ".$this->_host."\r\n";
-    $out .= "Content-Type: application/x-www-form-urlencoded\r\n";
-    $out .= "Content-Length: ".PLIB_String::strlen($data)."\r\n";
-    $out .= "Connection: Close\r\n\r\n";
-    $out .= $data;
-    return $this->_send_request($out);
+		$out .= "Host: ".$this->_host."\r\n";
+		$out .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		$out .= "Content-Length: ".PLIB_String::strlen($data)."\r\n";
+		$out .= "Connection: Close\r\n\r\n";
+		$out .= $data;
+		return $this->_send_request($out);
 	}
 	
 	/**
@@ -202,44 +202,45 @@ final class PLIB_HTTP extends PLIB_FullObject
 		fwrite($sock,$request);
 
 		// read reply
-    $reply = '';
+		$reply = '';
 		while(!feof($sock))
-    	$reply .= fgets($sock,128);
-    fclose($sock);
-    
-    // check reply code
-    if(!PLIB_String::starts_with($reply,'HTTP/1.1 200'))
-    {
-    	$matches = array();
-    	preg_match('/^HTTP\/[\d\.]+\s+(\d+)\s+(.*)/',$reply,$matches);
-    	$this->_error = $matches[2];
-    	$this->_errno = $matches[1];
-    	return false;
-    }
-    
-    // determine header-end
-    $cut = PLIB_String::strpos($reply,"\r\n\r\n");
-    if($cut === false)
-    {
-    	$this->_error = 'Invalid reply';
-    	return false;
-    }
-    
-    // save headers
-    $this->_headers = array();
-    $headers = PLIB_String::substr($reply,0,$cut);
-    $lines = preg_split('/[\r\n]/',$headers);
-    foreach($lines as $line)
-    {
-    	$dotpos = PLIB_String::strpos($line,':');
-    	if($dotpos === false)
-    		continue;
-    	
-    	$this->_headers[PLIB_String::substr($line,0,$dotpos)] = PLIB_String::substr($line,$dotpos + 1);
-    }
-    
-    // return reply
-    return PLIB_String::substr($reply,$cut + 4);
+			$reply .= fgets($sock,128);
+		fclose($sock);
+		
+		// TODO is this correct?
+		// check reply code
+		if(!PLIB_String::starts_with($reply,'HTTP/1.1 200'))
+		{
+			$matches = array();
+			preg_match('/^HTTP\/[\d\.]+\s+(\d+)\s+(.*)/',$reply,$matches);
+			$this->_error = $matches[2];
+			$this->_errno = $matches[1];
+			return false;
+		}
+		
+		// determine header-end
+		$cut = PLIB_String::strpos($reply,"\r\n\r\n");
+		if($cut === false)
+		{
+			$this->_error = 'Invalid reply';
+			return false;
+		}
+		
+		// save headers
+		$this->_headers = array();
+		$headers = PLIB_String::substr($reply,0,$cut);
+		$lines = preg_split('/[\r\n]/',$headers);
+		foreach($lines as $line)
+		{
+			$dotpos = PLIB_String::strpos($line,':');
+			if($dotpos === false)
+				continue;
+			
+			$this->_headers[PLIB_String::substr($line,0,$dotpos)] = PLIB_String::substr($line,$dotpos + 1);
+		}
+		
+		// return reply
+		return PLIB_String::substr($reply,$cut + 4);
 	}
 	
 	protected function _get_print_vars()

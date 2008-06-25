@@ -116,7 +116,7 @@ final class PLIB_GD_Diagram_2dPie extends PLIB_FullObject implements PLIB_GD_Dia
 			$bartitle = $this->_data->get_title_of($i,$title,$value,$percent);
 			$barattr = $this->_data->get_attributes_of($i,$title,$value,$percent);
 			$text = new PLIB_GD_Text($bartitle,$barattr);
-			$g->get_text_view($text)->draw_in_circle_part($ellipse,$last,$last + $size);
+			$g->get_text_view($text)->draw_in_circle_part($ellipse,(int)$last,(int)($last + $size));
 			
 			$last += $size;
 			$i++;

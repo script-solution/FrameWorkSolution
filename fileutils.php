@@ -269,8 +269,12 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 		{
 			if($item != '.' && $item != '..')
 			{
-				if(is_dir($directory.$item) && $recursive)
-					self::_get_dir_content($res,$directory.$item.'/',$recursive,$abs);
+				if(is_dir($directory.$item))
+				{
+					$res[] = $abs ? $directory.$item : $item;
+					if($recursive)
+						self::_get_dir_content($res,$directory.$item.'/',$recursive,$abs);
+				}
 				else
 					$res[] = $abs ? $directory.$item : $item;
 			}

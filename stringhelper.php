@@ -349,7 +349,7 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 			if($c == '&')
 			{
 				$end = PLIB_String::strpos($string,';',$i);
-				if($end == -1)
+				if($end === false)
 					break;
 				
 				$current .= PLIB_String::substr($string,$i,$end - $i + 1);

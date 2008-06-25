@@ -432,8 +432,8 @@ final class PLIB_GD_Color extends PLIB_FullObject
 		// do we have the color in the cache?
 		// Note that we cache the colors because if we don't have a truecolor-image
 		// GD limits the number of colors to 255 even if the color has already been created
-		if(isset(self::$_color_cache[$this->_r.''.$this->_g.''.$this->_b.''.$this->_alpha]))
-			return self::$_color_cache[$this->_r.''.$this->_g.''.$this->_b.''.$this->_alpha];
+		if(isset(self::$_color_cache[$this->_r.$this->_g.$this->_b.$this->_alpha]))
+			return self::$_color_cache[$this->_r.$this->_g.$this->_b.$this->_alpha];
 		
 		if($this->_alpha != 0)
 			$c = imagecolorallocatealpha($img,$this->_r,$this->_g,$this->_b,$this->_alpha);
@@ -441,7 +441,7 @@ final class PLIB_GD_Color extends PLIB_FullObject
 			$c = imagecolorallocate($img,$this->_r,$this->_g,$this->_b);
 		
 		// store to cache
-		self::$_color_cache[$this->_r.''.$this->_g.''.$this->_b.''.$this->_alpha] = $c;
+		self::$_color_cache[$this->_r.$this->_g.$this->_b.$this->_alpha] = $c;
 		
 		return $c;
 	}

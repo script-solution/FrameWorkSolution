@@ -99,11 +99,11 @@ final class PLIB_CSS_SimpleParser extends PLIB_FullObject
 	}
 	
 	/**
-   * returns the default value for the given attribute
-   *
-   * @param string $attribute the attribute-name
-   * @return string the default-value
-   */
+	 * returns the default value for the given attribute
+	 *
+	 * @param string $attribute the attribute-name
+	 * @return string the default-value
+	 */
 	public function get_default_value($attribute)
 	{
 		switch($attribute)
@@ -126,11 +126,11 @@ final class PLIB_CSS_SimpleParser extends PLIB_FullObject
 	}
 
 	/**
-   * returns the classes in the file
-   *
-   * @param array $skip an numeric array with the classes to skip
-   * @return array all classes
-   */
+	 * returns the classes in the file
+	 *
+	 * @param array $skip an numeric array with the classes to skip
+	 * @return array all classes
+	 */
 	public function get_classes($skip = null)
 	{
 		if($skip != null)

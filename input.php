@@ -269,7 +269,7 @@ final class PLIB_Input extends PLIB_FullObject
 					return null;
 
 				case PLIB_Input::HEX_32:
-					if(preg_match('/^[a-f0-9]{32}/i',$var))
+					if(preg_match('/^[a-f0-9]{32}$/i',$var))
 						return $var;
 					return null;
 
@@ -322,7 +322,7 @@ final class PLIB_Input extends PLIB_FullObject
 	 *
 	 * @param string $name the name of the variable
 	 * @param string $method the method from which you want to request the variable:
-	 * 											 (get,post,cookie,server); -1 if this doesn't matter
+	 * 											 (get,post,cookie,server); -1 if you want to set it in all methods
 	 * @param mixed $value the new value
 	 * @return mixed the value
 	 */
@@ -346,7 +346,7 @@ final class PLIB_Input extends PLIB_FullObject
 	 *
 	 * @param string $name the name of the variable
 	 * @param string $method the method from which you want to request the variable:
-	 * 											 (get,post,cookie,server); -1 if this doesn't matter
+	 * 											 (get,post,cookie,server); -1 if you want to unset it in all methods
 	 */
 	public function unset_var($name,$method)
 	{

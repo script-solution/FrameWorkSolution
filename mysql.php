@@ -444,9 +444,9 @@ final class PLIB_MySQL extends PLIB_Singleton
 		// execute the query
 	  $qry = $this->sql_qry($sql);
 	  if(!$qry)
-      return '';
-     
-    return $this->print_result($qry,$return);
+			return '';
+		 
+		return $this->print_result($qry,$return);
 	}
 	
 	/**

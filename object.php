@@ -104,10 +104,10 @@ abstract class PLIB_Object
 	}
 	
 	public function __clone()
-  {
-  	// we have to assign a new id to cloned objects
-  	$this->_object_id = self::$_next_id++;
-  }
+	{
+		// we have to assign a new id to cloned objects
+		$this->_object_id = self::$_next_id++;
+	}
 	
 	/**
 	 * @return int the id of this object
