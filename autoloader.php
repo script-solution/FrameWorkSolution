@@ -47,11 +47,12 @@ class PLIB_AutoLoader extends PLIB_UtilBase
 	 */
 	public static function load_item($item)
 	{
-		if(PLIB_String::starts_with($item,'PLIB_'))
+		// Note that we don't use the MB-functions here for performance issues
+		if(substr($item,0,5) == 'PLIB_')
 		{
-			$myitem = PLIB_String::substr($item,5);
+			$myitem = substr($item,5);
 			$myitem = str_replace('_','/',$myitem);
-			$myitem = PLIB_String::strtolower($myitem);
+			$myitem = strtolower($myitem);
 			$myitem .= '.php';
 			$path = PLIB_Path::lib().$myitem;
 			

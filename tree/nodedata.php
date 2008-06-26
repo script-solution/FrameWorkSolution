@@ -134,11 +134,9 @@ class PLIB_Tree_NodeData extends PLIB_FullObject
 	 */
 	public final function set_parent_id($parent_id)
 	{
-		if(!PLIB_Helper::is_integer($parent_id) || $parent_id < 0)
-			PLIB_Helper::def_error('intge0','parent_id',$parent_id);
-		
-		$changed = $this->_parent_id !== null && $this->_parent_id != $parent_id;
-		$this->_parent_id = $parent_id;
+		// Don't check the id for performance-issues
+		$changed = $this->_parent_id !== null && $this->_parent_id != (int)$parent_id;
+		$this->_parent_id = (int)$parent_id;
 		$this->_changed |= $changed;
 	}
 
