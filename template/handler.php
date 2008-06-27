@@ -674,7 +674,8 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 		}
 		
 		// detect recursions
-		if(current($this->_tpl_calls) == $tpl)
+		$tplc = count($this->_tpl_calls);
+		if($tplc > 0 && $this->_tpl_calls[$tplc - 1] == $tpl)
 			die('It seems that the template "'.$tpl.'" includes itself :)');
 		
 		array_push($this->_tpl_calls,$tpl);
