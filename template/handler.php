@@ -103,6 +103,13 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * @var string
 	 */
 	private $_filename = '';
+	
+	/**
+	 * The current template-number
+	 *
+	 * @var int
+	 */
+	private $_number = 1;
 
 	/**
 	 * The cache-folder
@@ -413,20 +420,24 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * Sets the template to use for the following operations
 	 *
 	 * @param string $filename the name of the template (without path)
+	 * @param int $number the number of the template (if one template is used more than once)
 	 */
-	public function set_template($filename)
+	public function set_template($filename,$number = 1)
 	{
 		if(empty($filename))
 			PLIB_Helper::def_error('notempty','filename',$filename);
+		if(!PLIB_Helper::is_integer($number) || $number <= 0)
+			PLIB_Helper::def_error('intgt0','number',$number);
 
 		// save the current values to the stack
 		if($this->_filename != '')
-			array_push($this->_stack,$this->_filename);
+			array_push($this->_stack,array($this->_filename,$this->_number));
 
 		$this->_filename = $filename;
+		$this->_number = $number;
 		// init the variables, if not already done
-		if(!isset($this->_variables[$this->_filename]))
-			$this->_variables[$this->_filename] = array();
+		if(!isset($this->_variables[$filename.$number]))
+			$this->_variables[$filename.$number] = array();
 	}
 	
 	/**
@@ -435,7 +446,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	public function restore_template()
 	{
 		if(count($this->_stack))
-			$this->_filename = array_pop($this->_stack);
+			list($this->_filename,$this->_number) = array_pop($this->_stack);
 	}
 	
 	/**
@@ -481,8 +492,10 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * @param mixed $array reference to the array
 	 * @param string $template the template to add the variables to (if not set the
 	 * 		current one will be used)
+	 * @param int $number the number of the template (if one template is used more than once)
+	 * 	(0 = the current one)
 	 */
-	public function add_array($name,&$array,$template = '')
+	public function add_array($name,&$array,$template = '',$number = 0)
 	{
 		if(empty($name))
 			PLIB_Helper::def_error('empty','name',$name);
@@ -493,7 +506,11 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 		if(empty($tpl))
 			PLIB_Helper::def_error('notempty','template',$template);
 		
-		$this->_variables[$tpl][$name] = &$array;
+		$number = $number == 0 ? $this->_number : $number;
+		if(!PLIB_Helper::is_integer($number) || $number <= 0)
+			PLIB_Helper::def_error('intgt0','number',$number);
+		
+		$this->_variables[$tpl.$number][$name] = &$array;
 	}
 
 	/**
@@ -505,8 +522,10 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * @param array $vars an associative array with the values
 	 * @param string $template the template to add the variables to (if not set the
 	 * 		current one will be used)
+	 * @param int $number the number of the template (if one template is used more than once)
+	 * 	(0 = the current one)
 	 */
-	public function add_variables($vars,$template = '')
+	public function add_variables($vars,$template = '',$number = 0)
 	{
 		if(is_array($vars))
 		{
@@ -514,10 +533,14 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 			if(empty($tpl))
 				PLIB_Helper::def_error('notempty','template',$template);
 			
+			$number = $number == 0 ? $this->_number : $number;
+			if(!PLIB_Helper::is_integer($number) || $number <= 0)
+				PLIB_Helper::def_error('intgt0','number',$number);
+			
 			foreach($vars as $name => $value)
 			{
 				$value = $value === null ? '' : $value;
-				$this->_variables[$tpl][$name] = $value;
+				$this->_variables[$tpl.$number][$name] = $value;
 			}
 		}
 	}
@@ -526,16 +549,19 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * Returns the variables including all global ones from the given template
 	 * 
 	 * @param string $template the template-filename
+	 * @param int $number the number of the template (if one template is used more than once)
 	 * @return array all variables for the given template
 	 */
-	public function &get_variables($template)
+	public function &get_variables($template,$number = 1)
 	{
 		if(empty($template))
 			PLIB_Helper::def_error('notempty','template',$template);
+		if(!PLIB_Helper::is_integer($number) || $number <= 0)
+			PLIB_Helper::def_error('intgt0','number',$number);
 		
 		$vars = $this->_static_vars;
-		if(isset($this->_variables[$template]))
-			$vars = array_merge($vars,$this->_variables[$template]);
+		if(isset($this->_variables[$template.$number]))
+			$vars = array_merge($vars,$this->_variables[$template.$number]);
 		return $vars;
 	}
 
@@ -544,10 +570,14 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 *
 	 * @param string $template the template-filename
 	 * @param boolean $restore restore the last template?
+	 * @param int $number the number of the template (if one template is used more than once)
 	 * @return the html-code
 	 */
-	public function parse_template($template = -1,$restore = true)
+	public function parse_template($template = -1,$restore = true,$number = 1)
 	{
+		if(!PLIB_Helper::is_integer($number) || $number <= 0)
+			PLIB_Helper::def_error('intgt0','number',$number);
+		
 		$recompile_necessary = false;
 		// Note that we use -1 as default value to prevent recursion in template-calls
 		// Because if a variable has been used for the template-name and it is empty
@@ -651,7 +681,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 
 		// call the function with corresponding part-argument
 		$func_name = $this->get_function_name($tpl);
-		$str = $func_name($this);
+		$str = $func_name($this,$number);
 		
 		array_pop($this->_tpl_calls);
 		

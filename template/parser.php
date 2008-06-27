@@ -257,9 +257,8 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 			// {include "folder"~var~"file.htm"}
 			// ...
 			$content = preg_replace(
-				'/{INCLUDE\s+('.$this->_regex_concat.')}/ie',
-				'"\nEOF;\n".\'$html .= $base->tpl->parse_template(\''
-				.'.$this->_parse_concat(stripslashes(\'\\1\')).",false);\n".'
+				'/{INCLUDE\s+('.$this->_regex_concat.')\s*#?('.$this->_regex_numvar.')?}/ie',
+				'"\nEOF;\n".\'$html .= \'.$this->_parse_include(stripslashes(\'\\1\'),\'\\2\').";\n".'
 				.'\'$html .= <<<EOF\'."\n"',
 				$content
 			);
@@ -267,8 +266,8 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 
 		// build php-file
 		$result = '<?php'."\n"
-		 .'function '.$this->_tpl->get_function_name($template).'($base) {'."\n"
-		 .'$tplvars = &$base->tpl->get_variables(\''.$template.'\');'."\n";
+		 .'function '.$this->_tpl->get_function_name($template).'($base,$number) {'."\n"
+		 .'$tplvars = &$base->tpl->get_variables(\''.$template.'\',$number);'."\n";
 		$result .= '$html = "";'."\n"
 		 .'$html .=<<<EOF'."\n"
 		 .$content."\n".'EOF;'."\n"
@@ -281,6 +280,24 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 			return '';
 		
 		return $result;
+	}
+	
+	/**
+	 * Parses an include-statement
+	 *
+	 * @param string $filename the filename to include
+	 * @param int $number the template-number
+	 * @return string the include-code
+	 */
+	private function _parse_include($filename,$number)
+	{
+		$res = '$base->tpl->parse_template(';
+		$res .= $this->_parse_concat($filename);
+		$res .= ',false';
+		if($number)
+			$res .= ','.$this->_parse_value($number);
+		$res .= ')';
+		return $res;
 	}
 	
 	/**
