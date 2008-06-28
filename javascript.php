@@ -40,6 +40,13 @@ final class PLIB_Javascript extends PLIB_Singleton
 	private $_cache = null;
 	
 	/**
+	 * Wether the files should be shrinked
+	 *
+	 * @var boolean
+	 */
+	private $_shrink = true;
+	
+	/**
 	 * @return string the cache-folder or null if not set
 	 */
 	public function get_cache_folder()
@@ -64,6 +71,17 @@ final class PLIB_Javascript extends PLIB_Singleton
 	}
 	
 	/**
+	 * Sets wether the files should be shrinked. By default this is enabled.
+	 * For example you may disable this for debugging javascript.
+	 *
+	 * @param boolean $shrink the new value
+	 */
+	public function set_shrink($shrink)
+	{
+		$this->_shrink = (bool)$shrink;
+	}
+	
+	/**
 	 * Returns the javascript-file to use for the given file. This file will be cached and a shrinked
 	 * version will be used.
 	 * If $source is "lib" the fill be assumed at:
@@ -73,9 +91,8 @@ final class PLIB_Javascript extends PLIB_Singleton
 	 * 
 	 * @param string $file the js-file
 	 * @param string $source if $source = "lib" the PHPLib will be used as root
-	 * @param boolean $shrink do you want to shrink the file? (default=true)
 	 */
-	public function get_file($file,$source = 'def',$shrink = true)
+	public function get_file($file,$source = 'def')
 	{
 		if(empty($file))
 			PLIB_Helper::def_error('notempty','file',$file);
@@ -93,7 +110,7 @@ final class PLIB_Javascript extends PLIB_Singleton
 		
 		// init some vars
 		$filepath = $source == 'lib' ? PLIB_Path::lib().$file : PLIB_Path::inner().$file;
-		if($shrink)
+		if($this->_shrink)
 		{
 			$filename = basename($file);
 			$modtime = @filemtime($filepath);
