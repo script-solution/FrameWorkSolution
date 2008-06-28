@@ -70,19 +70,7 @@ final class PLIB_Cache_Storage_DB extends PLIB_FullObject implements PLIB_Cache_
 		);
 		$res = array();
 		while($row = $this->db->sql_fetch_assoc($qry))
-		{
-			if($row[$this->_content_column] == '')
-				$c = array();
-			else
-			{
-				$c = unserialize($row[$this->_content_column]);
-				if($c === false)
-					PLIB_Helper::error('The serialized data of "'.$row[$this->_name_column]
-						.'" contains errors!',false);
-			}
-			
-			$res[$row[$this->_name_column]] = $c;
-		}
+			$res[$row[$this->_name_column]] = @unserialize($row[$this->_content_column]);
 		$this->db->sql_free($qry);
 		return $res;
 	}

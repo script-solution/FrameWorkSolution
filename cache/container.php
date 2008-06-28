@@ -13,13 +13,11 @@
 /**
  * The container for all caches
  *
- * TODO make final!
- * 
  * @package			PHPLib
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Cache_Container extends PLIB_FullObject
+final class PLIB_Cache_Container extends PLIB_FullObject
 {
 	/**
 	 * All cache-objects
@@ -84,9 +82,18 @@ class PLIB_Cache_Container extends PLIB_FullObject
 			$this->_caches[$name] = new PLIB_Cache_Content($name,$source);
 			
 			$val = $this->_cache_contents[$name];
-			if(!is_array($val))
-				$val = array();
-			$this->_caches[$name]->set_elements($val);
+			// if the cache isn't valid, we have to reload and store it here
+			if($val === false)
+			{
+				$this->_caches[$name]->reload();
+				$this->store($name);
+			}
+			else
+			{
+				if(!is_array($val))
+					$val = array();
+				$this->_caches[$name]->set_elements($val);
+			}
 			
 			unset($this->_cache_contents[$name]);
 		}
