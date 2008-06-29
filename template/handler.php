@@ -161,6 +161,20 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * @var array
 	 */
 	private $_tpl_calls = array();
+	
+	/**
+	 * The number of parse_string()-calls
+	 *
+	 * @var int
+	 */
+	private $_string_counter = 1;
+	
+	/**
+	 * Contains the variables for parse_string() while it is called. Otherwise it's null.
+	 *
+	 * @var array
+	 */
+	private $_string_vars = null;
 
 	/**
 	 * constructor
@@ -184,6 +198,16 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	public function get_current_template()
 	{
 		return $this->_filename;
+	}
+	
+	/**
+	 * Returns the currently set template-number which will get all added variables and so on.
+	 *
+	 * @return int the number
+	 */
+	public function get_current_number()
+	{
+		return $this->_number;
 	}
 
 	/**
@@ -552,8 +576,12 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * @param int $number the number of the template (if one template is used more than once)
 	 * @return array all variables for the given template
 	 */
-	public function &get_variables($template,$number = 1)
+	public function get_variables($template,$number = 1)
 	{
+		// return the variables for parse_string()?
+		if($this->_string_vars !== null)
+			return array_merge($this->_static_vars,$this->_string_vars);
+		
 		if(empty($template))
 			PLIB_Helper::def_error('notempty','template',$template);
 		if(!PLIB_Helper::is_integer($number) || $number <= 0)
@@ -563,6 +591,37 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 		if(isset($this->_variables[$template.$number]))
 			$vars = array_merge($vars,$this->_variables[$template.$number]);
 		return $vars;
+	}
+	
+	/**
+	 * Parses the given string independendly of everything else. You can use everything except
+	 * includes and you can use all given variables and the global ones.
+	 * <p>
+	 * That means that this method converts the given string to PHP-code, sets the given
+	 * variables and the global ones and evals it. You will get the result text.
+	 *
+	 * @param string $string the string to parse
+	 * @param array $vars an array of variables that should be set for the template
+	 * @return string the result-text
+	 */
+	public function parse_string($string,$vars)
+	{
+		$this->_string_vars = $vars;
+		$incson = $this->get_includes_enabled();
+		$this->set_includes_enabled(false);
+		
+		$parser = new PLIB_Template_Parser($this);
+		$result = $parser->compile_template('__string_'.$this->_string_counter,null,$string);
+		eval(PLIB_String::substr($result,5,-2));
+		
+		$func_name = $this->get_function_name('__string_'.$this->_string_counter);
+		$str = $func_name($this,1);
+		
+		$this->set_includes_enabled($incson);
+		$this->_string_vars = null;
+		$this->_string_counter++;
+		
+		return $str;
 	}
 
 	/**
@@ -642,7 +701,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 			// if we could not save the template we eval the code directly
 			// this prevents problems if the cache-directory has not yet CHMOD 0777 (which may happen
 			// at the beginning of the installation)
-			$parser = new PLIB_Template_Parser($this,$this->_filename);
+			$parser = new PLIB_Template_Parser($this);
 			$tpl_content = $parser->compile_template($tpl,$cache_path,$tpl_content);
 			if($tpl_content !== '')
 			{

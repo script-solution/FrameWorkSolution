@@ -100,29 +100,18 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 	private $_tpl;
 	
 	/**
-	 * The template-file to parse
-	 *
-	 * @var string
-	 */
-	private $_filename;
-	
-	/**
 	 * constructor
 	 *
 	 * @param PLIB_Template_Handler $tpl the template-handler
-	 * @param string $filename the template-file to parse
 	 */
-	public function __construct($tpl,$filename)
+	public function __construct($tpl)
 	{
 		parent::__construct();
 		
 		if(!($tpl instanceof PLIB_Template_Handler))
 			PLIB_Helper::def_error('instance','tpl','PLIB_Template_Handler',$tpl);
-		if(empty($filename))
-			PLIB_Helper::def_error('empty','filename',$filename);
 		
 		$this->_tpl = $tpl;
-		$this->_filename = $filename;
 		
 		// define some regexs to parse the templates
 		
@@ -154,7 +143,7 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 	 * Compiles the given template and stores the result to the given cache-file
 	 *
 	 * @param string $template the template-file
-	 * @param string $cache_file the file where to store the result to
+	 * @param string $cache_file the file where to store the result to (null = don't store)
 	 * @param string $content the content to parse
 	 * @return string the parsed result if an error occurred or an empty string
 	 */
@@ -267,7 +256,7 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 		// build php-file
 		$result = '<?php'."\n"
 		 .'function '.$this->_tpl->get_function_name($template).'($base,$number) {'."\n"
-		 .'$tplvars = &$base->tpl->get_variables(\''.$template.'\',$number);'."\n";
+		 .'$tplvars = $base->tpl->get_variables(\''.$template.'\',$number);'."\n";
 		$result .= '$html = "";'."\n"
 		 .'$html .=<<<EOF'."\n"
 		 .$content."\n".'EOF;'."\n"
@@ -275,9 +264,12 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 		 .'?>';
 
 		// write to file
-		$written = PLIB_FileUtils::write($cache_file,$result);
-		if($written > 0)
-			return '';
+		if($cache_file !== null)
+		{
+			$written = PLIB_FileUtils::write($cache_file,$result);
+			if($written > 0)
+				return '';
+		}
 		
 		return $result;
 	}
