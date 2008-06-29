@@ -220,6 +220,7 @@ function hide()
  * Toggles the display of the colorpicker relative to the element with given id
  *
  * @param mixed relId the id of the element to use for the positioning
+ * @param string position the position (see PLIB_displayElement for the possible values)
  */
 function toggle(relId,position)
 {
