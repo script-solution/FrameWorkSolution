@@ -82,8 +82,8 @@ function setEventHandler(event,handler)
  */
 function sendGetRequest(url,onfinish)
 {
-	// not initialized?
-	if(this.xmlHttp == null)
+	// we have to do this for every request with IE
+	if(this.xmlHttp == null || (document.all && !window.opera))
 		this.xmlHttp = PLIB_getXmlHttpObject();
 	
 	// copy to local variables
