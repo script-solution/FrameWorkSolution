@@ -374,6 +374,20 @@ function PLIB_addToPage(html)
 }
 
 /**
+ * Adds or removes the given classname to the given element
+ *
+ * @param object element the element
+ * @param string className the class-name to add/remove
+ */
+function PLIB_toggleClassName(element,className)
+{
+	if(element.className.indexOf(className) >= 0)
+		PLIB_removeClassName(element,className);
+	else
+		PLIB_addClassName(element,className);
+}
+
+/**
  * Adds the given className to the given element
  * 
  * @param object element the element
@@ -603,25 +617,6 @@ Array.prototype.removeEntry = function(entry)
 		this[this.length - 1] = temp;
 		this.pop();
 	}
-};
-
-
-/**
- * Builds a string with all elements of the array separated by the given string.
- *
- * @param string sep the separator of the elements
- * @return string the result-string
- */
-Array.prototype.implode = function(sep)
-{
-	var res = '';
-	for(var i = 0;i < this.length;i++)
-	{
-		res += this[i];
-		if(i < this.length - 1)
-			res += sep;
-	}
-	return res;
 };
 
 /**
