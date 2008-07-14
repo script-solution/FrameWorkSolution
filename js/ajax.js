@@ -83,7 +83,7 @@ function setEventHandler(event,handler)
 function sendGetRequest(url,onfinish)
 {
 	// we have to do this for every request with IE
-	if(this.xmlHttp == null || (document.all && !window.opera))
+	if(this.xmlHttp == null || Browser.isIE)
 		this.xmlHttp = PLIB_getXmlHttpObject();
 	
 	// copy to local variables
@@ -96,7 +96,7 @@ function sendGetRequest(url,onfinish)
 	
 	// does not work in IE
 	// TODO: the special chars will not be transferred correctly in IE. how to fix that?
-	if(!document.all || window.opera)
+	if(Browser.isIE)
 		cxmlHttp.overrideMimeType(this.mimeType);
 	
 	// build callback

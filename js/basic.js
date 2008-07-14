@@ -10,6 +10,17 @@
  */
 
 /**
+ * Detect and store the browser-type
+ * Borrowed from prototype :-)
+ */
+var Browser = {
+	isIE : !!(window.attachEvent && !window.opera),
+	isOpera : !!window.opera,
+	isWebKit : navigator.userAgent.indexOf('AppleWebKit/') > -1,
+	isGecko : navigator.userAgent.indexOf('Gecko') > -1 && navigator.userAgent.indexOf('KHTML') == -1
+};
+
+/**
  * Builds a string with all ids to delete. The function assumes that
  * you have checkboxes for the entries that indicate which entries should
  * be deleted. Every checkbox has the id <checkboxPrefix><number> where
@@ -208,6 +219,7 @@ function PLIB_escapeHTML(input)
  * The location may be one of the following:
  * 	topleft,topleftright,top,toprightleft,topright,
  *	lefttop,righttop,
+ * 	center,
  *	left,right,
  *	leftbottom,rightbottom,
  *	bottomleft,bottomleftright,bottom,bottomrightleft,bottomright
@@ -216,7 +228,7 @@ function PLIB_escapeHTML(input)
  *	tl tlr      t      trl tr
  *	lt /-----------------\ rt
  *     |                 |
- *	l  |                 | r
+ *	l  |        c        | r
  *     |                 |
  *	lb \-----------------/ rb
  *	bl blr      b      brl br
@@ -302,6 +314,12 @@ function PLIB_displayElement(elId,relId,location,padding,display)
 				element.style.left = (left + rwidth + padding) + "px";
 				break;
 			
+			case 'c':
+			case 'center':
+				element.style.top = (top + (rheight / 2) - (eheight / 2)) + "px";
+				element.style.left = (left + (rwidth / 2) - (ewidth / 2)) + "px";
+				break;
+			
 			case 'left':
 			case 'l':
 				element.style.top = (top + (rheight / 2) - (eheight / 2)) + "px";
@@ -360,6 +378,22 @@ function PLIB_displayElement(elId,relId,location,padding,display)
 		element.style.position = 'absolute';
 		element.style.display = display;
 	}
+}
+
+/**
+ * Sets the opacity of the given element.
+ *
+ * @param object el the element
+ * @param int value the value (0..100)
+ */
+function PLIB_setOpacity(el,value)
+{
+	if(Browser.isIE)
+		el.style.filter = "Alpha(opacity=" + value + ")";
+	else if(Browser.isOpera || Browser.isWebKit)
+		el.style.opacity = value / 100;
+	else
+		el.style.MozOpacity = value / 100;
 }
 
 /**
@@ -553,17 +587,69 @@ function PLIB_getPageOffsetTop(el)
 }
 
 /**
+ * @return the body-element of the IE
+ */
+function PLIB_getIEBody()
+{
+	if(document.compatMode && document.compatMode != "BackCompat")
+		return document.documentElement;
+	return document.body;
+}
+
+/**
+ * Determines the scroll-offset of the page
+ *
+ * @return array an numeric array with the offset (x,y)
+ */
+function PLIB_getScrollOffset()
+{
+	var dim;
+	if(Browser.isIE)
+	{
+		var body = PLIB_getIEBody();
+		dim = new Array(body.scrollLeft,body.scrollTop);
+	}
+	else
+		dim = new Array(window.pageXOffset,window.pageYOffset);
+	return dim;
+}
+
+/**
+ * Determines the size of the window
+ *
+ * @return array an numeric array with the window-size (width,height)
+ */
+function PLIB_getWindowSize()
+{
+	var size;
+	if(Browser.isIE)
+	{
+		var body = PLIB_getIEBody();
+		size = new Array(body.clientWidth,body.clientHeight);
+	}
+	else
+		size = new Array(window.innerWidth,window.innerHeight);
+	return size;
+}
+
+/**
  * Determines the size of the page
  *
- * @return array an numeric array with the page-size
+ * @return array an numeric array with the page-size (width,height)
  */
 function PLIB_getPageSize()
 {
 	var size;
-	if(document.all && !window.opera)
-		size = new Array(document.body.offsetWidth,document.body.offsetHeight);
+	if(Browser.isIE)
+	{
+		var body = PLIB_getIEBody();
+		size = new Array(body.clientWidth,body.clientHeight);
+	}
 	else
-		size = new Array(window.innerWidth,window.innerHeight);
+	{
+		var body = document.getElementsByTagName('body')[0];
+		size = new Array(body.offsetWidth,body.offsetHeight);
+	}
 	return size;
 }
 
