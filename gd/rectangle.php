@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_Rectangle extends PLIB_FullObject implements PLIB_GD_Shape2D
+class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 {
 	/**
 	 * The position of the rectangle
@@ -334,7 +334,7 @@ class PLIB_GD_Rectangle extends PLIB_FullObject implements PLIB_GD_Shape2D
 			$ry < $ty + $th && $ry + $rh > $ty;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

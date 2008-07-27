@@ -27,6 +27,7 @@
  * 	<li>Loops with key:		{loop array as key => element} ... {endloop}</li>
  * 	<li>Loop backwards:		{loopbw array as element} ... {endloop}</li>
  * 	<li>Loop bw with key:	{loopbw array as key => element} ... {endloop}</li>
+ * 	<li>Loop a range:			{loop x in a..b} ... {endloop}</li>
  * 	<li>Math operations:	{1 + 1}, {varName * 2}, {2 / varName}, {array.length - 4}, ...</li>
  * 	<li>Array-length:			{array.length}</li>
  * 	<li>Loop-counter:			{array.current}</li>
@@ -53,7 +54,7 @@
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Template_Handler extends PLIB_FullObject
+final class PLIB_Template_Handler extends PLIB_Object
 {
 	/**
 	 * Are conditions enabled? (IF,ELSE,ENDIF)
@@ -187,7 +188,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 		
 		if($path != '')
 			$this->set_path($path);
-		$this->_cache_folder = PLIB_Path::inner().'cache';
+		$this->_cache_folder = PLIB_Path::server_app().'cache';
 	}
 	
 	/**
@@ -224,11 +225,12 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 * that in the theme-folder is a folder called "templates" which contains
 	 * all templates.
 	 *
-	 * @param string $path the path to the templates-folder (with the trailing slash)
+	 * @param string $path the path to the templates-folder (with the trailing slash and starting
+	 * 	at PLIB_Path::server_app())
 	 */
 	public function set_path($path)
 	{
-		if(!is_dir($path))
+		if(!is_dir(PLIB_Path::server_app().$path))
 			PLIB_Helper::error('"'.$path.'" is no folder!');
 		
 		$this->_template_path = $path;
@@ -634,6 +636,8 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 */
 	public function parse_template($template = -1,$restore = true,$number = 1)
 	{
+		$user = PLIB_Props::get()->user();
+
 		if(!PLIB_Helper::is_integer($number) || $number <= 0)
 			PLIB_Helper::def_error('intgt0','number',$number);
 		
@@ -660,29 +664,27 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 			$template_path = $this->_template_path;
 			if($template_path == '')
 			{
-				if(!self::prop_exists('user'))
-					PLIB_Helper::error('The property "user" doesn\'t exist! Please set a template-path!');
-				
-				$tp = $this->user->get_theme_item_path('templates/'.$tpl);
+				$tp = str_replace(
+					PLIB_Path::client_app(),'',$user->get_theme_item_path('templates/'.$tpl)
+				);
 				$template_path = dirname($tp).'/';
 			}
 			
 			// check if the file exists
-			if(!is_file($template_path.$tpl))
-				PLIB_Helper::error('"'.$template_path.$tpl.'" is no file!');
+			if(!is_file(PLIB_Path::server_app().$template_path.$tpl))
+				PLIB_Helper::error('"'.PLIB_Path::server_app().$template_path.$tpl.'" is no file!');
 			
-			$path = str_replace(PLIB_Path::inner(),'',$template_path);
-			$path = str_replace('/','_',$path);
+			$path = str_replace('/','_',$template_path);
 			$path = str_replace('\\','_',$path);
 			$cache_path = $this->_cache_folder.'/'.$path.$tpl.'.php';
-	
+			
 			// check if we have to recompile the template
-			if(!file_exists($cache_path))
+			if(!file_exists($cache_path) || !function_exists($func_name))
 				$recompile_necessary = true;
 			else
 			{
 				$cache_mtime = filemtime($cache_path);
-				$tpl_mtime = filemtime($template_path.$tpl);
+				$tpl_mtime = filemtime(PLIB_Path::server_app().$template_path.$tpl);
 				
 				// compare the last-modified-times
 				if($tpl_mtime > $cache_mtime)
@@ -691,7 +693,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	
 			// retrieve the template-content if we have to recompile it
 			if($recompile_necessary)
-				$tpl_content = PLIB_FileUtils::read($template_path.$tpl);
+				$tpl_content = PLIB_FileUtils::read(PLIB_Path::server_app().$template_path.$tpl);
 		}
 		
 		// recompile?
@@ -738,7 +740,7 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 			die('It seems that the template "'.$tpl.'" includes itself :)');
 		
 		array_push($this->_tpl_calls,$tpl);
-
+		
 		// call the function with corresponding part-argument
 		$func_name = $this->get_function_name($tpl);
 		$str = $func_name($this,$number);
@@ -760,10 +762,10 @@ final class PLIB_Template_Handler extends PLIB_FullObject
 	 */
 	public function get_function_name($template)
 	{
-		return 'PLIB_TPL_'.md5(PLIB_Path::inner()).'_'.str_replace('.','_',$template);
+		return 'PLIB_TPL_'.md5(PLIB_Path::server_app()).'_'.str_replace('.','_',$template);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

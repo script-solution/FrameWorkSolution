@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Dimension extends PLIB_FullObject
+final class PLIB_GD_Dimension extends PLIB_Object
 {
 	/**
 	 * The height of the dimension
@@ -140,7 +140,7 @@ final class PLIB_GD_Dimension extends PLIB_FullObject
 		$this->_height = max(0,$this->_height - $h);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

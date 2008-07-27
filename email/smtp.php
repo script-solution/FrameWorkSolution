@@ -145,14 +145,14 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 
 	public function send_mail()
 	{
-		if(!$this->_check_attributes())
+		if(!$this->check_attributes())
 			return false;
 
 		// open socket to host
 		$this->_sock = @fsockopen($this->_smtp_host,$this->_smtp_port);
 		if(!$this->_sock)
 		{
-			$this->_report_error(
+			$this->report_error(
 				'Unable to open socket to "'.$this->_smtp_host.':'.$this->_smtp_port.'"!'
 			);
 			return false;
@@ -163,7 +163,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		// is the server ready?
 		if($this->_code != 220)
 		{
-			$this->_report_error('Server "'.$this->_smtp_host.'" is not ready!');
+			$this->report_error('Server "'.$this->_smtp_host.'" is not ready!');
 			return false;
 		}
 
@@ -178,7 +178,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 			if($this->_code != 250)
 			{
 				// give up
-				$this->_report_error('"HELO" failed!');
+				$this->report_error('"HELO" failed!');
 				return false;
 			}
 		}
@@ -192,7 +192,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 			// can we auth?
 			if($this->_code != 334)
 			{
-				$this->_report_error('Unable to auth!');
+				$this->report_error('Unable to auth!');
 				return false;
 			}
 
@@ -200,7 +200,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 			$this->_send_command(base64_encode($this->_smtp_login));
 			if($this->_code != 334)
 			{
-				$this->_report_error('Invalid username!');
+				$this->report_error('Invalid username!');
 				return false;
 			}
 			
@@ -208,7 +208,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 			$this->_send_command(base64_encode($this->_smtp_pw));
 			if($this->_code != 235)
 			{
-				$this->_report_error('Invalid password!');
+				$this->report_error('Invalid password!');
 				return false;
 			}
 		}
@@ -221,7 +221,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 
 		if($this->_code != 250)
 		{
-			$this->_report_error('Unable to set "from"!');
+			$this->report_error('Unable to set "from"!');
 			return false;
 		}
 
@@ -235,7 +235,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		// no receivers?
 		if(count($receiver) == 0)
 		{
-			$this->_report_error('No receiver set!');
+			$this->report_error('No receiver set!');
 			return false;
 		}
 
@@ -247,7 +247,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 
 			if($this->_code != 250)
 			{
-				$this->_report_error('Unable to set receiver "'.$r.'"!');
+				$this->report_error('Unable to set receiver "'.$r.'"!');
 				return false;
 			}
 		}
@@ -256,14 +256,14 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		$this->_send_command('DATA');
 		if($this->_code != 354)
 		{
-			$this->_report_error('Unable to send data!');
+			$this->report_error('Unable to send data!');
 			return false;
 		}
 
 		// build headers
-		$headers = $this->_build_header('smtp');
+		$headers = $this->build_header('smtp');
 		if($this->get_content_type() == 'text/html')
-			$message = $this->_prepare_html_message($this->get_message());
+			$message = $this->prepare_html_message($this->get_message());
 		else
 			$message = $this->get_message();
 		$message = $headers."\n\n".$message."\n.";
@@ -272,7 +272,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		$this->_send_command($message);
 		if($this->_code != 250)
 		{
-			$this->_report_error('Unable to send data!');
+			$this->report_error('Unable to send data!');
 			return false;
 		}
 
@@ -283,7 +283,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		return true;
 	}
 
-	protected function _report_error($msg)
+	protected function report_error($msg)
 	{
 		$this->_error_message = htmlspecialchars($msg,ENT_QUOTES);
 		$this->_error_message .= '<br />Server replied: "'.$this->_response.'"';
@@ -328,9 +328,9 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		return $str;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

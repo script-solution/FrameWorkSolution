@@ -18,7 +18,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_ColorFade extends PLIB_FullObject
+final class PLIB_GD_ColorFade extends PLIB_Object
 {
 	/**
 	 * The distance from the beginning to the end of the color-fade
@@ -180,7 +180,7 @@ final class PLIB_GD_ColorFade extends PLIB_FullObject
 		return $res;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

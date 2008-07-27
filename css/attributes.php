@@ -17,7 +17,7 @@
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_CSS_Attributes extends PLIB_FullObject
+final class PLIB_CSS_Attributes extends PLIB_Object
 {
 	/**
 	 * The attribute-array
@@ -104,7 +104,7 @@ final class PLIB_CSS_Attributes extends PLIB_FullObject
 		return rtrim($css);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

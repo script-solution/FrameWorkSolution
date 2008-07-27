@@ -18,7 +18,7 @@
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Email_Base extends PLIB_FullObject
+abstract class PLIB_Email_Base extends PLIB_Object
 {
 	/**
 	 * the subject of the email
@@ -149,10 +149,15 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 */
 	public final function set_recipient($value)
 	{
-		if(!PLIB_StringHelper::is_valid_email($value))
-			PLIB_Helper::error('The email-address "'.$value.'" is invalid!');
+		$recipients = explode(',',$value);
+		foreach($recipients as $recipient)
+		{
+			$recipient = trim($recipient);
+			if(!PLIB_StringHelper::is_valid_email($recipient))
+				PLIB_Helper::error('The email-address "'.$recipient.'" is invalid!');
 		
-		$this->_recipient = $value;
+			$this->_recipient .= $recipient;
+		}
 	}
 
 	/**
@@ -307,7 +312,7 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 *
 	 * @return boolean true if so
 	 */
-	protected function _check_attributes()
+	protected function check_attributes()
 	{
 		// check if all required attributes are set
 		if($this->_subject == '')
@@ -334,7 +339,7 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 * @param string $method: mail or smtp
 	 * @return string the header
 	 */
-	protected function _build_header($method = 'mail')
+	protected function build_header($method = 'mail')
 	{
 		$headers = 'From: '.$this->_from."\n";
 
@@ -376,7 +381,7 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 * @param string $charset the charset to use
 	 * @return string the text to send
 	 */
-	protected function _prepare_html_message($text)
+	protected function prepare_html_message($text)
 	{
 		$html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
 		$html .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'."\n";
@@ -398,7 +403,7 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 *
 	 * @param string $msg the message
 	 */
-	protected function _report_error($msg)
+	protected function report_error($msg)
 	{
 		$this->_error_message = htmlspecialchars($msg,ENT_QUOTES);
 	}
@@ -410,7 +415,7 @@ abstract class PLIB_Email_Base extends PLIB_FullObject
 	 */
 	public abstract function send_mail();
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

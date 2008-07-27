@@ -22,13 +22,15 @@ class PLIB_Config_Item_YesNo extends PLIB_Config_Item_Default
 	public function get_control($form)
 	{
 		$str = $form->get_radio_yesno($this->_data->get_name(),$this->_data->get_value());
-		$str .= $this->_get_suffix();
+		$str .= $this->get_suffix();
 		return $str;
 	}
 
 	public function get_value()
 	{
-		return $this->input->get_var($this->_data->get_name(),'post',PLIB_Input::INT_BOOL);
+		$input = PLIB_Props::get()->input();
+
+		return $input->get_var($this->_data->get_name(),'post',PLIB_Input::INT_BOOL);
 	}
 }
 ?>

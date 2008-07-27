@@ -21,7 +21,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Pagination extends PLIB_FullObject
+class PLIB_Pagination extends PLIB_Object
 {
 	/**
 	 * The number of entries per page
@@ -198,7 +198,7 @@ class PLIB_Pagination extends PLIB_FullObject
 		return $numbers;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

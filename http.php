@@ -23,7 +23,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_HTTP extends PLIB_FullObject
+final class PLIB_HTTP extends PLIB_Object
 {
 	/**
 	 * The host
@@ -243,7 +243,7 @@ final class PLIB_HTTP extends PLIB_FullObject
 		return PLIB_String::substr($reply,$cut + 4);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

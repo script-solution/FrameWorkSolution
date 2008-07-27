@@ -14,7 +14,7 @@
  * Example:
  * <code>
  * $js = PLIB_Javascript::get_instance();
- * $js->set_cache_folder(PLIB_Path::inner().'cache');
+ * $js->set_cache_folder(PLIB_Path::server_app().'cache');
  * // will return the name of the cache-file
  * echo $js->get_file('myfile.js');
  * </code>
@@ -47,7 +47,7 @@ final class PLIB_Javascript extends PLIB_Singleton
 	private $_shrink = true;
 	
 	/**
-	 * @return string the cache-folder or null if not set
+	 * @return string the cache-folder or null if not set (starting at PLIB_Path::server_app()!)
 	 */
 	public function get_cache_folder()
 	{
@@ -58,14 +58,15 @@ final class PLIB_Javascript extends PLIB_Singleton
 	 * Sets the cache folder for shrinked javascript-files. This method assumes that the folder
 	 * is writable!
 	 * 
-	 * @param string $folder the new value
+	 * @param string $folder the new value (starting at PLIB_Path::server_app()!)
 	 */
 	public function set_cache_folder($folder)
 	{
 		if(empty($folder))
 			PLIB_Helper::def_error('notempty','folder',$folder);
-		if(!file_exists($folder) || !is_dir($folder))
-			PLIB_Helper::error('"'.$folder.'" is no valid folder!');
+		$rfolder = PLIB_Path::server_app().$folder;
+		if(!file_exists($rfolder) || !is_dir($rfolder))
+			PLIB_Helper::error('"'.$rfolder.'" is no valid folder!');
 		
 		$this->_cache = PLIB_FileUtils::ensure_trailing_slash($folder);
 	}
@@ -109,7 +110,8 @@ final class PLIB_Javascript extends PLIB_Singleton
 			$prefix = 'plib_';
 		
 		// init some vars
-		$filepath = $source == 'lib' ? PLIB_Path::lib().$file : PLIB_Path::inner().$file;
+		$filepath = $source == 'lib' ? PLIB_Path::server_lib().$file : PLIB_Path::server_app().$file;
+		$shrinked = $this->_shrink;
 		if($this->_shrink)
 		{
 			$filename = basename($file);
@@ -118,12 +120,13 @@ final class PLIB_Javascript extends PLIB_Singleton
 			$suffix = '_shrinked';
 			$cache_file = preg_replace('/[^a-z0-9_]/','_',$file);
 			$output_file = $this->_cache.$prefix.$cache_file.$suffix.'.'.$ext;
+			$server_output = PLIB_Path::server_app().$output_file;
 			
 			// determine if we have to recache the file
-			$recache = !is_file($output_file);
+			$recache = !is_file($server_output);
 			if(!$recache)
 			{
-				$outputmod = @filemtime($output_file);
+				$outputmod = @filemtime($server_output);
 				$recache = $modtime > $outputmod;
 			}
 			
@@ -131,17 +134,25 @@ final class PLIB_Javascript extends PLIB_Singleton
 			{
 				$shrinker = new PLIB_JS_FileShrinker($filepath);
 				$output = $shrinker->get_shrinked_content();
-				if(!PLIB_FileUtils::write($output_file,$output))
-					$output_file = $filepath;
+				if(!PLIB_FileUtils::write($server_output,$output))
+				{
+					$output_file = $file;
+					$shrinked = false;
+				}
 			}
 		}
 		else
-			$output_file = $filepath;
+			$output_file = $file;
 		
-		return $output_file;
+		if($shrinked)
+			return PLIB_Path::client_app().$output_file;
+		
+		if($source == 'lib')
+			return PLIB_Path::client_lib().$file;
+		return PLIB_Path::client_app().$file;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

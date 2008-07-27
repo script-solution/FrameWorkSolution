@@ -17,7 +17,7 @@
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tasks_Container extends PLIB_FullObject
+class PLIB_Tasks_Container extends PLIB_Object
 {
 	/**
 	 * The storage-object for the tasks
@@ -196,7 +196,7 @@ class PLIB_Tasks_Container extends PLIB_FullObject
 		return new PLIB_Date($res);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

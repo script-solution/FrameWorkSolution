@@ -23,7 +23,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Date extends PLIB_FullObject
+final class PLIB_Date extends PLIB_Object
 {
 	/**
 	 * Represents the timezone of the user
@@ -315,6 +315,8 @@ final class PLIB_Date extends PLIB_FullObject
 	 */
 	public function __construct($date = 'now',$input_tz = self::TZ_GMT,$output_tz = self::TZ_USER)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		parent::__construct();
 		
 		// init static fields
@@ -322,10 +324,10 @@ final class PLIB_Date extends PLIB_FullObject
 		{
 			// we set the default timezone to the user-tz, too, to prevent problems with 'now'
 			// and other stuff.
-			date_default_timezone_set($this->locale->get_timezone());
+			date_default_timezone_set($locale->get_timezone());
 			
 			PLIB_Date::$_timezone_gmt = new DateTimeZone('GMT');
-			PLIB_Date::$_timezone_user = new DateTimeZone($this->locale->get_timezone());
+			PLIB_Date::$_timezone_user = new DateTimeZone($locale->get_timezone());
 			
 			// store today, yesterday and tomorrow
 			$d = new DateTime('@'.time());
@@ -508,6 +510,18 @@ final class PLIB_Date extends PLIB_FullObject
 		$ts = gmmktime($h,$i,$s,$m,$d,$y);
 		return $ts - $offset;
 	}
+	
+	/**
+	 * Converts the date to an SQL-Date
+	 *
+	 * @param boolean $time do you want to get the time?
+	 * @return string the SQL-Date
+	 */
+	public function to_sql($time = true)
+	{
+		$format = $time ? '%y-%m-%d %H:%M:%S' : '%y-%m-%d';
+		return strftime($format,$this->to_timestamp());
+	}
 
 	/**
 	 * Returns a formated date.
@@ -539,84 +553,86 @@ final class PLIB_Date extends PLIB_FullObject
 	 */
 	public function to_format($format,$replace_wm = false)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		static $weekdays = null,$months = null;
 
 		// ensure that we initialize it if the entries are available
-		if($weekdays === null && $this->locale->contains_lang('sunday'))
+		if($weekdays === null && $locale->contains_lang('sunday'))
 		{
 			$weekdays = array(
-				$this->locale->lang('sunday'),
-				$this->locale->lang('monday'),
-				$this->locale->lang('tuesday'),
-				$this->locale->lang('wednesday'),
-				$this->locale->lang('thursday'),
-				$this->locale->lang('friday'),
-				$this->locale->lang('saturday')
+				$locale->lang('sunday'),
+				$locale->lang('monday'),
+				$locale->lang('tuesday'),
+				$locale->lang('wednesday'),
+				$locale->lang('thursday'),
+				$locale->lang('friday'),
+				$locale->lang('saturday')
 			);
 
 			$months = array(
-				1 => $this->locale->lang('january'),
-				$this->locale->lang('february'),
-				$this->locale->lang('march'),
-				$this->locale->lang('april'),
-				$this->locale->lang('may'),
-				$this->locale->lang('june'),
-				$this->locale->lang('july'),
-				$this->locale->lang('august'),
-				$this->locale->lang('september'),
-				$this->locale->lang('october'),
-				$this->locale->lang('november'),
-				$this->locale->lang('december')
+				1 => $locale->lang('january'),
+				$locale->lang('february'),
+				$locale->lang('march'),
+				$locale->lang('april'),
+				$locale->lang('may'),
+				$locale->lang('june'),
+				$locale->lang('july'),
+				$locale->lang('august'),
+				$locale->lang('september'),
+				$locale->lang('october'),
+				$locale->lang('november'),
+				$locale->lang('december')
 			);
 		}
 
 		switch($format)
 		{
 			case 'date':
-				$date = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
 				break;
 			case 'shortdate':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
 				$date = $this->_date->format($format);
 				break;
 			case 'shortdatetime':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'datetime':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
 				$date = $this->_date->format($format);
 				break;
 			case 'datetime_s':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'longdate':
-				$date = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG));
+				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG));
 				break;
 			case 'longdatetime':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
 				$date = $this->_date->format($format);
 				break;
 			case 'longdatetime_s':
-				$format = $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'time':
-				$date = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
+				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
 				break;
 			case 'time_s':
-				$date = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC));
+				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC));
 				break;
 
 			default:
@@ -652,6 +668,8 @@ final class PLIB_Date extends PLIB_FullObject
 	 */
 	public function to_date($show_time = true,$relative = true)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		if($relative)
 		{
 			$date = $this->_date->format('dmY');
@@ -668,33 +686,33 @@ final class PLIB_Date extends PLIB_FullObject
 					{
 						$ago = (int)($diff / 60);
 						if($ago == 1)
-							return '<b>'.$this->locale->lang('1_minute_ago').'</b>';
+							return '<b>'.$locale->lang('1_minute_ago').'</b>';
 						if($ago < 1)
-							return '<b>'.sprintf($this->locale->lang('x_seconds_ago'),$diff).'</b>';
+							return '<b>'.sprintf($locale->lang('x_seconds_ago'),$diff).'</b>';
 
-						return '<b>'.sprintf($this->locale->lang('x_minutes_ago'),$ago).'</b>';
+						return '<b>'.sprintf($locale->lang('x_minutes_ago'),$ago).'</b>';
 					}
 				}
 
-				$string = '<b>'.$this->locale->lang('today').'</b>';
+				$string = '<b>'.$locale->lang('today').'</b>';
 			}
 			else if($date == PLIB_Date::$_yesterday)
-				$string = $this->locale->lang('yesterday');
+				$string = $locale->lang('yesterday');
 			else if($date == PLIB_Date::$_tomorrow)
-				$string = $this->locale->lang('tomorrow');
+				$string = $locale->lang('tomorrow');
 			else
-				$string = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+				$string = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
 		}
 		else
-			$string = $this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+			$string = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
 
 		if($show_time)
-			$string .= ', '.$this->_date->format($this->locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
+			$string .= ', '.$this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
 
 		return $string;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		// we provide the fields this way because DateTime has no __toString()-method
 		$vars = get_object_vars($this);

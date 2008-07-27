@@ -24,8 +24,10 @@ class PLIB_DateTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
+		$locale = PLIB_Props::get()->locale();
+		
 		// ensure that we have the expected timezone
-		PLIB_Object::get_prop('locale')->set_timezone('Europe/Berlin');
+		$locale->set_timezone('Europe/Berlin');
 		date_default_timezone_set('Europe/Berlin');
 		parent::setUp();
 	}
@@ -43,6 +45,8 @@ class PLIB_DateTest extends PHPUnit_Framework_TestCase
 	 */
 	public function testTo_date()
 	{
+		$locale = PLIB_Props::get()->locale();
+		
 		$d = new PLIB_Date();
 		self::assertEquals($d->to_date(),'<b>0 seconds ago</b>');
 		$d->modify('-1minute');
@@ -60,7 +64,7 @@ class PLIB_DateTest extends PHPUnit_Framework_TestCase
 		
 		// determine offset to GMT
 		// during daylightsaving-time this is 7200 and 3600 otherwise
-		$tz = new DateTimeZone(PLIB_Object::get_prop('locale')->get_timezone());
+		$tz = new DateTimeZone($locale->get_timezone());
 		$offset = $tz->getOffset(new DateTime('@'.time(),new DateTimeZone('GMT')));
 		
 		// local 'today 0:00'

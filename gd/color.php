@@ -33,7 +33,7 @@ PLIB_GD_Color::$YELLOW = new PLIB_GD_Color(255,255,0);
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Color extends PLIB_FullObject
+final class PLIB_GD_Color extends PLIB_Object
 {
 	/**
 	 * Represents black (0,0,0)
@@ -555,7 +555,7 @@ final class PLIB_GD_Color extends PLIB_FullObject
 		return PLIB_Helper::is_integer($comp) && $comp >= 0 && $comp <= $limit;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

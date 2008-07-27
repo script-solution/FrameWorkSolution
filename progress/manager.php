@@ -24,7 +24,7 @@
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Progress_Manager extends PLIB_FullObject
+final class PLIB_Progress_Manager extends PLIB_Object
 {
 	/**
 	 * The storage-object for the position
@@ -197,7 +197,7 @@ final class PLIB_Progress_Manager extends PLIB_FullObject
 		}
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

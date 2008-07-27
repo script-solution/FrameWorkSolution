@@ -167,7 +167,7 @@ class PLIB_GD_Circle extends PLIB_GD_Ellipse implements PLIB_GD_Shape2D
 		parent::shrink($w,$h);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

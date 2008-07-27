@@ -46,7 +46,7 @@ PLIB_GD_BoxPosition::$BOTTOM_RIGHT = new PLIB_GD_BoxPosition(
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_BoxPosition extends PLIB_FullObject
+final class PLIB_GD_BoxPosition extends PLIB_Object
 {
 	/**
 	 * The box-position top-left
@@ -180,7 +180,7 @@ final class PLIB_GD_BoxPosition extends PLIB_FullObject
 		return $this->_vpos;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

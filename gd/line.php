@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Line extends PLIB_FullObject implements PLIB_GD_Shape
+final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 {
 	/**
 	 * The start-point of the line
@@ -370,7 +370,7 @@ final class PLIB_GD_Line extends PLIB_FullObject implements PLIB_GD_Shape
 			$cross->distance($p3) <= $l2len && $cross->distance($p4) <= $l2len;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

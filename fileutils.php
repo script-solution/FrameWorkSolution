@@ -330,6 +330,41 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	}
 	
 	/**
+	 * Copies the content of the given folder to the given target-directory
+	 * 
+	 * @param string $source the source-folder
+	 * @param string $target the target-folder
+	 * @return boolean true if successfull
+	 */
+	public static function copy_folder($source,$target)
+	{
+		// create target-directory
+		if(!is_dir($target))
+		{
+			if(!mkdir($target))
+				return false;
+		}
+		
+		$source = self::ensure_trailing_slash($source);
+		$target = self::ensure_trailing_slash($target);
+		foreach(self::get_dir_content($source,true,true) as $item)
+		{
+			$relitem = str_replace($source,'',$item);
+			if(is_dir($item) && !is_dir($target.$relitem))
+			{
+				if(!mkdir($target.$relitem))
+					return false;
+			}
+			else if(is_file($item))
+			{
+				if(!self::copy($item,$target.$relitem))
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * Copies the given source-file(!) to the given target-file. That means it reads the content
 	 * of the source-file, creates the target-file and writes the content into it.
 	 * The target-file will be replaced if it exists!
@@ -346,10 +381,7 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 			PLIB_Helper::def_error('notempty','target',$target);
 		if(!is_file($source))
 			PLIB_Helper::error('"'.$source.'" is no file!');
-		
-		$source = self::clean_path($source);
-		$target = self::clean_path($target);
-		
+
 		if(is_file($source))
 		{
 			$content = self::read($source);
@@ -360,6 +392,45 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Stores the content of the given folder into a zip-file and stores it at <var>$target</var>
+	 *
+	 * @param string $folder the source-folder
+	 * @param string $target the zip-file that should be created
+	 * @return boolean true if it was successfull
+	 */
+	public static function zip_folder($folder,$target)
+	{
+		$folder = self::ensure_trailing_slash($folder);
+		
+		$a = new ZipArchive();
+		if(!$a->open($target,ZIPARCHIVE::CREATE))
+			return false;
+		$paths = PLIB_FileUtils::get_dir_content($folder,true,true);
+		foreach($paths as $path)
+		{
+			$relitem = str_replace($folder,'',$path);
+			if(is_dir($path))
+			{
+				if(!$a->addEmptyDir($relitem))
+				{
+					$a->close();
+					return false;
+				}
+			}
+			else
+			{
+				if(!$a->addFile($path,$relitem))
+				{
+					$a->close();
+					return false;
+				}
+			}
+		}
+		$a->close();
+		return true;
 	}
 	
 	/**
@@ -383,6 +454,18 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function write($target,$content)
 	{
 		return @file_put_contents($target,$content);
+	}
+	
+	/**
+	 * Appends <var>$content</var> to <var>$target</var>
+	 *
+	 * @param string $target the target-file
+	 * @param string $content the content to store
+	 * @return int the number of written bytes or false if it failed
+	 */
+	public static function append($target,$content)
+	{
+		return @file_put_contents($target,$content,FILE_APPEND);
 	}
 }
 ?>

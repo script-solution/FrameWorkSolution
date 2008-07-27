@@ -17,7 +17,7 @@
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Attributes extends PLIB_FullObject
+final class PLIB_Highlighting_Attributes extends PLIB_Object
 {
 	/**
 	 * Represents the value "sup" for the position
@@ -342,7 +342,7 @@ final class PLIB_Highlighting_Attributes extends PLIB_FullObject
 		unset($this->_attributes[$attribute]);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

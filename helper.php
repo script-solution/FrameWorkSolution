@@ -286,14 +286,14 @@ final class PLIB_Helper extends PLIB_UtilBase
 	 * Includes the module given by the action-parameter and returns the name.
 	 * This is the default way to handle modules. The method assumes
 	 * that the modules are at:
-	 * <code>PLIB_Path::inner().$folder.$action.'/module_'.$action.'.php'</code>
+	 * <code>PLIB_Path::server_app().$folder.$action.'/module_'.$action.'.php'</code>
 	 * The classes have to have the name:
 	 * <code>$prefix.$action</code>
 	 *
 	 * @param string $prefix the prefix for the module-class-names
 	 * @param string $action_param the name of the action-get-parameter
 	 * @param string $default the default-module-name
-	 * @param string $folder the folder of the modules (starting at {@link PLIB_Path::inner()})
+	 * @param string $folder the folder of the modules (starting at {@link PLIB_Path::server_app()})
 	 * @return string the module-name
 	 */
 	public static function get_module_name($prefix = 'PLIB_Module_',$action_param = 'action',
@@ -303,14 +303,14 @@ final class PLIB_Helper extends PLIB_UtilBase
 			PLIB_Helper::def_error('notempty','action_param',$action_param);
 		if(empty($default))
 			PLIB_Helper::def_error('notempty','default',$default);
-		if(!is_dir(PLIB_Path::inner().$folder))
-			PLIB_Helper::error('"'.PLIB_Path::inner().$folder.'" is no folder!');
+		if(!is_dir(PLIB_Path::server_app().$folder))
+			PLIB_Helper::error('"'.PLIB_Path::server_app().$folder.'" is no folder!');
 		
 		$folder = PLIB_FileUtils::ensure_trailing_slash($folder);
 		$action = PLIB_Input::get_instance()->get_var($action_param,'get',PLIB_Input::IDENTIFIER);
 	
 		// try to load the module
-		$filename = PLIB_Path::inner().$folder.$action.'/module_'.$action.'.php';
+		$filename = PLIB_Path::server_app().$folder.$action.'/module_'.$action.'.php';
 		if(file_exists($filename))
 		{
 			include_once($filename);
@@ -319,7 +319,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 		}
 	
 		// use default module
-		include_once(PLIB_Path::inner().$folder.$default.'/module_'.$default.'.php');
+		include_once(PLIB_Path::server_app().$folder.$default.'/module_'.$default.'.php');
 		if(class_exists($prefix.$default))
 			return $default;
 	
@@ -332,99 +332,35 @@ final class PLIB_Helper extends PLIB_UtilBase
 	}
 	
 	/**
-	 * Determines which standalone-module to use and includes the module.
-	 * This is the default way to handle standalone-modules. The method assumes
-	 * that the modules are at:
-	 * <code>PLIB_Path::inner().$folder.$action.'.php'</code>
-	 * The classes have to have the name:
-	 * <code>$prefix.$action</code>
+	 * Generates the location-string
 	 *
-	 * @param PLIB_Document $base the base-object
-	 * @param string $prefix the prefix for the module-class-names
-	 * @param string $action_param the name of the action-get-parameter
-	 * @param string $folder the folder of the standalone-files (starting at
-	 * 	{@link PLIB_Path::inner()})
-	 * @return string the module-name
-	 */
-	public static function get_standalone_name($base,$prefix = 'PLIB_Standalone_',
-		$action_param = 'action',$folder = 'standalone/')
-	{
-		if(!($base instanceof PLIB_Document))
-			PLIB_Helper::def_error('instance','base','PLIB_Document',$base);
-		if(empty($action_param))
-			PLIB_Helper::def_error('notempty','action_param',$action_param);
-		if(!is_dir(PLIB_Path::inner().$folder))
-			PLIB_Helper::error('"'.PLIB_Path::inner().$folder.'" is no folder!');
-		
-		$action = $base->input->get_var($action_param,'get',PLIB_Input::IDENTIFIER);
-	
-		// try to load the module
-		$filename = PLIB_Path::inner().$folder.$action.'.php';
-		if(file_exists($filename))
-		{
-			include_once($filename);
-			if(class_exists($prefix.$action))
-				return $action;
-		}
-	
-		PLIB_Helper::error('Unable to load a standalone-module!');
-		return '';
-	}
-	
-	/**
-	 * Generates the location-string. This is the default way:
-	 * <code><home> &raquo; <link1> &raquo; ... &raquo; <linkN></code>
-	 * The method uses the method get_location() of the given module.
-	 *
-	 * You will get an array of the form:
-	 * <code>
-	 * 	array(
-	 * 		'position' => <positionString>,
-	 * 		'title' => <positionForDocTitle>
-	 * 	)
-	 * </code>
-	 *
-	 * @param PLIB_Module $module the current module
-	 * @param string $home_name the name for the home-link
-	 * @param string $home_url the URL of the home-link (get_url(-1) by default)
+	 * @param PLIB_Page $page the current page
 	 * @param string $linkclass the linkclass to use. Use an empty string if you want to use a class.
+	 * @param string $sep the separator ( &raquo; by default)
 	 * @return array the position and document-title
 	 */
-	public static function generate_location($module,$home_name = 'Index',$home_url = null,
-		$linkclass = '')
+	public static function generate_location($page,$linkclass = '',$sep = ' &raquo; ')
 	{
-		if(!($module instanceof PLIB_Module))
-			PLIB_Helper::def_error('instance','module','PLIB_Module',$module);
-		if(empty($home_name))
-			PLIB_Helper::def_error('notempty','home_name',$home_name);
+		if(!($page instanceof PLIB_Page))
+			PLIB_Helper::def_error('instance','page','PLIB_Page',$page);
 	
-		$suffix = '';
-		$loc = $module->get_location();
-		foreach($loc as $name => $url)
+		$links = array();
+		foreach($page->get_location() as $item)
 		{
+			list($name,$url) = $item;
 			if($url == '')
-				$suffix .= ' &raquo; '.$name;
+				$links[] = $name;
 			else
 			{
-				$suffix .= ' &raquo; <a ';
+				$link = '<a ';
 				if($linkclass)
-					$suffix .= 'class="'.$linkclass.'" ';
-				$suffix .= 'href="'.$url.'">'.$name.'</a>';
+					$link .= 'class="'.$linkclass.'" ';
+				$link .= 'href="'.$url.'">'.$name.'</a>';
+				$links[] = $link;
 			}
 		}
-	
-		$href = $home_url === null ? $module->url->get_url(-1) : $home_url;
-		$loc = '<a ';
-		if($linkclass)
-			$loc .= 'class="'.$linkclass.'" ';
-		$loc .= 'href="'.$href.'">'.$home_name.'</a>';
-	
-		$loc .= $suffix;
-	
-		return array(
-			'position' => $loc,
-			'title' => strip_tags($suffix)
-		);
+		
+		return implode($sep,$links);
 	}
 }
 ?>

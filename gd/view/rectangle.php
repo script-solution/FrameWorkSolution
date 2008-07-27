@@ -114,7 +114,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 		$img = $this->get_image_res();
 		
 		// determine paint-points for the rotated rectangle
-		$points = $this->_get_paint_points($angle,$pos);
+		$points = $this->get_paint_points($angle,$pos);
 		list($ltx,$lty,$lbx,$lby,,,$rtx,$rty) = $points;
 		
 		// calculate step-widths
@@ -171,7 +171,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 		
 		$mycolor = clone $color;
 		$mycolor->brighter($color_diff);
-		$paint_points = $this->_get_paint_points($angle,$pos);
+		$paint_points = $this->get_paint_points($angle,$pos);
 		$lview = $this->get_graphics()->get_line_view(
 			new PLIB_GD_Line(
 				new PLIB_GD_Point($paint_points[0],$paint_points[1]),
@@ -217,7 +217,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 			return $funcname($img,$x,$y,$x + $w,$y + $h,$color->get_color($img));
 		}
 		
-		$paint_points = $this->_get_paint_points($angle,$pos);
+		$paint_points = $this->get_paint_points($angle,$pos);
 		$funcname = 'image'.$func.'polygon';
 		return $funcname($img,$paint_points,4,$color->get_color($img));
 	}
@@ -252,7 +252,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 			array($radius,$h - $radius),
 			array($radius,$radius),
 		);
-		$this->_rotate_points($centers,$angle,$pos);
+		$this->rotate_points($centers,$angle,$pos);
 		
 		// draw the ellipse-parts
 		$i = 0;
@@ -298,7 +298,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 			array(0,$h - $radius),
 			array(0,$radius)
 		);
-		$this->_rotate_points($points,$angle,$pos);
+		$this->rotate_points($points,$angle,$pos);
 		
 		// draw the lines
 		if($func == 'filled')
@@ -323,7 +323,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * @param int $angle the angle to use (in degree)
 	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
-	protected final function _get_paint_points($angle,$pos)
+	protected final function get_paint_points($angle,$pos)
 	{
 		$size = $this->_rect->get_size();
 		$points = array(
@@ -332,7 +332,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 			array($size->get_width(),$size->get_height()),
 			array($size->get_width(),0)
 		);
-		$this->_rotate_points($points,$angle,$pos);
+		$this->rotate_points($points,$angle,$pos);
 		return $points;
 	}
 	
@@ -343,7 +343,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * @param int $angle the angle to use (in degree)
 	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
-	protected final function _rotate_points(&$points,$angle,$pos)
+	protected final function rotate_points(&$points,$angle,$pos)
 	{
 		if(!PLIB_Helper::is_integer($angle))
 			PLIB_Helper::def_error('integer','angle',$angle);
@@ -409,7 +409,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 		$points = $paint_points;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

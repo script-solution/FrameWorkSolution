@@ -22,7 +22,7 @@
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_CSS_SimpleParser extends PLIB_FullObject
+final class PLIB_CSS_SimpleParser extends PLIB_Object
 {
 	/**
 	 * The lines of the CSS-file
@@ -395,7 +395,7 @@ final class PLIB_CSS_SimpleParser extends PLIB_FullObject
 		return $res;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

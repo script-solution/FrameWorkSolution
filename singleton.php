@@ -24,7 +24,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Singleton extends PLIB_FullObject
+abstract class PLIB_Singleton extends PLIB_Object
 {
 	/**
 	 * The instance of this class
@@ -82,7 +82,7 @@ abstract class PLIB_Singleton extends PLIB_FullObject
 		);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

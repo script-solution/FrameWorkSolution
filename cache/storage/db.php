@@ -17,7 +17,7 @@
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Storage_DB extends PLIB_FullObject implements PLIB_Cache_Storage
+final class PLIB_Cache_Storage_DB extends PLIB_Object implements PLIB_Cache_Storage
 {
 	/**
 	 * The table-name to use for the query
@@ -65,35 +65,39 @@ final class PLIB_Cache_Storage_DB extends PLIB_FullObject implements PLIB_Cache_
 
 	public function load()
 	{
-		$qry = $this->db->sql_qry(
+		$db = PLIB_Props::get()->db();
+
+		$qry = $db->sql_qry(
 			'SELECT '.$this->_name_column.','.$this->_content_column.' FROM '.$this->_table
 		);
 		$res = array();
-		while($row = $this->db->sql_fetch_assoc($qry))
+		while($row = $db->sql_fetch_assoc($qry))
 			$res[$row[$this->_name_column]] = @unserialize($row[$this->_content_column]);
-		$this->db->sql_free($qry);
+		$db->sql_free($qry);
 		return $res;
 	}
 
 	public function store($name,$content)
 	{
+		$db = PLIB_Props::get()->db();
+
 		$values =	array(
 			$this->_name_column => $name,
 			$this->_content_column => addslashes(serialize($content))
 		);
 		
 		// At first we try an update. That should work most of the time
-		$this->db->sql_update(
+		$db->sql_update(
 			$this->_table,' WHERE '.$this->_name_column.' = "'.$name.'"',$values
 		);
 		
 		// does it not exist? so create it
 		// TODO how to do that? affected rows is just > 0 if something has been changed :/
-		//if($this->db->get_affected_rows() == 0)
-		//	$this->db->sql_insert($this->_table,$values);
+		//if($db->get_affected_rows() == 0)
+		//	$db->sql_insert($this->_table,$values);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

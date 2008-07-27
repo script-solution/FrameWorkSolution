@@ -63,7 +63,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 		
 		$this->get_graphics()->draw_point($tpos,3,PLIB_GD_Color::$ORANGE);
 		
-		return $this->_draw_text($tpos,0);
+		return $this->draw_text($tpos,0);
 	}
 	
 	/**
@@ -252,7 +252,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 		
 		list($w,$h) = $this->_text->get_size()->get();
 		$a = 90;
-		$tpos = $this->_get_string_position($rect,new PLIB_GD_Padding($pad),$pos,$a);
+		$tpos = $this->get_string_position($rect,new PLIB_GD_Padding($pad),$pos,$a);
 		
 		switch($pos->get_hpos())
 		{
@@ -300,7 +300,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 				break;
 		}
 		
-		return $this->_draw_text($tpos,$a);
+		return $this->draw_text($tpos,$a);
 	}
 	
 	/**
@@ -328,8 +328,8 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 			$pos = new PLIB_GD_BoxPosition();
 
 		// draw text
-		$tpos = $this->_get_string_position($rect,$padding,$pos,$angle);
-		return $this->_draw_text($tpos,$angle);
+		$tpos = $this->get_string_position($rect,$padding,$pos,$angle);
+		return $this->draw_text($tpos,$angle);
 	}
 	
 	/**
@@ -339,7 +339,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 	 * @param int $angle the angle
 	 * @return int the result of imagettftext()
 	 */
-	protected final function _draw_text($tpos,$angle)
+	protected final function draw_text($tpos,$angle)
 	{
 		$attr = $this->_text->get_attributes();
 		$fg = $attr->get_foreground();
@@ -456,7 +456,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 	 * @param int $angle the angle
 	 * @return PLIB_GD_Point the position
 	 */
-	protected final function _get_string_position($rect,$padding,$pos,$angle)
+	protected final function get_string_position($rect,$padding,$pos,$angle)
 	{
 		// cache some vars
 		list($x,$y) = $rect->get_location()->get();
@@ -530,7 +530,7 @@ class PLIB_GD_View_Text extends PLIB_GD_View
 		return new PLIB_GD_Point($x,$y);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

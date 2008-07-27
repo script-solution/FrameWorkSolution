@@ -17,7 +17,7 @@
  * @subpackage	progress.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Progress_Storage_PHPSession extends PLIB_FullObject implements PLIB_Progress_Storage
+final class PLIB_Progress_Storage_PHPSession extends PLIB_Object implements PLIB_Progress_Storage
 {
 	/**
 	 * The prefix of the session-variable
@@ -62,7 +62,7 @@ final class PLIB_Progress_Storage_PHPSession extends PLIB_FullObject implements 
 		$_SESSION[$this->_prefix.'pos'] = $pos;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

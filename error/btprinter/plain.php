@@ -17,7 +17,7 @@
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_BTPrinter_Plain extends PLIB_FullObject implements PLIB_Error_BTPrinter
+final class PLIB_Error_BTPrinter_Plain extends PLIB_Object implements PLIB_Error_BTPrinter
 {
 	/**
 	 * @see PLIB_Error_BTPrinter::print_backtrace()
@@ -49,11 +49,11 @@ final class PLIB_Error_BTPrinter_Plain extends PLIB_FullObject implements PLIB_E
 	}
 
 	/**
-	 * @see PLIB_Object::_get_print_vars()
+	 * @see PLIB_Object::get_print_vars()
 	 *
 	 * @return array
 	 */
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

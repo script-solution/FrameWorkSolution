@@ -38,7 +38,7 @@ class PLIB_HTML_PasswordBox extends PLIB_HTML_TextBox
 	
 	public function to_html()
 	{
-		$html = '<input type="password"'.$this->_get_default_attr_html();
+		$html = '<input type="password"'.$this->get_default_attr_html();
 		$html .= ' size="'.$this->get_cols().'" value="'.$this->get_used_value().'"';
 		if($this->get_maxlength() !== null)
 			$html .= ' maxlength="'.$this->get_maxlength().'"';
@@ -46,9 +46,9 @@ class PLIB_HTML_PasswordBox extends PLIB_HTML_TextBox
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

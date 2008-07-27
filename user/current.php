@@ -14,12 +14,14 @@
  * Represents the current user. Contains a {@link PLIB_Session_Data} object and some
  * more information for the current user. It manages the login-state and some
  * other stuff.
+ * <br>
+ * Note that you have to call {@link init} before you can use this class!
  *
  * @package			PHPLib
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
+class PLIB_User_Current extends PLIB_Object
 {
 	/**
 	 * No error in the login-procedure
@@ -121,29 +123,34 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	public function __construct($storage)
 	{
+		$sessions = PLIB_Props::get()->sessions();
+		
 		parent::__construct();
 		
-		if($this->sessions->sessions_enabled() && !($storage instanceof PLIB_User_Storage))
+		if($sessions->sessions_enabled() && !($storage instanceof PLIB_User_Storage))
 			PLIB_Helper::def_error('instance','storage','PLIB_User_Storage',$storage);
 		
 		$this->_storage = $storage;
 	}
 	
 	/**
-	 * You have to call this method in every case. Even if you don't want to allow logins!
-	 * Initializes the session
+	 * Inits all stuff to use this class. You HAVE to call this method if you want to use it.
+	 * Even if you don't allow logins!
 	 */
 	public function init()
 	{
+		$sessions = PLIB_Props::get()->sessions();
+		$cookies = PLIB_Props::get()->cookies();
+		
 		$this->_init_session();
 
-		if($this->sessions->sessions_enabled())
+		if($sessions->sessions_enabled())
 		{
 			// login by cookie?
 	    if($this->_use_cookies && !$this->is_loggedin())
 	    {
-	    	$user = $this->cookies->get_cookie('user');
-	  		$pw = $this->cookies->get_cookie('pw');
+	    	$user = $cookies->get_cookie('user');
+	  		$pw = $cookies->get_cookie('pw');
 	  		if($user != null && $pw != null)
 		 			$this->login($user,$pw,false);
 	    }
@@ -151,15 +158,15 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	    // fill userdata if not already done
 	    if($this->is_loggedin() && $this->_userdata === null)
 			{
-				$this->_set_userdata($this->get_user_id());
+				$this->set_userdata($this->get_user_id());
 	
 				// check the user
 				// Note that we do this at the point because if login() has been called
 				// $this->_userdata is already set and has been checked, of course.
-				if($this->_check_user() != self::LOGIN_ERROR_NO_ERROR)
+				if($this->check_user() != self::LOGIN_ERROR_NO_ERROR)
 				{
 	        $this->_assign_new_session();
-	    		$this->_setup_guest();
+	    		$this->setup_guest();
 				}
 			}
 		}
@@ -248,9 +255,9 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	/**
 	 * Returns the path to the given item. This allows you to provide different
 	 * themes. If the theme is empty it returns:
-	 * <code>PLIB_Path::inner().'theme/'.$item</code>
+	 * <code>PLIB_Path::client_app().'theme/'.$item</code>
 	 * otherwise:
-	 * <code>PLIB_Path::inner().'themes/'.$this->_theme.'/'.$item</code>
+	 * <code>PLIB_Path::client_app().'themes/'.$this->_theme.'/'.$item</code>
 	 * You may change this by overwriting this method!
 	 *
 	 * @param string $item the path to the item starting at a theme-folder
@@ -259,9 +266,9 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	public function get_theme_item_path($item)
 	{
 		if(empty($this->_theme))
-			return PLIB_Path::inner().'theme/'.$item;
+			return PLIB_Path::client_app().'theme/'.$item;
 		
-		return PLIB_Path::inner().'themes/'.$this->_theme.'/'.$item;
+		return PLIB_Path::client_app().'themes/'.$this->_theme.'/'.$item;
 	}
 
 	/**
@@ -429,8 +436,8 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	public function login($user,$pw,$hashpw = true)
 	{
-		$loggedin = $this->_set_userdata(0,$user);
-		
+		$loggedin = $this->set_userdata(0,$user);
+
 		if($hashpw)
 			$pw = $this->_storage->get_hash_of_pw($pw,$this->_userdata);
 		
@@ -443,14 +450,14 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 			if(empty($pw))
 		    $loggedin = self::LOGIN_ERROR_PW_INCORRECT;
 		  else
-		  	$loggedin = $this->_check_user($user,$pw);
+		  	$loggedin = $this->check_user($user,$pw);
 		}
 		
 		// setup user or guest
 		if($loggedin == self::LOGIN_ERROR_NO_ERROR)
-			$this->_setup_user($user,$pw);
+			$this->setup_user($user,$pw);
 		else
-			$this->_setup_guest();
+			$this->setup_guest();
 
 		return $loggedin;
 	}
@@ -460,13 +467,19 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	public function logout()
 	{
-		$this->sessions->logout_user($this->get_session_id(),$this->get_user_ip());
+		$sessions = PLIB_Props::get()->sessions();
+		$cookies = PLIB_Props::get()->cookies();
+
+		$sessions->logout_user($this->get_session_id(),$this->get_user_ip());
 		
 		if($this->_use_cookies)
 		{
-	    $this->cookies->delete_cookie('user');
-	    $this->cookies->delete_cookie('pw');
+	    $cookies->delete_cookie('user');
+	    $cookies->delete_cookie('pw');
 		}
+		
+		$this->_userdata = null;
+		$this->_session_data = array();
 	}
 	
 	/**
@@ -476,7 +489,7 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 * @param string $user the user-name
 	 * @return int the error-code or self::LOGIN_ERROR_NO_ERROR
 	 */
-	protected function _set_userdata($id,$user = false)
+	protected function set_userdata($id,$user = false)
 	{
 		if($user === false)
 			$userdata = $this->_storage->get_userdata_by_id($id);
@@ -489,8 +502,6 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 		$this->_userdata = $userdata;
 		$this->_user->set_user_id($userdata->get_user_id());
 		$this->_user->set_user_name($userdata->get_user_name());
-		$this->_user->set_user_group($userdata->get_profile_val('user_group'));
-		$this->_user->set_ghost_mode($userdata->get_profile_val('ghost_mode'));
 		
 		return self::LOGIN_ERROR_NO_ERROR;
 	}
@@ -501,28 +512,32 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 * @param string $user the username
 	 * @param string $pw the password
 	 */
-	protected function _setup_user($user,$pw)
+	protected function setup_user($user,$pw)
 	{
+		$cookies = PLIB_Props::get()->cookies();
+
 		if($this->_use_cookies)
 		{
-	    $this->cookies->set_cookie('user',$user);
-	    $this->cookies->set_cookie('pw',$pw);
+	    $cookies->set_cookie('user',$user);
+	    $cookies->set_cookie('pw',$pw);
 		}
 	}
 
 	/**
 	 * setups the required stuff for a guest
 	 */
-	protected function _setup_guest()
+	protected function setup_guest()
 	{
+		$cookies = PLIB_Props::get()->cookies();
+
 		$this->_user->make_guest();
 		$this->_userdata = null;
 		
 		// delete the cookie to ensure that the user won't try to get logged in again
 		if($this->_use_cookies)
 		{
-			$this->cookies->delete_cookie('user');
-			$this->cookies->delete_cookie('pw');
+			$cookies->delete_cookie('user');
+			$cookies->delete_cookie('pw');
 		}
 	}
 	
@@ -532,7 +547,7 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 * @param mixed $user the username
 	 * @param mixed $pw the password
 	 */
-	protected function _check_user($user = false,$pw = false)
+	protected function check_user($user = false,$pw = false)
 	{
 		$loggedin = self::LOGIN_ERROR_NO_ERROR;
 		
@@ -556,20 +571,24 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	private function _init_session()
 	{
+		$cookies = PLIB_Props::get()->cookies();
+		$input = PLIB_Props::get()->input();
+		$sessions = PLIB_Props::get()->sessions();
+
 		$user_ip = $this->_determine_user_ip();
 		$user_agent = $this->_determine_user_agent();
 
 		// retrieve session-id
 		$session_id = '';
-		if($this->cookies->isset_cookie('sid'))
-			$session_id = $this->cookies->get_cookie('sid');
-		else if($this->input->isset_var($this->_url_sid_name,'get'))
-			$session_id = $this->input->get_var($this->_url_sid_name,'get',PLIB_Input::STRING);
+		if($cookies->isset_cookie('sid'))
+			$session_id = $cookies->get_cookie('sid');
+		else if($input->isset_var($this->_url_sid_name,'get'))
+			$session_id = $input->get_var($this->_url_sid_name,'get',PLIB_Input::STRING);
 
 		// try to load the user from the session-manager
 		$user = null;
 		if(!empty($session_id))
-			$user = $this->sessions->get_user($session_id,$user_ip);
+			$user = $sessions->get_user($session_id,$user_ip);
 		
 		// check the data of the user
 		if($user !== null)
@@ -592,7 +611,7 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 		else
 		{
 			$this->_session_data = array();
-			$this->_user = $this->sessions->get_new_user();
+			$this->_user = $sessions->get_new_user();
 		}
 		
 		// store current ip and user-agent
@@ -603,7 +622,7 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	  if($user === null)
 	  {
 		  $this->_assign_new_session();
-		  $this->sessions->add_user($this->_user);
+		  $sessions->add_user($this->_user);
 	  }
 	}
 	
@@ -612,10 +631,13 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	private function _assign_new_session()
 	{
+		$cookies = PLIB_Props::get()->cookies();
+		$sessions = PLIB_Props::get()->sessions();
+
 		// generate new session id and store it via cookie
 	  $this->_user->set_session_id($this->_generate_session_id());
-		$this->cookies->set_cookie(
-			'sid',$this->_user->get_session_id(),$this->sessions->get_online_timeout()
+		$cookies->set_cookie(
+			'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
 		);
 	}
 
@@ -637,7 +659,9 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	private function _determine_user_agent()
 	{
-		$val = $this->input->get_var('HTTP_USER_AGENT','server',PLIB_Input::STRING);
+		$input = PLIB_Props::get()->input();
+
+		$val = $input->get_var('HTTP_USER_AGENT','server',PLIB_Input::STRING);
 		if($val === null)
 			$val = '';
 		return $val;
@@ -650,8 +674,10 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	private function _determine_user_ip()
 	{
-		if($this->input->isset_var('REMOTE_ADDR','server'))
-			return $this->input->get_var('REMOTE_ADDR','server',PLIB_Input::STRING);
+		$input = PLIB_Props::get()->input();
+
+		if($input->isset_var('REMOTE_ADDR','server'))
+			return $input->get_var('REMOTE_ADDR','server',PLIB_Input::STRING);
 
 		$ip = getenv('REMOTE_ADDR');
 		$ip = htmlspecialchars($ip,ENT_QUOTES);
@@ -698,19 +724,21 @@ class PLIB_User_Current extends PLIB_FullObject implements PLIB_Initable
 	 */
 	private function _check_user_agent($old_ua,$current_ua)
 	{
+		$input = PLIB_Props::get()->input();
+
 		if(!$this->_user_agent_validation)
 			return true;
 
 		// The browser sends a HEAD-request to the root-folder if the user has requested a page
 		// which contains the java-applet. In this request the user-agent is different which
 		// causes a logout if the user-agent-check is enabled.
-		if($this->input->get_var('REQUEST_METHOD','server',PLIB_Input::STRING) == 'HEAD')
+		if($input->get_var('REQUEST_METHOD','server',PLIB_Input::STRING) == 'HEAD')
 			return true;
 
 		return $current_ua === $old_ua;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

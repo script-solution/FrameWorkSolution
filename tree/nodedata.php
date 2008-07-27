@@ -21,7 +21,7 @@
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tree_NodeData extends PLIB_FullObject
+class PLIB_Tree_NodeData extends PLIB_Object
 {
 	/**
 	 * Stores wether something has changed
@@ -176,7 +176,7 @@ class PLIB_Tree_NodeData extends PLIB_FullObject
 		);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

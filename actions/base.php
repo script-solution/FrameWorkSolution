@@ -18,7 +18,7 @@
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Actions_Base extends PLIB_FullObject
+abstract class PLIB_Actions_Base extends PLIB_Object
 {
 	/**
 	 * The id of this action
@@ -36,7 +36,7 @@ abstract class PLIB_Actions_Base extends PLIB_FullObject
 	
 	/**
 	 * The success-message to display. This may be a custom message or:
-	 * <pre>$this->locale->lang('success_&lt;actionID&gt;)</pre>
+	 * <pre>PLIB_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
 	 *
 	 * @var boolean
 	 */
@@ -196,7 +196,7 @@ abstract class PLIB_Actions_Base extends PLIB_FullObject
 
 	/**
 	 * Sets the success-message to display. This may be a custom message or:
-	 * <pre>$this->locale->lang('success_&lt;actionID&gt;)</pre>
+	 * <pre>PLIB_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
 	 * 
 	 * @param string $msg the new value
 	 */
@@ -290,7 +290,7 @@ abstract class PLIB_Actions_Base extends PLIB_FullObject
 	 */
 	public abstract function perform_action();
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

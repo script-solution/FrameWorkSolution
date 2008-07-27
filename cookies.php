@@ -18,7 +18,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cookies extends PLIB_FullObject
+final class PLIB_Cookies extends PLIB_Object
 {
 	/**
 	 * The prefix for all cookies
@@ -214,7 +214,7 @@ final class PLIB_Cookies extends PLIB_FullObject
 		setcookie($this->_prefix.$name,'',time() - 3600,$this->_path,$this->_domain);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

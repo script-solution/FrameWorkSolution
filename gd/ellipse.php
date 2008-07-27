@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_Ellipse extends PLIB_FullObject
+class PLIB_GD_Ellipse extends PLIB_Object
 {
 	/**
 	 * The center-point
@@ -101,7 +101,7 @@ class PLIB_GD_Ellipse extends PLIB_FullObject
 		$this->_size->decrease($w,$h);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

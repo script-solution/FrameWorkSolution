@@ -18,20 +18,24 @@ if(!defined('PLIB_PATH'))
 // include the path-object. we need this for the autoload-function
 include_once(PLIB_PATH.'utilbase.php');
 include_once(PLIB_PATH.'path.php');
-PLIB_Path::set_lib(PLIB_PATH);
+PLIB_Path::set_server_lib(PLIB_PATH);
+PLIB_Path::set_client_lib(PLIB_PATH);
 
 // we need some basic stuff
-include_once(PLIB_Path::lib().'general.php');
-include_once(PLIB_Path::lib().'helper.php');
-include_once(PLIB_Path::lib().'string.php');
-include_once(PLIB_Path::lib().'autoloader.php');
+include_once(PLIB_Path::server_lib().'general.php');
+include_once(PLIB_Path::server_lib().'helper.php');
+include_once(PLIB_Path::server_lib().'string.php');
+include_once(PLIB_Path::server_lib().'autoloader.php');
 
-function __autoload($item)
+if(!function_exists('__autoload'))
 {
-	// "redirect" the request to our autoloader because we want to support
-	// other loaders. For example one for this library and one for the project that use this lib.
-	if(!(PLIB_AutoLoader::load_item($item)))
-		PLIB_Helper::error('The file for item "'.$item.'" could not been found!');
+	function __autoload($item)
+	{
+		// "redirect" the request to our autoloader because we want to support
+		// other loaders. For example one for this library and one for the project that use this lib.
+		if(!(PLIB_AutoLoader::load_item($item)))
+			PLIB_Helper::error('The file for item "'.$item.'" could not been found!');
+	}
 }
 
 // improve the debugging...

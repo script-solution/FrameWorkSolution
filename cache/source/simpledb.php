@@ -18,7 +18,7 @@
  * @subpackage	cache.source
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Source_SimpleDB extends PLIB_FullObject implements PLIB_Cache_Source
+final class PLIB_Cache_Source_SimpleDB extends PLIB_Object implements PLIB_Cache_Source
 {
 	/**
 	 * The table-name to use for the query
@@ -77,15 +77,17 @@ final class PLIB_Cache_Source_SimpleDB extends PLIB_FullObject implements PLIB_C
 	
 	public function get_content()
 	{
+		$db = PLIB_Props::get()->db();
+
 		// perform query
 		$sql = 'SELECT * FROM '.$this->_table;
 		if($this->_order !== null)
 			$sql .= ' ORDER BY '.$this->_order.' '.$this->_direction;
-		$res = $this->db->sql_qry($sql);
+		$res = $db->sql_qry($sql);
 		
 		// collect rows
 		$rows = array();
-		while($row = $this->db->sql_fetch_assoc($res))
+		while($row = $db->sql_fetch_assoc($res))
 		{
 			if($this->_key !== null)
 				$rows[$row[$this->_key]] = $row;
@@ -96,7 +98,7 @@ final class PLIB_Cache_Source_SimpleDB extends PLIB_FullObject implements PLIB_C
 		return $rows;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

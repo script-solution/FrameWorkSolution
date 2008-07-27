@@ -17,7 +17,7 @@
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_Output_Plain extends PLIB_FullObject implements PLIB_Error_Output
+final class PLIB_Error_Output_Plain extends PLIB_Object implements PLIB_Error_Output
 {
 	/**
 	 * @see PLIB_Error_Output::print_error()
@@ -40,7 +40,7 @@ final class PLIB_Error_Output_Plain extends PLIB_FullObject implements PLIB_Erro
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::inner()),'',$file);
+			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
 			$realpath = str_replace($realfile,'',$file);
 			$res .= ' in '.$realpath.$realfile.', line '.$line."\n";
 		}
@@ -49,11 +49,11 @@ final class PLIB_Error_Output_Plain extends PLIB_FullObject implements PLIB_Erro
 	}
 
 	/**
-	 * @see PLIB_Object::_get_print_vars()
+	 * @see PLIB_Object::get_print_vars()
 	 *
 	 * @return array
 	 */
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

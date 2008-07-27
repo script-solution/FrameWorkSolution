@@ -33,12 +33,12 @@ final class PLIB_Email_PHP extends PLIB_Email_Base
 
 	public function send_mail()
 	{
-		if(!$this->_check_attributes())
+		if(!$this->check_attributes())
 			return false;
 
-		$headers = $this->_build_header('mail');
+		$headers = $this->build_header('mail');
 		if($this->get_content_type() == 'text/html')
-			$message = $this->_prepare_html_message($this->get_message());
+			$message = $this->prepare_html_message($this->get_message());
 		else
 			$message = $this->get_message();
 
@@ -54,16 +54,16 @@ final class PLIB_Email_PHP extends PLIB_Email_Base
 
 		if(!$res)
 		{
-			$this->_report_error('Mail could not been sent');
+			$this->report_error('Mail could not been sent');
 			return false;
 		}
 
 		return true;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

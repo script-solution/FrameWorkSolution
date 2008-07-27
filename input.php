@@ -26,7 +26,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Input extends PLIB_FullObject
+final class PLIB_Input extends PLIB_Object
 {
 	/**
 	 * Represents an integer
@@ -296,6 +296,20 @@ final class PLIB_Input extends PLIB_FullObject
 		}
 
 		return null;
+	}
+	
+	/**
+	 * Unescapes the given value of the given method. That means the method assumes that the value
+	 * is been retrieved from this class and it undos everthing that has been done.
+	 * Note that arrays are not supported! Additionally it doesn't matter what the value of
+	 * magic_quotes_gpc is, the data will be unescaped in every case.
+	 *
+	 * @param mixed $value the value
+	 * @param string $method the method (get,post,cookie,server)
+	 */
+	public function unescape_value($value,$method)
+	{
+		return stripslashes(PLIB_StringHelper::htmlspecialchars_back($value));
 	}
 
 	/**
@@ -585,7 +599,7 @@ final class PLIB_Input extends PLIB_FullObject
 		return $input;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -17,7 +17,7 @@
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Group extends PLIB_FullObject
+class PLIB_Config_Group extends PLIB_Object
 {
 	/**
 	 * The id of the group
@@ -114,7 +114,7 @@ class PLIB_Config_Group extends PLIB_FullObject
 		return $this->_sort;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_print_vars($this);
 	}

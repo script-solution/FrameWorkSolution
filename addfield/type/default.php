@@ -17,7 +17,7 @@
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLIB_AddField_Field
+abstract class PLIB_AddField_Type_Default extends PLIB_Object implements PLIB_AddField_Field
 {
 	/**
 	 * The data of this field
@@ -53,13 +53,15 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 	
 	public function get_value_from_formular($default = null)
 	{
-		$val = $this->input->get_var('add_'.$this->_data->get_name(),'post',PLIB_Input::STRING);
+		$input = PLIB_Props::get()->input();
+
+		$val = $input->get_var('add_'.$this->_data->get_name(),'post',PLIB_Input::STRING);
 		return $val !== null ? $val : $default;
 	}
 	
 	public function get_formular_field($formular,$value)
 	{
-		$html = $this->_get_formular_field($formular,$value);
+		$html = $this->get_formular_field_impl($formular,$value);
 		$html .= $this->_data->get_value_suffix();
 		if($this->_data->get_edit_suffix())
 			$html .= '<div style="padding-top: 4px;">'.$this->_data->get_edit_suffix().'</div>';
@@ -74,7 +76,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 	 * @param mixed $value the default value
 	 * @return string the HTML-code for the formular-control
 	 */
-	protected abstract function _get_formular_field($formular,$value);
+	protected abstract function get_formular_field_impl($formular,$value);
 	
 	public function is_valid_value($value)
 	{
@@ -87,7 +89,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 			return 'value_missing';
 		}
 		
-		$valid = $this->_is_valid_value($value);
+		$valid = $this->is_valid_value_impl($value);
 		if($valid)
 			return '';
 		
@@ -100,7 +102,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 	 * @param mixed $value the entered value
 	 * @return boolean true if the value is valid
 	 */
-	protected abstract function _is_valid_value($value);
+	protected abstract function is_valid_value_impl($value);
 	
 	public function is_empty($value)
 	{
@@ -118,7 +120,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 	 */
 	public function get_display($value,$link_class,$text_class,$limit = 0)
 	{
-		$display = $this->_get_display_value($value);
+		$display = $this->get_display_value($value);
 
 		$custom = $this->_data->get_custom_display();
 		if($custom)
@@ -149,7 +151,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 	 * @param mixed $value the value
 	 * @return mixed the value to use
 	 */
-	protected function _get_display_value($value)
+	protected function get_display_value($value)
 	{
 		return $value;
 	}
@@ -163,7 +165,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_FullObject implements PLI
 		return $value;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

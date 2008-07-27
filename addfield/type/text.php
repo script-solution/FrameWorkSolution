@@ -19,12 +19,12 @@
  */
 class PLIB_AddField_Type_Text extends PLIB_AddField_Type_Default
 {
-	protected function _get_formular_field($formular,$value)
+	protected function get_formular_field_impl($formular,$value)
 	{
 		return $formular->get_textarea('add_'.$this->_data->get_name(),$value,'90%',5);
 	}
 	
-	protected function _is_valid_value($value)
+	protected function is_valid_value_impl($value)
 	{
 		$regex = $this->_data->get_validation();
 		if($regex == '' || preg_match($regex,$value) == 1)

@@ -19,7 +19,7 @@
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Session_Data extends PLIB_FullObject
+class PLIB_Session_Data extends PLIB_Object
 {
 	/**
 	 * Stores wether this entry has changed
@@ -357,7 +357,7 @@ class PLIB_Session_Data extends PLIB_FullObject
 		$this->set_user_name('');
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

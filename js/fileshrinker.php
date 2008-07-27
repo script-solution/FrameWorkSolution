@@ -17,7 +17,7 @@
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_JS_FileShrinker extends PLIB_FullObject
+final class PLIB_JS_FileShrinker extends PLIB_Object
 {
 	/**
 	 * The input-file
@@ -222,7 +222,7 @@ final class PLIB_JS_FileShrinker extends PLIB_FullObject
 		return $c % 2 == 1;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

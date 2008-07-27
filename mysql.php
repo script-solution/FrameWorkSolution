@@ -50,9 +50,9 @@ final class PLIB_MySQL extends PLIB_Singleton
 	/**
 	 * The timer for internal time-measurement
 	 *
-	 * @var PLIB_Timer
+	 * @var PLIB_Profiler
 	 */
-	private $_timer;
+	private $_profiler;
 
 	/**
 	 * Do you want to enable debugging?
@@ -82,7 +82,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	{
 		parent::__construct();
 		
-		$this->_timer = new PLIB_Timer();
+		$this->_profiler = new PLIB_Profiler();
 	}
 
 	/**
@@ -121,6 +121,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	{
 		if($this->_con !== null)
 			@mysql_close($this->_con);
+		$this->_con = null;
 	}
 	
 	/**
@@ -237,7 +238,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	public function sql_fetch($sql,$error = true)
 	{
 		if($this->_enable_debug)
-			$this->_timer->start();
+			$this->_profiler->start();
 
 		if(strpos($sql,'LIMIT') === false)
 			$sql .= "\n".'LIMIT 1';
@@ -254,7 +255,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$this->_total_queries++;
 		if($this->_enable_debug)
 		{
-			$sql_time = $this->_timer->stop();
+			$sql_time = $this->_profiler->get_time();
 			$result = array(array(),array(''));
 			@preg_match_all('/(?:FROM|UPDATE|INSERT\s+INTO)\s+([a-z0-9_]+)/',$sql,$result);
 			if(isset($result[1][0]))
@@ -280,7 +281,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	public function sql_qry($sql,$error = true)
 	{
 		if($this->_enable_debug)
-			$this->_timer->start();
+			$this->_profiler->start();
 
 		$query = @mysql_query($sql,$this->_con);
 		if(!$query && $error)
@@ -294,7 +295,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$this->_total_queries++;
 		if($this->_enable_debug)
 		{
-			$sql_time = $this->_timer->stop();
+			$sql_time = $this->_profiler->get_time();
 			$result = array(array(),array(''));
 			@preg_match_all('/(?:FROM|UPDATE|INSERT\s+INTO)\s+([a-z0-9_]+)/',$sql,$result);
 			if(isset($result[1][0]))
@@ -467,8 +468,8 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$res .= ' table.sql_debug td {border: 1px solid #bbb; padding: 3px;}'."\n";
 		$res .= ' table.sql_debug thead td {background-color: #008; color: #fff;}'."\n";
 		$res .= '</style>'."\n";
-		$res .= '<script type="text/javascript" src="'.PLIB_Path::lib().'js/basic.js"></script>'."\n";
-		$res .= '<script type="text/javascript" src="'.PLIB_Path::lib().'js/table_sorter.js">';
+		$res .= '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/basic.js"></script>'."\n";
+		$res .= '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/table_sorter.js">';
 		$res .= '</script>'."\n";
 		$res .= '<table id="sql_debug" class="sql_debug" width="100%">'."\n";
 		
@@ -675,7 +676,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 		return '\''.$value.'\'';
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

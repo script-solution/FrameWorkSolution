@@ -12,12 +12,12 @@
 /**
  * The message-container. Collects messages (errors, warnings and notices) which
  * may be displayed at some place and time in the document.
- * This class is abstract because print_messages() has to be implemented!
+ * This class is abstract because add_messages() has to be implemented!
  * 
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Messages extends PLIB_FullObject
+abstract class PLIB_Messages extends PLIB_Object
 {
 	/**
 	 * Represents an error.
@@ -150,7 +150,7 @@ abstract class PLIB_Messages extends PLIB_FullObject
 	 * @return boolean wether an error has been added
 	 * @see contains($type)
 	 */
-	public final function containsError()
+	public final function contains_error()
 	{
 		return $this->contains(self::MSG_TYPE_ERROR);
 	}
@@ -159,7 +159,7 @@ abstract class PLIB_Messages extends PLIB_FullObject
 	 * @return boolean wether a warning has been added
 	 * @see contains($type)
 	 */
-	public final function containsWarning()
+	public final function contains_warning()
 	{
 		return $this->contains(self::MSG_TYPE_WARNING);
 	}
@@ -168,7 +168,7 @@ abstract class PLIB_Messages extends PLIB_FullObject
 	 * @return boolean wether a notice has been added
 	 * @see contains($type)
 	 */
-	public final function containsNotice()
+	public final function contains_notice()
 	{
 		return $this->contains(self::MSG_TYPE_NOTICE);
 	}
@@ -177,7 +177,7 @@ abstract class PLIB_Messages extends PLIB_FullObject
 	 * @return boolean wether a no-access message has been added
 	 * @see contains($type)
 	 */
-	public final function containsNoAccess()
+	public final function contains_no_access()
 	{
 		return $this->contains(self::MSG_TYPE_NO_ACCESS);
 	}
@@ -229,9 +229,9 @@ abstract class PLIB_Messages extends PLIB_FullObject
 	}
 	
 	/**
-	 * The method which should "print" the messages.
+	 * The method which should add the messages.
 	 */
-	public abstract function print_messages();
+	public abstract function add_messages();
 	
 	/**
 	 * Checks wether the given type is valid
@@ -250,7 +250,7 @@ abstract class PLIB_Messages extends PLIB_FullObject
 		return in_array($type,$valid);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

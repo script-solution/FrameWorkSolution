@@ -17,14 +17,14 @@
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Tasks_Base extends PLIB_FullObject
+abstract class PLIB_Tasks_Base extends PLIB_Object
 {
 	/**
 	 * Should run the task
 	 */
 	public abstract function run();
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

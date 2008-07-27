@@ -20,7 +20,7 @@
  * @subpackage	objects
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Objects_Data extends PLIB_FullObject
+abstract class PLIB_Objects_Data extends PLIB_Object
 {
 	/**
 	 * The table-name in the database this object belongs to
@@ -99,17 +99,19 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 	 */
 	public function create()
 	{
+		$db = PLIB_Props::get()->db();
+
 		$fields = $this->_get_fields();
 		
 		// no fields are not allowed
 		if(count($fields) == 0)
 			throw new PLIB_Exceptions_MissingData('Please set at least one field first!');
 		
-		$this->db->sql_insert($this->table(),$fields);
+		$db->sql_insert($this->table(),$fields);
 		
 		// assign the id if not already done
 		if($this->get_id() === null)
-			$this->set_id($this->db->get_last_insert_id());
+			$this->set_id($db->get_last_insert_id());
 	}
 	
 	/**
@@ -117,6 +119,8 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 	 */
 	public function update()
 	{
+		$db = PLIB_Props::get()->db();
+
 		if($this->get_id() === null)
 			throw new PLIB_Exceptions_MissingData('The id is missing');
 		
@@ -125,7 +129,7 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 		if(count($fields) == 0)
 			throw new PLIB_Exceptions_MissingData('Please set at least one field first!');
 		
-		$this->db->sql_update($this->table(),'WHERE id = '.$this->get_id(),$fields);
+		$db->sql_update($this->table(),'WHERE id = '.$this->get_id(),$fields);
 	}
 	
 	/**
@@ -133,10 +137,12 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 	 */
 	public function delete()
 	{
+		$db = PLIB_Props::get()->db();
+
 		if($this->get_id() === null)
 			throw new PLIB_Exceptions_MissingData('The id is missing');
 		
-		$this->db->sql_qry('DELETE FROM '.$this->table().' WHERE id = '.$this->get_id());
+		$db->sql_qry('DELETE FROM '.$this->table().' WHERE id = '.$this->get_id());
 	}
 	
 	/**
@@ -296,8 +302,7 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 		foreach(get_class_methods(get_class($this)) as $var)
 		{
 			// TODO that's no good solution. but what is one? :/
-			if(PLIB_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_prop' &&
-					$var != 'get_object_id')
+			if(PLIB_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id')
 			{
 				$value = $this->$var();
 				if($value !== null)
@@ -307,7 +312,7 @@ abstract class PLIB_Objects_Data extends PLIB_FullObject
 		return $fields;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

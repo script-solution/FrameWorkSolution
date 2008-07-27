@@ -15,7 +15,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_KeywordHighlighter extends PLIB_FullObject
+final class PLIB_KeywordHighlighter extends PLIB_Object
 {
 	/**
 	 * A numeric array with all keywords that should be highlighted
@@ -160,7 +160,7 @@ final class PLIB_KeywordHighlighter extends PLIB_FullObject
 		return $result;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

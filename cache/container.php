@@ -17,7 +17,7 @@
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Container extends PLIB_FullObject
+final class PLIB_Cache_Container extends PLIB_Object
 {
 	/**
 	 * All cache-objects
@@ -233,7 +233,7 @@ final class PLIB_Cache_Container extends PLIB_FullObject
 		}
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

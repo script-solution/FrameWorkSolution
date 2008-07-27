@@ -125,6 +125,13 @@ final class PLIB_PrintUtils extends PLIB_UtilBase
 				$str .= $var->__toString($use_html);
 				array_pop(self::$_stack);
 			}
+			else if(is_object($var))
+			{
+				$classname = get_class($var);
+				$str .= $classname.'[';
+				$str .= self::_to_string(get_object_vars($var),$use_html,$ml);
+				$str .= ']';
+			}
 			else if(!is_object($var) && $use_html)
 			{
 				$str .= '<span style="color: '.$color.';">';

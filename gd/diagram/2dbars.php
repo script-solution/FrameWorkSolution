@@ -17,7 +17,7 @@
  * @subpackage	gd.diagram
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Diagram_2dBars extends PLIB_FullObject implements PLIB_GD_Diagram
+final class PLIB_GD_Diagram_2dBars extends PLIB_Object implements PLIB_GD_Diagram
 {
 	/**
 	 * The data to display
@@ -101,11 +101,11 @@ final class PLIB_GD_Diagram_2dBars extends PLIB_FullObject implements PLIB_GD_Di
 	}
 
 	/**
-	 * @see PLIB_Object::_get_print_vars()
+	 * @see PLIB_Object::get_print_vars()
 	 *
 	 * @return array
 	 */
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -25,7 +25,7 @@
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Processor extends PLIB_FullObject
+final class PLIB_Highlighting_Processor extends PLIB_Object
 {
 	/**
 	 * Represents a string
@@ -547,7 +547,7 @@ final class PLIB_Highlighting_Processor extends PLIB_FullObject
 		$areas[$this->_area_counter++] = array($start,$end,$type,$id);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

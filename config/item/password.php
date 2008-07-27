@@ -25,13 +25,15 @@ class PLIB_Config_Item_Password extends PLIB_Config_Item_Default
 		$str = $form->get_passwordbox(
 			$this->_data->get_name(),$this->_data->get_value(),$props['size'],$props['maxlen']
 		);
-		$str .= $this->_get_suffix();
+		$str .= $this->get_suffix();
 		return $str;
 	}
 
 	public function get_value()
 	{
-		return $this->input->get_var($this->_data->get_name(),'post',PLIB_Input::STRING);
+		$input = PLIB_Props::get()->input();
+
+		return $input->get_var($this->_data->get_name(),'post',PLIB_Input::STRING);
 	}
 }
 ?>

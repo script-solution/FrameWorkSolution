@@ -18,7 +18,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Padding extends PLIB_FullObject
+final class PLIB_GD_Padding extends PLIB_Object
 {
 	/**
 	 * The top-padding
@@ -153,7 +153,7 @@ final class PLIB_GD_Padding extends PLIB_FullObject
 		return $this->_top;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

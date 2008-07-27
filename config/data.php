@@ -17,7 +17,7 @@
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Data extends PLIB_FullObject
+class PLIB_Config_Data extends PLIB_Object
 {
 	/**
 	 * The id of the entry
@@ -238,7 +238,7 @@ class PLIB_Config_Data extends PLIB_FullObject
 		return $this->_suffix;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

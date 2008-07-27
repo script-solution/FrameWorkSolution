@@ -20,7 +20,7 @@
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Array_1Dim extends PLIB_FullObject implements Iterator
+class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 {
 	/**
 	 * Represents the ascending sort-direction
@@ -492,7 +492,7 @@ class PLIB_Array_1Dim extends PLIB_FullObject implements Iterator
 		return 0;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

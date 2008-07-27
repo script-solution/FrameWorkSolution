@@ -31,7 +31,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Image extends PLIB_FullObject
+final class PLIB_GD_Image extends PLIB_Object
 {
 	/**
 	 * Loads the image of given type from file
@@ -62,13 +62,6 @@ final class PLIB_GD_Image extends PLIB_FullObject
 	 * @var array
 	 */
 	private static $_graphics = array();
-	
-	/**
-	 * The timer (to measure the rendering-time)
-	 *
-	 * @var PLIB_Timer
-	 */
-	private $_timer;
 	
 	/**
 	 * The width of the image
@@ -114,7 +107,6 @@ final class PLIB_GD_Image extends PLIB_FullObject
 		if(!PLIB_Helper::is_integer($height) || $height <= 0)
 			PLIB_Helper::def_error('intgt0','height',$height);
 		
-		$this->_timer = new PLIB_Timer();
 		$this->_width = $width;
 		$this->_height = $height;
 		if($truecolor)
@@ -337,17 +329,6 @@ final class PLIB_GD_Image extends PLIB_FullObject
 	 */
 	public function send($format = 'png',$allow_cache = false)
 	{
-		// TODO make this optional
-		/*if($this->_bgcolor !== null)
-			$color = $this->_bgcolor->get_readable_random_foreground();
-		else
-			$color = PLIB_GD_Color::$WHITE;
-		$attr = new PLIB_GD_TextAttributes(new PLIB_GD_Font_GD(),2,$color);
-		$text = new PLIB_GD_Text('Rendertime: '.$this->_timer->stop().' sec.',$attr);
-		$this->get_graphics()->get_text_view($text)->draw_in_rect(
-			$this->get_bounds_rect(),new PLIB_GD_Padding(2),PLIB_GD_BoxPosition::$BOTTOM_RIGHT
-		);*/
-		
 		if(!headers_sent())
 		{
 			header('Content-type: image/'.$format);
@@ -388,7 +369,7 @@ final class PLIB_GD_Image extends PLIB_FullObject
 		imagedestroy($this->_image);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

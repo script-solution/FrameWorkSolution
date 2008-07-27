@@ -25,7 +25,7 @@
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_HTML_LimitedString extends PLIB_FullObject
+final class PLIB_HTML_LimitedString extends PLIB_Object
 {
 	/**
 	 * The input-string
@@ -410,7 +410,7 @@ final class PLIB_HTML_LimitedString extends PLIB_FullObject
 		return $str;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

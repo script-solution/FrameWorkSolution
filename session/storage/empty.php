@@ -18,7 +18,7 @@
  * @subpackage	session.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Session_Storage_Empty extends PLIB_FullObject implements PLIB_Session_Storage
+final class PLIB_Session_Storage_Empty extends PLIB_Object implements PLIB_Session_Storage
 {
 	public function load_list()
 	{
@@ -45,7 +45,7 @@ final class PLIB_Session_Storage_Empty extends PLIB_FullObject implements PLIB_S
 		// do nothing
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

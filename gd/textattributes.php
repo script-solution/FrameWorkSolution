@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_TextAttributes extends PLIB_FullObject
+class PLIB_GD_TextAttributes extends PLIB_Object
 {
 	/**
 	 * The font to use
@@ -306,7 +306,7 @@ class PLIB_GD_TextAttributes extends PLIB_FullObject
 		$this->_shadow = (bool)$val;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

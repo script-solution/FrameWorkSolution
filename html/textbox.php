@@ -71,7 +71,7 @@ class PLIB_HTML_TextBox extends PLIB_HTML_TextElement
 	
 	public function to_html()
 	{
-		$html = '<input type="text"'.$this->_get_default_attr_html().' size="'.$this->get_cols().'"';
+		$html = '<input type="text"'.$this->get_default_attr_html().' size="'.$this->get_cols().'"';
 		if($this->_maxlength !== null)
 			$html .= ' maxlength="'.$this->_maxlength.'"';
 		$html .= ' value="'.$this->get_used_value().'"';
@@ -79,9 +79,9 @@ class PLIB_HTML_TextBox extends PLIB_HTML_TextElement
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

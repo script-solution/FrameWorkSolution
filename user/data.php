@@ -18,7 +18,7 @@
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_User_Data extends PLIB_FullObject
+class PLIB_User_Data extends PLIB_Object
 {
 	/**
 	 * The id of the user (0 if it is a guest)
@@ -81,7 +81,7 @@ class PLIB_User_Data extends PLIB_FullObject
 		return $this->_user_pw;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -123,7 +123,7 @@ class PLIB_HTML_ComboBox extends PLIB_HTML_List
 	
 	public function to_html()
 	{
-		$html = '<select'.$this->_get_default_attr_html();
+		$html = '<select'.$this->get_default_attr_html();
 		if($this->_multiple)
 		{
 			$html .= ' multiple="multiple"';
@@ -151,7 +151,7 @@ class PLIB_HTML_ComboBox extends PLIB_HTML_List
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

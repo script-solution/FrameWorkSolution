@@ -9,7 +9,10 @@
  * @link				http://www.script-solution.de
  */
 
+// TODO put this in the init.php
+
 // set error-display-mode
+// TODO uncomment this!
 @ini_set('display_errors',1);
 error_reporting(E_ALL | E_STRICT);
 

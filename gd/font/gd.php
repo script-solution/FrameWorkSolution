@@ -17,7 +17,7 @@
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Font_GD extends PLIB_FullObject implements PLIB_GD_Font
+final class PLIB_GD_Font_GD extends PLIB_Object implements PLIB_GD_Font
 {
 	/**
 	 * @see PLIB_GD_Font::draw()
@@ -131,7 +131,7 @@ final class PLIB_GD_Font_GD extends PLIB_FullObject implements PLIB_GD_Font
 		}
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

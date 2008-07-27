@@ -16,9 +16,11 @@ var ivConfig = {
 	bgFadeSteps : 10,
 	imgFadeSteps : 10,
 	imgResizeSteps : 10,
+	timeout : 5,
 	initialBlockSize : '100px',
 	loadingImg : null,
-	blockPadding : 0
+	blockPadding : 0,
+	errorMsg : 'Unable to load the image'
 };
 
 /**
@@ -29,23 +31,27 @@ var ivConfig = {
  * @param int bgFadeSteps the number of steps to fade in the background (default=10)
  * @param int imgFadeSteps the number of steps to fade in the image (default=10)
  * @param int imgResizeSteps the number of steps to resize the image (default=10)
+ * @param int timeout the timeout between the resize-steps
  * @param string initialBlockSize the initial size of the image-block (while loading the image)
  *		(default=100px)
  * @param string loadingImg the image-URL to display while the real image is loading (null = none)
  * 		(default=null)
  * @param int blockPadding how much padding do you have for the block? (in pixel) (default=0)
+ * @param string errorMsg the message to display if the image can't be loaded
  */
 function PLIB_configureImageViewer(showBG,bgOpacity,bgFadeSteps,imgFadeSteps,imgResizeSteps,
-	initialBlockSize,loadingImg,blockPadding)
+	timeout,initialBlockSize,loadingImg,blockPadding,errorMsg)
 {
 	ivConfig.showBG = showBG;
 	ivConfig.bgOpacity = bgOpacity;
 	ivConfig.bgFadeSteps = bgFadeSteps;
 	ivConfig.imgFadeSteps = imgFadeSteps;
 	ivConfig.imgResizeSteps = imgResizeSteps;
+	ivConfig.timeout = timeout;
 	ivConfig.initialBlockSize = initialBlockSize;
 	ivConfig.loadingImg = loadingImg;
 	ivConfig.blockPadding = blockPadding;
+	ivConfig.errorMsg = errorMsg;
 }
 
 /**
@@ -108,7 +114,7 @@ function PLIB_showImage(imgURL)
 		el.onclick = function() {
 			PLIB_hideElement(bg.id);
 			PLIB_hideElement(el.id);
-		}
+		};
 		document.getElementsByTagName('body')[0].appendChild(el);
 	}
 	
@@ -122,7 +128,7 @@ function PLIB_showImage(imgURL)
 	el.style.left = (size[0] / 2 - iinitialSize / 2 + offset[0]) + 'px';
 	
 	// set content
-	var html = '<img id="plib_image_viewer_img" src="' + imgURL + '" />';
+	var html = '<img id="plib_image_viewer_img" src="" />';
 	if(ivConfig.loadingImg != null)
 		html += '<img id="plib_image_viewer_loadimg" src="' + ivConfig.loadingImg + '" />';
 	el.innerHTML = html;
@@ -145,13 +151,16 @@ function PLIB_showImage(imgURL)
 		loadImg.style.top = ((iinitialSize + ivConfig.blockPadding * 2) / 2 - loadImg.height / 2) + 'px';
 	}
 	
-	var loadFunc = function() {
+	// load the image
+	var preImg = new Image();
+	preImg.onload = function() {
 		// hide loading-image
 		if(ivConfig.loadingImg != null)
 			loadImg.style.visibility = 'hidden';
 		
-		var iwidth = parseInt(img.width);
-		var iheight = parseInt(img.height);
+		img.src = imgURL;
+		var iwidth = parseInt(preImg.width);
+		var iheight = parseInt(preImg.height);
 		
 		// display real image
 		_setImageSize(img,iinitialSize,iinitialSize);
@@ -159,13 +168,18 @@ function PLIB_showImage(imgURL)
 		_fadeIn(img.id,100,ivConfig.imgFadeSteps);
 		_smoothResize(el.id,img.id,iwidth,iheight,ivConfig.imgResizeSteps);
 	};
-	
-	// some browser don't seem to fire the load-event if the image is already loaded. Therefore we
-	// check that and if so we call the function directly
-	if(img.complete)
-		loadFunc();
-	else
-		PLIB_addEvent(img,'load',loadFunc);
+	preImg.onerror = function() {
+		// hide loading-image
+		if(ivConfig.loadingImg != null)
+			loadImg.style.visibility = 'hidden';
+		
+		el.innerHTML = "<p align=\"center\">" + ivConfig.errorMsg + "</p>";
+		el.style.width = 'auto';
+		el.style.height = 'auto';
+		el.style.top = (size[1] / 2 - el.offsetHeight / 2 + offset[1]) + 'px';
+		el.style.left = (size[0] / 2 - el.offsetWidth / 2 + offset[0]) + 'px';
+	};
+	preImg.src = imgURL;
 }
 
 /**
@@ -185,7 +199,10 @@ function _fadeIn(elId,max,steps,i)
 	if(i < steps)
 	{
 		PLIB_setOpacity(el,i * max / steps);
-		window.setTimeout('_fadeIn("' + elId + '",' + max + ',' + steps + ',' + (i + 1) + ')',5);
+		window.setTimeout(
+			'_fadeIn("' + elId + '",' + max + ',' + steps + ',' + (i + 1) + ')',
+			ivConfig.timeout
+		);
 	}
 	else
 		PLIB_setOpacity(el,max);
@@ -217,14 +234,17 @@ function _smoothResize(elId,imgId,width,height,steps,i)
 	{
 		var realwidth = wdiff / (steps - i);
 		var realheight = hdiff / (steps - i);
-		_setImageSize(img,csize[0] + realwidth,csize[1] + realheight);
+		if(img != null)
+			_setImageSize(img,csize[0] + realwidth,csize[1] + realheight);
 		el.style.width = (csize[0] + realwidth) + 'px';
 		el.style.height = (csize[1] + realheight) + 'px';
 		
 		el.style.left = (parseInt(el.style.left) - realwidth / 2) + 'px';
 		el.style.top = (parseInt(el.style.top) - realheight / 2) + 'px';
-		window.setTimeout('_smoothResize("' + elId + '","' + imgId + '",' + width + ',' + height +
-			',' + steps + ',' + (i + 1) + ')',5);
+		window.setTimeout(
+			'_smoothResize("' + elId + '","' + imgId + '",' + width + ',' + height + ',' + steps + ',' + (i + 1) + ')',
+			ivConfig.timeout
+		);
 	}
 	else
 	{

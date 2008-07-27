@@ -22,9 +22,11 @@ class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
 {
 	public function get_control($form)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		/* @var $form PLIB_HTML_Formular */
 		$props = $this->_data->get_properties();
-		$options = $this->_get_items($props);
+		$options = $this->get_items($props);
 		$vals = explode(',',$this->_data->get_value());
 		
 		if($props['type'] == 'combo')
@@ -45,14 +47,14 @@ class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
 					continue;
 				
 				$str .= $form->get_checkbox(
-					$this->_data->get_name().'['.$key.']',in_array($key,$vals),1,$this->locale->lang($value)
+					$this->_data->get_name().'['.$key.']',in_array($key,$vals),1,$locale->lang($value)
 				);
 				if($i < $len - 1)
 					$str .= '<br />';
 			}
 		}
 		
-		$str .= $this->_get_suffix();
+		$str .= $this->get_suffix();
 		return $str;
 	}
 	
@@ -62,22 +64,26 @@ class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
 	 * @param array $props the properties of the item
 	 * @return array all items
 	 */
-	protected function _get_items($props)
+	protected function get_items($props)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		$options = array();
 		foreach($props as $k => $v)
 		{
 			if($k === 'type')
 				continue;
-			$options[$k] = $this->locale->lang($v,false);
+			$options[$k] = $locale->lang($v,false);
 		}
 		return $options;
 	}
 
 	public function get_value()
 	{
+		$input = PLIB_Props::get()->input();
+
 		$props = $this->_data->get_properties();
-		$vals = $this->input->get_var($this->_data->get_name(),'post');
+		$vals = $input->get_var($this->_data->get_name(),'post');
 		if(!is_array($vals))
 			$vals = array();
 		

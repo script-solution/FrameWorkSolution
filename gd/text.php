@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Text extends PLIB_FullObject
+final class PLIB_GD_Text extends PLIB_Object
 {
 	/**
 	 * The text to draw
@@ -340,7 +340,7 @@ final class PLIB_GD_Text extends PLIB_FullObject
 		PLIB_GD_Utils::add_padding_custom($bounds,$t,$r,$b,$l,$angle);
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

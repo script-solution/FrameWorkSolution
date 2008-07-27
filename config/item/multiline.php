@@ -26,13 +26,15 @@ class PLIB_Config_Item_MultiLine extends PLIB_Config_Item_Default
 		$str = $form->get_textarea(
 			$this->_data->get_name(),$this->_data->get_value(),$props['width'],$props['height']
 		);
-		$str .= $this->_get_suffix();
+		$str .= $this->get_suffix();
 		return $str;
 	}
 
 	public function get_value()
 	{
-		return trim($this->input->get_var($this->_data->get_name(),'post',PLIB_Input::STRING));
+		$input = PLIB_Props::get()->input();
+
+		return trim($input->get_var($this->_data->get_name(),'post',PLIB_Input::STRING));
 	}
 }
 ?>

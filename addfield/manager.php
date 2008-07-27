@@ -127,7 +127,7 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 		return $res;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

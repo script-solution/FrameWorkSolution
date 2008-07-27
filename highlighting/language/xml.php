@@ -17,7 +17,7 @@
  * @subpackage	highlighting.language
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Language_XML extends PLIB_FullObject
+final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	implements PLIB_Highlighting_Language
 {
 	/**
@@ -514,11 +514,11 @@ final class PLIB_Highlighting_Language_XML extends PLIB_FullObject
 	}
 
 	/**
-	 * @see PLIB_Object::_get_print_vars()
+	 * @see PLIB_Object::get_print_vars()
 	 *
 	 * @return array
 	 */
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -167,7 +167,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 		return imagearc($img,$x,$y,$w,$h,$start,$end,$color->get_color($img));
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

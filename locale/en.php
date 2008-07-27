@@ -17,7 +17,7 @@
  * @subpackage	locale
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Locale_EN extends PLIB_FullObject implements PLIB_Locale
+class PLIB_Locale_EN extends PLIB_Object implements PLIB_Locale
 {
 	/**
 	 * The default language-entries
@@ -161,7 +161,7 @@ class PLIB_Locale_EN extends PLIB_FullObject implements PLIB_Locale
 		$this->_timezone = $timezone;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

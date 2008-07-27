@@ -21,17 +21,19 @@ class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
 {
 	public function get_value_from_formular($default = null)
 	{
+		$input = PLIB_Props::get()->input();
+
 		$field_name = $this->_data->get_name();
-		$day = $this->input->get_var('add_'.$field_name.'_day','post',PLIB_Input::INTEGER);
-		$month = $this->input->get_var('add_'.$field_name.'_month','post',PLIB_Input::INTEGER);
-		$year = $this->input->get_var('add_'.$field_name.'_year','post',PLIB_Input::INTEGER);
+		$day = $input->get_var('add_'.$field_name.'_day','post',PLIB_Input::INTEGER);
+		$month = $input->get_var('add_'.$field_name.'_month','post',PLIB_Input::INTEGER);
+		$year = $input->get_var('add_'.$field_name.'_year','post',PLIB_Input::INTEGER);
 		if($day === null || $month === null || $year === null || $day == -1 || $month == -1 || $year == -1)
 			return $default !== null ? $default : '0000-00-00';
 
 		return $year.'-'.$month.'-'.$day;
 	}
 	
-	protected function _get_formular_field($formular,$value)
+	protected function get_formular_field_impl($formular,$value)
 	{
 		$dateVal = array(-1,-1,-1);
 		if($value != '')
@@ -44,7 +46,7 @@ class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
 		return $formular->get_date_chooser('add_'.$this->_data->get_name().'_',$dateVal,false,true,1900);
 	}
 	
-	protected function _is_valid_value($value)
+	protected function is_valid_value_impl($value)
 	{
 		if(!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/',$value))
 			return false;
@@ -58,15 +60,17 @@ class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
 		return $value == '0000-00-00';
 	}
 	
-	protected function _get_display_value($value)
+	protected function get_display_value($value)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		$parts = explode('-',$value);
 		// invalid date?
 		if(!is_array($parts) || count($parts) != 3)
 			return '';
 		
 		$comps = array();
-		$date_order = $this->locale->get_date_order();
+		$date_order = $locale->get_date_order();
 		foreach($date_order as $element)
 		{
 			switch($element)
@@ -83,12 +87,12 @@ class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
 			}
 		}
 		
-		return implode($this->locale->get_date_separator(),$comps);
+		return implode($locale->get_date_separator(),$comps);
 	}
 	
 	public function get_value_to_store($value)
 	{
-		if(!$this->_is_valid_value($value))
+		if(!$this->is_valid_value_impl($value))
 			return '0000-00-00';
 		
 		return $value;

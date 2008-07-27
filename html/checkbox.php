@@ -91,7 +91,7 @@ class PLIB_HTML_Checkbox extends PLIB_HTML_FormElement
 	
 	public function to_html()
 	{
-		$html = '<input type="checkbox"'.$this->_get_default_attr_html();
+		$html = '<input type="checkbox"'.$this->get_default_attr_html();
 		if($this->get_used_value())
 			$html .= ' checked="checked"';
 		$html .= ' value="'.$this->_checked_value.'" />';
@@ -99,9 +99,9 @@ class PLIB_HTML_Checkbox extends PLIB_HTML_FormElement
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

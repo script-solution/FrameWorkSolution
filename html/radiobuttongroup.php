@@ -73,7 +73,7 @@ class PLIB_HTML_RadioButtonGroup extends PLIB_HTML_List
 			// set temp id for this radiobutton
 			$this->set_id($id.'_'.$k);
 			
-			$html .= '<input type="radio"'.$this->_get_default_attr_html().' value="'.$k.'"';
+			$html .= '<input type="radio"'.$this->get_default_attr_html().' value="'.$k.'"';
 			if($k == $selected)
 				$html .= ' checked="checked"';
 			$html .= '/>&nbsp;<label for="'.$this->get_id().'">'.$v.'</label>';
@@ -89,7 +89,7 @@ class PLIB_HTML_RadioButtonGroup extends PLIB_HTML_List
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

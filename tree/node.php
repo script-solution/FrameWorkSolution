@@ -20,7 +20,7 @@
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Tree_Node extends PLIB_FullObject
+final class PLIB_Tree_Node extends PLIB_Object
 {
 	/**
 	 * The id of the node (copied from the data)
@@ -316,7 +316,7 @@ final class PLIB_Tree_Node extends PLIB_FullObject
 		return $pos;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		// replace the parent to prevent recursion
 		$vars = get_object_vars($this);

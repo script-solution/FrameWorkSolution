@@ -24,17 +24,17 @@ include_once(PLIB_PATH.'init.php');
  */
 class PLIB_UnitTest_Document extends PLIB_Document
 {
-	protected function _load_db()
+	protected function load_db()
 	{
 		return null;
 	}
 
-	protected function _load_msgs()
+	protected function load_msgs()
 	{
 		return null;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}
@@ -52,7 +52,7 @@ function PLIB_UnitTest_autoloader($item)
 {
 	if(PLIB_String::ends_with($item,'Test'))
 	{
-		$path = PLIB_Path::lib().'tests/'.$item.'.php';
+		$path = PLIB_Path::server_lib().'tests/'.$item.'.php';
 		if(is_file($path))
 		{
 			include($path);

@@ -125,13 +125,14 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	 */
 	public function handle_exception($exception)
 	{
+		$no = $exception->getCode();
 		// if somebody has used '@' to suppress errors, we will ignore them here
 		// note that this means that nobody should set error-reporting to 0 because otherwise
 		// we would log no error
-		if(error_reporting() == 0 || $this->_max_errors())
+		if((error_reporting() & $no) == 0 || $this->_max_errors())
 			return;
 		
-		echo $this->get_error_message($exception->getCode(),$exception->getMessage(),$exception->getFile(),
+		echo $this->get_error_message($no,$exception->getMessage(),$exception->getFile(),
 			$exception->getLine(),$exception->getTrace());
 		$this->_error_count++;
 	}
@@ -149,7 +150,7 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 		// if somebody has used '@' to suppress errors, we will ignore them here
 		// note that this means that nobody should set error-reporting to 0 because otherwise
 		// we would log no error
-		if(error_reporting() == 0 || $this->_max_errors())
+		if((error_reporting() & $no) == 0 || $this->_max_errors())
 			return;
 
 		echo $this->get_error_message($no,$msg,$file,$line);
@@ -290,7 +291,7 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 		return false;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

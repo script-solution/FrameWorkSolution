@@ -18,7 +18,7 @@
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Manager extends PLIB_FullObject
+class PLIB_Config_Manager extends PLIB_Object
 {
 	/**
 	 * The storage-object
@@ -190,7 +190,7 @@ class PLIB_Config_Manager extends PLIB_FullObject
 	 */
 	public final function load_group($id)
 	{
-		$this->_load_items($this->_storage->get_items_of_group($id));
+		$this->load_items($this->_storage->get_items_of_group($id));
 	}
 	
 	/**
@@ -200,7 +200,7 @@ class PLIB_Config_Manager extends PLIB_FullObject
 	 */
 	public final function load_items_with($keyword)
 	{
-		$this->_load_items($this->_storage->get_items_with($keyword));
+		$this->load_items($this->_storage->get_items_with($keyword));
 	}
 	
 	/**
@@ -208,12 +208,12 @@ class PLIB_Config_Manager extends PLIB_FullObject
 	 *
 	 * @param array $items an array of PLIB_Config_Data objects
 	 */
-	protected final function _load_items($items)
+	protected final function load_items($items)
 	{
 		$this->_items = array();
 		foreach($items as $data)
 		{
-			$item = $this->_get_item($data);
+			$item = $this->get_item($data);
 			if($item !== null)
 				$this->_items[] = $item;
 		}
@@ -226,10 +226,10 @@ class PLIB_Config_Manager extends PLIB_FullObject
 	 * @param PLIB_Config_Data $data the data of the item
 	 * @return PLIB_Config_Item the corresponding item or null if the type is unknown
 	 */
-	protected function _get_item($data)
+	protected function get_item($data)
 	{
 		$name = 'PLIB_Config_Item_'.ucfirst($data->get_type());
-		$file = PLIB_Path::lib().'config/item/'.$data->get_type().'.php';
+		$file = PLIB_Path::server_lib().'config/item/'.$data->get_type().'.php';
 		if(is_file($file))
 		{
 			include_once($file);
@@ -240,7 +240,7 @@ class PLIB_Config_Manager extends PLIB_FullObject
 		return null;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

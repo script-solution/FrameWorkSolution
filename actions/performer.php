@@ -18,7 +18,7 @@
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Actions_Performer extends PLIB_FullObject
+class PLIB_Actions_Performer extends PLIB_Object
 {
 	/**
 	 * An associative array with all announced actions:
@@ -89,12 +89,12 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 	 * Sets the folder which contains the modules
 	 * 
 	 * @param string $folder the new value (with trailing slash and starting at
-	 * 	{@link PLIB_Path::inner()})
+	 * 	{@link PLIB_Path::server_app()})
 	 */
 	public final function set_mod_folder($folder)
 	{
-		if(!is_dir(PLIB_Path::inner().$folder))
-			PLIB_Helper::error('"'.PLIB_Path::inner().$folder.'" is no folder!');
+		if(!is_dir(PLIB_Path::server_app().$folder))
+			PLIB_Helper::error('"'.PLIB_Path::server_app().$folder.'" is no folder!');
 		
 		$this->_mod_folder = PLIB_FileUtils::ensure_trailing_slash($folder);
 	}
@@ -154,7 +154,7 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 				$name = $name[0];
 			}
 			
-			$filename = PLIB_Path::inner().$this->_mod_folder.$module_name.'/action_'.$name.'.php';
+			$filename = PLIB_Path::server_app().$this->_mod_folder.$module_name.'/action_'.$name.'.php';
 			if(!is_file($filename))
 				PLIB_Helper::error('The file "'.$filename.'" does not exist!');
 			
@@ -179,9 +179,11 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 	 */
 	public function get_action_type()
 	{
-		$action_type = $this->input->get_var('action_type','post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+
+		$action_type = $input->get_var('action_type','post',PLIB_Input::INTEGER);
 		if($action_type === null)
-			$action_type = $this->input->get_var('at','get',PLIB_Input::INTEGER);
+			$action_type = $input->get_var('at','get',PLIB_Input::INTEGER);
 
 		return $action_type;
 	}
@@ -199,6 +201,10 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 	 */
 	public final function perform_actions()
 	{
+		$locale = PLIB_Props::get()->locale();
+		$msgs = PLIB_Props::get()->msgs();
+		$doc = PLIB_Props::get()->doc();
+
 		$action_type = $this->get_action_type();
 		if($action_type === null)
 			return 0;
@@ -211,14 +217,14 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 		$c = $this->_actions[$action_type];
 		/* @var $c PLIB_Actions_Base */
 		
-		$this->_before_action_performed($action_type,$c);
+		$this->before_action_performed($action_type,$c);
 		
 		if(isset($this->_add_params[$action_type]))
 			$message = call_user_func_array(array($c,'perform_action'),$this->_add_params[$action_type]);
 		else
 			$message = $c->perform_action();
 		
-		$this->_after_action_performed($action_type,$c,$message);
+		$this->after_action_performed($action_type,$c,$message);
 
 		// has an error occurred?
 		if($message)
@@ -228,12 +234,12 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 			
 			foreach($message as $mline)
 			{
-				if($this->locale->contains_lang('error_'.$mline))
-					$this->msgs->add_error($this->locale->lang('error_'.$mline));
-				else if($this->locale->contains_lang($mline))
-					$this->msgs->add_error($this->locale->lang($mline));
+				if($locale->contains_lang('error_'.$mline))
+					$msgs->add_error($locale->lang('error_'.$mline));
+				else if($locale->contains_lang($mline))
+					$msgs->add_error($locale->lang($mline));
 				else
-					$this->msgs->add_error($mline);
+					$msgs->add_error($mline);
 			}
 			
 			return $c->get_error_return_val();
@@ -250,14 +256,14 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 				if($c->get_success_msg() != '')
 					$success_msg = $c->get_success_msg();
 				else
-					$success_msg = $this->locale->lang('success_'.$action_type);
+					$success_msg = $locale->lang('success_'.$action_type);
 
 				foreach($c->get_links() as $name => $url)
-					$this->msgs->add_link($name,$url);
+					$msgs->add_link($name,$url);
 				
-				$this->msgs->add_notice($success_msg);
+				$msgs->add_notice($success_msg);
 				if($c->get_redirect())
-					$this->doc->request_redirect($c->get_redirect_url(),$c->get_redirect_time());
+					$doc->request_redirect($c->get_redirect_url(),$c->get_redirect_time());
 				
 				return 1;
 			}
@@ -266,7 +272,7 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 			{
 				$url = $c->get_redirect_url();
 				$url = str_replace('&amp;','&',$url);
-				$this->doc->redirect($url);
+				$doc->redirect($url);
 			}
 		}
 
@@ -280,7 +286,7 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 	 * @param int $id the action-id
 	 * @param PLIB_Actions_Base $action the action-instance
 	 */
-	protected function _before_action_performed($id,$action)
+	protected function before_action_performed($id,$action)
 	{
 		// by default we do nothing
 	}
@@ -294,12 +300,12 @@ class PLIB_Actions_Performer extends PLIB_FullObject
 	 * @param PLIB_Actions_Base $action the action-instance
 	 * @param string $message the message that has been returned from the action
 	 */
-	protected function _after_action_performed($id,$action,&$message)
+	protected function after_action_performed($id,$action,&$message)
 	{
 		// be default we do nothing
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

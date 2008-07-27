@@ -22,7 +22,9 @@ class PLIB_Config_Item_Int extends PLIB_Config_Item_Line
 {
 	public function get_value()
 	{
-		return (int)$this->input->get_var($this->_data->get_name(),'post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+
+		return (int)$input->get_var($this->_data->get_name(),'post',PLIB_Input::INTEGER);
 	}
 }
 ?>

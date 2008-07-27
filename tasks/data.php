@@ -17,7 +17,7 @@
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tasks_Data extends PLIB_FullObject
+class PLIB_Tasks_Data extends PLIB_Object
 {
 	/**
 	 * The id of the task
@@ -205,7 +205,7 @@ class PLIB_Tasks_Data extends PLIB_FullObject
 		$this->_time = $time;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

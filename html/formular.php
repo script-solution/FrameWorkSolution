@@ -24,7 +24,7 @@
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_Formular extends PLIB_FullObject
+class PLIB_HTML_Formular extends PLIB_Object
 {
 	/**
 	 * The condition which will be used to determine if the value from $_POST should be displayed
@@ -97,9 +97,11 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 	 */
 	public final function get_input_value($name,$default = '')
 	{
+		$input = PLIB_Props::get()->input();
+
 		if($this->_condition)
 		{
-			$val = $this->input->get_var($name,'post');
+			$val = $input->get_var($name,'post');
 			if(is_string($val))
 				$val = stripslashes($val);
 			return $val;
@@ -120,9 +122,11 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 	 */
 	public final function get_checkbox_value($name,$default = false)
 	{
+		$input = PLIB_Props::get()->input();
+
 		$val = $default;
 		if($this->_condition)
-			$val = $this->input->isset_var($name,'post');
+			$val = $input->isset_var($name,'post');
 		
 		return $val ? ' checked="checked"' : '';
 	}
@@ -140,9 +144,11 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 	 */
 	public final function get_radio_value($name,$value,$default = false)
 	{
+		$input = PLIB_Props::get()->input();
+
 		$val = $default;
 		if($this->_condition)
-			$val = $this->input->get_var($name,'post') == $value;
+			$val = $input->get_var($name,'post') == $value;
 		
 		return $val ? ' checked="checked"' : '';
 	}
@@ -272,6 +278,8 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 	public final function get_date_chooser($prefix,$default = 0,$add_time = true,$add_no_value = false,
 		$start_year = 1990)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		if(!PLIB_Helper::is_integer($start_year) || $start_year < 0 || $start_year > 2019)
 			PLIB_Helper::def_error('numbetween','start_year',0,2019,$start_year);
 		
@@ -305,10 +313,10 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 		}
 
 		$result = '';
-		$result .= $this->_get_js_calendar($prefix,$start_year,$add_no_value);
+		$result .= $this->get_js_calendar($prefix,$start_year,$add_no_value);
 		
-		$separator = $this->locale->get_date_separator();
-		$date_order = $this->locale->get_date_order();
+		$separator = $locale->get_date_separator();
+		$date_order = $locale->get_date_order();
 		foreach($date_order as $k => $comp)
 		{
 			switch($comp)
@@ -345,7 +353,7 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 				$result .= $separator.' ';
 		}
 		
-		$result .= $this->_get_js_calendar_link($prefix);
+		$result .= $this->get_js_calendar_link($prefix);
 
 		if($add_time)
 		{
@@ -383,14 +391,15 @@ class PLIB_HTML_Formular extends PLIB_FullObject
 		$result = '';
 		
 		static $added_calendar = false;
-		$libpath = PLIB_Path::lib();
+		$libpath = PLIB_Path::client_lib();
+		$calendar_style = $this->get_js_calendar_style();
 		if(!$added_calendar)
 		{
 			$js = PLIB_Javascript::get_instance();
 			$caljs = $js->get_file('js/calendar.js','lib');
 			$result .= '<script type="text/javascript" src="'.$caljs.'"></script>'."\n";
-			$result .= '<script type="text/javascript" src="'.$this->_get_js_calendar_lang().'"></script>'."\n";
-			$result .= '<link rel="stylesheet" type="text/css" href="'.$this->_get_js_calendar_style().'" />'."\n";
+			$result .= '<script type="text/javascript" src="'.$this->get_js_calendar_lang().'"></script>'."\n";
+			//$result .= '<link rel="stylesheet" type="text/css" href="'.$this->get_js_calendar_style().'" />'."\n";
 			$added_calendar = true;
 		}
 		
@@ -403,7 +412,7 @@ var cal_{$name} = new PLIB_Calendar('{$libpath}js/','{$name}',function(date) {
 	val += this.get2Digits((date.getMonth() + 1)) + "." + date.getFullYear();
 	input.value = val;
 });
-//cal_{$name}.setCSSFile('{$libpath}js/calendarstyle.css');
+cal_{$name}.setCSSFile('{$calendar_style}');
 cal_{$name}.setStartUpFunction(function() {
 	var input = PLIB_getElement(this.inputId);
 	if(input.value != '')
@@ -428,7 +437,7 @@ cal_{$name}.setMaxYear(2020);
 EOF;
 		
 		$result .= $this->get_textbox($name,$default,12,10);
-		$result .= ' '.$this->_get_js_calendar_link($name);
+		$result .= ' '.$this->get_js_calendar_link($name);
 		
 		return $result;
 	}
@@ -436,15 +445,15 @@ EOF;
 	/**
 	 * @return string the CSS-file for the js-calendar
 	 */
-	protected function _get_js_calendar_style()
+	protected function get_js_calendar_style()
 	{
-		return PLIB_Path::lib().'js/calendarstyle.css';
+		return PLIB_Path::client_lib().'js/calendarstyle.css';
 	}
 	
 	/**
 	 * @return string the language-file for the js-calendar
 	 */
-	protected function _get_js_calendar_lang()
+	protected function get_js_calendar_lang()
 	{
 		return PLIB_Javascript::get_instance()->get_file('js/calendar_lang_en.js','lib');
 	}
@@ -452,9 +461,9 @@ EOF;
 	/**
 	 * @return string the image-file for the js-calendar
 	 */
-	protected function _get_js_calendar_image()
+	protected function get_js_calendar_image()
 	{
-		return PLIB_Path::lib().'js/calendar.png';
+		return PLIB_Path::client_lib().'js/calendar.png';
 	}
 	
 	/**
@@ -465,18 +474,19 @@ EOF;
 	 * @param boolean $add_no_value wether a "no-value"-entry should be added
 	 * @return string the js-calendar
 	 */
-	protected function _get_js_calendar($prefix,$start_year,$add_no_value)
+	protected function get_js_calendar($prefix,$start_year,$add_no_value)
 	{
 		static $added_calendar = false;
-		$libpath = PLIB_Path::lib();
+		$libpath = PLIB_Path::client_lib();
+		$calendar_style = $this->get_js_calendar_style();
 		$result = '';
 		if(!$added_calendar)
 		{
 			$js = PLIB_Javascript::get_instance();
 			$caljs = $js->get_file('js/calendar.js','lib');
 			$result .= '<script type="text/javascript" src="'.$caljs.'"></script>'."\n";
-			$result .= '<script type="text/javascript" src="'.$this->_get_js_calendar_lang().'"></script>'."\n";
-			$result .= '<link rel="stylesheet" type="text/css" href="'.$this->_get_js_calendar_style().'" />'."\n";
+			$result .= '<script type="text/javascript" src="'.$this->get_js_calendar_lang().'"></script>'."\n";
+			//$result .= '<link rel="stylesheet" type="text/css" href="'.$this->get_js_calendar_style().'" />'."\n";
 			$added_calendar = true;
 		}
 		
@@ -492,7 +502,7 @@ var cal_{$prefix} = new PLIB_Calendar('{$libpath}js/','mycal',function(date) {
 	month.options.selectedIndex = {$add_no_value} ? date.getMonth() + 1 : date.getMonth();
 	year.options.selectedIndex = ({$add_no_value} ? 1 : 0) + date.getFullYear() - {$start_year};
 });
-//cal_{$prefix}.setCSSFile('{$libpath}js/calendarstyle.css');
+cal_{$prefix}.setCSSFile('{$calendar_style}');
 cal_{$prefix}.setStartUpFunction(function() {
 	var day = PLIB_getElement('{$prefix}day');
 	var month = PLIB_getElement('{$prefix}month');
@@ -524,9 +534,9 @@ EOF;
 	 * @param string $prefix the date-prefix
 	 * @return string the link
 	 */
-	protected function _get_js_calendar_link($prefix)
+	protected function get_js_calendar_link($prefix)
 	{
-		$image  = $this->_get_js_calendar_image();
+		$image  = $this->get_js_calendar_image();
 		$result = '<a href="javascript:cal_'.$prefix.'.display(\'image_cal_'.$prefix.'\');">';
 		$result .= '<img id="image_cal_'.$prefix.'" src="'.$image.'" alt="Calendar" /></a>';
 		return $result;
@@ -548,13 +558,15 @@ EOF;
 	 */
 	public final function get_date_chooser_timestamp($prefix,$add_time = true)
 	{
-		$year = $this->input->get_var($prefix.'year','post',PLIB_Input::INTEGER);
-		$month = $this->input->get_var($prefix.'month','post',PLIB_Input::INTEGER);
-		$day = $this->input->get_var($prefix.'day','post',PLIB_Input::INTEGER);
+		$input = PLIB_Props::get()->input();
+
+		$year = $input->get_var($prefix.'year','post',PLIB_Input::INTEGER);
+		$month = $input->get_var($prefix.'month','post',PLIB_Input::INTEGER);
+		$day = $input->get_var($prefix.'day','post',PLIB_Input::INTEGER);
 		if($add_time)
 		{
-			$min = $this->input->get_var($prefix.'min','post',PLIB_Input::INTEGER);
-			$hour = $this->input->get_var($prefix.'hour','post',PLIB_Input::INTEGER);
+			$min = $input->get_var($prefix.'min','post',PLIB_Input::INTEGER);
+			$hour = $input->get_var($prefix.'hour','post',PLIB_Input::INTEGER);
 		}
 		else
 		{
@@ -612,7 +624,7 @@ EOF;
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the text-box
 	 */
-	public final function get_textbox($name,$default = '',$size = 15,$maxlength = 15,$disabled = false)
+	public final function get_textbox($name,$default = '',$size = 15,$maxlength = null,$disabled = false)
 	{
 		$tb = new PLIB_HTML_TextBox($name,null,null,$default,PLIB_Helper::is_integer($size) ? $size : 15,$maxlength);
 		if(is_string($size) && PLIB_String::ends_with($size,'%'))
@@ -635,7 +647,7 @@ EOF;
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the password-box
 	 */
-	public final function get_passwordbox($name,$default = '',$size = 15,$maxlength = 15,
+	public final function get_passwordbox($name,$default = '',$size = 15,$maxlength = null,
 		$disabled = false)
 	{
 		$pb = new PLIB_HTML_PasswordBox($name,null,$default,$size,$maxlength);
@@ -681,12 +693,14 @@ EOF;
 	 */
 	public final function get_checkbox($name,$default = false,$value = '',$text = '',$disabled = false)
 	{
+		$input = PLIB_Props::get()->input();
+
 		$cb = new PLIB_HTML_Checkbox($name,null,null,$default,$text,$value);
 		$this->_apply_defaults($cb);
 		$cb->set_disabled($disabled);
 		
 		if($this->_condition)
-			$cb->set_value($this->input->isset_var($name,'post'));
+			$cb->set_value($input->isset_var($name,'post'));
 		
 		return $cb->to_html();
 	}
@@ -701,9 +715,11 @@ EOF;
 	 */
 	public final function get_radio_yesno($name,$default,$disabled = false)
 	{
+		$locale = PLIB_Props::get()->locale();
+
 		$options = array(
-			'1' => $this->locale->lang('yes'),
-			'0' => $this->locale->lang('no')
+			'1' => $locale->lang('yes'),
+			'0' => $locale->lang('no')
 		);
 		return $this->get_radio_boxes($name,$options,$default,' ',$disabled);
 	}
@@ -770,7 +786,7 @@ EOF;
 		return $res;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

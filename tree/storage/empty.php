@@ -17,7 +17,7 @@
  * @subpackage	tree.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Tree_Storage_Empty extends PLIB_FullObject implements PLIB_Tree_Storage
+final class PLIB_Tree_Storage_Empty extends PLIB_Object implements PLIB_Tree_Storage
 {
 	public function get_nodes()
 	{
@@ -39,7 +39,7 @@ final class PLIB_Tree_Storage_Empty extends PLIB_FullObject implements PLIB_Tree
 		// do noting
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

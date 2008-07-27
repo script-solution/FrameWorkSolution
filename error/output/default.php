@@ -17,7 +17,7 @@
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_Output_Default extends PLIB_FullObject implements PLIB_Error_Output
+final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_Output
 {
 	/**
 	 * @see PLIB_Error_Output::print_error()
@@ -31,7 +31,7 @@ final class PLIB_Error_Output_Default extends PLIB_FullObject implements PLIB_Er
 	public function print_error($no,$msg,$file,$line,$backtrace)
 	{
 		// javascript-clap-code
-		$res = '<script type="text/javascript" src="'.PLIB_Path::lib().'js/basic.js"></script>'."\n";
+		$res = '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/basic.js"></script>'."\n";
 		
 		$htmlmsg = str_replace("\n",'<br />',$msg);
 		$res .= '<div style="font-size: 12px; padding-bottom: 5px;">'."\n";
@@ -45,7 +45,7 @@ final class PLIB_Error_Output_Default extends PLIB_FullObject implements PLIB_Er
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::inner()),'',$file);
+			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
 			$realpath = str_replace($realfile,'',$file);
 			$res .= ' in '.$realpath.'<b>'.$realfile.'</b>, line <b>'.$line.'</b>'."\n";
 			$res .= '<br />'."\n";
@@ -69,7 +69,7 @@ final class PLIB_Error_Output_Default extends PLIB_FullObject implements PLIB_Er
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::inner()),'',$file);
+			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
 			$realpath = str_replace($file,'',$realfile);
 			$res .= ' in '.$realpath.'[b]'.$realfile.'[/b], line [b]'.$line.'[/b]';
 		}
@@ -82,11 +82,11 @@ final class PLIB_Error_Output_Default extends PLIB_FullObject implements PLIB_Er
 	}
 
 	/**
-	 * @see PLIB_Object::_get_print_vars()
+	 * @see PLIB_Object::get_print_vars()
 	 *
 	 * @return array
 	 */
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

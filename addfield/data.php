@@ -17,7 +17,7 @@
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AddField_Data extends PLIB_FullObject
+class PLIB_AddField_Data extends PLIB_Object
 {
 	/**
 	 * The id of the field
@@ -291,7 +291,7 @@ class PLIB_AddField_Data extends PLIB_FullObject
 		return $this->_custom_display;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

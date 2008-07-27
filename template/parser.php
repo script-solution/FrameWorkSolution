@@ -18,7 +18,7 @@
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Template_Parser extends PLIB_FullObject
+final class PLIB_Template_Parser extends PLIB_Object
 {
 	/**
 	 * The regular expression for an ident
@@ -255,8 +255,8 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 
 		// build php-file
 		$result = '<?php'."\n"
-		 .'function '.$this->_tpl->get_function_name($template).'($base,$number) {'."\n"
-		 .'$tplvars = $base->tpl->get_variables(\''.$template.'\',$number);'."\n";
+		 .'function '.$this->_tpl->get_function_name($template).'($tpl,$number) {'."\n"
+		 .'$tplvars = $tpl->get_variables(\''.$template.'\',$number);'."\n";
 		$result .= '$html = "";'."\n"
 		 .'$html .=<<<EOF'."\n"
 		 .$content."\n".'EOF;'."\n"
@@ -283,7 +283,7 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 	 */
 	private function _parse_include($filename,$number)
 	{
-		$res = '$base->tpl->parse_template(';
+		$res = '$tpl->parse_template(';
 		$res .= $this->_parse_concat($filename);
 		$res .= ',false';
 		if($number)
@@ -504,7 +504,7 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 			$arguments = PLIB_String::substr($other,$bracket + 1,-1);
 			$arguments = trim($arguments);
 			
-			$res = '($base->tpl->check_allowed_method(\''.$var.'\',\''.$func.'\')?';
+			$res = '($tpl->check_allowed_method(\''.$var.'\',\''.$func.'\')?';
 			$res .= '$tplvars[\''.$var.'\']->'.$func.'(';
 			$matches = array();
 			preg_match_all('/(?P<con>'.$this->_regex_concat.'),?/',$arguments,$matches);
@@ -643,7 +643,7 @@ final class PLIB_Template_Parser extends PLIB_FullObject
 		return preg_replace('/[^a-z0-9_]/','_',$item).'_c';
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

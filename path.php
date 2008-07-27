@@ -21,11 +21,32 @@
 final class PLIB_Path extends PLIB_UtilBase
 {
 	/**
-	 * The inner-path
-	 * 
+	 * The relative path to the application from the servers point of view
+	 *
 	 * @var string
 	 */
-	private static $_inner = '';
+	private static $_server_app = '';
+	
+	/**
+	 * The relative path to the application from the clients point of view
+	 *
+	 * @var string
+	 */
+	private static $_client_app = '';
+	
+	/**
+	 * The relative path to the library from the servers point of view
+	 *
+	 * @var unknown_type
+	 */
+	private static $_server_lib = 'lib/';
+	
+	/**
+	 * The relative path to the library from the clients point of view
+	 *
+	 * @var string
+	 */
+	private static $_client_lib = 'lib/';
 	
 	/**
 	 * The outer-path
@@ -35,30 +56,47 @@ final class PLIB_Path extends PLIB_UtilBase
 	private static $_outer = null;
 	
 	/**
-	 * The lib-path
-	 * 
-	 * @var string
-	 */
-	private static $_lib = 'lib/';
-	
-	/**
-	 * Sets the value of the inner path (relative with trailing slash!)
+	 * Sets the value of the path to the application (relative with trailing slash!) from the
+	 * servers point of view.
 	 * 
 	 * @param string $path the new value
 	 */
-	public static function set_inner($path)
+	public static function set_server_app($path)
 	{
-		PLIB_Path::$_inner = $path;
+		self::$_server_app = $path;
 	}
 	
 	/**
-	 * Sets the value of the lib path (relative with trailing slash!)
+	 * Sets the value of the path to the application (relative with trailing slash!) from the
+	 * clients point of view.
 	 * 
 	 * @param string $path the new value
 	 */
-	public static function set_lib($path)
+	public static function set_client_app($path)
 	{
-		PLIB_Path::$_lib = $path;
+		self::$_client_app = $path;
+	}
+	
+	/**
+	 * Sets the value of the path to the library (relative with trailing slash!) from the
+	 * servers point of view.
+	 * 
+	 * @param string $path the new value
+	 */
+	public static function set_server_lib($path)
+	{
+		self::$_server_lib = $path;
+	}
+	
+	/**
+	 * Sets the value of the path to the library (relative with trailing slash!) from the
+	 * clients point of view.
+	 * 
+	 * @param string $path the new value
+	 */
+	public static function set_client_lib($path)
+	{
+		self::$_client_lib = $path;
 	}
 	
 	/**
@@ -68,18 +106,39 @@ final class PLIB_Path extends PLIB_UtilBase
 	 */
 	public static function set_outer($url)
 	{
-		PLIB_Path::$_outer = $url;
+		self::$_outer = $url;
 	}
 	
 	/**
-	 * Returns the inner-path to the root-folder of the project with a trailing slash.
-	 * "inner" means that this should be used to include files or other work on the server.
-	 * 
-	 * @return string the inner-path to the project-folder
+	 * @return string the relative path to the application from the servers point of view
 	 */
-	public static function inner()
+	public static function server_app()
 	{
-		return PLIB_Path::$_inner;
+		return self::$_server_app;
+	}
+	
+	/**
+	 * @return string the relative path to the application from the clients point of view
+	 */
+	public static function client_app()
+	{
+		return self::$_client_app;
+	}
+	
+	/**
+	 * @return string the relative path to the library from the servers point of view
+	 */
+	public static function server_lib()
+	{
+		return self::$_server_lib;
+	}
+	
+	/**
+	 * @return string the relative path to the library from the clients point of view
+	 */
+	public static function client_lib()
+	{
+		return self::$_client_lib;
 	}
 	
 	/**
@@ -90,7 +149,7 @@ final class PLIB_Path extends PLIB_UtilBase
 	 */
 	public static function outer()
 	{
-		if(PLIB_Path::$_outer === null)
+		if(self::$_outer === null)
 		{
 			$input = PLIB_Input::get_instance();
 			$https = $input->get_var('HTTPS','server',PLIB_Input::STRING);
@@ -112,20 +171,10 @@ final class PLIB_Path extends PLIB_UtilBase
 			else
 				$url .= $request_uri;
 			
-			PLIB_Path::$_outer = $url;
+			self::$_outer = $url;
 		}
 		
-		return PLIB_Path::$_outer;
-	}
-	
-	/**
-	 * Returns the (inner-)path to the library-folder with a trailing slash
-	 * 
-	 * @return string the path to the library
-	 */
-	public static function lib()
-	{
-		return PLIB_Path::$_lib;
+		return self::$_outer;
 	}
 }
 ?>

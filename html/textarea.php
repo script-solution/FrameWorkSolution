@@ -67,14 +67,14 @@ class PLIB_HTML_TextArea extends PLIB_HTML_TextElement
 	
 	public function to_html()
 	{
-		$html = '<textarea'.$this->_get_default_attr_html().' cols="'.$this->get_cols().'"';
+		$html = '<textarea'.$this->get_default_attr_html().' cols="'.$this->get_cols().'"';
 		$html .= ' rows="'.$this->_rows.'">'.$this->get_used_value().'</textarea>';
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

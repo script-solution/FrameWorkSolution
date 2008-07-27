@@ -54,7 +54,7 @@ class PLIB_AutoLoader extends PLIB_UtilBase
 			$myitem = str_replace('_','/',$myitem);
 			$myitem = strtolower($myitem);
 			$myitem .= '.php';
-			$path = PLIB_Path::lib().$myitem;
+			$path = PLIB_Path::server_lib().$myitem;
 			
 			if(is_file($path))
 			{

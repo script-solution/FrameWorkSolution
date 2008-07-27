@@ -17,7 +17,7 @@
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_HTML_FormElement extends PLIB_FullObject
+abstract class PLIB_HTML_FormElement extends PLIB_Object
 {
 	/**
 	 * The id of the element
@@ -291,7 +291,7 @@ abstract class PLIB_HTML_FormElement extends PLIB_FullObject
 	 *
 	 * @return string the HTML-code
 	 */
-	protected function _get_default_attr_html()
+	protected function get_default_attr_html()
 	{
 		$html = ' id="'.$this->_id.'" name="'.$this->_name.'"';
 		if($this->_class !== null)

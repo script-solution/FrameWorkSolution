@@ -12,7 +12,7 @@
 /**
  * This class makes it easier to create an URL. It appends automaticly the session-id,
  * if necessary, appends the external variables and so on.
- * Please note that some variables are lazy initialized. So please call $this->_init() to do
+ * Please note that some variables are lazy initialized. So please call $this->init() to do
  * that if you extend this class and implement additional methods.
  * 
  * TODO what to finalize here?
@@ -20,7 +20,7 @@
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_URL extends PLIB_FullObject
+class PLIB_URL extends PLIB_Object
 {
 	/**
 	 * The session-id which will be appended
@@ -69,9 +69,11 @@ class PLIB_URL extends PLIB_FullObject
 	 */
 	public function __construct()
 	{
+		$input = PLIB_Props::get()->input();
+
 		parent::__construct();
 		
-		$this->_phpself = $this->input->get_var('PHP_SELF','server',PLIB_Input::STRING);
+		$this->_phpself = $input->get_var('PHP_SELF','server',PLIB_Input::STRING);
 	}
 
 	/**
@@ -152,8 +154,10 @@ class PLIB_URL extends PLIB_FullObject
 	 */
 	public function get_extern_vars()
 	{
+		$input = PLIB_Props::get()->input();
+
 		$vars = array();
-		foreach($this->input->get_vars_from_method('get') as $key => $value)
+		foreach($input->get_vars_from_method('get') as $key => $value)
 		{
 			if(!$this->is_intern($key))
 				$vars[$key] = $value;
@@ -166,15 +170,15 @@ class PLIB_URL extends PLIB_FullObject
 	 * Note that this method does NOT append the external vars. Therefore you should
 	 * always create a link to a standalone-file!
 	 *
-	 * @param string $file the file (starting at {@link PLIB_Path::inner()})
+	 * @param string $file the file (starting at {@link PLIB_Path::client_app()})
 	 * @param string $additional additional parameters
 	 * @param string $separator the separator for the parameters (default = &amp;)
-	 * @param boolean $absolute use the absolute URL or {@link PLIB_Path::inner()}?
+	 * @param boolean $absolute use the absolute URL or {@link PLIB_Path::client_app()}?
 	 * @return string the url
 	 */
 	public function get_file_url($file,$additional = '',$separator = '&amp;',$absolute = false)
 	{
-		$this->_init();
+		$this->init();
 
 		// Note that we don't append the external vars here because this leads always to
 		// a standalone file!
@@ -186,7 +190,7 @@ class PLIB_URL extends PLIB_FullObject
 		$parameters .= $additional;
 
 		$first_sep = PLIB_String::strpos($file,'?') !== false ? $separator : '?';
-		$base = $absolute ? PLIB_Path::outer() : PLIB_Path::inner();
+		$base = $absolute ? PLIB_Path::outer() : PLIB_Path::client_app();
 		if($parameters == '')
 			$url = $base.$file;
 		else if($separator == '&' && $parameters[0] == $separator)
@@ -240,13 +244,16 @@ class PLIB_URL extends PLIB_FullObject
 	 */
 	public function get_url($target = 0,$additional = '',$separator = '&amp;',$force_sid = false)
 	{
-		$this->_init();
+		$input = PLIB_Props::get()->input();
+		$user = PLIB_Props::get()->user();
+
+		$this->init();
 
 		if($target === -1)
 			$action = '';
 		else if($target === 0)
 		{
-			$action_param = $this->input->get_var($this->_action_param,'get',PLIB_Input::STRING);
+			$action_param = $input->get_var($this->_action_param,'get',PLIB_Input::STRING);
 			if($action_param == null)
 				$action = '';
 			else
@@ -259,7 +266,7 @@ class PLIB_URL extends PLIB_FullObject
 		if($separator == '&')
 		{
 			if($force_sid)
-				$parameters .= '&'.$this->user->get_url_sid_name().'='.$this->user->get_session_id();
+				$parameters .= '&'.$user->get_url_sid_name().'='.$user->get_session_id();
 			else
 				$parameters .= str_replace('&amp;','&',$this->_session_id);
 			$parameters .= str_replace('&amp;','&',$this->_extern_vars);
@@ -267,7 +274,7 @@ class PLIB_URL extends PLIB_FullObject
 		else
 		{
 			if($force_sid)
-				$parameters .= '&amp;'.$this->user->get_url_sid_name().'='.$this->user->get_session_id();
+				$parameters .= '&amp;'.$user->get_url_sid_name().'='.$user->get_session_id();
 			else
 				$parameters .= $this->_session_id;
 			$parameters .= $this->_extern_vars;
@@ -293,7 +300,7 @@ class PLIB_URL extends PLIB_FullObject
 	 */
 	public function use_session_id()
 	{
-		$this->_init();
+		$this->init();
 
 		return $this->_session_id != '';
 	}
@@ -302,8 +309,12 @@ class PLIB_URL extends PLIB_FullObject
 	 * initializes everything
 	 *
 	 */
-	protected function _init()
+	protected function init()
 	{
+		$input = PLIB_Props::get()->input();
+		$cookies = PLIB_Props::get()->cookies();
+		$user = PLIB_Props::get()->user();
+
 		if($this->_session_id !== -1)
 			return;
 
@@ -311,7 +322,7 @@ class PLIB_URL extends PLIB_FullObject
 		$this->_extern_vars = '';
 		if($this->_append_extern)
 		{
-			foreach($this->input->get_vars_from_method('get') as $key => $value)
+			foreach($input->get_vars_from_method('get') as $key => $value)
 			{
 				if(!$this->is_intern($key))
 					$this->_extern_vars .= '&amp;'.$key.'='.$value;
@@ -321,21 +332,21 @@ class PLIB_URL extends PLIB_FullObject
 		// can we find the cookie?
 		$use_sid = false;
 
-		// NOTE: we don't use $this->input here because we always set the cookies in that class!
+		// NOTE: we don't use $input here because we always set the cookies in that class!
 		// so we will always find them there, no matter if the user has activated cookies or not
 		if(isset($_COOKIE))
-			$use_sid = !isset($_COOKIE[$this->cookies->get_prefix().'sid']);
+			$use_sid = !isset($_COOKIE[$cookies->get_prefix().'sid']);
 		else
 		{
 			global $HTTP_COOKIE_VARS;
-			$use_sid = !isset($HTTP_COOKIE_VARS[$this->cookies->get_prefix().'sid']);
+			$use_sid = !isset($HTTP_COOKIE_VARS[$cookies->get_prefix().'sid']);
 		}
 
-		if($this->user instanceof PLIB_User_Current && $use_sid)
+		if($user instanceof PLIB_User_Current && $use_sid)
 		{
-			$sid = $this->user->get_session_id();
+			$sid = $user->get_session_id();
 			if($sid)
-				$this->_session_id = '&amp;'.$this->user->get_url_sid_name().'='.$sid;
+				$this->_session_id = '&amp;'.$user->get_url_sid_name().'='.$sid;
 			else
 				$this->_session_id = '';
 		}
@@ -343,7 +354,7 @@ class PLIB_URL extends PLIB_FullObject
 			$this->_session_id = '';
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

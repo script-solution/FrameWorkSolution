@@ -37,14 +37,14 @@ class PLIB_HTML_SubmitButton extends PLIB_HTML_Button
 	
 	public function to_html()
 	{
-		$html = '<input type="submit"'.$this->_get_default_attr_html();
+		$html = '<input type="submit"'.$this->get_default_attr_html();
 		$html .= ' value="'.$this->get_used_value().'" />';
 		return $html;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
-		return array_merge(parent::_get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_print_vars(),get_object_vars($this));
 	}
 }
 ?>

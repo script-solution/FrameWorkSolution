@@ -13,12 +13,14 @@
 /**
  * This class manages all currently online user. It uses a storage-object
  * to support different storage-locations for the data.
+ * <br>
+ * Note that you have to call {@link garbage_collection} by yourself!
  *
  * @package			PHPLib
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
+class PLIB_Session_Manager extends PLIB_Object
 {
 	/**
 	 * The storage-class
@@ -54,6 +56,13 @@ class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
 	 * @var boolean
 	 */
 	private $_enable_session = true;
+	
+	/**
+	 * Stores wether this object has already been finalized
+	 *
+	 * @var boolean
+	 */
+	private $_finalized = false;
 
 	/**
 	 * constructor
@@ -74,22 +83,57 @@ class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
 		if($enable_session)
 			$this->_load_user_list();
 	}
+	
+	/**
+	 * Will update all changed user
+	 */
+	public final function finalize()
+	{
+		$user = PLIB_Props::get()->user();
+		
+		// do nothing if we do not store sessions
+		if(!$this->_enable_session)
+			return;
+		
+		// don't finalize twice
+		if($this->_finalized)
+			return;
+		
+		// at first we have to finalize the current user so that it can update
+		// some values to the user-object, if necessary
+		$user->finalize();
+		
+		// add the new user
+		foreach($this->_added_user as $suser)
+			$this->_storage->add_user($suser);
+		
+		// now update all changed user-objects
+		foreach($this->_user_list as $suser)
+		{
+			if(!in_array($suser,$this->_added_user) && $suser->has_changed())
+				$this->_storage->update_user($suser);
+		}
+		
+		$this->_finalized = true;
+	}
 
 	/**
 	 * Logouts the timedout user
 	 *
 	 * @see set_online_timeout()
 	 */
-	public final function init()
+	public function garbage_collection()
 	{
+		$user = PLIB_Props::get()->user();
+		
 		$del = array();
-		$current_sess = $this->user->get_session_id();
-		foreach($this->_user_list as $id => $user)
+		$current_sess = $user->get_session_id();
+		foreach($this->_user_list as $id => $suser)
 		{
-			if($this->_check_online_timeout($user,$current_sess))
+			if($this->check_online_timeout($suser,$current_sess))
 			{
 				unset($this->_user_list[$id]);
-				$del[] = $user->get_session_id();
+				$del[] = $suser->get_session_id();
 			}
 		}
 
@@ -103,7 +147,7 @@ class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
 	 * @param PLIB_Session_Data $user the user to check
 	 * @param string $currentsid the session-id of the current user
 	 */
-	protected function _check_online_timeout($user,$currentsid)
+	protected function check_online_timeout($user,$currentsid)
 	{
 		return $user->get_date() < (time() - $this->_online_timeout) &&
 				$user->get_session_id() != $currentsid;
@@ -194,31 +238,6 @@ class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
 	}
 	
 	/**
-	 * Will update all changed user
-	 */
-	public final function finalize()
-	{
-		// do nothing if we do not store sessions
-		if(!$this->_enable_session)
-			return;
-		
-		// at first we have to finalize the current user so that it can update
-		// some values to the user-object, if necessary
-		$this->user->finalize();
-		
-		// add the new user
-		foreach($this->_added_user as $user)
-			$this->_storage->add_user($user);
-		
-		// now update all changed user-objects
-		foreach($this->_user_list as $user)
-		{
-			if(!in_array($user,$this->_added_user) && $user->has_changed())
-				$this->_storage->update_user($user);
-		}
-	}
-	
-	/**
 	 * Logouts the user with given data
 	 * 
 	 * @param string $session_id the session-id of the user
@@ -246,7 +265,7 @@ class PLIB_Session_Manager extends PLIB_FullObject implements PLIB_Initable
 			$this->_user_list[$user->get_session_id().$user->get_user_ip()] = $user;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -17,7 +17,7 @@
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Config_Item_Default extends PLIB_FullObject implements PLIB_Config_Item
+abstract class PLIB_Config_Item_Default extends PLIB_Object implements PLIB_Config_Item
 {
 	/**
 	 * The data of the item
@@ -54,14 +54,14 @@ abstract class PLIB_Config_Item_Default extends PLIB_FullObject implements PLIB_
 	/**
 	 * @return string the suffix or an empty string for no suffix
 	 */
-	protected function _get_suffix()
+	protected function get_suffix()
 	{
 		if(($suffix = $this->_data->get_suffix()))
-			return ' '.preg_replace('/%([a-z0-9_]+)/ei','$this->locale->lang("\\1")',$suffix);
+			return ' '.preg_replace('/%([a-z0-9_]+)/ei','PLIB_Props::get()->locale()->lang("\\1")',$suffix);
 		return '';
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -17,7 +17,7 @@
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Storage_File extends PLIB_FullObject implements PLIB_Cache_Storage
+final class PLIB_Cache_Storage_File extends PLIB_Object implements PLIB_Cache_Storage
 {
 	/**
 	 * The folder which contains the cache-files
@@ -90,7 +90,7 @@ final class PLIB_Cache_Storage_File extends PLIB_FullObject implements PLIB_Cach
 		return $c;
 	}
 	
-	protected function _get_print_vars()
+	protected function get_print_vars()
 	{
 		return get_object_vars($this);
 	}

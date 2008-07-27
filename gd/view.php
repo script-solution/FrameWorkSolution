@@ -17,7 +17,7 @@
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_GD_View extends PLIB_FullObject
+abstract class PLIB_GD_View extends PLIB_Object
 {
 	/**
 	 * The image
