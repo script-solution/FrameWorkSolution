@@ -3,7 +3,7 @@
  * Contains the SQL-parser-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * A utitity to parse a SQL-string or -file and return all found statements
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_SQLParser extends PLIB_UtilBase
+final class FWS_SQLParser extends FWS_UtilBase
 {
 	/**
 	 * Single line comment
@@ -50,7 +50,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 	 */
 	public static function get_statements_from_File($filename)
 	{
-		return self::get_statements(PLIB_FileUtils::read($filename));
+		return self::get_statements(FWS_FileUtils::read($filename));
 	}
 	
 	/**
@@ -79,7 +79,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 		$m = array();
 		// if no mb-functions are used (e.g. they are not supported) we simply use the byte-positions
 		// as offset
-		if(PLIB_String::get_use_mb_functions())
+		if(FWS_String::get_use_mb_functions())
 		{
 			// unfortunatly preg_match_all() with PREG_OFFSET_CAPTURE does always count bytes for the
 			// offset (this doesn't change with modifier "u").
@@ -175,7 +175,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 					if($status == 0)
 					{
 						$status = self::SL_COMMENT;
-						$temp .= PLIB_String::substr($sql,$last,$match[1] - $last);
+						$temp .= FWS_String::substr($sql,$last,$match[1] - $last);
 					}
 					break;
 				
@@ -193,7 +193,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 					if($status == 0)
 					{
 						$status = self::ML_COMMENT;
-						$temp .= PLIB_String::substr($sql,$last,$match[1] - $last);
+						$temp .= FWS_String::substr($sql,$last,$match[1] - $last);
 					}
 					break;
 				
@@ -202,7 +202,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 					// we just want to do this if we are not in a comment or string
 					if($status == 0)
 					{
-						$temp .= PLIB_String::substr($sql,$last,$match[1] - $last);
+						$temp .= FWS_String::substr($sql,$last,$match[1] - $last);
 						$statements[] = trim($temp);
 						$temp = '';
 						$last = $match[1] + 1;
@@ -226,7 +226,7 @@ final class PLIB_SQLParser extends PLIB_UtilBase
 		$count = 0;
 		for($i = $pos - 1;$i >= 0;$i--)
 		{
-			$c = PLIB_String::substr($string,$i,1);
+			$c = FWS_String::substr($string,$i,1);
 			if($c != '\\')
 				break;
 			

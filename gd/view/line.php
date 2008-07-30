@@ -3,7 +3,7 @@
  * Contains the line-view-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,31 +13,31 @@
 /**
  * The view for a line which allows the painting of it
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_View_Line extends PLIB_GD_View
+class FWS_GD_View_Line extends FWS_GD_View
 {
 	/**
 	 * The line
 	 *
-	 * @var PLIB_GD_Line
+	 * @var FWS_GD_Line
 	 */
 	protected $_line;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_Image $img the image
-	 * @param PLIB_GD_Line $line the line
+	 * @param FWS_GD_Image $img the image
+	 * @param FWS_GD_Line $line the line
 	 */
 	public function __construct($img,$line)
 	{
 		parent::__construct($img);
 		
-		if(!($line instanceof PLIB_GD_Line))
-			PLIB_Helper::def_error('instance','line','PLIB_GD_Line',$line);
+		if(!($line instanceof FWS_GD_Line))
+			FWS_Helper::def_error('instance','line','FWS_GD_Line',$line);
 		
 		$this->_line = $line;
 	}
@@ -45,13 +45,13 @@ class PLIB_GD_View_Line extends PLIB_GD_View
 	/**
 	 * Draws the line with the given color
 	 *
-	 * @param PLIB_GD_Color $color
+	 * @param FWS_GD_Color $color
 	 * @return the result of imageline()
 	 */
 	public final function draw($color)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		$from = $this->_line->get_from();
 		$to = $this->_line->get_to();
@@ -72,11 +72,11 @@ class PLIB_GD_View_Line extends PLIB_GD_View
 	 */
 	public final function draw_colorfade($colors,$step = 1)
 	{
-		if(!PLIB_Helper::is_integer($step) || $step <= 0)
-			PLIB_Helper::def_error('intgt0','step',$step);
+		if(!FWS_Helper::is_integer($step) || $step <= 0)
+			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_line->get_length();
-		$cf = new PLIB_GD_ColorFade($distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade($distance,$distance / $step,$colors);
 		$cfcolors = $cf->get_colors();
 		
 		$img = $this->get_image_res();

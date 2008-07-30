@@ -3,7 +3,7 @@
  * Contains the config-item-password class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The implementation of the config-item "password". That means the user will get a password-box.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Item_Password extends PLIB_Config_Item_Default
+class FWS_Config_Item_Password extends FWS_Config_Item_Default
 {
 	public function get_control($form)
 	{
@@ -31,9 +31,9 @@ class PLIB_Config_Item_Password extends PLIB_Config_Item_Default
 
 	public function get_value()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		return $input->get_var($this->_data->get_name(),'post',PLIB_Input::STRING);
+		return $input->get_var($this->_data->get_name(),'post',FWS_Input::STRING);
 	}
 }
 ?>

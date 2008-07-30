@@ -3,7 +3,7 @@
  * Contains the data-class for the additional-fields
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Simply a container for the data of the fields
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AddField_Data extends PLIB_Object
+class FWS_AddField_Data extends FWS_Object
 {
 	/**
 	 * The id of the field
@@ -141,24 +141,24 @@ class PLIB_AddField_Data extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		if(!is_string($type) || empty($type))
-			PLIB_Helper::def_error('notempty','type',$type);
-		if(!PLIB_Helper::is_integer($location) || $location < 0)
-			PLIB_Helper::def_error('intge0','location',$location);
+			FWS_Helper::def_error('notempty','type',$type);
+		if(!FWS_Helper::is_integer($location) || $location < 0)
+			FWS_Helper::def_error('intge0','location',$location);
 		if(!is_string($name) || empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		if(!is_string($title) || empty($title))
-			PLIB_Helper::def_error('notempty','title',$title);
-		if(!PLIB_Helper::is_integer($sort))
-			PLIB_Helper::def_error('integer','sort',$sort);
-		if(!PLIB_Helper::is_integer($length) || $length < 0)
-			PLIB_Helper::def_error('intge0','length',$length);
+			FWS_Helper::def_error('notempty','title',$title);
+		if(!FWS_Helper::is_integer($sort))
+			FWS_Helper::def_error('integer','sort',$sort);
+		if(!FWS_Helper::is_integer($length) || $length < 0)
+			FWS_Helper::def_error('intge0','length',$length);
 		if(!is_array($values))
-			PLIB_Helper::def_error('array','values',$values);
+			FWS_Helper::def_error('array','values',$values);
 		if(!is_string($validation))
-			PLIB_Helper::def_error('string','validation',$validation);
+			FWS_Helper::def_error('string','validation',$validation);
 		
 		$this->_id = $id;
 		$this->_type = $type;

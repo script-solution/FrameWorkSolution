@@ -3,7 +3,7 @@
  * Contains the URL-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -17,10 +17,10 @@
  * 
  * TODO what to finalize here?
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_URL extends PLIB_Object
+class FWS_URL extends FWS_Object
 {
 	/**
 	 * The session-id which will be appended
@@ -69,11 +69,11 @@ class PLIB_URL extends PLIB_Object
 	 */
 	public function __construct()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		parent::__construct();
 		
-		$this->_phpself = $input->get_var('PHP_SELF','server',PLIB_Input::STRING);
+		$this->_phpself = $input->get_var('PHP_SELF','server',FWS_Input::STRING);
 	}
 
 	/**
@@ -154,7 +154,7 @@ class PLIB_URL extends PLIB_Object
 	 */
 	public function get_extern_vars()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		$vars = array();
 		foreach($input->get_vars_from_method('get') as $key => $value)
@@ -170,10 +170,10 @@ class PLIB_URL extends PLIB_Object
 	 * Note that this method does NOT append the external vars. Therefore you should
 	 * always create a link to a standalone-file!
 	 *
-	 * @param string $file the file (starting at {@link PLIB_Path::client_app()})
+	 * @param string $file the file (starting at {@link FWS_Path::client_app()})
 	 * @param string $additional additional parameters
 	 * @param string $separator the separator for the parameters (default = &amp;)
-	 * @param boolean $absolute use the absolute URL or {@link PLIB_Path::client_app()}?
+	 * @param boolean $absolute use the absolute URL or {@link FWS_Path::client_app()}?
 	 * @return string the url
 	 */
 	public function get_file_url($file,$additional = '',$separator = '&amp;',$absolute = false)
@@ -189,14 +189,14 @@ class PLIB_URL extends PLIB_Object
 			$parameters .= $this->_session_id;
 		$parameters .= $additional;
 
-		$first_sep = PLIB_String::strpos($file,'?') !== false ? $separator : '?';
-		$base = $absolute ? PLIB_Path::outer() : PLIB_Path::client_app();
+		$first_sep = FWS_String::strpos($file,'?') !== false ? $separator : '?';
+		$base = $absolute ? FWS_Path::outer() : FWS_Path::client_app();
 		if($parameters == '')
 			$url = $base.$file;
 		else if($separator == '&' && $parameters[0] == $separator)
-			$url = $base.$file.$first_sep.PLIB_String::substr($parameters,1);
-		else if($separator == '&amp;' && PLIB_String::substr($parameters,0,5) == '&amp;')
-			$url = $base.$file.$first_sep.PLIB_String::substr($parameters,5);
+			$url = $base.$file.$first_sep.FWS_String::substr($parameters,1);
+		else if($separator == '&amp;' && FWS_String::substr($parameters,0,5) == '&amp;')
+			$url = $base.$file.$first_sep.FWS_String::substr($parameters,5);
 		else
 			$url = $base.$file.$first_sep.$parameters;
 
@@ -244,8 +244,8 @@ class PLIB_URL extends PLIB_Object
 	 */
 	public function get_url($target = 0,$additional = '',$separator = '&amp;',$force_sid = false)
 	{
-		$input = PLIB_Props::get()->input();
-		$user = PLIB_Props::get()->user();
+		$input = FWS_Props::get()->input();
+		$user = FWS_Props::get()->user();
 
 		$this->init();
 
@@ -253,7 +253,7 @@ class PLIB_URL extends PLIB_Object
 			$action = '';
 		else if($target === 0)
 		{
-			$action_param = $input->get_var($this->_action_param,'get',PLIB_Input::STRING);
+			$action_param = $input->get_var($this->_action_param,'get',FWS_Input::STRING);
 			if($action_param == null)
 				$action = '';
 			else
@@ -284,9 +284,9 @@ class PLIB_URL extends PLIB_Object
 		if($parameters == '')
 			$url = $this->_phpself;
 		else if($separator == '&' && $parameters[0] == $separator)
-			$url = $this->_phpself.'?'.PLIB_String::substr($parameters,1);
-		else if($separator == '&amp;' && PLIB_String::substr($parameters,0,5) == '&amp;')
-			$url = $this->_phpself.'?'.PLIB_String::substr($parameters,5);
+			$url = $this->_phpself.'?'.FWS_String::substr($parameters,1);
+		else if($separator == '&amp;' && FWS_String::substr($parameters,0,5) == '&amp;')
+			$url = $this->_phpself.'?'.FWS_String::substr($parameters,5);
 		else
 			$url = $this->_phpself.'?'.$parameters;
 
@@ -311,9 +311,9 @@ class PLIB_URL extends PLIB_Object
 	 */
 	protected function init()
 	{
-		$input = PLIB_Props::get()->input();
-		$cookies = PLIB_Props::get()->cookies();
-		$user = PLIB_Props::get()->user();
+		$input = FWS_Props::get()->input();
+		$cookies = FWS_Props::get()->cookies();
+		$user = FWS_Props::get()->user();
 
 		if($this->_session_id !== -1)
 			return;
@@ -342,7 +342,7 @@ class PLIB_URL extends PLIB_Object
 			$use_sid = !isset($HTTP_COOKIE_VARS[$cookies->get_prefix().'sid']);
 		}
 
-		if($user instanceof PLIB_User_Current && $use_sid)
+		if($user instanceof FWS_User_Current && $use_sid)
 		{
 			$sid = $user->get_session_id();
 			if($sid)

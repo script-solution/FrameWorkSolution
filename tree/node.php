@@ -3,7 +3,7 @@
  * Contains the tree-node-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * <br>
  * Note that this class does not check many parameters for performance issues!
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Tree_Node extends PLIB_Object
+final class FWS_Tree_Node extends FWS_Object
 {
 	/**
 	 * The id of the node (copied from the data)
@@ -32,7 +32,7 @@ final class PLIB_Tree_Node extends PLIB_Object
 	/**
 	 * The data of this node
 	 *
-	 * @var PLIB_Tree_NodeData
+	 * @var FWS_Tree_NodeData
 	 */
 	private $_data;
 	
@@ -47,7 +47,7 @@ final class PLIB_Tree_Node extends PLIB_Object
 	/**
 	 * The parent-node (not the id!). This will be set by the tree-manager!
 	 *
-	 * @var PLIB_Tree_Node
+	 * @var FWS_Tree_Node
 	 */
 	private $_parent;
 	
@@ -68,8 +68,8 @@ final class PLIB_Tree_Node extends PLIB_Object
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_Tree_NodeData $data the data of this node
-	 * @param PLIB_Tree_Node $parent the parent-node
+	 * @param FWS_Tree_NodeData $data the data of this node
+	 * @param FWS_Tree_Node $parent the parent-node
 	 * @param int $layer the layer of this node
 	 */
 	public function __construct($data,$parent = null,$layer = -1)
@@ -92,7 +92,7 @@ final class PLIB_Tree_Node extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Tree_Node the parent-node (null for the root-node)
+	 * @return FWS_Tree_Node the parent-node (null for the root-node)
 	 */
 	public function get_parent()
 	{
@@ -124,7 +124,7 @@ final class PLIB_Tree_Node extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Tree_NodeData the data of this node
+	 * @return FWS_Tree_NodeData the data of this node
 	 */
 	public function get_data()
 	{
@@ -134,12 +134,12 @@ final class PLIB_Tree_Node extends PLIB_Object
 	/**
 	 * Sets the data of this node
 	 *
-	 * @param PLIB_Tree_NodeData $data the new value
+	 * @param FWS_Tree_NodeData $data the new value
 	 */
 	public function set_data($data)
 	{
-		if(!($data instanceof PLIB_Tree_NodeData))
-			PLIB_Helper::def_error('instance','data','PLIB_Tree_NodeData',$data);
+		if(!($data instanceof FWS_Tree_NodeData))
+			FWS_Helper::def_error('instance','data','FWS_Tree_NodeData',$data);
 		
 		$this->_data = $data;
 	}
@@ -171,8 +171,8 @@ final class PLIB_Tree_Node extends PLIB_Object
 	 * Note that the parent-id will be set in the data!
 	 * <b>This method may just be called by the tree-manager!</b>
 	 *
-	 * @param PLIB_Tree_NodeData $data the data to add
-	 * @return PLIB_Tree_Node the created node or null if nothing has been done
+	 * @param FWS_Tree_NodeData $data the data to add
+	 * @return FWS_Tree_Node the created node or null if nothing has been done
 	 */
 	public function add_data($data)
 	{
@@ -185,13 +185,13 @@ final class PLIB_Tree_Node extends PLIB_Object
 	 * Note that the parent-id will be set in the data!
 	 * <b>This method may just be called by the tree-manager!</b>
 	 * 
-	 * @param PLIB_Tree_NodeData $data the data to add
+	 * @param FWS_Tree_NodeData $data the data to add
 	 * @param int $index the index where the node should be added (0..n)
-	 * @return PLIB_Tree_Node the created node or null if nothing has been done
+	 * @return FWS_Tree_Node the created node or null if nothing has been done
 	 */
 	public function add_data_at($data,$index)
 	{
-		$node = new PLIB_Tree_Node($data,$this,$this->_layer + 1);
+		$node = new FWS_Tree_Node($data,$this,$this->_layer + 1);
 		return $this->add_node_at($node,$index);
 	}
 	
@@ -200,8 +200,8 @@ final class PLIB_Tree_Node extends PLIB_Object
 	 * Note that the parent-id will be set in the data!
 	 * <b>This method may just be called by the tree-manager!</b>
 	 *
-	 * @param PLIB_Tree_Node $node the node to add
-	 * @return PLIB_Tree_Node the created node or null if nothing has been done
+	 * @param FWS_Tree_Node $node the node to add
+	 * @return FWS_Tree_Node the created node or null if nothing has been done
 	 */
 	public function add_node($node)
 	{
@@ -213,9 +213,9 @@ final class PLIB_Tree_Node extends PLIB_Object
 	 * Note that the parent-id will be set in the data!
 	 * <b>This method may just be called by the tree-manager!</b>
 	 * 
-	 * @param PLIB_Tree_Node $node the node to add
+	 * @param FWS_Tree_Node $node the node to add
 	 * @param int $index the index where the node should be added (0..n)
-	 * @return PLIB_Tree_Node the created node or null if nothing has been done
+	 * @return FWS_Tree_Node the created node or null if nothing has been done
 	 */
 	public function add_node_at($node,$index)
 	{

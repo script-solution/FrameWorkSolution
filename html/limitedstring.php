@@ -3,7 +3,7 @@
  * Contains a class to cut a HTML-string to a given length.
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,16 +16,16 @@
  * 
  * Usage:
  * <code>
- * 	$lhtml = new PLIB_HTML_LimitedString('<p>test <a href="#foo">bar</a> blub</p>',3);
+ * 	$lhtml = new FWS_HTML_LimitedString('<p>test <a href="#foo">bar</a> blub</p>',3);
  *  $lhtml->set_more_text(' ... <a href="somePage.htm">Read more</a>');
  * 	echo $lhtml->get();
  * </code>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_HTML_LimitedString extends PLIB_Object
+final class FWS_HTML_LimitedString extends FWS_Object
 {
 	/**
 	 * The input-string
@@ -143,9 +143,9 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 		parent::__construct();
 		
 		if(!is_string($input))
-			PLIB_Helper::def_error('string','input',$input);
-		if(!PLIB_Helper::is_integer($limit) || $limit <= 0)
-			PLIB_Helper::def_error('intgt0','limit',$limit);
+			FWS_Helper::def_error('string','input',$input);
+		if(!FWS_Helper::is_integer($limit) || $limit <= 0)
+			FWS_Helper::def_error('intgt0','limit',$limit);
 		
 		$this->_input = $input;
 		$this->_limit = $limit;
@@ -180,26 +180,26 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 	public function get()
 	{
 		// do we have to cut the string?
-		$real_len = PLIB_String::strlen(strip_tags($this->_input));
+		$real_len = FWS_String::strlen(strip_tags($this->_input));
 		if($real_len > $this->_limit)
 		{
 			$this->_has_cut = true;
 			
 			// ensure that the limit is >= 0 and we want to count the "...", too
-			$limit = max(0,$this->_limit - PLIB_String::strlen(strip_tags($this->_more_text)));
+			$limit = max(0,$this->_limit - FWS_String::strlen(strip_tags($this->_more_text)));
 			$output = '';
 			$c = 0;
-			for($i = 0,$len = PLIB_String::strlen($this->_input);$i < $len;$i++)
+			for($i = 0,$len = FWS_String::strlen($this->_input);$i < $len;$i++)
 			{
 				// search the next tag-start
-				$pos = PLIB_String::strpos($this->_input,'<',$i);
+				$pos = FWS_String::strpos($this->_input,'<',$i);
 				
 				// there is no tag anymore?
 				if($pos === false)
 				{
 					// does it fit?
 					if($c + ($len - $i) <= $limit)
-						$output .= PLIB_String::substr($this->_input,$i);
+						$output .= FWS_String::substr($this->_input,$i);
 					else
 					{
 						$rem = $this->_get_html_part($c,$i,$i + $limit - $c,end($this->_open_tags));
@@ -214,18 +214,18 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 				$noctag = isset($this->_no_content_tags[end($this->_open_tags)]);
 				for($a = $i;$a < $pos;$a++)
 				{
-					$vc = PLIB_String::substr($this->_input,$a,1);
+					$vc = FWS_String::substr($this->_input,$a,1);
 					
 					// have we found a &...;? so don't count it
 					if($vc == '&')
 					{
-						$a = PLIB_String::strpos($this->_input,';',$a);
+						$a = FWS_String::strpos($this->_input,';',$a);
 						$visible_chars++;
 						$last_was_space = false;
 						continue;
 					}
 					
-					$is_wp = PLIB_String::is_whitespace($vc);
+					$is_wp = FWS_String::is_whitespace($vc);
 					if((!$noctag && (!$is_wp || !$last_was_space)) || !$is_wp)
 					{
 						$last_was_space = $is_wp;
@@ -237,14 +237,14 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 				if($c + $visible_chars <= $limit)
 				{
 					// search the tag-end
-					$end = PLIB_String::strpos($this->_input,'>',$pos);
-					$is_closing_tag = PLIB_String::substr($this->_input,$pos + 1,1) == '/';
+					$end = FWS_String::strpos($this->_input,'>',$pos);
+					$is_closing_tag = FWS_String::substr($this->_input,$pos + 1,1) == '/';
 					
 					// closing tag?
 					if($is_closing_tag)
 					{
-						$tagname = PLIB_String::substr($this->_input,$pos + 2,$end - $pos - 2);
-						$tagname = PLIB_String::strtolower($tagname);
+						$tagname = FWS_String::substr($this->_input,$pos + 2,$end - $pos - 2);
+						$tagname = FWS_String::strtolower($tagname);
 						array_pop($this->_open_tags);
 					}
 					else
@@ -252,16 +252,16 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 						// search the tagname-end
 						for($x = $pos;$x < $len;$x++)
 						{
-							$xc = PLIB_String::substr($this->_input,$x,1);
+							$xc = FWS_String::substr($this->_input,$x,1);
 							// whitespace or ">"?
-							if($xc == '>' || PLIB_String::is_whitespace($xc))
+							if($xc == '>' || FWS_String::is_whitespace($xc))
 								break;
 						}
-						$tagname = PLIB_String::substr($this->_input,$pos + 1,$x - $pos - 1);
-						$tagname = PLIB_String::strtolower($tagname);
+						$tagname = FWS_String::substr($this->_input,$pos + 1,$x - $pos - 1);
+						$tagname = FWS_String::strtolower($tagname);
 						
 						// just add the tag if it is no short-tag
-						if(PLIB_String::substr($this->_input,$end - 1,1) != '/' &&
+						if(FWS_String::substr($this->_input,$end - 1,1) != '/' &&
 								!isset($this->_short_tags[$tagname]))
 						{
 							array_push($this->_open_tags,$tagname);
@@ -277,7 +277,7 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 						$this->_last_td_type = $tagname;
 						
 						$preg_res = array();
-						$arguments = PLIB_String::substr($this->_input,$pos + 1,$end - ($pos + 1));
+						$arguments = FWS_String::substr($this->_input,$pos + 1,$end - ($pos + 1));
 						if(preg_match('/colspan\s*=\s*"?\s*(\d+)\s*"?/i',$arguments,$preg_res))
 						{
 							$col_width = $preg_res[1];
@@ -313,7 +313,7 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 					$visible = $this->_get_html_part($c,$i,$pos,$current_tag);
 					
 					// append to output and continue at the end-position of the tag
-					$output .= $visible.PLIB_String::substr($this->_input,$pos,$end - $pos + 1);
+					$output .= $visible.FWS_String::substr($this->_input,$pos,$end - $pos + 1);
 					$i = $end;
 				}
 				else
@@ -386,20 +386,20 @@ final class PLIB_HTML_LimitedString extends PLIB_Object
 		$str = '';
 		for($i = $start;$i < $end;$i++)
 		{
-			$c = PLIB_String::substr($this->_input,$i,1);
+			$c = FWS_String::substr($this->_input,$i,1);
 			
 			// have we found a &...;? so don't count it
 			if($c == '&')
 			{
-				$aend = PLIB_String::strpos($this->_input,';',$i);
-				$str .= PLIB_String::substr($this->_input,$i,$aend - $i + 1);
+				$aend = FWS_String::strpos($this->_input,';',$i);
+				$str .= FWS_String::substr($this->_input,$i,$aend - $i + 1);
 				$count++;
 				$i = $aend;
 				$last_was_space = false;
 				continue;
 			}
 			
-			$is_wp = PLIB_String::is_whitespace($c);
+			$is_wp = FWS_String::is_whitespace($c);
 			$str .= $c;
 			if((!$noctag && (!$is_wp || !$last_was_space)) || !$is_wp)
 			{

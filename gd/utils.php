@@ -3,7 +3,7 @@
  * Contains the gd-utils-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,23 +13,23 @@
 /**
  * Contains some helper-methods for the gd-package
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Utils extends PLIB_UtilBase
+final class FWS_GD_Utils extends FWS_UtilBase
 {
 	/**
 	 * Adds the given padding to the bounds
 	 *
 	 * @param array $bounds the bounds
-	 * @param PLIB_GD_Padding $padding the padding to add
+	 * @param FWS_GD_Padding $padding the padding to add
 	 * @param int $angle the rotation-angle
 	 */
 	public static function add_padding(&$bounds,$padding,$angle)
 	{
-		if(!($padding instanceof PLIB_GD_Padding))
-			PLIB_Helper::def_error('instance','padding','PLIB_GD_Padding',$padding);
+		if(!($padding instanceof FWS_GD_Padding))
+			FWS_Helper::def_error('instance','padding','FWS_GD_Padding',$padding);
 		
 		$pl = $padding->get_left();
 		$pb = $padding->get_bottom();
@@ -51,7 +51,7 @@ final class PLIB_GD_Utils extends PLIB_UtilBase
 	public static function add_padding_custom(&$bounds,$pt,$pr,$pb,$pl,$angle)
 	{
 		if(!is_array($bounds) || count($bounds) != 8)
-			PLIB_Helper::error('Invalid bounds-array: '.PLIB_PrintUtils::to_string($bounds,true,false));
+			FWS_Helper::error('Invalid bounds-array: '.FWS_PrintUtils::to_string($bounds,true,false));
 		
 		// nothing to do?
 		if($pt == 0 && $pr == 0 && $pb == 0 && $pl == 0)

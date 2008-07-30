@@ -3,7 +3,7 @@
  * Contains the default-addfield-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,30 +13,30 @@
 /**
  * The default additional field
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_AddField_Type_Default extends PLIB_Object implements PLIB_AddField_Field
+abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddField_Field
 {
 	/**
 	 * The data of this field
 	 *
-	 * @var PLIB_AddField_Data
+	 * @var FWS_AddField_Data
 	 */
 	protected $_data;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_AddField_Data $data the data of the field
+	 * @param FWS_AddField_Data $data the data of the field
 	 */
 	public function __construct($data)
 	{
 		parent::__construct();
 		
-		if(!($data instanceof PLIB_AddField_Data))
-			PLIB_Helper::def_error('instance','data','PLIB_AddField_Data',$data);
+		if(!($data instanceof FWS_AddField_Data))
+			FWS_Helper::def_error('instance','data','FWS_AddField_Data',$data);
 		
 		$this->_data = $data;
 	}
@@ -53,9 +53,9 @@ abstract class PLIB_AddField_Type_Default extends PLIB_Object implements PLIB_Ad
 	
 	public function get_value_from_formular($default = null)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$val = $input->get_var('add_'.$this->_data->get_name(),'post',PLIB_Input::STRING);
+		$val = $input->get_var('add_'.$this->_data->get_name(),'post',FWS_Input::STRING);
 		return $val !== null ? $val : $default;
 	}
 	
@@ -72,7 +72,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_Object implements PLIB_Ad
 	/**
 	 * Should generate just the formular field, without edit-suffix
 	 *
-	 * @param PLIB_HTML_Formular the formular that should be used
+	 * @param FWS_HTML_Formular the formular that should be used
 	 * @param mixed $value the default value
 	 * @return string the HTML-code for the formular-control
 	 */
@@ -132,7 +132,7 @@ abstract class PLIB_AddField_Type_Default extends PLIB_Object implements PLIB_Ad
 		
 		if($limit)
 		{
-			$lhs = new PLIB_HTML_LimitedString($display,30);
+			$lhs = new FWS_HTML_LimitedString($display,30);
 			$short = $lhs->get();
 			if($lhs->has_cut())
 				$display = '<span title="'.strip_tags($display).'">'.$short.'</span>';

@@ -3,7 +3,7 @@
  * Contains the integer-class for the additional-fields
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents an integer as additional field
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AddField_Type_Int extends PLIB_AddField_Type_Default
+class FWS_AddField_Type_Int extends FWS_AddField_Type_Default
 {
 	protected function get_formular_field_impl($formular,$value)
 	{
@@ -32,12 +32,12 @@ class PLIB_AddField_Type_Int extends PLIB_AddField_Type_Default
 	
 	protected function is_valid_value_impl($value)
 	{
-		return PLIB_Helper::is_integer($value);
+		return FWS_Helper::is_integer($value);
 	}
 	
 	public function get_value_to_store($value)
 	{
-		if(!PLIB_Helper::is_integer($value))
+		if(!FWS_Helper::is_integer($value))
 			return null;
 		
 		return $value;

@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_GD_ColorFade test
+ * Contains the FWS_GD_ColorFade test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,16 +11,16 @@
  */
 
 /**
- * PLIB_GD_ColorFade test case.
+ * FWS_GD_ColorFade test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
+class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var PLIB_GD_ColorFade
+	 * @var FWS_GD_ColorFade
 	 */
 	private $_cf;
 
@@ -36,7 +36,7 @@ class PLIB_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 			array(0,255,0),
 			array(255,0,255)
 		);
-		$this->_cf = new PLIB_GD_ColorFade(360,120,$colors);
+		$this->_cf = new FWS_GD_ColorFade(360,120,$colors);
 	}
 
 	/**
@@ -49,7 +49,7 @@ class PLIB_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_GD_ColorFade->get_color_at()
+	 * Tests FWS_GD_ColorFade->get_color_at()
 	 */
 	public function testGet_color_at()
 	{
@@ -60,31 +60,31 @@ class PLIB_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_GD_ColorFade->get_colors()
+	 * Tests FWS_GD_ColorFade->get_colors()
 	 */
 	public function testGet_colors()
 	{
-		// TODO Auto-generated PLIB_GD_ColorFadeTest->testGet_colors()
+		// TODO Auto-generated FWS_GD_ColorFadeTest->testGet_colors()
 		$this->markTestIncomplete("get_colors test not implemented");
 		$this->_cf->get_colors(/* parameters */);
 	}
 
 	/**
-	 * Tests PLIB_GD_ColorFade->__construct()
+	 * Tests FWS_GD_ColorFade->__construct()
 	 */
 	public function test__construct()
 	{
-		// TODO Auto-generated PLIB_GD_ColorFadeTest->test__construct()
+		// TODO Auto-generated FWS_GD_ColorFadeTest->test__construct()
 		$this->markTestIncomplete("__construct test not implemented");
 		$this->_cf->__construct(/* parameters */);
 	}
 
 	/**
-	 * Tests PLIB_GD_ColorFade->__toString()
+	 * Tests FWS_GD_ColorFade->__toString()
 	 */
 	public function test__toString()
 	{
-		// TODO Auto-generated PLIB_GD_ColorFadeTest->test__toString()
+		// TODO Auto-generated FWS_GD_ColorFadeTest->test__toString()
 		$this->markTestIncomplete("__toString test not implemented");
 		$this->_cf->__toString(/* parameters */);
 	}

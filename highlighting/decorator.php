@@ -3,7 +3,7 @@
  * Contains the highlighting-decorator-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,16 +14,16 @@
  * The interface for the highlighting-decorators. That means the classes that use HTML, BBCode
  * or something similar to actually highlight the text.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Highlighting_Decorator
+interface FWS_Highlighting_Decorator
 {
 	/**
 	 * Should open all given attributes and return the result
 	 *
-	 * @param PLIB_Highlighting_Attributes $attr the attributes
+	 * @param FWS_Highlighting_Attributes $attr the attributes
 	 * @param string $text the text for which the attributes should be applied
 	 * @return string the result
 	 */
@@ -32,7 +32,7 @@ interface PLIB_Highlighting_Decorator
 	/**
 	 * Should close all given attributes and return the result
 	 *
-	 * @param PLIB_Highlighting_Attributes $attr the attributes
+	 * @param FWS_Highlighting_Attributes $attr the attributes
 	 * @return string the result
 	 */
 	public function close_attributes($attr);

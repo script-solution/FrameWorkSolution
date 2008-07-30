@@ -3,7 +3,7 @@
  * Contains the date-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -13,22 +13,22 @@
  * The date-class to format dates for the output. You may use this for timestamps or
  * in general for any date.
  * <br>
- * This class depends on {@link PLIB_Locale}. That means that PLIB_Props::get()->locale() will
+ * This class depends on {@link FWS_Locale}. That means that FWS_Props::get()->locale() will
  * be used for texts, date-formats, timezone and so on.
  * <br>
- * PLIB_Date lets you specify an 'input-timezone' and an 'output-timezone'. That means you can
+ * FWS_Date lets you specify an 'input-timezone' and an 'output-timezone'. That means you can
  * choose in which timezone your date is and in what you want to interpret it. So for example
  * you have a timestamp in GMT and want to display it in the user-timezone.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Date extends PLIB_Object
+final class FWS_Date extends FWS_Object
 {
 	/**
 	 * Represents the timezone of the user
 	 * 
-	 * @see PLIB_Locale
+	 * @see FWS_Locale
 	 */
 	const TZ_USER		= 0;
 	
@@ -75,7 +75,7 @@ final class PLIB_Date extends PLIB_Object
 	/**
 	 * A convenience method for:
 	 * <code>
-	 * 	$d = new PLIB_Date($date);
+	 * 	$d = new FWS_Date($date);
 	 * 	return $d->to_date($show_time,$relative);
 	 * </code>
 	 * 
@@ -87,7 +87,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public static function get_date($date = 'now',$show_time = true,$relative = true)
 	{
-		$d = new PLIB_Date($date);
+		$d = new FWS_Date($date);
 		return $d->to_date($show_time,$relative);
 	}
 	
@@ -105,7 +105,7 @@ final class PLIB_Date extends PLIB_Object
 	 * Creates a timestamp in GMT. You can choose the input-timezone
 	 * This is a convenience-method for:
 	 * <code>
-	 * 	$d = new PLIB_Date($date,$input_tz);
+	 * 	$d = new FWS_Date($date,$input_tz);
 	 * 	return $d->to_timestamp();
 	 * </code>
 	 * You may also modify the date before the timestamp-creation. For example with '+1day'.
@@ -119,7 +119,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public static function get_timestamp($date,$input_tz = self::TZ_USER,$mod = '')
 	{
-		$d = new PLIB_Date($date,$input_tz);
+		$d = new FWS_Date($date,$input_tz);
 		if($mod != '')
 			$d->modify($mod);
 		return $d->to_timestamp();
@@ -128,7 +128,7 @@ final class PLIB_Date extends PLIB_Object
 	/**
 	 * A convenience method for:
 	 * <code>
-	 * 	$d = new PLIB_Date($date);
+	 * 	$d = new FWS_Date($date);
 	 * 	return $d->to_format($format);
 	 * </code>
 	 * 
@@ -139,7 +139,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public static function get_formated_date($format,$date = 'now')
 	{
-		$d = new PLIB_Date($date);
+		$d = new FWS_Date($date);
 		return $d->to_format($format);
 	}
 		
@@ -151,7 +151,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public static function is_valid_timestamp($timestamp)
 	{
-		if(!PLIB_Helper::is_integer($timestamp))
+		if(!FWS_Helper::is_integer($timestamp))
 			return false;
 		
 		return $timestamp >= 0 && $timestamp < ~(1 << 31);
@@ -295,7 +295,7 @@ final class PLIB_Date extends PLIB_Object
 	
 	/**
 	 * Constructor. By default the input-timezone is GMT and the output-timezone the one of the user.
-	 * See {@link PLIB_Locale}.<br>
+	 * See {@link FWS_Locale}.<br>
 	 * Note that it may cause trouble if you use a string as first argument and append the timezone
 	 * to it! Because the class assumes that the date is either represented in GMT or the timezone
 	 * of the user.
@@ -315,39 +315,39 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function __construct($date = 'now',$input_tz = self::TZ_GMT,$output_tz = self::TZ_USER)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		parent::__construct();
 		
 		// init static fields
-		if(!PLIB_Date::$_timezone_gmt)
+		if(!FWS_Date::$_timezone_gmt)
 		{
 			// we set the default timezone to the user-tz, too, to prevent problems with 'now'
 			// and other stuff.
 			date_default_timezone_set($locale->get_timezone());
 			
-			PLIB_Date::$_timezone_gmt = new DateTimeZone('GMT');
-			PLIB_Date::$_timezone_user = new DateTimeZone($locale->get_timezone());
+			FWS_Date::$_timezone_gmt = new DateTimeZone('GMT');
+			FWS_Date::$_timezone_user = new DateTimeZone($locale->get_timezone());
 			
 			// store today, yesterday and tomorrow
 			$d = new DateTime('@'.time());
 			
-			PLIB_Date::$_today = $d->format('dmY');
+			FWS_Date::$_today = $d->format('dmY');
 			$d->modify('-1 day');
-			PLIB_Date::$_yesterday = $d->format('dmY');
+			FWS_Date::$_yesterday = $d->format('dmY');
 			$d->modify('+2 days');
-			PLIB_Date::$_tomorrow = $d->format('dmY');
+			FWS_Date::$_tomorrow = $d->format('dmY');
 		}
 		
 		// is it a timestamp?
-		if(PLIB_Helper::is_integer($date))
+		if(FWS_Helper::is_integer($date))
 		{
 			// if we timestamp should be considered in the user-timezone we have to substract the offset
 			// of the user-timezone to GMT.
 			if($input_tz == self::TZ_USER)
 			{
-				$offset = PLIB_Date::$_timezone_user->getOffset(
-					new DateTime('@'.$date,PLIB_Date::$_timezone_gmt)
+				$offset = FWS_Date::$_timezone_user->getOffset(
+					new DateTime('@'.$date,FWS_Date::$_timezone_gmt)
 				);
 				$ts = $date - $offset;
 				$date = gmdate('Y-m-d H:i:s',$ts);
@@ -386,25 +386,25 @@ final class PLIB_Date extends PLIB_Object
 					break;
 				
 				default:
-					PLIB_Helper::error('Invalid number of array-elements! 0..6 are allowed.');
+					FWS_Helper::error('Invalid number of array-elements! 0..6 are allowed.');
 					break;
 			}
 		}
 		
 		// determine timezone
 		if($input_tz == self::TZ_USER)
-			$input_tz = PLIB_Date::$_timezone_user;
+			$input_tz = FWS_Date::$_timezone_user;
 		else
-			$input_tz = PLIB_Date::$_timezone_gmt;
+			$input_tz = FWS_Date::$_timezone_gmt;
 		
 		// create internal date-object
 		$this->_date = new DateTime($date,$input_tz);
 		
 		// set output timezone
 		if($output_tz == self::TZ_USER)
-			$this->_date->setTimezone(PLIB_Date::$_timezone_user);
+			$this->_date->setTimezone(FWS_Date::$_timezone_user);
 		else
-			$this->_date->setTimezone(PLIB_Date::$_timezone_gmt);
+			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
 		
 		$this->_output_tz = $output_tz;
 	}
@@ -425,7 +425,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function is_today()
 	{
-		return $this->_date->format('dmY') == PLIB_Date::$_today;
+		return $this->_date->format('dmY') == FWS_Date::$_today;
 	}
 	
 	/**
@@ -433,7 +433,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function is_yesterday()
 	{
-		return $this->_date->format('dmY') == PLIB_Date::$_yesterday;
+		return $this->_date->format('dmY') == FWS_Date::$_yesterday;
 	}
 	
 	/**
@@ -441,7 +441,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function is_tomorrow()
 	{
-		return $this->_date->format('dmY') == PLIB_Date::$_tomorrow;
+		return $this->_date->format('dmY') == FWS_Date::$_tomorrow;
 	}
 	
 	/**
@@ -553,7 +553,7 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function to_format($format,$replace_wm = false)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		static $weekdays = null,$months = null;
 
@@ -589,50 +589,50 @@ final class PLIB_Date extends PLIB_Object
 		switch($format)
 		{
 			case 'date':
-				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+				$date = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_DATE));
 				break;
 			case 'shortdate':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE_SHORT);
 				$date = $this->_date->format($format);
 				break;
 			case 'shortdatetime':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_SHORT);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE_SHORT);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'datetime':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_TIME);
 				$date = $this->_date->format($format);
 				break;
 			case 'datetime_s':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'longdate':
-				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG));
+				$date = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_DATE_LONG));
 				break;
 			case 'longdatetime':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE_LONG);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_TIME);
 				$date = $this->_date->format($format);
 				break;
 			case 'longdatetime_s':
-				$format = $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_LONG);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_DATE_TIME_SEP);
-				$format .= $locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC);
+				$format = $locale->get_dateformat(FWS_Locale::FORMAT_DATE_LONG);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_DATE_TIME_SEP);
+				$format .= $locale->get_dateformat(FWS_Locale::FORMAT_TIME_SEC);
 				$date = $this->_date->format($format);
 				break;
 			case 'time':
-				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
+				$date = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_TIME));
 				break;
 			case 'time_s':
-				$date = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME_SEC));
+				$date = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_TIME_SEC));
 				break;
 
 			default:
@@ -644,7 +644,7 @@ final class PLIB_Date extends PLIB_Object
 		{
 			if($weekdays === null)
 			{
-				PLIB_Helper::error('As it seems you\'ve called this method before the required '
+				FWS_Helper::error('As it seems you\'ve called this method before the required '
 					.'language-entries have been loaded');
 			}
 			
@@ -668,17 +668,17 @@ final class PLIB_Date extends PLIB_Object
 	 */
 	public function to_date($show_time = true,$relative = true)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		if($relative)
 		{
 			$date = $this->_date->format('dmY');
-			if($date == PLIB_Date::$_today)
+			if($date == FWS_Date::$_today)
 			{
 				if($show_time)
 				{
 					// generate timestamp for now and this date
-					$ts = PLIB_Date::get_current_timestamp();
+					$ts = FWS_Date::get_current_timestamp();
 					$thists = $this->to_timestamp();
 					
 					$diff = $ts - $thists;
@@ -696,18 +696,18 @@ final class PLIB_Date extends PLIB_Object
 
 				$string = '<b>'.$locale->lang('today').'</b>';
 			}
-			else if($date == PLIB_Date::$_yesterday)
+			else if($date == FWS_Date::$_yesterday)
 				$string = $locale->lang('yesterday');
-			else if($date == PLIB_Date::$_tomorrow)
+			else if($date == FWS_Date::$_tomorrow)
 				$string = $locale->lang('tomorrow');
 			else
-				$string = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+				$string = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_DATE));
 		}
 		else
-			$string = $this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_DATE));
+			$string = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_DATE));
 
 		if($show_time)
-			$string .= ', '.$this->_date->format($locale->get_dateformat(PLIB_Locale::FORMAT_TIME));
+			$string .= ', '.$this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_TIME));
 
 		return $string;
 	}

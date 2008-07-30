@@ -3,7 +3,7 @@
  * Contains the task-storage-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The task-data. Contains all data that is required for a task
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tasks_Data extends PLIB_Object
+class FWS_Tasks_Data extends FWS_Object
 {
 	/**
 	 * The id of the task
@@ -52,7 +52,7 @@ class PLIB_Tasks_Data extends PLIB_Object
 	/**
 	 * The point of the of the last execution
 	 *
-	 * @var PLIB_Date
+	 * @var FWS_Date
 	 */
 	private $_last_execution;
 	
@@ -69,7 +69,7 @@ class PLIB_Tasks_Data extends PLIB_Object
 	 * @param int $id the id of the task
 	 * @param string $file the file of the task
 	 * @param int $interval the interval in seconds
-	 * @param PLIB_Date $last_execution the last-execution date
+	 * @param FWS_Date $last_execution the last-execution date
 	 * @param boolean $enabled is the task enabled?
 	 * @param string $time the point of time for the execution (hours:minutes:seconds)
 	 */
@@ -78,8 +78,8 @@ class PLIB_Tasks_Data extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($id))
-			PLIB_Helper::def_error('integer','id',$id);
+		if(!FWS_Helper::is_integer($id))
+			FWS_Helper::def_error('integer','id',$id);
 		
 		$this->_id = $id;
 		$this->set_file($file);
@@ -131,7 +131,7 @@ class PLIB_Tasks_Data extends PLIB_Object
 	public final function set_file($file)
 	{
 		if(empty($file))
-			PLIB_Helper::def_error('empty','file',$file);
+			FWS_Helper::def_error('empty','file',$file);
 		
 		$this->_file = $file;
 	}
@@ -151,14 +151,14 @@ class PLIB_Tasks_Data extends PLIB_Object
 	 */
 	public final function set_interval($interval)
 	{
-		if(!PLIB_Helper::is_integer($interval))
-			PLIB_Helper::def_error('integer','interval',$interval);
+		if(!FWS_Helper::is_integer($interval))
+			FWS_Helper::def_error('integer','interval',$interval);
 		
 		$this->_interval = $interval;
 	}
 
 	/**
-	 * @return PLIB_Date the date of the last execution (may be null!)
+	 * @return FWS_Date the date of the last execution (may be null!)
 	 */
 	public final function get_last_execution()
 	{
@@ -168,12 +168,12 @@ class PLIB_Tasks_Data extends PLIB_Object
 	/**
 	 * Sets the last execution time
 	 * 
-	 * @param PLIB_Date $last_execution the new value (may be null!)
+	 * @param FWS_Date $last_execution the new value (may be null!)
 	 */
 	public final function set_last_execution($last_execution)
 	{
-		if($last_execution !== null && !($last_execution instanceof PLIB_Date))
-			PLIB_Helper::def_error('instance','last_execution','PLIB_Date',$last_execution);
+		if($last_execution !== null && !($last_execution instanceof FWS_Date))
+			FWS_Helper::def_error('instance','last_execution','FWS_Date',$last_execution);
 		
 		$this->_last_execution = $last_execution;
 	}
@@ -200,7 +200,7 @@ class PLIB_Tasks_Data extends PLIB_Object
 	public final function set_time($time)
 	{
 		if($time && !preg_match('/^\d{2}:\d{2}:\d{2}$/',$time))
-			PLIB_Helper::error('$time is invalid!');
+			FWS_Helper::error('$time is invalid!');
 		
 		$this->_time = $time;
 	}

@@ -3,7 +3,7 @@
  * Contains the missing-data-exception
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The MissingDataException indicates that some data is missing to continue
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Exceptions_MissingData extends PLIB_Exceptions_Critical
+final class FWS_Exceptions_MissingData extends FWS_Exceptions_Critical
 {
 	/**
 	 * Constructor

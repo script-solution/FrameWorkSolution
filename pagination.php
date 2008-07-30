@@ -3,7 +3,7 @@
  * Contains the pagination-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -18,10 +18,10 @@
  * <pre>1 2 |3| 4 5 7 9 ... 15</pre>
  * <pre>1 ... 8 11 13 14 |15|</pre>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Pagination extends PLIB_Object
+class FWS_Pagination extends FWS_Object
 {
 	/**
 	 * The number of entries per page
@@ -69,10 +69,10 @@ class PLIB_Pagination extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($per_page) || $per_page <= 0)
-			PLIB_Helper::def_error('intgt0','per_page',$per_page);
-		if(!PLIB_Helper::is_integer($num) || $num < 0)
-			PLIB_Helper::def_error('intge0','num',$num);
+		if(!FWS_Helper::is_integer($per_page) || $per_page <= 0)
+			FWS_Helper::def_error('intgt0','per_page',$per_page);
+		if(!FWS_Helper::is_integer($num) || $num < 0)
+			FWS_Helper::def_error('intge0','num',$num);
 
 		$this->_per_page = $per_page;
 		$this->_num = $num;
@@ -148,12 +148,12 @@ class PLIB_Pagination extends PLIB_Object
 	 */
 	public final function get_page_numbers($percent = 30,$untouched = 2,$max_dist = 6)
 	{
-		if(!PLIB_Helper::is_integer($percent) || $percent < 0 || $percent > 100)
-			PLIB_Helper::def_error('numbetween','percent',0,100,$percent);
-		if(!PLIB_Helper::is_integer($untouched) || $untouched < 0)
-			PLIB_Helper::def_error('intge0','untouched',$untouched);
-		if(!PLIB_Helper::is_integer($max_dist) || $max_dist < 0)
-			PLIB_Helper::def_error('intge0','max_dist',$max_dist);
+		if(!FWS_Helper::is_integer($percent) || $percent < 0 || $percent > 100)
+			FWS_Helper::def_error('numbetween','percent',0,100,$percent);
+		if(!FWS_Helper::is_integer($untouched) || $untouched < 0)
+			FWS_Helper::def_error('intge0','untouched',$untouched);
+		if(!FWS_Helper::is_integer($max_dist) || $max_dist < 0)
+			FWS_Helper::def_error('intge0','max_dist',$max_dist);
 
 		$numbers = array();
 		$numbers[] = 1;

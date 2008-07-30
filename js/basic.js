@@ -2,7 +2,7 @@
  * Contains the basic javascript-functions
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -33,7 +33,7 @@ var Browser = {
  * @param int start with which index for the checkbox-ids do you want to start? (default=0)
  * @return string a string with all selected ids
  */
-function PLIB_getDeleteIds(checkboxPrefix,start)
+function FWS_getDeleteIds(checkboxPrefix,start)
 {
 	if(typeof start == 'undefined')
 		start = 0;
@@ -61,7 +61,7 @@ function PLIB_getDeleteIds(checkboxPrefix,start)
  * @param string path the path of the cookie (default="/")
  * @param string domain the domain of the cookie (default="")
  */
-function PLIB_setCookie(name,value,lifetime,path,domain)
+function FWS_setCookie(name,value,lifetime,path,domain)
 {
 	var str = escape(name) + "=" + escape(value);
 	
@@ -88,7 +88,7 @@ function PLIB_setCookie(name,value,lifetime,path,domain)
  * @param int width the width of the popup
  * @param int height the height of the popup
  */
-function PLIB_openDefaultPopup(filename,title,width,height)
+function FWS_openDefaultPopup(filename,title,width,height)
 {
 	var options = 'toolbar=no,status=no,menubar=no,width=' + width + ',height=' + height;
 	options += ',resizable=yes,scrollbars=yes,left=0,top=0,screenX=0,screenY=0';
@@ -102,7 +102,7 @@ function PLIB_openDefaultPopup(filename,title,width,height)
  * @param string title the title of the popup
  * @param string options the options of die popup
  */
-function PLIB_openPopup(filename,title,options)
+function FWS_openPopup(filename,title,options)
 {
 	window.open(filename,title,options);
 }
@@ -113,26 +113,26 @@ function PLIB_openPopup(filename,title,options)
  * @param mixed object the object
  * @param boolean showFunctions do you want to show functions? (default=false)
  */
-function PLIB_printObject(object,showFunctions)
+function FWS_printObject(object,showFunctions)
 {
 	if(typeof showFunctions == 'undefined')
 		showFunctions = false;
 
 	var props = '<pre style="max-height: 500px; overflow: auto; border-top: 1px solid #555;';
 	props += ' border-bottom: 1px solid #555;">';
-	props += PLIB_getObjectProperties(object,showFunctions);
+	props += FWS_getObjectProperties(object,showFunctions);
 	props += '</pre>';
 
 	var el;
-	if(!PLIB_getElement('PLIB_debug_field'))
+	if(!FWS_getElement('FWS_debug_field'))
 	{
 		var str = '';
 		str += '<h3 align="center">JS-Debugging of ' + object + ' [' + (typeof object) + ']</h3>';
 		str += props;
-		str += '<center><a href="javascript:PLIB_hideElement(\'PLIB_debug_field\');">Close</a></center>';
+		str += '<center><a href="javascript:FWS_hideElement(\'FWS_debug_field\');">Close</a></center>';
 		
 		el = document.createElement('div');
-		el.id = 'PLIB_debug_field';
+		el.id = 'FWS_debug_field';
 		el.innerHTML = str;
 		el.style.backgroundColor = '#ebebeb';
 		el.style.position = 'absolute';
@@ -144,7 +144,7 @@ function PLIB_printObject(object,showFunctions)
 	}
 	else
 	{
-		el = PLIB_getElement('PLIB_debug_field');
+		el = FWS_getElement('FWS_debug_field');
 		el.innerHTML += props;
 	}
 	
@@ -164,7 +164,7 @@ function PLIB_printObject(object,showFunctions)
  * @param boolean showFunctions do you want to show functions? (default=false)
  * @return string the properties
  */
-function PLIB_getObjectProperties(object,showFunctions)
+function FWS_getObjectProperties(object,showFunctions)
 {
 	if(typeof object == 'object' || typeof object == 'array')
 	{
@@ -176,7 +176,7 @@ function PLIB_getObjectProperties(object,showFunctions)
 				if(typeof object[x] != 'undefined' && (showFunctions || typeof object[x] != 'function'))
 				{
 					str += '  ' + x + ' => ';
-					str += PLIB_escapeHTML(object[x]);
+					str += FWS_escapeHTML(object[x]);
 					str += "\n";
 				}
 			}
@@ -188,7 +188,7 @@ function PLIB_getObjectProperties(object,showFunctions)
 		str += '}' + "\n";
 	}
 	else
-		str = PLIB_escapeHTML(object);
+		str = FWS_escapeHTML(object);
 	
 	return str;
 }
@@ -199,7 +199,7 @@ function PLIB_getObjectProperties(object,showFunctions)
  * @param string input the input-string
  * @return string the output-string
  */
-function PLIB_escapeHTML(input)
+function FWS_escapeHTML(input)
 {
 	if(typeof input == 'string')
 	{
@@ -239,10 +239,10 @@ function PLIB_escapeHTML(input)
  * @param int padding the padding to the relative element (default=0)
  * @param string display the display-value (default=block)
  */
-function PLIB_displayElement(elId,relId,location,padding,display)
+function FWS_displayElement(elId,relId,location,padding,display)
 {
-	var element = PLIB_getElement(elId);
-	var relative = PLIB_getElement(relId);
+	var element = FWS_getElement(elId);
+	var relative = FWS_getElement(relId);
 	
 	// do both exist?
 	if(element && relative)
@@ -267,8 +267,8 @@ function PLIB_displayElement(elId,relId,location,padding,display)
 		var eheight = parseInt(element.offsetHeight);
 		var rwidth = parseInt(relative.offsetWidth);
 		var rheight = parseInt(relative.offsetHeight);
-		var left = PLIB_getPageOffsetLeft(relative);
-		var top = PLIB_getPageOffsetTop(relative);
+		var left = FWS_getPageOffsetLeft(relative);
+		var top = FWS_getPageOffsetTop(relative);
 	
 		switch(location)
 		{
@@ -386,7 +386,7 @@ function PLIB_displayElement(elId,relId,location,padding,display)
  * @param object el the element
  * @param int value the value (0..100)
  */
-function PLIB_setOpacity(el,value)
+function FWS_setOpacity(el,value)
 {
 	if(Browser.isIE)
 		el.style.filter = "Alpha(opacity=" + value + ")";
@@ -401,7 +401,7 @@ function PLIB_setOpacity(el,value)
  *
  * @param string html the HTML-code to add
  */
-function PLIB_addToPage(html)
+function FWS_addToPage(html)
 {
 	var body = document.getElementsByTagName('body')[0];
 	body.innerHTML += html;
@@ -413,12 +413,12 @@ function PLIB_addToPage(html)
  * @param object element the element
  * @param string className the class-name to add/remove
  */
-function PLIB_toggleClassName(element,className)
+function FWS_toggleClassName(element,className)
 {
 	if(element.className.indexOf(className) >= 0)
-		PLIB_removeClassName(element,className);
+		FWS_removeClassName(element,className);
 	else
-		PLIB_addClassName(element,className);
+		FWS_addClassName(element,className);
 }
 
 /**
@@ -427,9 +427,9 @@ function PLIB_toggleClassName(element,className)
  * @param object element the element
  * @param string className the className to add
  */
-function PLIB_addClassName(element,className)
+function FWS_addClassName(element,className)
 {
-	PLIB_removeClassName(element,className);
+	FWS_removeClassName(element,className);
 	element.className += " " + className;
 }
 
@@ -439,7 +439,7 @@ function PLIB_addClassName(element,className)
  * @param object element the element
  * @param string className the className to remove
  */
-function PLIB_removeClassName(element,className)
+function FWS_removeClassName(element,className)
 {
 	var cls = element.className.split(" ");
 	var ar = new Array();
@@ -458,7 +458,7 @@ function PLIB_removeClassName(element,className)
  * @param string evname the event-name
  * @param function func the callback-function
  */
-function PLIB_addEvent(el,evname,func)
+function FWS_addEvent(el,evname,func)
 {
 	// IE
 	if(el.attachEvent)
@@ -477,7 +477,7 @@ function PLIB_addEvent(el,evname,func)
  * @param string evname the event-name
  * @param function func the callback-function
  */
-function PLIB_removeEvent(el,evname,func)
+function FWS_removeEvent(el,evname,func)
 {
 	// IE
 	if(el.detachEvent)
@@ -494,7 +494,7 @@ function PLIB_removeEvent(el,evname,func)
  *
  * @param string file the file to include
  */
-function PLIB_includeJS(file)
+function FWS_includeJS(file)
 {
 	var head = document.getElementsByTagName('head')[0];
 	head.innerHTML += '<script type="text/javascript" src="' + file + '"></script>';
@@ -505,9 +505,9 @@ function PLIB_includeJS(file)
  *
  * @param mixed elId the id of the element
  */
-function PLIB_toggleElement(elId)
+function FWS_toggleElement(elId)
 {
-	var element = PLIB_getElement(elId);
+	var element = FWS_getElement(elId);
 	if(element.style.display == 'none')
 		element.style.display = 'block';
 	else
@@ -520,12 +520,12 @@ function PLIB_toggleElement(elId)
  * @param mixed elId the id of the element
  * @param string display the value of style.display (default 'block')
  */
-function PLIB_showElement(elId,display)
+function FWS_showElement(elId,display)
 {
 	if(typeof display == 'undefined')
 		display = 'block';
 	
-	var element = PLIB_getElement(elId);
+	var element = FWS_getElement(elId);
 	if(element)
 		element.style.display = display;
 }
@@ -535,9 +535,9 @@ function PLIB_showElement(elId,display)
  *
  * @param mixed elId the id of the element
  */
-function PLIB_hideElement(elId)
+function FWS_hideElement(elId)
 {
-	var element = PLIB_getElement(elId);
+	var element = FWS_getElement(elId);
 	if(element)
 		element.style.display = 'none';
 }
@@ -549,9 +549,9 @@ function PLIB_hideElement(elId)
  * @param mixed id the id of the element
  * @param string content the new content
  */
-function PLIB_replaceContent(id,content)
+function FWS_replaceContent(id,content)
 {
-	var element = PLIB_getElement(id);
+	var element = FWS_getElement(id);
 	if(element)
 		element.innerHTML = content;
 }
@@ -562,11 +562,11 @@ function PLIB_replaceContent(id,content)
  * @param object el the element
  * @return int the left page-offset
  */
-function PLIB_getPageOffsetLeft(el)
+function FWS_getPageOffsetLeft(el)
 {
 	var x = el.offsetLeft;
 	if(el.offsetParent != null)
-    x += PLIB_getPageOffsetLeft(el.offsetParent);
+    x += FWS_getPageOffsetLeft(el.offsetParent);
 	
   return x;
 }
@@ -577,11 +577,11 @@ function PLIB_getPageOffsetLeft(el)
  * @param object el the element
  * @return int the top page-offset
  */
-function PLIB_getPageOffsetTop(el)
+function FWS_getPageOffsetTop(el)
 {
   var y = el.offsetTop;
   if(el.offsetParent != null)
-    y += PLIB_getPageOffsetTop(el.offsetParent);
+    y += FWS_getPageOffsetTop(el.offsetParent);
 
   return y;
 }
@@ -589,7 +589,7 @@ function PLIB_getPageOffsetTop(el)
 /**
  * @return the body-element of the IE
  */
-function PLIB_getIEBody()
+function FWS_getIEBody()
 {
 	if(document.compatMode && document.compatMode != "BackCompat")
 		return document.documentElement;
@@ -601,12 +601,12 @@ function PLIB_getIEBody()
  *
  * @return array an numeric array with the offset (x,y)
  */
-function PLIB_getScrollOffset()
+function FWS_getScrollOffset()
 {
 	var dim;
 	if(Browser.isIE)
 	{
-		var body = PLIB_getIEBody();
+		var body = FWS_getIEBody();
 		dim = new Array(body.scrollLeft,body.scrollTop);
 	}
 	else
@@ -619,12 +619,12 @@ function PLIB_getScrollOffset()
  *
  * @return array an numeric array with the window-size (width,height)
  */
-function PLIB_getWindowSize()
+function FWS_getWindowSize()
 {
 	var size;
 	if(Browser.isIE)
 	{
-		var body = PLIB_getIEBody();
+		var body = FWS_getIEBody();
 		size = new Array(body.clientWidth,body.clientHeight);
 	}
 	else
@@ -637,12 +637,12 @@ function PLIB_getWindowSize()
  *
  * @return array an numeric array with the page-size (width,height)
  */
-function PLIB_getPageSize()
+function FWS_getPageSize()
 {
 	var size;
 	if(Browser.isIE)
 	{
-		var body = PLIB_getIEBody();
+		var body = FWS_getIEBody();
 		size = new Array(body.clientWidth,body.clientHeight);
 	}
 	else
@@ -657,7 +657,7 @@ function PLIB_getPageSize()
  * @param mixed id the id of the element
  * @return object the element with given id
  */
-function PLIB_getElement(id)
+function FWS_getElement(id)
 {
 	return document.getElementById(id);
 }

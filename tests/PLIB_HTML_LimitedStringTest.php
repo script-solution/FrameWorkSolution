@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_HTML_LimitedString test
+ * Contains the FWS_HTML_LimitedString test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,13 +11,13 @@
  */
 
 /**
- * PLIB_HTML_LimitedString test case.
+ * FWS_HTML_LimitedString test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
+class FWS_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Prepares the environment before running a test.
@@ -36,36 +36,36 @@ class PLIB_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_HTML_LimitedString->Get()
+	 * Tests FWS_HTML_LimitedString->Get()
 	 */
 	public function testGet()
 	{
-		$lstr = new PLIB_HTML_LimitedString('test1',3);
+		$lstr = new FWS_HTML_LimitedString('test1',3);
 		$res = $lstr->get();
 		self::assertEquals($res,'...');
 		self::assertTrue($lstr->has_cut());
 		
-		$lstr = new PLIB_HTML_LimitedString('test1',4);
+		$lstr = new FWS_HTML_LimitedString('test1',4);
 		$res = $lstr->get();
 		self::assertEquals($res,'t...');
 		self::assertTrue($lstr->has_cut());
 		
-		$lstr = new PLIB_HTML_LimitedString('test1',5);
+		$lstr = new FWS_HTML_LimitedString('test1',5);
 		$res = $lstr->get();
 		self::assertEquals($res,'test1');
 		self::assertFalse($lstr->has_cut());
 		
-		$lstr = new PLIB_HTML_LimitedString('<b>abc</b> test',5);
+		$lstr = new FWS_HTML_LimitedString('<b>abc</b> test',5);
 		$res = $lstr->get();
 		self::assertEquals($res,'<b>ab...</b>');
 		self::assertTrue($lstr->has_cut());
 		
-		$lstr = new PLIB_HTML_LimitedString('<b>abc</b> test',6);
+		$lstr = new FWS_HTML_LimitedString('<b>abc</b> test',6);
 		$res = $lstr->get();
 		self::assertEquals($res,'<b>abc</b>...');
 		self::assertTrue($lstr->has_cut());
 		
-		$lstr = new PLIB_HTML_LimitedString('<b>abc</b><ul><li>123</li><li>4567</li></ul>',7);
+		$lstr = new FWS_HTML_LimitedString('<b>abc</b><ul><li>123</li><li>4567</li></ul>',7);
 		$res = $lstr->get();
 		self::assertEquals($res,'<b>abc</b><ul><li>1...</li></ul>');
 		self::assertTrue($lstr->has_cut());
@@ -87,7 +87,7 @@ class PLIB_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
 	</tr>
 </table>
 EOF;
-		$lstr = new PLIB_HTML_LimitedString($html,18);
+		$lstr = new FWS_HTML_LimitedString($html,18);
 		$res = $lstr->get();
 		echo $html;
 		echo $res;

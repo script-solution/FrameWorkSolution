@@ -3,7 +3,7 @@
  * Contains the gd-image-renderer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,23 +11,23 @@
  */
 
 /**
- * The GD-image-renderer sends an image generated with the GD-interface of the library to the
- * browser. You can set the image-object ({@link PLIB_GD_Image}) which should be sent.
+ * The GD-image-renderer sends an image generated with the GD-interface of the framework to the
+ * browser. You can set the image-object ({@link FWS_GD_Image}) which should be sent.
  * Additionally you can set the format of the image.
  * <br>
  * If any messages exist the renderer will generate a different image which contains the message
  * <code>$locale->lang('error_occurred')</code>.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Document_Renderer
+class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_Renderer
 {
 	/**
 	 * The image to render
 	 *
-	 * @var PLIB_GD_Image
+	 * @var FWS_GD_Image
 	 */
 	private $_image;
 	
@@ -46,7 +46,7 @@ class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Documen
 	private $_allow_cache = false;
 	
 	/**
-	 * @return PLIB_GD_Image the image (null if not set)
+	 * @return FWS_GD_Image the image (null if not set)
 	 */
 	public final function get_image()
 	{
@@ -56,12 +56,12 @@ class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Documen
 	/**
 	 * Sets the image for the renderer
 	 *
-	 * @param PLIB_GD_Image $image the image
+	 * @param FWS_GD_Image $image the image
 	 */
 	public final function set_image($image)
 	{
-		if(!($image instanceof PLIB_GD_Image))
-			PLIB_Helper::def_error('instance','image','PLIB_GD_Image',$image);
+		if(!($image instanceof FWS_GD_Image))
+			FWS_Helper::def_error('instance','image','FWS_GD_Image',$image);
 		
 		$this->_image = $image;
 	}
@@ -87,14 +87,14 @@ class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Documen
 	}
 	
 	/**
-	 * @see PLIB_Document_Renderer::render()
+	 * @see FWS_Document_Renderer::render()
 	 *
-	 * @param PLIB_Document $doc
+	 * @param FWS_Document $doc
 	 * @return string
 	 */
 	public function render($doc)
 	{
-		$msgs = PLIB_Props::get()->msgs();
+		$msgs = FWS_Props::get()->msgs();
 		
 		// run the module
 		$doc->get_module()->run();
@@ -104,7 +104,7 @@ class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Documen
 			$this->handle_msgs($msgs);
 		
 		if($this->_image === null)
-			PLIB_Helper::error('Please set the image first!');
+			FWS_Helper::error('Please set the image first!');
 		
 		// send the image and catch it
 		ob_start();
@@ -121,30 +121,30 @@ class PLIB_Document_Renderer_GDImage extends PLIB_Object implements PLIB_Documen
 	/**
 	 * Handles the collected messages
 	 *
-	 * @param PLIB_Document_Messages $msgs
+	 * @param FWS_Document_Messages $msgs
 	 */
 	protected function handle_msgs($msgs)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 		
-		$font = new PLIB_GD_Font_GD();
-		$attr = new PLIB_GD_TextAttributes($font,4,PLIB_GD_Color::$BLACK);
-		$text = new PLIB_GD_Text(html_entity_decode($locale->lang('error_occurred')),$attr);
+		$font = new FWS_GD_Font_GD();
+		$attr = new FWS_GD_TextAttributes($font,4,FWS_GD_Color::$BLACK);
+		$text = new FWS_GD_Text(html_entity_decode($locale->lang('error_occurred')),$attr);
 		$size = $text->get_size();
 		$size->increase(20,20);
-		$img = new PLIB_GD_Image($size->get_width(),$size->get_height());
-		$img->set_background(PLIB_GD_Color::$WHITE);
+		$img = new FWS_GD_Image($size->get_width(),$size->get_height());
+		$img->set_background(FWS_GD_Color::$WHITE);
 		$g = $img->get_graphics();
 		$g->get_text_view($text)->draw_in_rect(
-			$img->get_bounds_rect(),null,PLIB_GD_BoxPosition::$CENTER_CENTER
+			$img->get_bounds_rect(),null,FWS_GD_BoxPosition::$CENTER_CENTER
 		);
-		$g->get_rect_view($img->get_bounds_rect())->draw(PLIB_GD_Color::$LIGHT_GRAY);
+		$g->get_rect_view($img->get_bounds_rect())->draw(FWS_GD_Color::$LIGHT_GRAY);
 		
 		$this->set_image($img);
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

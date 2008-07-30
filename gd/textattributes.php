@@ -3,7 +3,7 @@
  * Contains the text-attributes-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,18 +11,18 @@
  */
 
 /**
- * A collection of attributes for TTF-texts which are used by {@link PLIB_GD_View_Text}.
+ * A collection of attributes for TTF-texts which are used by {@link FWS_GD_View_Text}.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_TextAttributes extends PLIB_Object
+class FWS_GD_TextAttributes extends FWS_Object
 {
 	/**
 	 * The font to use
 	 *
-	 * @var PLIB_GD_Font
+	 * @var FWS_GD_Font
 	 */
 	private $_font;
 	
@@ -36,21 +36,21 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * The foreground-color
 	 *
-	 * @var PLIB_GD_Color
+	 * @var FWS_GD_Color
 	 */
 	private $_foreground;
 	
 	/**
 	 * The background-color
 	 *
-	 * @var PLIB_GD_Color
+	 * @var FWS_GD_Color
 	 */
 	private $_background = null;
 	
 	/**
 	 * The border-color
 	 *
-	 * @var PLIB_GD_Color
+	 * @var FWS_GD_Color
 	 */
 	private $_bordercolor = null;
 	
@@ -92,10 +92,10 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_Font $font the font of the text
+	 * @param FWS_GD_Font $font the font of the text
 	 * @param int $size the font-size
-	 * @param PLIB_GD_Color $foreground the foreground to use (black by default)
-	 * @param PLIB_GD_Color $background the background to use (none by default)
+	 * @param FWS_GD_Color $foreground the foreground to use (black by default)
+	 * @param FWS_GD_Color $background the background to use (none by default)
 	 */
 	public function __construct($font,$size,$foreground = null,$background = null)
 	{
@@ -103,13 +103,13 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 		
 		$this->set_font($font);
 		$this->set_size($size);
-		$this->set_foreground($foreground !== null ? $foreground : PLIB_GD_Color::$BLACK);
+		$this->set_foreground($foreground !== null ? $foreground : FWS_GD_Color::$BLACK);
 		if($background !== null)
 			$this->set_background($background);
 	}
 
 	/**
-	 * @return PLIB_GD_Font the font
+	 * @return FWS_GD_Font the font
 	 */
 	public final function get_font()
 	{
@@ -119,12 +119,12 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * Sets the font
 	 * 
-	 * @param PLIB_GD_Font $font the new value
+	 * @param FWS_GD_Font $font the new value
 	 */
 	public final function set_font($font)
 	{
-		if(!($font instanceof PLIB_GD_Font))
-			PLIB_Helper::def_error('instance','font','PLIB_GD_Font',$font);
+		if(!($font instanceof FWS_GD_Font))
+			FWS_Helper::def_error('instance','font','FWS_GD_Font',$font);
 		
 		$this->_font = $font;
 	}
@@ -144,14 +144,14 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	 */
 	public final function set_size($size)
 	{
-		if(!PLIB_Helper::is_integer($size) || $size <= 0)
-			PLIB_Helper::def_error('intgt0','size',$size);
+		if(!FWS_Helper::is_integer($size) || $size <= 0)
+			FWS_Helper::def_error('intgt0','size',$size);
 		
 		$this->_size = $size;
 	}
 
 	/**
-	 * @return PLIB_GD_Color the foreground-color
+	 * @return FWS_GD_Color the foreground-color
 	 */
 	public final function get_foreground()
 	{
@@ -161,18 +161,18 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * Sets the foreground-color
 	 * 
-	 * @param PLIB_GD_Color $color the new color
+	 * @param FWS_GD_Color $color the new color
 	 */
 	public final function set_foreground($color)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		$this->_foreground = $color;
 	}
 
 	/**
-	 * @return PLIB_GD_Color the background-color (null = none)
+	 * @return FWS_GD_Color the background-color (null = none)
 	 */
 	public final function get_background()
 	{
@@ -182,12 +182,12 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * Sets the background-color
 	 * 
-	 * @param PLIB_GD_Color $color the new color (null = none)
+	 * @param FWS_GD_Color $color the new color (null = none)
 	 */
 	public final function set_background($color)
 	{
-		if($color !== null && !($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if($color !== null && !($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		$this->_background = $color;
 	}
@@ -207,14 +207,14 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	 */
 	public final function set_border_size($size)
 	{
-		if(!PLIB_Helper::is_integer($size) || $size <= 0)
-			PLIB_Helper::def_error('intgt0','size',$size);
+		if(!FWS_Helper::is_integer($size) || $size <= 0)
+			FWS_Helper::def_error('intgt0','size',$size);
 		
 		return $this->_bordersize = $size;
 	}
 
 	/**
-	 * @return PLIB_GD_Color the border-color (null = none)
+	 * @return FWS_GD_Color the border-color (null = none)
 	 */
 	public final function get_border()
 	{
@@ -224,12 +224,12 @@ class PLIB_GD_TextAttributes extends PLIB_Object
 	/**
 	 * Sets the border-color
 	 * 
-	 * @param PLIB_GD_Color $color the new color (null = none)
+	 * @param FWS_GD_Color $color the new color (null = none)
 	 */
 	public final function set_border($color)
 	{
-		if($color !== null && !($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if($color !== null && !($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		$this->_bordercolor = $color;
 	}

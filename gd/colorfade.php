@@ -3,7 +3,7 @@
  * Contains the point-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,16 +14,16 @@
  * This class generates the colors for a color-fade of a given distance and a given number of
  * steps. Additionally you can get a color at a given position.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_ColorFade extends PLIB_Object
+final class FWS_GD_ColorFade extends FWS_Object
 {
 	/**
 	 * The distance from the beginning to the end of the color-fade
 	 *
-	 * @var PLIB_GD_Point
+	 * @var FWS_GD_Point
 	 */
 	private $_distance;
 	
@@ -47,26 +47,26 @@ final class PLIB_GD_ColorFade extends PLIB_Object
 	 * @param int $distance the distance from the beginning to the end of the color-fade
 	 * @param int $steps the number of steps
 	 * @param array $colors an array with all colors that should be used. These may be instances of
-	 * 	PLIB_GD_Color or arrays with the 3 or 4 color-components
+	 * 	FWS_GD_Color or arrays with the 3 or 4 color-components
 	 */
 	public function __construct($distance,$steps,$colors)
 	{
 		parent::__construct();
 		
 		if(!is_numeric($distance) || $distance <= 0)
-			PLIB_Helper::def_error('numgt0','distance',$distance);
+			FWS_Helper::def_error('numgt0','distance',$distance);
 		if(!is_numeric($steps) || $steps <= 0)
-			PLIB_Helper::def_error('numgt0','steps',$steps);
+			FWS_Helper::def_error('numgt0','steps',$steps);
 		if(!is_array($colors) || count($colors) < 2)
-			PLIB_Helper::error('Please provide at least 2 colors!');
+			FWS_Helper::error('Please provide at least 2 colors!');
 		
 		// add alpha channel if necessary
-		if($colors[0] instanceof PLIB_GD_Color)
+		if($colors[0] instanceof FWS_GD_Color)
 		{
 			foreach($colors as $k => $c)
 			{
-				if(!($c instanceof PLIB_GD_Color))
-					PLIB_Helper::error('The element with key='.$k.' in the colors-array is no valid color!');
+				if(!($c instanceof FWS_GD_Color))
+					FWS_Helper::error('The element with key='.$k.' in the colors-array is no valid color!');
 				
 				$colors[$k] = $c->get_comps(true);
 			}
@@ -76,7 +76,7 @@ final class PLIB_GD_ColorFade extends PLIB_Object
 			foreach($colors as $k => $c)
 			{
 				if(!is_array($c) || count($c) < 3)
-					PLIB_Helper::error('The element with key='.$k.' in the colors-array is no valid color!');
+					FWS_Helper::error('The element with key='.$k.' in the colors-array is no valid color!');
 				
 				if(!isset($c[3]))
 					$colors[$k][3] = 0;
@@ -92,12 +92,12 @@ final class PLIB_GD_ColorFade extends PLIB_Object
 	 * Determines the color in the color-fade at given position
 	 *
 	 * @param int $position the position of which you would like to know the color
-	 * @return PLIB_GD_Color the color at given position
+	 * @return FWS_GD_Color the color at given position
 	 */
 	public function get_color_at($position)
 	{
 		if(!is_numeric($position) || $position < 0 || $position >= $this->_steps)
-			PLIB_Helper::def_error('numbetween','position',0,$this->_steps - 1,$position);
+			FWS_Helper::def_error('numbetween','position',0,$this->_steps - 1,$position);
 		
 		// cache some vars
 		$colors = &$this->_colors;
@@ -124,7 +124,7 @@ final class PLIB_GD_ColorFade extends PLIB_Object
 		$g_step = $g_dist / $area_width;
 		$b_step = $b_dist / $area_width;
 		
-		return new PLIB_GD_Color(
+		return new FWS_GD_Color(
 			(int)($start_color[0] + $r_step * $pos_in_area),
 			(int)($start_color[1] + $g_step * $pos_in_area),
 			(int)($start_color[2] + $b_step * $pos_in_area)
@@ -168,7 +168,7 @@ final class PLIB_GD_ColorFade extends PLIB_Object
 			$a = $colors[$i][3];
 			for($x = 0;$x < $step_count;$x++)
 			{
-				$res[] = new PLIB_GD_Color((int)$r,(int)$g,(int)$b,(int)$a);
+				$res[] = new FWS_GD_Color((int)$r,(int)$g,(int)$b,(int)$a);
 				
 				$r -= $r_step * $step;
 				$g -= $g_step * $step;

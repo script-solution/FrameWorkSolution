@@ -3,7 +3,7 @@
  * Contains the button-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The base-class for all buttons (submit, reset, ...)
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_HTML_Button extends PLIB_HTML_FormElement
+abstract class FWS_HTML_Button extends FWS_HTML_FormElement
 {
 	/**
 	 * Constructor

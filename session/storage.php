@@ -3,7 +3,7 @@
  * Contains the session-storage-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,37 +13,37 @@
 /**
  * The interface for all session-store-types
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Session_Storage
+interface FWS_Session_Storage
 {
 	/**
-	 * Loads the list and returns an array {@link PLIB_Session_Data} objects
+	 * Loads the list and returns an array {@link FWS_Session_Data} objects
 	 * 
 	 * @return array all online user
 	 */
 	public function load_list();
 	
 	/**
-	 * Should build and return a new {@link PLIB_Session_Data} object.
+	 * Should build and return a new {@link FWS_Session_Data} object.
 	 * 
-	 * @return PLIB_Session_Data the user-object
+	 * @return FWS_Session_Data the user-object
 	 */
 	public function get_new_user();
 	
 	/**
 	 * Adds the given entry
 	 * 
-	 * @param PLIB_Session_Data $user the {@link PLIB_Session_Data} object
+	 * @param FWS_Session_Data $user the {@link FWS_Session_Data} object
 	 */
 	public function add_user($user);
 	
 	/**
 	 * Updates the given entry
 	 * 
-	 * @param PLIB_Session_Data $user the {@link PLIB_Session_Data} object
+	 * @param FWS_Session_Data $user the {@link FWS_Session_Data} object
 	 */
 	public function update_user($user);
 	

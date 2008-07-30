@@ -3,7 +3,7 @@
  * Contains the boxposition-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,103 +11,103 @@
  */
 
 // init the static fields
-PLIB_GD_BoxPosition::$TOP_LEFT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::FIRST,PLIB_GD_BoxPosition::FIRST
+FWS_GD_BoxPosition::$TOP_LEFT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::FIRST,FWS_GD_BoxPosition::FIRST
 );
-PLIB_GD_BoxPosition::$TOP_CENTER = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::MIDDLE,PLIB_GD_BoxPosition::FIRST
+FWS_GD_BoxPosition::$TOP_CENTER = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::MIDDLE,FWS_GD_BoxPosition::FIRST
 );
-PLIB_GD_BoxPosition::$TOP_RIGHT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::LAST,PLIB_GD_BoxPosition::FIRST
+FWS_GD_BoxPosition::$TOP_RIGHT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::LAST,FWS_GD_BoxPosition::FIRST
 );
-PLIB_GD_BoxPosition::$CENTER_LEFT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::FIRST,PLIB_GD_BoxPosition::MIDDLE
+FWS_GD_BoxPosition::$CENTER_LEFT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::FIRST,FWS_GD_BoxPosition::MIDDLE
 );
-PLIB_GD_BoxPosition::$CENTER_CENTER = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::MIDDLE,PLIB_GD_BoxPosition::MIDDLE
+FWS_GD_BoxPosition::$CENTER_CENTER = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::MIDDLE,FWS_GD_BoxPosition::MIDDLE
 );
-PLIB_GD_BoxPosition::$CENTER_RIGHT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::LAST,PLIB_GD_BoxPosition::MIDDLE
+FWS_GD_BoxPosition::$CENTER_RIGHT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::LAST,FWS_GD_BoxPosition::MIDDLE
 );
-PLIB_GD_BoxPosition::$BOTTOM_LEFT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::FIRST,PLIB_GD_BoxPosition::LAST
+FWS_GD_BoxPosition::$BOTTOM_LEFT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::FIRST,FWS_GD_BoxPosition::LAST
 );
-PLIB_GD_BoxPosition::$BOTTOM_CENTER = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::MIDDLE,PLIB_GD_BoxPosition::LAST
+FWS_GD_BoxPosition::$BOTTOM_CENTER = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::MIDDLE,FWS_GD_BoxPosition::LAST
 );
-PLIB_GD_BoxPosition::$BOTTOM_RIGHT = new PLIB_GD_BoxPosition(
-	PLIB_GD_BoxPosition::LAST,PLIB_GD_BoxPosition::LAST
+FWS_GD_BoxPosition::$BOTTOM_RIGHT = new FWS_GD_BoxPosition(
+	FWS_GD_BoxPosition::LAST,FWS_GD_BoxPosition::LAST
 );
 
 /**
  * Represents a position in a box.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_BoxPosition extends PLIB_Object
+final class FWS_GD_BoxPosition extends FWS_Object
 {
 	/**
 	 * The box-position top-left
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $TOP_LEFT;
 	
 	/**
 	 * The box-position top-center
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $TOP_CENTER;
 	
 	/**
 	 * The box-position top-right
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $TOP_RIGHT;
 	
 	/**
 	 * The box-position center-left
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $CENTER_LEFT;
 	
 	/**
 	 * The box-position center-center
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $CENTER_CENTER;
 	
 	/**
 	 * The box-position center-right
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $CENTER_RIGHT;
 	
 	/**
 	 * The box-position bottom-left
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $BOTTOM_LEFT;
 	
 	/**
 	 * The box-position bottom-center
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $BOTTOM_CENTER;
 	
 	/**
 	 * The box-position bottom-right
 	 *
-	 * @var PLIB_GD_BoxPosition
+	 * @var FWS_GD_BoxPosition
 	 */
 	public static $BOTTOM_RIGHT;
 	
@@ -156,9 +156,9 @@ final class PLIB_GD_BoxPosition extends PLIB_Object
 		parent::__construct();
 		
 		if(!in_array($hpos,array(self::FIRST,self::MIDDLE,self::LAST)))
-			PLIB_Helper::def_error('inarray','hpos',array(self::FIRST,self::MIDDLE,self::LAST),$hpos);
+			FWS_Helper::def_error('inarray','hpos',array(self::FIRST,self::MIDDLE,self::LAST),$hpos);
 		if(!in_array($vpos,array(self::FIRST,self::MIDDLE,self::LAST)))
-			PLIB_Helper::def_error('inarray','vpos',array(self::FIRST,self::MIDDLE,self::LAST),$vpos);
+			FWS_Helper::def_error('inarray','vpos',array(self::FIRST,self::MIDDLE,self::LAST),$vpos);
 		
 		$this->_hpos = $hpos;
 		$this->_vpos = $vpos;

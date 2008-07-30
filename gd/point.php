@@ -3,7 +3,7 @@
  * Contains the point-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a point for drawing with gd.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Point extends PLIB_Object
+final class FWS_GD_Point extends FWS_Object
 {
 	/**
 	 * The x-coordinate of the point
@@ -81,9 +81,9 @@ final class PLIB_GD_Point extends PLIB_Object
 	public function set_position($x,$y)
 	{
 		if(!is_numeric($x))
-			PLIB_Helper::def_error('numeric','x',$x);
+			FWS_Helper::def_error('numeric','x',$x);
 		if(!is_numeric($y))
-			PLIB_Helper::def_error('numeric','y',$y);
+			FWS_Helper::def_error('numeric','y',$y);
 		
 		$this->_x = $x;
 		$this->_y = $y;
@@ -94,16 +94,16 @@ final class PLIB_GD_Point extends PLIB_Object
 	 *
 	 * @param int $x the amount in x-direction
 	 * @param int $y the amount in y-direction
-	 * @return PLIB_GD_Point the derived point
+	 * @return FWS_GD_Point the derived point
 	 */
 	public function derive($x,$y)
 	{
 		if(!is_numeric($x))
-			PLIB_Helper::def_error('numeric','x',$x);
+			FWS_Helper::def_error('numeric','x',$x);
 		if(!is_numeric($y))
-			PLIB_Helper::def_error('numeric','y',$y);
+			FWS_Helper::def_error('numeric','y',$y);
 		
-		return new PLIB_GD_Point($this->_x + $x,$this->_y + $y);
+		return new FWS_GD_Point($this->_x + $x,$this->_y + $y);
 	}
 	
 	/**
@@ -115,9 +115,9 @@ final class PLIB_GD_Point extends PLIB_Object
 	public function translate($x,$y)
 	{
 		if(!is_numeric($x))
-			PLIB_Helper::def_error('numeric','x',$x);
+			FWS_Helper::def_error('numeric','x',$x);
 		if(!is_numeric($y))
-			PLIB_Helper::def_error('numeric','y',$y);
+			FWS_Helper::def_error('numeric','y',$y);
 		
 		$this->_x += $x;
 		$this->_y += $y;
@@ -126,7 +126,7 @@ final class PLIB_GD_Point extends PLIB_Object
 	/**
 	 * Determines the distance to the given point
 	 *
-	 * @param PLIB_GD_Point $point the other point
+	 * @param FWS_GD_Point $point the other point
 	 * @return float the distance to the point
 	 */
 	public function distance($point)

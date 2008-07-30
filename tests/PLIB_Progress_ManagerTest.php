@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_Progress_Manager test
+ * Contains the FWS_Progress_Manager test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,13 +11,13 @@
  */
 
 /**
- * PLIB_Progress_Manager test case.
+ * FWS_Progress_Manager test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Progress_ManagerTest extends PHPUnit_Framework_TestCase
+class FWS_Progress_ManagerTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Prepares the environment before running a test.
@@ -36,13 +36,13 @@ class PLIB_Progress_ManagerTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Progress_Manager->__construct()
+	 * Tests FWS_Progress_Manager->__construct()
 	 */
 	public function test__construct()
 	{
-		$task = new PLIB_Progress_ManagerTestTask();
-		$storage = new PLIB_Progress_ManagerTestStorage();
-		$pm = new PLIB_Progress_Manager($storage);
+		$task = new FWS_Progress_ManagerTestTask();
+		$storage = new FWS_Progress_ManagerTestStorage();
+		$pm = new FWS_Progress_Manager($storage);
 		$pm->set_ops_per_cycle(2);
 		
 		$x = 0;
@@ -60,7 +60,7 @@ class PLIB_Progress_ManagerTest extends PHPUnit_Framework_TestCase
 	}
 }
 
-class PLIB_Progress_ManagerTestStorage implements PLIB_Progress_Storage
+class FWS_Progress_ManagerTestStorage implements FWS_Progress_Storage
 {
 	private $_x = -1;
 	
@@ -80,7 +80,7 @@ class PLIB_Progress_ManagerTestStorage implements PLIB_Progress_Storage
 	}
 }
 
-class PLIB_Progress_ManagerTestTask implements PLIB_Progress_Task
+class FWS_Progress_ManagerTestTask implements FWS_Progress_Task
 {
 	private $_x = 0;
 	

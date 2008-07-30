@@ -3,7 +3,7 @@
  * Contains the php-mail-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The mail()-implementation for sending emails
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Email_PHP extends PLIB_Email_Base
+final class FWS_Email_PHP extends FWS_Email_Base
 {
 	/**
 	 * Constructor
@@ -43,7 +43,7 @@ final class PLIB_Email_PHP extends PLIB_Email_Base
 			$message = $this->get_message();
 
 		// send the email...
-		if(PLIB_PHPConfig::is_safemode_enabled())
+		if(FWS_PHPConfig::is_safemode_enabled())
 		{
 			$res = @mail(
 				$this->get_recipient(),$this->get_subject(),$message,$headers,'-f '.$this->get_from()

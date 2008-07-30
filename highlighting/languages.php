@@ -3,7 +3,7 @@
  * Contains the languages-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The container and loader for the highlighting-languages
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Languages extends PLIB_UtilBase
+final class FWS_Highlighting_Languages extends FWS_UtilBase
 {
 	/**
 	 * All known languages
@@ -37,7 +37,7 @@ final class PLIB_Highlighting_Languages extends PLIB_UtilBase
 			return;
 		
 		self::$_langs = array();
-		$contents = PLIB_FileUtils::read($file);
+		$contents = FWS_FileUtils::read($file);
 		$xml = new SimpleXMLElement($contents);
 		
 		if(isset($xml->language))
@@ -68,7 +68,7 @@ final class PLIB_Highlighting_Languages extends PLIB_UtilBase
 	public static function contains_lang($id)
 	{
 		if(self::$_langs === null)
-			PLIB_Helper::error('Please call self::ensure_inited() first!');
+			FWS_Helper::error('Please call self::ensure_inited() first!');
 		
 		return isset(self::$_langs[$id]);
 	}
@@ -83,7 +83,7 @@ final class PLIB_Highlighting_Languages extends PLIB_UtilBase
 	public static function get_language_name($id)
 	{
 		if(self::$_langs === null)
-			PLIB_Helper::error('Please call self::ensure_inited() first!');
+			FWS_Helper::error('Please call self::ensure_inited() first!');
 		
 		if(!isset(self::$_langs[$id]))
 			return null;
@@ -99,7 +99,7 @@ final class PLIB_Highlighting_Languages extends PLIB_UtilBase
 	public static function get_languages()
 	{
 		if(self::$_langs === null)
-			PLIB_Helper::error('Please call self::ensure_inited() first!');
+			FWS_Helper::error('Please call self::ensure_inited() first!');
 		
 		return self::$_langs;
 	}

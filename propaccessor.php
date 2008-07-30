@@ -3,14 +3,14 @@
  * Contains the property-accessor-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * The property-accessor for the library. Provides methods to access the properties. If a property
+ * The property-accessor for the framework. Provides methods to access the properties. If a property
  * does not exist, the loader will be used to load the property.
  * <br>
  * You can set your own property-loader if you want to change the predefined properties. If you
@@ -19,15 +19,15 @@
  * <br>
  * You can inherit from this class, too, if you want to provide additional properties
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_PropAccessor extends PLIB_Object
+class FWS_PropAccessor extends FWS_Object
 {
 	/**
 	 * The instance of the property-loader
 	 *
-	 * @var PLIB_PropLoader
+	 * @var FWS_PropLoader
 	 */
 	private $_loader;
 	
@@ -46,18 +46,18 @@ class PLIB_PropAccessor extends PLIB_Object
 		parent::__construct();
 		
 		// use the default loader
-		$this->_loader = new PLIB_PropLoader();
+		$this->_loader = new FWS_PropLoader();
 	}
 	
 	/**
 	 * Sets the loader that should be used for the properties
 	 *
-	 * @param PLIB_PropLoader $loader the loader
+	 * @param FWS_PropLoader $loader the loader
 	 */
 	public final function set_loader($loader)
 	{
-		if(!($loader instanceof PLIB_PropLoader))
-			PLIB_Helper::def_error('instance','loader','PLIB_PropLoader',$loader);
+		if(!($loader instanceof FWS_PropLoader))
+			FWS_Helper::def_error('instance','loader','FWS_PropLoader',$loader);
 		
 		$this->_loader = $loader;
 	}
@@ -95,7 +95,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Document the document-instance
+	 * @return FWS_Document the document-instance
 	 */
 	public function doc()
 	{
@@ -103,7 +103,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Document_Messages the messages-container
+	 * @return FWS_Document_Messages the messages-container
 	 */
 	public function msgs()
 	{
@@ -111,7 +111,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Profiler the profiler instance
+	 * @return FWS_Profiler the profiler instance
 	 */
 	public function profiler()
 	{
@@ -119,7 +119,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Session_Manager the session-manager
+	 * @return FWS_Session_Manager the session-manager
 	 */
 	public function sessions()
 	{
@@ -127,7 +127,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_User_Current the current-user-object
+	 * @return FWS_User_Current the current-user-object
 	 */
 	public function user()
 	{
@@ -135,7 +135,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 
 	/**
-	 * @return PLIB_Cookies the cookies-object
+	 * @return FWS_Cookies the cookies-object
 	 */
 	public function cookies()
 	{
@@ -143,7 +143,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 
 	/**
-	 * @return PLIB_URL the URL-object
+	 * @return FWS_URL the URL-object
 	 */
 	public function url()
 	{
@@ -151,7 +151,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 
 	/**
-	 * @return PLIB_Template_Handler the template-object
+	 * @return FWS_Template_Handler the template-object
 	 */
 	public function tpl()
 	{
@@ -159,7 +159,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 
 	/**
-	 * @return PLIB_Locale the locale
+	 * @return FWS_Locale the locale
 	 */
 	public function locale()
 	{
@@ -167,7 +167,7 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Input the input-instance
+	 * @return FWS_Input the input-instance
 	 */
 	public function input()
 	{

@@ -3,7 +3,7 @@
  * Contains the message-container-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The message-container. Collects messages (errors, warnings and notices) which
  * may be displayed at some place and time in the document.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Document_Messages extends PLIB_Object
+class FWS_Document_Messages extends FWS_Object
 {
 	/**
 	 * Represents an error.
@@ -94,10 +94,10 @@ class PLIB_Document_Messages extends PLIB_Object
 	public final function add_link($name,$url)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(empty($url))
-			PLIB_Helper::def_error('notempty','url',$url);
+			FWS_Helper::def_error('notempty','url',$url);
 		
 		$this->_links[$name] = $url;
 	}
@@ -146,15 +146,15 @@ class PLIB_Document_Messages extends PLIB_Object
 	 * Adds the given message of given type to the container
 	 *
 	 * @param string $msg the message
-	 * @param int $type the message-type; see PLIB_Messages::*
+	 * @param int $type the message-type; see FWS_Messages::*
 	 */
 	public final function add_message($msg,$type = self::NOTICE)
 	{
 		if(!$this->_is_valid_type($type))
-			PLIB_Helper::error('Invalid type: '.$type.'!');
+			FWS_Helper::error('Invalid type: '.$type.'!');
 		
 		if(empty($msg))
-			PLIB_Helper::def_error('notempty','msg',$msg);
+			FWS_Helper::def_error('notempty','msg',$msg);
 		
 		$this->_messages[$type][] = $msg;
 	}
@@ -207,13 +207,13 @@ class PLIB_Document_Messages extends PLIB_Object
 	/**
 	 * Checks wether a message of given type exists
 	 *
-	 * @param int $type the message-type; see PLIB_Messages::*
+	 * @param int $type the message-type; see FWS_Messages::*
 	 * @return boolean true if there has been added a message of given type
 	 */
 	public final function contains($type)
 	{
 		if(!$this->_is_valid_type($type))
-			PLIB_Helper::error('Invalid type: '.$type.'!');
+			FWS_Helper::error('Invalid type: '.$type.'!');
 		
 		return count($this->_messages[$type]) > 0;
 	}
@@ -238,14 +238,14 @@ class PLIB_Document_Messages extends PLIB_Object
 	/**
 	 * Returns all messages of given type
 	 *
-	 * @param int $type the message-type; see PLIB_Messages::*
+	 * @param int $type the message-type; see FWS_Messages::*
 	 * @return array a numeric array with all messages of the type
 	 * @see get_all_messages()
 	 */
 	public final function get_messages($type)
 	{
 		if(!$this->_is_valid_type($type))
-			PLIB_Helper::error('Invalid type: '.$type.'!');
+			FWS_Helper::error('Invalid type: '.$type.'!');
 		
 		return $this->_messages[$type];
 	}
@@ -260,13 +260,13 @@ class PLIB_Document_Messages extends PLIB_Object
 	{
 		switch($type)
 		{
-			case PLIB_Document_Messages::ERROR:
+			case FWS_Document_Messages::ERROR:
 				return 'Error';
-			case PLIB_Document_Messages::NOTICE:
+			case FWS_Document_Messages::NOTICE:
 				return 'Notice';
-			case PLIB_Document_Messages::WARNING:
+			case FWS_Document_Messages::WARNING:
 				return 'Warning';
-			case PLIB_Document_Messages::NO_ACCESS:
+			case FWS_Document_Messages::NO_ACCESS:
 				return 'No-Access';
 		}
 		

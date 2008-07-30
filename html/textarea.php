@@ -3,7 +3,7 @@
  * Contains the textarea-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<textarea name="...">...</textarea>
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_TextArea extends PLIB_HTML_TextElement
+class FWS_HTML_TextArea extends FWS_HTML_TextElement
 {
 	/**
 	 * The number of rows of the textarea

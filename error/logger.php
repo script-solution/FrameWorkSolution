@@ -3,7 +3,7 @@
  * Contains the error-logger-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all error-loggers
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Error_Logger
+interface FWS_Error_Logger
 {
 	/**
 	 * Should log the given error

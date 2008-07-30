@@ -3,7 +3,7 @@
  * Contains the textbox-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The abstract base-class for all text-elements
  * (&lt;input type="text"../&gt;,&lt;textarea&gt;,...)
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_HTML_TextElement extends PLIB_HTML_FormElement
+abstract class FWS_HTML_TextElement extends FWS_HTML_FormElement
 {
 	/**
 	 * The number of cols for the text-element
@@ -58,8 +58,8 @@ abstract class PLIB_HTML_TextElement extends PLIB_HTML_FormElement
 	 */
 	public final function set_cols($cols)
 	{
-		if(!PLIB_Helper::is_integer($cols) || $cols <= 0)
-			PLIB_Helper::def_error('intgt0','cols',$cols);
+		if(!FWS_Helper::is_integer($cols) || $cols <= 0)
+			FWS_Helper::def_error('intgt0','cols',$cols);
 		
 		$this->_cols = $cols;
 	}

@@ -3,7 +3,7 @@
  * Contains helper for arrays
  *
  * @version			$Id:utils.php 153 2007-12-10 22:53:09Z nasmussen $
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,17 +13,17 @@
 /**
  * Contains helper methods for arrays
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Array_Utils extends PLIB_UtilBase
+final class FWS_Array_Utils extends FWS_UtilBase
 {
 	/**
 	 * Converts the given 1-dimension array to a 2-dimension array with a given number of items
 	 * per line. So for example:
 	 * <code>
-	 * 	PLIB_Array_Utils::convert_to_2d(array(1,2,3,4,5,6),4);
+	 * 	FWS_Array_Utils::convert_to_2d(array(1,2,3,4,5,6),4);
 	 * </code>
 	 * will lead to:
 	 * <code>
@@ -40,9 +40,9 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 	public static function convert_to_2d($array,$perline)
 	{
 		if(!is_array($array))
-			PLIB_Helper::def_error('array','array',$array);
-		if(!PLIB_Helper::is_integer($perline) || $perline <= 0)
-			PLIB_Helper::def_error('intgt0','perline',$perline);
+			FWS_Helper::def_error('array','array',$array);
+		if(!FWS_Helper::is_integer($perline) || $perline <= 0)
+			FWS_Helper::def_error('intgt0','perline',$perline);
 		
 		$i = 0;
 		$a = array();
@@ -76,16 +76,16 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 	public static function filter_2dim($array,$elements)
 	{
 		if(!is_array($array))
-			PLIB_Helper::def_error('array','array',$array);
+			FWS_Helper::def_error('array','array',$array);
 		if(!is_array($elements))
-			PLIB_Helper::def_error('array','elements',$elements);
+			FWS_Helper::def_error('array','elements',$elements);
 		
 		$qelements = self::get_fast_access($elements);
 		$pra = array();
 		foreach($array as $k => $v)
 		{
 			if(!is_array($v))
-				PLIB_Helper::error('The element with key "'.$k.'" is no array!');
+				FWS_Helper::error('The element with key "'.$k.'" is no array!');
 			
 			$sub = array();
 			foreach($v as $kk => $vv)
@@ -118,7 +118,7 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 		foreach($array as $v)
 		{
 			if(!is_scalar($v))
-				PLIB_Helper::error('The element '.$i.' is not scalar!');
+				FWS_Helper::error('The element '.$i.' is not scalar!');
 			
 			$fast[$v] = true;
 			$i++;
@@ -136,17 +136,17 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 	public static function advanced_explode($split,$string)
 	{
 		if(empty($split))
-			PLIB_Helper::def_error('notempty','split',$split);
+			FWS_Helper::def_error('notempty','split',$split);
 	
 		if($string == '' || $string == null)
 			return array();
 	
-		$split_len = PLIB_String::strlen($split);
-		if(PLIB_String::substr($string,0,$split_len) == $split)
-			$string = PLIB_String::substr($string,$split_len);
+		$split_len = FWS_String::strlen($split);
+		if(FWS_String::substr($string,0,$split_len) == $split)
+			$string = FWS_String::substr($string,$split_len);
 	
-		if(PLIB_String::substr($string,-$split_len,$split_len) == $split)
-			$string = PLIB_String::substr($string,0,-$split_len);
+		if(FWS_String::substr($string,-$split_len,$split_len) == $split)
+			$string = FWS_String::substr($string,0,-$split_len);
 	
 		return explode($split,$string);
 	}
@@ -161,7 +161,7 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 	public static function advanced_implode($separator,$array)
 	{
 		if(!is_array($array))
-			PLIB_Helper::def_error('array','array',$array);
+			FWS_Helper::def_error('array','array',$array);
 		
 		$result = '';
 		$len = count($array);
@@ -190,7 +190,7 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 		if(is_array($array))
 		{
 			foreach($array as $k => $element)
-				$array[$k] = PLIB_String::strtolower($element);
+				$array[$k] = FWS_String::strtolower($element);
 		}
 		
 		return $array;
@@ -208,7 +208,7 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 		if(is_array($array))
 		{
 			foreach($array as $k => $element)
-				$array[$k] = PLIB_String::strtoupper($element);
+				$array[$k] = FWS_String::strtoupper($element);
 		}
 		
 		return $array;
@@ -266,7 +266,7 @@ final class PLIB_Array_Utils extends PLIB_UtilBase
 		{
 			foreach($array as $value)
 			{
-				if(!PLIB_Helper::is_integer($value))
+				if(!FWS_Helper::is_integer($value))
 					return false;
 			}
 	

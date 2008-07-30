@@ -3,7 +3,7 @@
  * Contains the radiobutton-group-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a radio-button-group.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_RadioButtonGroup extends PLIB_HTML_List
+class FWS_HTML_RadioButtonGroup extends FWS_HTML_List
 {
 	/**
 	 * The separator for the radiobuttons

@@ -3,7 +3,7 @@
  * Contains the tree-manager
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,23 +16,23 @@
  * stores the structure in an efficient way so that it can be easily accessed any
  * manipulated.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tree_Manager extends PLIB_Object
+class FWS_Tree_Manager extends FWS_Object
 {
 	/**
 	 * The storage-object
 	 *
-	 * @var PLIB_Tree_Storage
+	 * @var FWS_Tree_Storage
 	 */
 	private $_storage;
 	
 	/**
 	 * The root-node.
 	 *
-	 * @var PLIB_Tree_Node
+	 * @var FWS_Tree_Node
 	 */
 	private $_root;
 	
@@ -49,17 +49,17 @@ class PLIB_Tree_Manager extends PLIB_Object
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_Tree_Storage $storage the storage-object (null = empty storage)
+	 * @param FWS_Tree_Storage $storage the storage-object (null = empty storage)
 	 */
 	public function __construct($storage = null)
 	{
 		parent::__construct();
 		
-		if($storage !== null && !($storage instanceof PLIB_Tree_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Tree_Storage',$storage);
+		if($storage !== null && !($storage instanceof FWS_Tree_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Tree_Storage',$storage);
 		
 		if($storage === null)
-			$this->_storage = new PLIB_Tree_Storage_Empty();
+			$this->_storage = new FWS_Tree_Storage_Empty();
 		else
 			$this->_storage = $storage;
 		
@@ -87,13 +87,13 @@ class PLIB_Tree_Manager extends PLIB_Object
 		}
 		
 		// create root
-		$root = new PLIB_Tree_NodeData(0,'root');
-		$this->_root = new PLIB_Tree_Node($root);
+		$root = new FWS_Tree_NodeData(0,'root');
+		$this->_root = new FWS_Tree_Node($root);
 		
 		// create all root-nodes and append it to our root
 		foreach($roots as $id)
 		{
-			$n = new PLIB_Tree_Node($nodes[$id],$this->_root,$this->_root->get_layer() + 1);
+			$n = new FWS_Tree_Node($nodes[$id],$this->_root,$this->_root->get_layer() + 1);
 			$this->_root->add_node($n);
 			$this->_nodes[$id] = $n;
 		}
@@ -142,8 +142,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function node_exists($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 
 		if($this->_root === null)
 			$this->first_node_access();
@@ -210,14 +210,14 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function move_node($id,$parent_id,$index = -1)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
-		if(!PLIB_Helper::is_integer($parent_id) || $parent_id < 0)
-			PLIB_Helper::def_error('intge0','parent_id',$parent_id);
-		if(!PLIB_Helper::is_integer($index) || $index < -1)
-			PLIB_Helper::def_error('numgex','index',-1,$index);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($parent_id) || $parent_id < 0)
+			FWS_Helper::def_error('intge0','parent_id',$parent_id);
+		if(!FWS_Helper::is_integer($index) || $index < -1)
+			FWS_Helper::def_error('numgex','index',-1,$index);
 		if($parent_id == $id)
-			PLIB_Helper::error('You can\'t add the node as a child of itself ;)');
+			FWS_Helper::error('You can\'t add the node as a child of itself ;)');
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -229,7 +229,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 			return;
 		
 		if($n->has_child_node($parent_id,true))
-			PLIB_Helper::error('You can\'t add the node to a child-node of it ;)');
+			FWS_Helper::error('You can\'t add the node to a child-node of it ;)');
 		
 		// remove from the current node
 		$p = $n->get_parent();
@@ -247,7 +247,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Adds a node with the given data to the node with id <var>$parent_id</var>.
 	 *
 	 * @param int $parent_id the id of the parent-node (0 = root)
-	 * @param PLIB_Tree_NodeData $data the data
+	 * @param FWS_Tree_NodeData $data the data
 	 */
 	public final function add_node($parent_id,$data)
 	{
@@ -259,15 +259,15 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * the given index.
 	 *
 	 * @param int $parent_id the id of the parent-node (0 = root)
-	 * @param PLIB_Tree_NodeData $data the data
+	 * @param FWS_Tree_NodeData $data the data
 	 * @param int $index the index at which you want to add it (0..n)
 	 */
 	public final function add_node_at($parent_id,$data,$index)
 	{
-		if(!PLIB_Helper::is_integer($parent_id) || $parent_id < 0)
-			PLIB_Helper::def_error('intge0','parent_id',$parent_id);
-		if(!($data instanceof PLIB_Tree_NodeData))
-			PLIB_Helper::def_error('instance','data','PLIB_Tree_NodeData',$data);
+		if(!FWS_Helper::is_integer($parent_id) || $parent_id < 0)
+			FWS_Helper::def_error('intge0','parent_id',$parent_id);
+		if(!($data instanceof FWS_Tree_NodeData))
+			FWS_Helper::def_error('instance','data','FWS_Tree_NodeData',$data);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -280,7 +280,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 			// get parent
 			$parent = $this->get_node($parent_id);
 			if($parent === null)
-				PLIB_Helper::error('A node with id '.$parent_id.' does not exist!');
+				FWS_Helper::error('A node with id '.$parent_id.' does not exist!');
 			
 			$n = $parent->add_data_at($data,$index);
 		}
@@ -297,8 +297,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function remove_node($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -333,8 +333,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function get_path($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		
 		$node = $this->get_node($id);
 		if($node !== null)
@@ -361,8 +361,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function get_parent_id($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		
 		$node = $this->get_node($id);
 		if($node !== null)
@@ -379,8 +379,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function has_childs($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		
 		return $this->get_child_count($id) > 0;
 	}
@@ -393,8 +393,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function get_child_count($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id < 0)
-			PLIB_Helper::def_error('intge0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id < 0)
+			FWS_Helper::def_error('intge0','id',$id);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -413,12 +413,12 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Returns the node with given id
 	 * 
 	 * @param int $id the id of the node
-	 * @return PLIB_Tree_Node the node-object or null if not found
+	 * @return FWS_Tree_Node the node-object or null if not found
 	 */
 	public final function get_node($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id <= 0)
-			PLIB_Helper::def_error('intgt0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id <= 0)
+			FWS_Helper::def_error('intgt0','id',$id);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -433,7 +433,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Returns the data of the node with given id
 	 *
 	 * @param int $id the id of the node
-	 * @return PLIB_Tree_NodeData the node-data or null if not found
+	 * @return FWS_Tree_NodeData the node-data or null if not found
 	 */
 	public final function get_node_data($id)
 	{
@@ -448,12 +448,12 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Collects all nodes with given ids
 	 *
 	 * @param array $ids a numeric array with the ids
-	 * @return array an numeric array with {@link PLIB_Tree_Node} objects
+	 * @return array an numeric array with {@link FWS_Tree_Node} objects
 	 */
 	public final function get_nodes_with_ids($ids)
 	{
-		if(!PLIB_Array_Utils::is_integer($ids))
-			PLIB_Helper::def_error('intarray','ids',$ids);
+		if(!FWS_Array_Utils::is_integer($ids))
+			FWS_Helper::def_error('intarray','ids',$ids);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -469,7 +469,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 	}
 
 	/**
-	 * @return array an associative array with all node-objects ({@link PLIB_Tree_Node}):
+	 * @return array an associative array with all node-objects ({@link FWS_Tree_Node}):
 	 * 	<code>array(<id> => <node>,...)</code>
 	 */
 	public final function get_all_nodes()
@@ -490,8 +490,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function get_direct_sub_nodes($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id < 0)
-			PLIB_Helper::def_error('intge0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id < 0)
+			FWS_Helper::def_error('intge0','id',$id);
 		
 		if($this->_root === null)
 			$this->first_node_access();
@@ -518,8 +518,8 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 */
 	public final function get_sub_nodes($id)
 	{
-		if(!PLIB_Helper::is_integer($id) || $id < 0)
-			PLIB_Helper::def_error('intge0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id < 0)
+			FWS_Helper::def_error('intge0','id',$id);
 		
 		if($id == 0)
 			return $this->get_all_nodes();
@@ -550,7 +550,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Collects all node-ids to remove
 	 *
 	 * @param array $ids a reference to the array with the ids
-	 * @param PLIB_Tree_Node $node the current node
+	 * @param FWS_Tree_Node $node the current node
 	 */
 	private function _collect_remove_ids(&$ids,$node)
 	{
@@ -563,7 +563,7 @@ class PLIB_Tree_Manager extends PLIB_Object
 	 * Collects the nodes of the given node recursivly
 	 *
 	 * @param array $result [reference] the result-array
-	 * @param PLIB_Tree_Node $node the node
+	 * @param FWS_Tree_Node $node the node
 	 */
 	private function _get_all_nodes(&$result,$node)
 	{

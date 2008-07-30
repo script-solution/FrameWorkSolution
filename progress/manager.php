@@ -3,7 +3,7 @@
  * Contains the progress-manager
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -20,16 +20,16 @@
  * Additionally you may (or should if this should make sense ;)) add listeners to get informed
  * about the current state of the operation.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Progress_Manager extends PLIB_Object
+final class FWS_Progress_Manager extends FWS_Object
 {
 	/**
 	 * The storage-object for the position
 	 *
-	 * @var PLIB_Progress_Storage
+	 * @var FWS_Progress_Storage
 	 */
 	private $_storage;
 	
@@ -71,14 +71,14 @@ final class PLIB_Progress_Manager extends PLIB_Object
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_Progress_Storage $storage the storage-implementation
+	 * @param FWS_Progress_Storage $storage the storage-implementation
 	 */
 	public function __construct($storage)
 	{
 		parent::__construct();
 		
-		if(!($storage instanceof PLIB_Progress_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Progress_Storage',$storage);
+		if(!($storage instanceof FWS_Progress_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Progress_Storage',$storage);
 		
 		$this->_storage = $storage;
 	}
@@ -86,12 +86,12 @@ final class PLIB_Progress_Manager extends PLIB_Object
 	/**
 	 * Adds the given listener to the list so that it will be informed if something happened.
 	 *
-	 * @param PLIB_Progress_Listener $l the listener
+	 * @param FWS_Progress_Listener $l the listener
 	 */
 	public function add_listener($l)
 	{
-		if(!($l instanceof PLIB_Progress_Listener))
-			PLIB_Helper::def_error('instance','l','PLIB_Progress_Listener',$l);
+		if(!($l instanceof FWS_Progress_Listener))
+			FWS_Helper::def_error('instance','l','FWS_Progress_Listener',$l);
 		
 		$this->_listener[] = $l;
 	}
@@ -111,8 +111,8 @@ final class PLIB_Progress_Manager extends PLIB_Object
 	 */
 	public function set_ops_per_cycle($value)
 	{
-		if(!PLIB_Helper::is_integer($value) || $value <= 0)
-			PLIB_Helper::def_error('intgt0','value',$value);
+		if(!FWS_Helper::is_integer($value) || $value <= 0)
+			FWS_Helper::def_error('intgt0','value',$value);
 		
 		$this->_ops_per_cycle = $value;
 	}
@@ -163,12 +163,12 @@ final class PLIB_Progress_Manager extends PLIB_Object
 	/**
 	 * Runs the given task.
 	 *
-	 * @param PLIB_Progress_Task $task the task to run
+	 * @param FWS_Progress_Task $task the task to run
 	 */
 	public function run_task($task)
 	{
-		if(!($task instanceof PLIB_Progress_Task))
-			PLIB_Helper::def_error('instance','task','PLIB_Progress_Task',$task);
+		if(!($task instanceof FWS_Progress_Task))
+			FWS_Helper::def_error('instance','task','FWS_Progress_Task',$task);
 		
 		$this->_total = $task->get_total_operations();
 		$position = $this->_storage->get_position();

@@ -3,7 +3,7 @@
  * Contains a CSS-attribute-container
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Contains and manages CSS-attributes
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_HTML_FormElement extends PLIB_Object
+abstract class FWS_HTML_FormElement extends FWS_Object
 {
 	/**
 	 * The id of the element
@@ -43,7 +43,7 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 	/**
 	 * The CSS-Attributes for the style-attribute
 	 *
-	 * @var PLIB_CSS_Attributes
+	 * @var FWS_CSS_Attributes
 	 */
 	private $_style;
 	
@@ -91,7 +91,7 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 		$this->set_id($id !== null ? $id : $this->_generate_id($name));
 		$this->set_value($value);
 		$this->set_default($default);
-		$this->_style = new PLIB_CSS_Attributes();
+		$this->_style = new FWS_CSS_Attributes();
 	}
 
 	/**
@@ -128,9 +128,9 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 	public final function set_name($name)
 	{
 		if(!is_string($name))
-			PLIB_Helper::def_error('string','name',$name);
+			FWS_Helper::def_error('string','name',$name);
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$this->_name = $name;
 	}
@@ -153,13 +153,13 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 	public final function set_class($class)
 	{
 		if($class !== null && empty($class))
-			PLIB_Helper::def_error('notempty','class',$class);
+			FWS_Helper::def_error('notempty','class',$class);
 		
 		$this->_class = $class;
 	}
 	
 	/**
-	 * @return PLIB_CSS_Attributes the CSS-attributes of this element
+	 * @return FWS_CSS_Attributes the CSS-attributes of this element
 	 */
 	public final function get_style()
 	{
@@ -260,11 +260,11 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 	public final function set_custom_attribute($name,$value)
 	{
 		if(!is_scalar($name))
-			PLIB_Helper::def_error('scalar','name',$name);
+			FWS_Helper::def_error('scalar','name',$name);
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		if(!is_scalar($value))
-			PLIB_Helper::def_error('scalar','value',$value);
+			FWS_Helper::def_error('scalar','value',$value);
 		
 		$this->_custom[$name] = $value;
 	}
@@ -277,9 +277,9 @@ abstract class PLIB_HTML_FormElement extends PLIB_Object
 	public final function remove_custom_attribute($name)
 	{
 		if(!is_scalar($name))
-			PLIB_Helper::def_error('scalar','name',$name);
+			FWS_Helper::def_error('scalar','name',$name);
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(isset($this->_custom[$name]))
 			unset($this->_custom[$name]);

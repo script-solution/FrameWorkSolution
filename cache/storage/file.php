@@ -3,7 +3,7 @@
  * Contains the cache-storage-file class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The file-based implementation of the cache-storage
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Storage_File extends PLIB_Object implements PLIB_Cache_Storage
+final class FWS_Cache_Storage_File extends FWS_Object implements FWS_Cache_Storage
 {
 	/**
 	 * The folder which contains the cache-files
@@ -35,20 +35,20 @@ final class PLIB_Cache_Storage_File extends PLIB_Object implements PLIB_Cache_St
 	{
 		parent::__construct();
 		
-		if(empty($folder) || !is_dir($folder) || !PLIB_FileUtils::is_writable($folder))
-			PLIB_Helper::error('$folder is invalid. It has to exist and be writable!');
+		if(empty($folder) || !is_dir($folder) || !FWS_FileUtils::is_writable($folder))
+			FWS_Helper::error('$folder is invalid. It has to exist and be writable!');
 		
-		$this->_folder = PLIB_FileUtils::ensure_trailing_slash($folder);
+		$this->_folder = FWS_FileUtils::ensure_trailing_slash($folder);
 	}
 	
 	public function load()
 	{
 		$res = array();
-		$items = PLIB_FileUtils::get_dir_content($this->_folder);
+		$items = FWS_FileUtils::get_dir_content($this->_folder);
 		foreach($items as $item)
 		{
-			if(PLIB_String::ends_with($item,'.php') && is_file($this->_folder.$item))
-				$res[PLIB_FileUtils::get_name($item,false)] = include($this->_folder.$item);
+			if(FWS_String::ends_with($item,'.php') && is_file($this->_folder.$item))
+				$res[FWS_FileUtils::get_name($item,false)] = include($this->_folder.$item);
 		}
 		return $res;
 	}
@@ -58,7 +58,7 @@ final class PLIB_Cache_Storage_File extends PLIB_Object implements PLIB_Cache_St
 		$c = '<?php'."\n";
 		$c .= 'return '.$this->_get_content($content).';'."\n";
 		$c .= '?>';
-		PLIB_FileUtils::write($this->_folder.$name.'.php',$c);
+		FWS_FileUtils::write($this->_folder.$name.'.php',$c);
 	}
 	
 	/**

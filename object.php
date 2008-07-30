@@ -3,21 +3,21 @@
  * Contains the base-object for all classes
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * This is the base object for all class which can be instantiated in the library.
- * It offers us a way to affect all classes in the library. So for example to print
+ * This is the base object for all class which can be instantiated in the framework.
+ * It offers us a way to affect all classes in the framework. So for example to print
  * an object or do other things.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Object
+abstract class FWS_Object
 {
 	/**
 	 * The next id that should be used
@@ -84,14 +84,14 @@ abstract class PLIB_Object
 	protected abstract function get_print_vars();
 	
 	/**
-	 * The toString-method of all classes that inherit from {@link PLIB_Object}
+	 * The toString-method of all classes that inherit from {@link FWS_Object}
 	 * 
 	 * @param boolean $use_html do you want to print it as HTML? (true by default)
 	 * @return string information about the object
 	 */
 	public function __toString($use_html = true)
 	{
-		return PLIB_PrintUtils::obj_to_string($this,$this->get_print_vars(),$use_html);
+		return FWS_PrintUtils::obj_to_string($this,$this->get_print_vars(),$use_html);
 	}
 }
 ?>

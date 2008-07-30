@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_String test
+ * Contains the FWS_String test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,13 +11,13 @@
  */
 
 /**
- * PLIB_String test case.
+ * FWS_String test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_StringTest extends PHPUnit_Framework_TestCase
+class FWS_StringTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Prepares the environment before running a test.
@@ -36,47 +36,47 @@ class PLIB_StringTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_String::Ends_with()
+	 * Tests FWS_String::Ends_with()
 	 */
 	public function testEnds_with()
 	{
-		self::assertTrue(PLIB_String::ends_with('input','t'));
-		self::assertTrue(PLIB_String::ends_with('input','ut'));
-		self::assertTrue(PLIB_String::ends_with('input','put'));
-		self::assertTrue(PLIB_String::ends_with('input','nput'));
-		self::assertTrue(PLIB_String::ends_with('input','input'));
+		self::assertTrue(FWS_String::ends_with('input','t'));
+		self::assertTrue(FWS_String::ends_with('input','ut'));
+		self::assertTrue(FWS_String::ends_with('input','put'));
+		self::assertTrue(FWS_String::ends_with('input','nput'));
+		self::assertTrue(FWS_String::ends_with('input','input'));
 		
-		self::assertFalse(PLIB_String::ends_with('input','pu'));
+		self::assertFalse(FWS_String::ends_with('input','pu'));
 	}
 
 	/**
-	 * Tests PLIB_String::Is_alpha()
+	 * Tests FWS_String::Is_alpha()
 	 */
 	public function testIs_alpha()
 	{
-		self::assertTrue(PLIB_String::is_alpha('a'));
-		self::assertTrue(PLIB_String::is_alpha('h'));
-		self::assertTrue(PLIB_String::is_alpha('z'));
-		self::assertTrue(PLIB_String::is_alpha('A'));
-		self::assertTrue(PLIB_String::is_alpha('N'));
-		self::assertTrue(PLIB_String::is_alpha('Z'));
+		self::assertTrue(FWS_String::is_alpha('a'));
+		self::assertTrue(FWS_String::is_alpha('h'));
+		self::assertTrue(FWS_String::is_alpha('z'));
+		self::assertTrue(FWS_String::is_alpha('A'));
+		self::assertTrue(FWS_String::is_alpha('N'));
+		self::assertTrue(FWS_String::is_alpha('Z'));
 	}
 
 	/**
-	 * Tests PLIB_String::Starts_with()
+	 * Tests FWS_String::Starts_with()
 	 */
 	public function testStarts_with()
 	{
-		self::assertTrue(PLIB_String::starts_with('input','i'));
-		self::assertTrue(PLIB_String::starts_with('input','in'));
-		self::assertTrue(PLIB_String::starts_with('input','inp'));
-		self::assertTrue(PLIB_String::starts_with('input','inpu'));
-		self::assertTrue(PLIB_String::starts_with('input','input'));
+		self::assertTrue(FWS_String::starts_with('input','i'));
+		self::assertTrue(FWS_String::starts_with('input','in'));
+		self::assertTrue(FWS_String::starts_with('input','inp'));
+		self::assertTrue(FWS_String::starts_with('input','inpu'));
+		self::assertTrue(FWS_String::starts_with('input','input'));
 		
-		self::assertTrue(PLIB_String::starts_with('input','nput',1));
-		self::assertTrue(PLIB_String::starts_with('input','ut',3));
+		self::assertTrue(FWS_String::starts_with('input','nput',1));
+		self::assertTrue(FWS_String::starts_with('input','ut',3));
 		
-		self::assertFalse(PLIB_String::starts_with('input','in',1));
+		self::assertFalse(FWS_String::starts_with('input','in',1));
 	}
 }
 ?>

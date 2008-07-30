@@ -3,7 +3,7 @@
  * Contains the config-manager-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,16 +14,16 @@
  * The manager for the config-items. Contains config-items of one root-group and can
  * update their values.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Manager extends PLIB_Object
+class FWS_Config_Manager extends FWS_Object
 {
 	/**
 	 * The storage-object
 	 *
-	 * @var PLIB_Config_Storage
+	 * @var FWS_Config_Storage
 	 */
 	private $_storage;
 	
@@ -35,7 +35,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	private $_groups;
 	
 	/**
-	 * The loaded items (an array of PLIB_Config_Item's)
+	 * The loaded items (an array of FWS_Config_Item's)
 	 *
 	 * @var array
 	 */
@@ -44,14 +44,14 @@ class PLIB_Config_Manager extends PLIB_Object
 	/**
 	 * Constructor
 	 * 
-	 * @param PLIB_Config_Storage $storage the storage to use
+	 * @param FWS_Config_Storage $storage the storage to use
 	 */
 	public function __construct($storage)
 	{
 		parent::__construct();
 		
-		if(!($storage instanceof PLIB_Config_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Config_Storage',$storage);
+		if(!($storage instanceof FWS_Config_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Config_Storage',$storage);
 		
 		$this->_storage = $storage;
 		
@@ -61,7 +61,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	}
 	
 	/**
-	 * @return array an array of PLIB_Config_Group objects
+	 * @return array an array of FWS_Config_Group objects
 	 */
 	public final function get_groups()
 	{
@@ -76,7 +76,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	public final function get_item_count()
 	{
 		if($this->_items === null)
-			PLIB_Helper::error('Please load the items first, e.g. via load_group()!');
+			FWS_Helper::error('Please load the items first, e.g. via load_group()!');
 		
 		return count($this->_items);
 	}
@@ -85,7 +85,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	 * Returns the group with given id
 	 *
 	 * @param int $id the group-id
-	 * @return PLIB_Config_Group the group or null if not found
+	 * @return FWS_Config_Group the group or null if not found
 	 */
 	public final function get_group($id)
 	{
@@ -98,16 +98,16 @@ class PLIB_Config_Manager extends PLIB_Object
 	/**
 	 * Displays the items
 	 * 
-	 * @param PLIB_Config_View $view the view
+	 * @param FWS_Config_View $view the view
 	 * @see load_group()
 	 * @see load_items_with()
 	 */
 	public final function display($view)
 	{
-		if(!($view instanceof PLIB_Config_View))
-			PLIB_Helper::def_error('instance','view','PLIB_Config_View',$view);
+		if(!($view instanceof FWS_Config_View))
+			FWS_Helper::def_error('instance','view','FWS_Config_View',$view);
 		if($this->_items === null)
-			PLIB_Helper::error('Please load the items first, e.g. via load_group()!');
+			FWS_Helper::error('Please load the items first, e.g. via load_group()!');
 		
 		$last_gid = 0;
 		foreach($this->_items as $item)
@@ -165,7 +165,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	public final function save_changes()
 	{
 		if($this->_items === null)
-			PLIB_Helper::error('Please load the items first, e.g. via load_group()!');
+			FWS_Helper::error('Please load the items first, e.g. via load_group()!');
 		
 		$i = 0;
 		foreach($this->_items as $item)
@@ -206,7 +206,7 @@ class PLIB_Config_Manager extends PLIB_Object
 	/**
 	 * Loads the given items
 	 *
-	 * @param array $items an array of PLIB_Config_Data objects
+	 * @param array $items an array of FWS_Config_Data objects
 	 */
 	protected final function load_items($items)
 	{
@@ -223,13 +223,13 @@ class PLIB_Config_Manager extends PLIB_Object
 	 * Loads the item for the given data. You may overwrite this method to support additional types
 	 * or something similar.
 	 *
-	 * @param PLIB_Config_Data $data the data of the item
-	 * @return PLIB_Config_Item the corresponding item or null if the type is unknown
+	 * @param FWS_Config_Data $data the data of the item
+	 * @return FWS_Config_Item the corresponding item or null if the type is unknown
 	 */
 	protected function get_item($data)
 	{
-		$name = 'PLIB_Config_Item_'.ucfirst($data->get_type());
-		$file = PLIB_Path::server_lib().'config/item/'.$data->get_type().'.php';
+		$name = 'FWS_Config_Item_'.ucfirst($data->get_type());
+		$file = FWS_Path::server_fw().'config/item/'.$data->get_type().'.php';
 		if(is_file($file))
 		{
 			include_once($file);

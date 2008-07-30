@@ -3,7 +3,7 @@
  * Contains the 1-dimensional cache
  *
  * @version			$Id:1dim.php 153 2007-12-10 22:53:09Z nasmussen $
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * Additionally you may sort the array by the keys or elements in any direction and
  * may use binary-search if the array is sorted by the elements.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Array_1Dim extends PLIB_Object implements Iterator
+class FWS_Array_1Dim extends FWS_Object implements Iterator
 {
 	/**
 	 * Represents the ascending sort-direction
@@ -101,14 +101,14 @@ class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 	{
 		if(!in_array($mode,array(self::SORT_MODE_ELEMENTS,self::SORT_MODE_KEYS)))
 		{
-			PLIB_Helper::def_error(
+			FWS_Helper::def_error(
 				'inarray','mode',array(self::SORT_MODE_ELEMENTS,self::SORT_MODE_KEYS),$mode
 			);
 		}
 		
 		if(!in_array($dir,array(self::SORT_DIR_ASC,self::SORT_DIR_DESC)))
 		{
-			PLIB_Helper::def_error(
+			FWS_Helper::def_error(
 				'inarray','dir',array(self::SORT_DIR_ASC,self::SORT_DIR_DESC),$dir
 			);
 		}
@@ -141,7 +141,7 @@ class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 	{
 		if(!in_array($dir,array(self::SORT_DIR_ASC,self::SORT_DIR_DESC)))
 		{
-			PLIB_Helper::def_error(
+			FWS_Helper::def_error(
 				'inarray','dir',array(self::SORT_DIR_ASC,self::SORT_DIR_DESC),$dir
 			);
 		}
@@ -211,7 +211,7 @@ class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 	public final function set_elements($elements)
 	{
 		if(!is_array($elements))
-			PLIB_Helper::def_error('array','elements',$elements);
+			FWS_Helper::def_error('array','elements',$elements);
 		
 		if($this->_length > 0)
 			$this->clear();
@@ -236,7 +236,7 @@ class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 		if($is_key && isset($this->_cache_content[$row]))
 			return $this->_cache_content[$row];
 
-		if(!$is_key && PLIB_Helper::is_integer($row) && $row >= 0 && $row < $this->_length)
+		if(!$is_key && FWS_Helper::is_integer($row) && $row >= 0 && $row < $this->_length)
 			return $this->_cache_content[$this->_cache_content_keys[$row]];
 
 		return null;
@@ -330,7 +330,7 @@ class PLIB_Array_1Dim extends PLIB_Object implements Iterator
 	public final function add_element_at($element,$index,$key = false)
 	{
 		if($index < 0 || $index > $this->_length)
-			PLIB_Helper::def_error('numbetween','index',0,$this->_length,$index);
+			FWS_Helper::def_error('numbetween','index',0,$this->_length,$index);
 		
 		if($key === false)
 			$key = $this->_length;

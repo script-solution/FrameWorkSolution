@@ -3,7 +3,7 @@
  * Contains the padding-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * Can be used for all kinds of paddings. Contains a padding-value for all 4 sides
  * (top,right,bottom,left)
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Padding extends PLIB_Object
+final class FWS_GD_Padding extends FWS_Object
 {
 	/**
 	 * The top-padding
@@ -79,7 +79,7 @@ final class PLIB_GD_Padding extends PLIB_Object
 			
 			case 1:
 				if(!is_numeric($arg1) || $arg1 < 0)
-					PLIB_Helper::def_error('numge0','arg1',$arg1);
+					FWS_Helper::def_error('numge0','arg1',$arg1);
 				
 				$this->_top = $arg1;
 				$this->_right = $arg1;
@@ -89,9 +89,9 @@ final class PLIB_GD_Padding extends PLIB_Object
 			
 			case 2:
 				if(!is_numeric($arg1) || $arg1 < 0)
-					PLIB_Helper::def_error('numge0','arg1',$arg1);
+					FWS_Helper::def_error('numge0','arg1',$arg1);
 				if(!is_numeric($arg2) || $arg2 < 0)
-					PLIB_Helper::def_error('numge0','arg2',$arg2);
+					FWS_Helper::def_error('numge0','arg2',$arg2);
 				
 				$this->_top = $arg1;
 				$this->_right = $arg2;
@@ -101,13 +101,13 @@ final class PLIB_GD_Padding extends PLIB_Object
 			
 			case 4:
 				if(!is_numeric($arg1) || $arg1 < 0)
-					PLIB_Helper::def_error('numge0','arg1',$arg1);
+					FWS_Helper::def_error('numge0','arg1',$arg1);
 				if(!is_numeric($arg2) || $arg2 < 0)
-					PLIB_Helper::def_error('numge0','arg2',$arg2);
+					FWS_Helper::def_error('numge0','arg2',$arg2);
 				if(!is_numeric($arg3) || $arg3 < 0)
-					PLIB_Helper::def_error('numge0','arg3',$arg3);
+					FWS_Helper::def_error('numge0','arg3',$arg3);
 				if(!is_numeric($arg4) || $arg4 < 0)
-					PLIB_Helper::def_error('numge0','arg4',$arg4);
+					FWS_Helper::def_error('numge0','arg4',$arg4);
 				
 				$this->_top = $arg1;
 				$this->_right = $arg2;
@@ -116,7 +116,7 @@ final class PLIB_GD_Padding extends PLIB_Object
 				break;
 			
 			default:
-				PLIB_Helper::error('Invalid number of arguments. Allowed are 0,1,2 and 4');
+				FWS_Helper::error('Invalid number of arguments. Allowed are 0,1,2 and 4');
 				break;
 		}
 	}

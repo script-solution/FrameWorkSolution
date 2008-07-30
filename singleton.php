@@ -3,7 +3,7 @@
  * Contains the singleton-base-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -21,15 +21,15 @@
  * 	}
  * </code>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Singleton extends PLIB_Object
+abstract class FWS_Singleton extends FWS_Object
 {
 	/**
 	 * The instance of this class
 	 *
-	 * @var PLIB_Singleton
+	 * @var FWS_Singleton
 	 */
 	private static $_instances = array();
 	
@@ -44,7 +44,7 @@ abstract class PLIB_Singleton extends PLIB_Object
 	 * Creates the object of the given class (once) and returns it
 	 *
 	 * @param string $name the class-name
-	 * @return PLIB_Singleton the object of the given class
+	 * @return FWS_Singleton the object of the given class
 	 */
 	protected static function _get_instance($name)
 	{
@@ -61,23 +61,23 @@ abstract class PLIB_Singleton extends PLIB_Object
 	/**
 	 * Constructor
 	 * 
-	 * @throws PLIB_Exceptions_UnsupportedMethod if _get_instance() is not used
+	 * @throws FWS_Exceptions_UnsupportedMethod if _get_instance() is not used
 	 */
 	public function __construct()
 	{
 		if(self::$_locked)
-			throw new PLIB_Exceptions_UnsupportedMethod('Since '.get_class($this).' is a singleton'
+			throw new FWS_Exceptions_UnsupportedMethod('Since '.get_class($this).' is a singleton'
 				.' you can\'t instantiate it but have to use the static get-instance-method!');
 		
 		parent::__construct();
 	}
 	
 	/**
-	 * @throws PLIB_Exceptions_UnsupportedMethod in all cases
+	 * @throws FWS_Exceptions_UnsupportedMethod in all cases
 	 */
 	public function __clone()
 	{
-		throw new PLIB_Exceptions_UnsupportedMethod(
+		throw new FWS_Exceptions_UnsupportedMethod(
 			'Since '.get_class($this).' is a singleton you can\'t clone it!'
 		);
 	}

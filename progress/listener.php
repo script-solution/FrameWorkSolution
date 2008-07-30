@@ -3,7 +3,7 @@
  * Contains the progress-listener-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The listener-interface for the progress. Contains methods to react of events like
  * the progress is finished or a cycle is finished.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Progress_Listener
+interface FWS_Progress_Listener
 {
 	/**
 	 * Will be called if the whole progress has been finished

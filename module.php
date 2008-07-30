@@ -3,7 +3,7 @@
  * Contains the module-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -11,15 +11,15 @@
 
 /**
  * The module-class which is the base-class for all modules. Modules are used by the class
- * {@link PLIB_Document} and are intended to provide a modular and more independend architecture.
+ * {@link FWS_Document} and are intended to provide a modular and more independend architecture.
  * A module can control the complete result that will be sent to the browser by switching and
  * manipulating the renderer of the document and the changing properties of the document itself.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
- * @see PLIB_Helper::get_module_name()
+ * @see FWS_Helper::get_module_name()
  */
-abstract class PLIB_Module extends PLIB_Object
+abstract class FWS_Module extends FWS_Object
 {
 	/**
 	 * Stores wether the module has been shown successfully or something unexpected
@@ -56,7 +56,7 @@ abstract class PLIB_Module extends PLIB_Object
 	 * for preparing the document. For example setting the content-type, adding bread-crumbs and so
 	 * on.
 	 *
-	 * @param PLIB_Document $doc the document
+	 * @param FWS_Document $doc the document
 	 */
 	public function init($doc)
 	{
@@ -77,13 +77,13 @@ abstract class PLIB_Module extends PLIB_Object
 	 * Creates the formular, adds it to the template and allows all methods of it
 	 * to be called.
 	 *
-	 * @return PLIB_HTML_Formular the created formular
+	 * @return FWS_HTML_Formular the created formular
 	 */
 	protected function request_formular()
 	{
-		$tpl = PLIB_Props::get()->tpl();
+		$tpl = FWS_Props::get()->tpl();
 
-		$form = new PLIB_HTML_Formular(false,false);
+		$form = new FWS_HTML_Formular(false,false);
 		$tpl->add_array('form',$form);
 		$tpl->add_allowed_method('form','*');
 		return $form;
@@ -93,13 +93,13 @@ abstract class PLIB_Module extends PLIB_Object
 	 * Reports an error and stores that the module has not finished in a correct way.
 	 * Note that you have to specify a message if the type is no error and no no-access-msg!
 	 *
-	 * @param int $type the type. see PLIB_Document_Messages::*
+	 * @param int $type the type. see FWS_Document_Messages::*
 	 * @param string $message you can specify the message to display here, if you like
 	 */
-	protected function report_error($type = PLIB_Document_Messages::ERROR,$message = '')
+	protected function report_error($type = FWS_Document_Messages::ERROR,$message = '')
 	{
-		$locale = PLIB_Props::get()->locale();
-		$msgs = PLIB_Props::get()->msgs();
+		$locale = FWS_Props::get()->locale();
+		$msgs = FWS_Props::get()->msgs();
 
 		// determine message to report
 		$msg = '';
@@ -109,16 +109,16 @@ abstract class PLIB_Module extends PLIB_Object
 		{
 			switch($type)
 			{
-				case PLIB_Document_Messages::NO_ACCESS:
+				case FWS_Document_Messages::NO_ACCESS:
 					$msg = $locale->lang('permission_denied');
 					break;
 				
-				case PLIB_Document_Messages::ERROR:
+				case FWS_Document_Messages::ERROR:
 					$msg = $locale->lang('invalid_page');
 					break;
 					
 				default:
-					PLIB_Helper::error('Missing message or invalid type: '.$type);
+					FWS_Helper::error('Missing message or invalid type: '.$type);
 			}
 		}
 		
@@ -128,7 +128,7 @@ abstract class PLIB_Module extends PLIB_Object
 	}
 	
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

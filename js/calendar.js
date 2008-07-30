@@ -2,7 +2,7 @@
  * Contains the javascript-calendar
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -12,17 +12,17 @@
 /**
  * Stores the instance of the currently displayed calendar
  */
-PLIB_Calendar.instance = null;
+FWS_Calendar.instance = null;
 
 /**
  * The id of the calendar-area
  */
-PLIB_Calendar.id = 'plib_calendar';
+FWS_Calendar.id = 'fws_calendar';
 
 /**
  * The language-entries
  */
-PLIB_Calendar.language = new Array();
+FWS_Calendar.language = new Array();
 
 /**
  * Constructor
@@ -32,7 +32,7 @@ PLIB_Calendar.language = new Array();
  * @param function onSelected the callback-function which should be called as soon
  * 			as the user selects a date
  */
-function PLIB_Calendar(path,inputId,onSelected)
+function FWS_Calendar(path,inputId,onSelected)
 {
 	// properties
 	this.cssFile = '';
@@ -46,7 +46,7 @@ function PLIB_Calendar(path,inputId,onSelected)
 	if(typeof onSelected != 'function')
 	{
 		this.onSelected = function(date) {
-			var input = PLIB_getElement(this.inputId);
+			var input = FWS_getElement(this.inputId);
 			var val = date.getFullYear() + "-";
 			val += this.get2Digits((date.getMonth() + 1)) + "-" + this.get2Digits(date.getDate());
 			input.value = val;
@@ -101,23 +101,23 @@ function PLIB_Calendar(path,inputId,onSelected)
 		html += '<table>' + "\n";
 		html += '	<thead>' + "\n";
 		html += '		<tr>' + "\n";
-		html += '			<td id="plibcal_prev_year" class="cal_button"';
+		html += '			<td id="fwscal_prev_year" class="cal_button"';
 		html += ' onmouseover="this.className = \'cal_button_hover\';"';
 		html += ' onmouseout="this.className = \'cal_button\';"';
-		html += ' onclick="PLIB_Calendar.instance.prevYear();">&lt;&lt;</td>' + "\n";
-		html += '			<td id="plibcal_prev_month" class="cal_button"';
+		html += ' onclick="FWS_Calendar.instance.prevYear();">&lt;&lt;</td>' + "\n";
+		html += '			<td id="fwscal_prev_month" class="cal_button"';
 		html += ' onmouseover="this.className = \'cal_button_hover\';"';
 		html += ' onmouseout="this.className = \'cal_button\';"';
-		html += ' onclick="PLIB_Calendar.instance.prevMonth();">&lt;</td>' + "\n";
+		html += ' onclick="FWS_Calendar.instance.prevMonth();">&lt;</td>' + "\n";
 		html += '			<td id="cal_headline" class="cal_month" colspan="4">&nbsp;</td>' + "\n";
-		html += '			<td id="plibcal_next_month" class="cal_button"';
+		html += '			<td id="fwscal_next_month" class="cal_button"';
 		html += ' onmouseover="this.className = \'cal_button_hover\';"';
 		html += ' onmouseout="this.className = \'cal_button\';"';
-		html += ' onclick="PLIB_Calendar.instance.nextMonth();">&gt;</td>' + "\n";
-		html += '			<td id="plibcal_next_year" class="cal_button"';
+		html += ' onclick="FWS_Calendar.instance.nextMonth();">&gt;</td>' + "\n";
+		html += '			<td id="fwscal_next_year" class="cal_button"';
 		html += ' onmouseover="this.className = \'cal_button_hover\';"';
 		html += ' onmouseout="this.className = \'cal_button\';"';
-		html += ' onclick="PLIB_Calendar.instance.nextYear();">&gt;&gt;</td>' + "\n";
+		html += ' onclick="FWS_Calendar.instance.nextYear();">&gt;&gt;</td>' + "\n";
 		html += '		</tr>' + "\n";
 		
 		html += '		<tr>' + "\n";
@@ -126,7 +126,7 @@ function PLIB_Calendar(path,inputId,onSelected)
 			if(x == 0)
 				html += '			<td class="cal_wkcorner">&nbsp;</td>' + "\n";
 			else
-				html += '			<td class="cal_wkday">' + PLIB_Calendar.language['wd_' + (x - 1)] + '</td>' + "\n";
+				html += '			<td class="cal_wkday">' + FWS_Calendar.language['wd_' + (x - 1)] + '</td>' + "\n";
 		}
 		html += '		</tr>' + "\n";
 		html += '	</thead>' + "\n";
@@ -149,8 +149,8 @@ function PLIB_Calendar(path,inputId,onSelected)
 		html += '	<tfoot>' + "\n";
 		html += '		<tr>' + "\n";
 		html += '			<td colspan="8">';
-		html += '<a href="javascript:PLIB_hideElement(\'' + PLIB_Calendar.id + '\');">';
-		html += PLIB_Calendar.language['close'] + '</a></td>' + "\n";
+		html += '<a href="javascript:FWS_hideElement(\'' + FWS_Calendar.id + '\');">';
+		html += FWS_Calendar.language['close'] + '</a></td>' + "\n";
 		html += '		</tr>' + "\n";
 		html += '	</tfoot>' + "\n";
 		
@@ -205,7 +205,7 @@ function PLIB_Calendar(path,inputId,onSelected)
 	 */
 	this._onSelected = function(id)
 	{
-		var col = PLIB_getElement(id);
+		var col = FWS_getElement(id);
 		var day = parseInt(col.innerHTML);
 		if(day)
 		{
@@ -256,13 +256,13 @@ function PLIB_Calendar(path,inputId,onSelected)
 			this.date.setFullYear(year);
 			
 			// set week-number
-			var col = PLIB_getElement('cal_col_' + y + '_0');
+			var col = FWS_getElement('cal_col_' + y + '_0');
 			col.innerHTML = week;
 		
 			// loop through the week-days
 			for(var x = 1;x < 8;x++)
 			{
-				var col = PLIB_getElement('cal_col_' + y + '_' + x);
+				var col = FWS_getElement('cal_col_' + y + '_' + x);
 				
 				// adjust realDay for the days out of the current month
 				if(weekDay != null || day > monthDays + 1)
@@ -278,26 +278,26 @@ function PLIB_Calendar(path,inputId,onSelected)
 					
 					// set classes
 					if(nyear == year && nmonth == month && nday == day)
-						PLIB_addClassName(col,'cal_today');
+						FWS_addClassName(col,'cal_today');
 					if(syear == year && smonth == month && sday == day)
-						PLIB_addClassName(col,'cal_selected');
+						FWS_addClassName(col,'cal_selected');
 					
 					// change css-classes on hover
 					col.onmouseover = function()
 					{
-						PLIB_addClassName(this,'cal_valid_hover');
+						FWS_addClassName(this,'cal_valid_hover');
 					};
 					
 					col.onmouseout = function()
 					{
-						PLIB_removeClassName(this,'cal_valid_hover');
+						FWS_removeClassName(this,'cal_valid_hover');
 					};
 					
 					// we want to select the date on click
 					col.onclick = function()
 					{
-						PLIB_hideElement(PLIB_Calendar.id);
-						PLIB_Calendar.instance._onSelected(this.id);
+						FWS_hideElement(FWS_Calendar.id);
+						FWS_Calendar.instance._onSelected(this.id);
 					};
 					
 					weekDay = null;
@@ -317,8 +317,8 @@ function PLIB_Calendar(path,inputId,onSelected)
 		}
 		
 		// show date in the headline
-		var headline = PLIB_getElement('cal_headline');
-		headline.innerHTML = PLIB_Calendar.language['month_' + month] + ' ' + year;
+		var headline = FWS_getElement('cal_headline');
+		headline.innerHTML = FWS_Calendar.language['month_' + month] + ' ' + year;
 	}
 }
 
@@ -380,24 +380,24 @@ function setSelectedDate(year,month,day)
 function adjustButtons()
 {
 	if(this.date.getMonth() == 11 && this.date.getFullYear() == this.maxYear)
-		this.disableButton('plibcal_next_month');
+		this.disableButton('fwscal_next_month');
 	else
-		this.enableButton('plibcal_next_month');
+		this.enableButton('fwscal_next_month');
 	
 	if(this.date.getMonth() == 0 && this.date.getFullYear() == this.minYear)
-		this.disableButton('plibcal_prev_month');
+		this.disableButton('fwscal_prev_month');
 	else
-		this.enableButton('plibcal_prev_month');
+		this.enableButton('fwscal_prev_month');
 	
 	if(this.date.getFullYear() == this.maxYear)
-		this.disableButton('plibcal_next_year');
+		this.disableButton('fwscal_next_year');
 	else
-		this.enableButton('plibcal_next_year');
+		this.enableButton('fwscal_next_year');
 	
 	if(this.date.getFullYear() == this.minYear)
-		this.disableButton('plibcal_prev_year');
+		this.disableButton('fwscal_prev_year');
 	else
-		this.enableButton('plibcal_prev_year');
+		this.enableButton('fwscal_prev_year');
 }
 
 /**
@@ -451,7 +451,7 @@ function nextYear()
  */
 function enableButton(id)
 {
-	var el = PLIB_getElement(id);
+	var el = FWS_getElement(id);
 	el.className = 'cal_button';
 	el.onmouseover = function() {el.className = 'cal_button_hover'; };
 	el.onmouseout = function() {el.className = 'cal_button'; };
@@ -464,7 +464,7 @@ function enableButton(id)
  */
 function disableButton(id)
 {
-	var el = PLIB_getElement(id);
+	var el = FWS_getElement(id);
 	el.className = 'cal_button_disabled';
 	el.onmouseover = null;
 	el.onmouseout = null;
@@ -488,11 +488,11 @@ function setCSSFile(file)
 function display(relId)
 {
 	// do we have to create it?
-	if(!PLIB_getElement(PLIB_Calendar.id))
+	if(!FWS_getElement(FWS_Calendar.id))
 	{
 		var body = document.getElementsByTagName('body')[0];
 		var element = document.createElement('div');
-		element.id = PLIB_Calendar.id;
+		element.id = FWS_Calendar.id;
 		element.zindex = 100;
 		element.className = 'calendar';
 		element.innerHTML = this.getHTML();
@@ -509,14 +509,14 @@ function display(relId)
 		}
 	}
 	
-	PLIB_Calendar.instance = this;
+	FWS_Calendar.instance = this;
 	
 	// call startup-function
 	if(this.onStartUp != null)
 		this.onStartUp();
 	
-	var cal = PLIB_getElement(PLIB_Calendar.id);
-	var rel = PLIB_getElement(relId);
+	var cal = FWS_getElement(FWS_Calendar.id);
+	var rel = FWS_getElement(relId);
 	
 	// we have to display it at first because otherwise offsetWidth is not set
 	cal.style.top = '-600px';
@@ -525,11 +525,11 @@ function display(relId)
 	
 	// check if the space on the right side of the relative-element is enough
 	// for our calendar
-	var windowWidth = PLIB_getPageSize()[0];
-	if(PLIB_getPageOffsetLeft(rel) + cal.offsetWidth + rel.offsetWidth > windowWidth - 25)
-		PLIB_displayElement(PLIB_Calendar.id,relId,'lt',2);
+	var windowWidth = FWS_getPageSize()[0];
+	if(FWS_getPageOffsetLeft(rel) + cal.offsetWidth + rel.offsetWidth > windowWidth - 25)
+		FWS_displayElement(FWS_Calendar.id,relId,'lt',2);
 	else
-		PLIB_displayElement(PLIB_Calendar.id,relId,'rt',2);
+		FWS_displayElement(FWS_Calendar.id,relId,'rt',2);
 	
 	// set the days of the selected month&year
 	this.fill();

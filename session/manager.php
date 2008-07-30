@@ -3,7 +3,7 @@
  * Contains the session-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,16 +16,16 @@
  * <br>
  * Note that you have to call {@link garbage_collection} by yourself!
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Session_Manager extends PLIB_Object
+class FWS_Session_Manager extends FWS_Object
 {
 	/**
 	 * The storage-class
 	 *
-	 * @var PLIB_User_Storage
+	 * @var FWS_User_Storage
 	 */
 	private $_storage;
 	
@@ -67,15 +67,15 @@ class PLIB_Session_Manager extends PLIB_Object
 	/**
 	 * constructor
 	 *
-	 * @param PLIB_Session_Storage $storage the storage-object to use
+	 * @param FWS_Session_Storage $storage the storage-object to use
 	 * @param boolean $enable_session do you want to enable the session-management?
 	 */
 	public function __construct($storage,$enable_session = true)
 	{
 		parent::__construct();
 		
-		if(!($storage instanceof PLIB_Session_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Session_Storage',$storage);
+		if(!($storage instanceof FWS_Session_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Session_Storage',$storage);
 		
 		$this->_enable_session = (boolean)$enable_session;
 		$this->_storage = $storage;
@@ -89,7 +89,7 @@ class PLIB_Session_Manager extends PLIB_Object
 	 */
 	public final function finalize()
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 		
 		// do nothing if we do not store sessions
 		if(!$this->_enable_session)
@@ -124,7 +124,7 @@ class PLIB_Session_Manager extends PLIB_Object
 	 */
 	public function garbage_collection()
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 		
 		$del = array();
 		$current_sess = $user->get_session_id();
@@ -144,7 +144,7 @@ class PLIB_Session_Manager extends PLIB_Object
 	/**
 	 * Checks wether the given user should be logged out because the timeout is over or not
 	 *
-	 * @param PLIB_Session_Data $user the user to check
+	 * @param FWS_Session_Data $user the user to check
 	 * @param string $currentsid the session-id of the current user
 	 */
 	protected function check_online_timeout($user,$currentsid)
@@ -176,14 +176,14 @@ class PLIB_Session_Manager extends PLIB_Object
 	 */
 	public final function set_online_timeout($timeout)
 	{
-		if(!PLIB_Helper::is_integer($timeout) || $timeout <= 0)
-			PLIB_Helper::def_error('intgt0','timeout',$timeout);
+		if(!FWS_Helper::is_integer($timeout) || $timeout <= 0)
+			FWS_Helper::def_error('intgt0','timeout',$timeout);
 
 		$this->_online_timeout = $timeout;
 	}
 	
 	/**
-	 * @return PLIB_Session_Data a new object of {@link PLIB_Session_Data}
+	 * @return FWS_Session_Data a new object of {@link FWS_Session_Data}
 	 */
 	public final function get_new_user()
 	{
@@ -200,7 +200,7 @@ class PLIB_Session_Manager extends PLIB_Object
 	
 	/**
 	 * @return array the list with the currently online user
-	 * @see PLIB_Session_Data
+	 * @see FWS_Session_Data
 	 */
 	public final function get_online_list()
 	{
@@ -210,24 +210,24 @@ class PLIB_Session_Manager extends PLIB_Object
 	/**
 	 * Adds the given user to the list
 	 * 
-	 * @param PLIB_Session_Data $user the user to add
+	 * @param FWS_Session_Data $user the user to add
 	 */
 	public final function add_user($user)
 	{
-		if(!($user instanceof PLIB_Session_Data))
-			PLIB_Helper::def_error('instance','user','PLIB_Session_Data',$user);
+		if(!($user instanceof FWS_Session_Data))
+			FWS_Helper::def_error('instance','user','FWS_Session_Data',$user);
 		
 		$this->_user_list[$user->get_session_id().$user->get_user_ip()] = $user;
 		$this->_added_user[] = $user;
 	}
 	
 	/**
-	 * Returns the {@link PLIB_Session_Data} object for the given session-id and user-ip.
+	 * Returns the {@link FWS_Session_Data} object for the given session-id and user-ip.
 	 * Note that both values are required because we group all users by both values.
 	 * 
 	 * @param string $session_id the session-id of the user
 	 * @param string $user_ip the ip user the user
-	 * @return PLIB_Session_Data the user-object or null if not found
+	 * @return FWS_Session_Data the user-object or null if not found
 	 */
 	public final function get_user($session_id,$user_ip)
 	{

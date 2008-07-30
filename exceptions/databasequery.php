@@ -3,7 +3,7 @@
  * Contains the DatabaseQuery-exception
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The DatabaseQueryException indicates that an error has occurred while requesting something
  * from the database
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Exceptions_DatabaseQuery extends PLIB_Exceptions_Critical
+final class FWS_Exceptions_DatabaseQuery extends FWS_Exceptions_Critical
 {
 	/**
 	 * The query which should be performed

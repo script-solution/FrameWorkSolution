@@ -3,7 +3,7 @@
  * Contains the config-group-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The data of a config-group
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Group extends PLIB_Object
+class FWS_Config_Group extends FWS_Object
 {
 	/**
 	 * The id of the group

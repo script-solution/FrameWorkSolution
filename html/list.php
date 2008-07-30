@@ -3,7 +3,7 @@
  * Contains the list-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The abstract base-class for all list-elements (combobox, radiogroup, ...)
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_HTML_List extends PLIB_HTML_FormElement
+abstract class FWS_HTML_List extends FWS_HTML_FormElement
 {
 	/**
 	 * The options of the list
@@ -56,7 +56,7 @@ abstract class PLIB_HTML_List extends PLIB_HTML_FormElement
 	public final function set_options($options)
 	{
 		if(!is_array($options))
-			PLIB_Helper::def_error('array','options',$options);
+			FWS_Helper::def_error('array','options',$options);
 		
 		$this->_options = array();
 		foreach($options as $k => $v)
@@ -72,7 +72,7 @@ abstract class PLIB_HTML_List extends PLIB_HTML_FormElement
 	public final function add_option($option,$title)
 	{
 		if($option === null)
-			PLIB_Helper::def_error('notnull','option',$option);
+			FWS_Helper::def_error('notnull','option',$option);
 		
 		$this->_options[$option] = $title;
 	}

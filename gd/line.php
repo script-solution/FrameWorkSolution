@@ -3,7 +3,7 @@
  * Contains the line-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,30 +13,30 @@
 /**
  * Represents a line for drawing with GD.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
+final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 {
 	/**
 	 * The start-point of the line
 	 * 
-	 * @var PLIB_GD_Point
+	 * @var FWS_GD_Point
 	 */
 	private $_from;
 	
 	/**
 	 * The end-point of the line
 	 * 
-	 * @var PLIB_GD_Point
+	 * @var FWS_GD_Point
 	 */
 	private $_to;
 	
 	/**
 	 * There are multiple ways to create a line:
 	 * <ul>
-	 * 	<li><var>__construct($from,$to)</var>: with $from and $to as {@link PLIB_GD_Point}</li>
+	 * 	<li><var>__construct($from,$to)</var>: with $from and $to as {@link FWS_GD_Point}</li>
 	 * 	<li><var>__construct($x1,$y1,$x2,$y2)</var></li>
 	 * </ul>
 	 */
@@ -48,10 +48,10 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 		{
 			// __construct($from,$to)
 			case 2:
-				if(!($arg1 instanceof PLIB_GD_Point))
-					PLIB_Helper::def_error('instance','arg1','PLIB_GD_Point',$arg1);
-				if(!($arg2 instanceof PLIB_GD_Point))
-					PLIB_Helper::def_error('instance','arg2','PLIB_GD_Point',$arg2);
+				if(!($arg1 instanceof FWS_GD_Point))
+					FWS_Helper::def_error('instance','arg1','FWS_GD_Point',$arg1);
+				if(!($arg2 instanceof FWS_GD_Point))
+					FWS_Helper::def_error('instance','arg2','FWS_GD_Point',$arg2);
 				
 				$this->_from = $arg1;
 				$this->_to = $arg2;
@@ -59,12 +59,12 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 			
 			// __construct($x1,$y1,$x2,$y2)
 			case 4:
-				$this->_from = new PLIB_GD_Point($arg1,$arg2);
-				$this->_to = new PLIB_GD_Point($arg3,$arg4);
+				$this->_from = new FWS_GD_Point($arg1,$arg2);
+				$this->_to = new FWS_GD_Point($arg3,$arg4);
 				break;
 			
 			default:
-				PLIB_Helper::error('Invalid number of arguments!');
+				FWS_Helper::error('Invalid number of arguments!');
 				break;
 		}
 	}
@@ -102,7 +102,7 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 	}
 	
 	/**
-	 * @return PLIB_GD_Point the start-point of the line
+	 * @return FWS_GD_Point the start-point of the line
 	 */
 	public function get_from()
 	{
@@ -110,7 +110,7 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 	}
 	
 	/**
-	 * @return PLIB_GD_Point the end-point of the line
+	 * @return FWS_GD_Point the end-point of the line
 	 */
 	public function get_to()
 	{
@@ -127,8 +127,8 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 
 	public function intersects_line($line)
 	{
-		if(!($line instanceof PLIB_GD_Line))
-			PLIB_Helper::def_error('instance','line','PLIB_GD_Line',$line);
+		if(!($line instanceof FWS_GD_Line))
+			FWS_Helper::def_error('instance','line','FWS_GD_Line',$line);
 		
 		return $this->_lines_intersect(
 			$line->get_x1(),$line->get_y1(),$line->get_x2(),$line->get_y2(),
@@ -138,8 +138,8 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 
 	public function intersects_circle($circle)
 	{
-		if(!($circle instanceof PLIB_GD_Circle))
-			PLIB_Helper::def_error('instance','circle','PLIB_GD_Circle',$circle);
+		if(!($circle instanceof FWS_GD_Circle))
+			FWS_Helper::def_error('instance','circle','FWS_GD_Circle',$circle);
 		
 		list($x,$y) = $circle->get_center()->get();
 		$r = $circle->get_radius();
@@ -187,8 +187,8 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 
 	public function intersects_rect($rect)
 	{
-		if(!($rect instanceof PLIB_GD_Rectangle))
-			PLIB_Helper::def_error('instance','rect','PLIB_GD_Rectangle',$rect);
+		if(!($rect instanceof FWS_GD_Rectangle))
+			FWS_Helper::def_error('instance','rect','FWS_GD_Rectangle',$rect);
 		
 		// Borrowed from java.awt.geom.Line2D
 		
@@ -222,13 +222,13 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 	 * Calculates the distance to the given point. Note that the method assumes that the line
 	 * has an infinive length!
 	 *
-	 * @param PLIB_GD_Point $point the point
+	 * @param FWS_GD_Point $point the point
 	 * @return double the distance of this line to the point
 	 */
 	public function distance($point)
 	{
-		if(!($point instanceof PLIB_GD_Point))
-			PLIB_Helper::def_error('instance','point','PLIB_GD_Point',$point);
+		if(!($point instanceof FWS_GD_Point))
+			FWS_Helper::def_error('instance','point','FWS_GD_Point',$point);
 		
 		// a = vector1, b = vector2, alpha = angle between a and b
 		// vectorproduct: |c| = |a|*|b|*sin(alpha)
@@ -357,14 +357,14 @@ final class PLIB_GD_Line extends PLIB_Object implements PLIB_GD_Shape
 		// create the 4 points and check wether the cross-point is in the first and the second line
 		// or in other words: if the distance of p1 <-> cross and p2 <-> cross is less than the length
 		// of the line. The same with p3 and p4
-		$p1 = new PLIB_GD_Point($x1,$y1);
-		$p2 = new PLIB_GD_Point($x2,$y2);
-		$p3 = new PLIB_GD_Point($x3,$y3);
-		$p4 = new PLIB_GD_Point($x4,$y4);
+		$p1 = new FWS_GD_Point($x1,$y1);
+		$p2 = new FWS_GD_Point($x2,$y2);
+		$p3 = new FWS_GD_Point($x3,$y3);
+		$p4 = new FWS_GD_Point($x4,$y4);
 		
 		$l1len = $p1->distance($p2);
 		$l2len = $p3->distance($p4);
-		$cross = new PLIB_GD_Point($crossx,$crossy);
+		$cross = new FWS_GD_Point($crossx,$crossy);
 		
 		return $cross->distance($p1) <= $l1len && $cross->distance($p2) <= $l1len &&
 			$cross->distance($p3) <= $l2len && $cross->distance($p4) <= $l2len;

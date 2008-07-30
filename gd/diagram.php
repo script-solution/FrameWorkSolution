@@ -3,7 +3,7 @@
  * Contains the diagram-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The diagram-interface
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_GD_Diagram
+interface FWS_GD_Diagram
 {
 	/**
 	 * Draws the data in the given rectangle
 	 *
-	 * @param PLIB_GD_Rectangle $rect the rectangle
+	 * @param FWS_GD_Rectangle $rect the rectangle
 	 */
 	public function draw_diagram($rect);
 }

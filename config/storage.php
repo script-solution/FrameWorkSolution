@@ -3,7 +3,7 @@
  * Contains the config-storage interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The interface for all storage-methods for the config-items
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Config_Storage
+interface FWS_Config_Storage
 {
 	/**
 	 * Loads all groups returns them
 	 * 
-	 * @return array the array with PLIB_Config_Group objects
+	 * @return array the array with FWS_Config_Group objects
 	 */
 	public function get_groups();
 	
@@ -32,7 +32,7 @@ interface PLIB_Config_Storage
 	 * The result <b>has to</b> have the "correct" order because it will be displayed in that order.
 	 *
 	 * @param int $id the group-id
-	 * @return array an array of PLIB_Config_Data objects
+	 * @return array an array of FWS_Config_Data objects
 	 */
 	public function get_items_of_group($id);
 	
@@ -41,7 +41,7 @@ interface PLIB_Config_Storage
 	 * The result <b>has to</b> have the "correct" order because it will be displayed in that order.
 	 *
 	 * @param string $keyword the keyword
-	 * @return array an array of PLIB_Config_Data objects
+	 * @return array an array of FWS_Config_Data objects
 	 */
 	public function get_items_with($keyword);
 	

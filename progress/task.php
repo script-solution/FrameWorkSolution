@@ -3,7 +3,7 @@
  * Contains the task-interface for progresses
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The interface for a task that takes a long time to complete and should therefore
  * be splitted into multiple small parts.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Progress_Task
+interface FWS_Progress_Task
 {
 	/**
 	 * Should return the total number of necessary operations

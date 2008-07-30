@@ -3,7 +3,7 @@
  * Contains a CSS-attributes-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Contains and manages CSS-attributes
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_CSS_Attributes extends PLIB_Object
+final class FWS_CSS_Attributes extends FWS_Object
 {
 	/**
 	 * The attribute-array
@@ -36,7 +36,7 @@ final class PLIB_CSS_Attributes extends PLIB_Object
 		parent::__construct();
 		
 		if(!is_array($attrs))
-			PLIB_Helper::def_error('array','attrs',$attrs);
+			FWS_Helper::def_error('array','attrs',$attrs);
 		
 		foreach($attrs as $k => $v)
 			$this->add_attribute($k,$v);
@@ -73,7 +73,7 @@ final class PLIB_CSS_Attributes extends PLIB_Object
 	public function set_attribute($name,$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$this->_attributes[$name] = $value;
 	}
@@ -86,7 +86,7 @@ final class PLIB_CSS_Attributes extends PLIB_Object
 	public function remove_attribute($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		unset($this->_attributes[$name]);
 	}

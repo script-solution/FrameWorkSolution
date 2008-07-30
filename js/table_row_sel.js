@@ -2,7 +2,7 @@
  * Contains the table-row-selector-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -19,7 +19,7 @@
  * @param string defClass the the default-row-class
  * @param string selClass the selection-row-class
  */
-function PLIB_TableRowSelector(rowIDPrefix,cbIDPrefix,defClass,selClass)
+function FWS_TableRowSelector(rowIDPrefix,cbIDPrefix,defClass,selClass)
 {
 	this.rowIDPrefix = rowIDPrefix;
 	this.cbIDPrefix = cbIDPrefix;
@@ -147,9 +147,9 @@ function toggleRowSelected(index)
 	// do we have a checkbox?
 	var cb = null;
 	if(this.cbIDPrefix)
-		cb = PLIB_getElement(this.cbIDPrefix + index);
+		cb = FWS_getElement(this.cbIDPrefix + index);
 	
-	var row = PLIB_getElement(this.rowIDPrefix + index);
+	var row = FWS_getElement(this.rowIDPrefix + index);
 	
 	// is the row already selected?
 	if(this.selectedRows[index])
@@ -177,7 +177,7 @@ function toggleAllSelected()
 {
 	for(var i = 0;;i++)
 	{
-		var row = PLIB_getElement(this.rowIDPrefix + i);
+		var row = FWS_getElement(this.rowIDPrefix + i);
 		var enabled = !this.disabledRows[i];
 		if(row && enabled)
 			this.toggleRowSelected(i);

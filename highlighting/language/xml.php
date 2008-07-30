@@ -3,7 +3,7 @@
  * Contains the xml-language-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting.language
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,17 +13,17 @@
 /**
  * The default language. Reads the definitions from an XML-file
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting.language
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Language_XML extends PLIB_Object
-	implements PLIB_Highlighting_Language
+final class FWS_Highlighting_Language_XML extends FWS_Object
+	implements FWS_Highlighting_Language
 {
 	/**
 	 * Empty attributes
 	 *
-	 * @var PLIB_Highlighting_Attributes
+	 * @var FWS_Highlighting_Attributes
 	 */
 	private static $_empty_attr = null;
 	
@@ -85,20 +85,20 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	/**
 	 * The attributes for numbers
 	 * 
-	 * @var PLIB_Highlighting_Attributes
+	 * @var FWS_Highlighting_Attributes
 	 */
 	private $_number_attrs = null;
 	
 	/**
 	 * The attributes for symbols
 	 * 
-	 * @var PLIB_Highlighting_Attributes
+	 * @var FWS_Highlighting_Attributes
 	 */
 	private $_symbol_attrs = null;
 	
 	/**
 	 * The attributes for strings:
-	 * <code>array(<id1> => <PLIB_Highlighting_Attributes>,...)</code>
+	 * <code>array(<id1> => <FWS_Highlighting_Attributes>,...)</code>
 	 * 
 	 * @var array
 	 */
@@ -106,7 +106,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	
 	/**
 	 * The attributes for keywords:
-	 * <code>array(<id1> => <PLIB_Highlighting_Attributes>,...)</code>
+	 * <code>array(<id1> => <FWS_Highlighting_Attributes>,...)</code>
 	 * 
 	 * @var array
 	 */
@@ -114,7 +114,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	
 	/**
 	 * The attributes for the different multi-line-comments:
-	 * <code>array(<id1> => <PLIB_Highlighting_Attributes>,...)</code>
+	 * <code>array(<id1> => <FWS_Highlighting_Attributes>,...)</code>
 	 * 
 	 * @var array
 	 */
@@ -122,7 +122,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 
 	/**
 	 * The attributes for the different single-line-comments:
-	 * <code>array(<id1> => <PLIB_Highlighting_Attributes>,...)</code>
+	 * <code>array(<id1> => <FWS_Highlighting_Attributes>,...)</code>
 	 * 
 	 * @var array
 	 */
@@ -130,7 +130,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	
 	/**
 	 * The attributes for the different regexps:
-	 * <code>array(<id1> => <PLIB_Highlighting_Attributes>,...)</code>
+	 * <code>array(<id1> => <FWS_Highlighting_Attributes>,...)</code>
 	 * 
 	 * @var array
 	 */
@@ -168,16 +168,16 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 		parent::__construct();
 		
 		if(self::$_empty_attr === null)
-			self::$_empty_attr = new PLIB_Highlighting_Attributes();
+			self::$_empty_attr = new FWS_Highlighting_Attributes();
 		
 		$this->_read_from_file($file);
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_attributes()
+	 * @see FWS_Highlighting_Language::get_attributes()
 	 *
 	 * @param element $element
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_attributes($element)
 	{
@@ -198,7 +198,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_escape_char()
+	 * @see FWS_Highlighting_Language::get_escape_char()
 	 *
 	 * @return char
 	 */
@@ -208,10 +208,10 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_keyword_attributes()
+	 * @see FWS_Highlighting_Language::get_keyword_attributes()
 	 *
 	 * @param id $id
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_keyword_attributes($id)
 	{
@@ -219,7 +219,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_keyword_settings()
+	 * @see FWS_Highlighting_Language::get_keyword_settings()
 	 *
 	 * @param id $id
 	 * @return array
@@ -233,7 +233,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_keywords_of()
+	 * @see FWS_Highlighting_Language::get_keywords_of()
 	 *
 	 * @param mixed $key
 	 * @return array
@@ -247,7 +247,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_keywords()
+	 * @see FWS_Highlighting_Language::get_keywords()
 	 *
 	 * @return array
 	 */
@@ -257,7 +257,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_lang_name()
+	 * @see FWS_Highlighting_Language::get_lang_name()
 	 *
 	 * @return string
 	 */
@@ -267,10 +267,10 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_ml_comment_attributes()
+	 * @see FWS_Highlighting_Language::get_ml_comment_attributes()
 	 *
 	 * @param id $id
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_ml_comment_attributes($id)
 	{
@@ -278,7 +278,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_multi_comment_limiters()
+	 * @see FWS_Highlighting_Language::get_multi_comment_limiters()
 	 *
 	 * @return array
 	 */
@@ -288,10 +288,10 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_regexp_attributes()
+	 * @see FWS_Highlighting_Language::get_regexp_attributes()
 	 *
 	 * @param id $id
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_regexp_attributes($id)
 	{
@@ -299,7 +299,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_regexps()
+	 * @see FWS_Highlighting_Language::get_regexps()
 	 *
 	 * @return array
 	 */
@@ -309,7 +309,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_single_comments()
+	 * @see FWS_Highlighting_Language::get_single_comments()
 	 *
 	 * @return array
 	 */
@@ -319,10 +319,10 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_sl_comment_attributes()
+	 * @see FWS_Highlighting_Language::get_sl_comment_attributes()
 	 *
 	 * @param id $id
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_sl_comment_attributes($id)
 	{
@@ -330,10 +330,10 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_string_attributes()
+	 * @see FWS_Highlighting_Language::get_string_attributes()
 	 *
 	 * @param id $id
-	 * @return PLIB_Highlighting_Attributes
+	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_string_attributes($id)
 	{
@@ -341,7 +341,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_string_quotes()
+	 * @see FWS_Highlighting_Language::get_string_quotes()
 	 *
 	 * @return array
 	 */
@@ -351,7 +351,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::get_symbols()
+	 * @see FWS_Highlighting_Language::get_symbols()
 	 *
 	 * @return array
 	 */
@@ -361,7 +361,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Highlighting_Language::highlight_numbers()
+	 * @see FWS_Highlighting_Language::highlight_numbers()
 	 *
 	 * @return boolean
 	 */
@@ -386,7 +386,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	 *
 	 * @param array $attr the attribute-map
 	 * @param mixed $id the id
-	 * @return PLIB_Highlighting_Attributes the attributes
+	 * @return FWS_Highlighting_Attributes the attributes
 	 */
 	private function _get_attributes_for($attr,$id)
 	{
@@ -406,7 +406,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	 */
 	private function _read_from_file($file)
 	{
-		$contents = PLIB_FileUtils::read($file);
+		$contents = FWS_FileUtils::read($file);
 		$xml = new SimpleXMLElement($contents);
 		
 		// general
@@ -497,16 +497,16 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	 * Builds the attributes for the given xml-element
 	 *
 	 * @param array $el the xml-element with the attributes
-	 * @return PLIB_Highlighting_Attributes the attributes
+	 * @return FWS_Highlighting_Attributes the attributes
 	 */
 	private function _build_attributes($el)
 	{
-		$a = new PLIB_Highlighting_Attributes();
+		$a = new FWS_Highlighting_Attributes();
 		if(isset($el->attr))
 		{
 			foreach($el->attr as $attr)
 			{
-				$aid = PLIB_Highlighting_Attributes::get_attribute_from_name($attr['name']);
+				$aid = FWS_Highlighting_Attributes::get_attribute_from_name($attr['name']);
 				$a->set($aid,$attr['value']);
 			}
 		}
@@ -514,7 +514,7 @@ final class PLIB_Highlighting_Language_XML extends PLIB_Object
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

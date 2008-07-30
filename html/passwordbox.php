@@ -3,7 +3,7 @@
  * Contains the password-box-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<input type="password" name="..." />
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_PasswordBox extends PLIB_HTML_TextBox
+class FWS_HTML_PasswordBox extends FWS_HTML_TextBox
 {
 	/**
 	 * Constructor

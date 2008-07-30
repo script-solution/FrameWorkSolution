@@ -3,24 +3,24 @@
  * Contains the property-loader-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * The property-loader of the library. The {@link PLIB_PropAccessor} will use the load method
+ * The property-loader of the framework. The {@link FWS_PropAccessor} will use the load method
  * of this class if a property does not exist to load it.
  * <br>
  * You can inherit from this class if you want to change the predefined properties. If you
  * do that the properties should be compatible to the default ones. That means you should inherit
  * from the default properties if you want to change them instead of providing your own one.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_PropLoader extends PLIB_Object
+class FWS_PropLoader extends FWS_Object
 {
 	/**
 	 * Loads the property with given name
@@ -31,91 +31,91 @@ class PLIB_PropLoader extends PLIB_Object
 	public final function load($name)
 	{
 		if(!method_exists($this,$name))
-			PLIB_Helper::error('The method '.$name.'() does not exist.
+			FWS_Helper::error('The method '.$name.'() does not exist.
 				Does the property you requested exist?');
 		
 		return $this->$name();
 	}
 	
 	/**
-	 * @return PLIB_Document the document
+	 * @return FWS_Document the document
 	 */
 	protected function doc()
 	{
-		return new PLIB_Document();
+		return new FWS_Document();
 	}
 	
 	/**
-	 * @return PLIB_Document_Messages the messages-container
+	 * @return FWS_Document_Messages the messages-container
 	 */
 	protected function msgs()
 	{
-		return new PLIB_Document_Messages();
+		return new FWS_Document_Messages();
 	}
 	
 	/**
-	 * @return PLIB_Profiler the profiler-instance
+	 * @return FWS_Profiler the profiler-instance
 	 */
 	protected function profiler()
 	{
-		return new PLIB_Profiler();
+		return new FWS_Profiler();
 	}
 	
 	/**
-	 * @return PLIB_Session_Manager the property
+	 * @return FWS_Session_Manager the property
 	 */
 	protected function sessions()
 	{
-		$storage = new PLIB_Session_Storage_Empty();
-	  return new PLIB_Session_Manager($storage,false);
+		$storage = new FWS_Session_Storage_Empty();
+	  return new FWS_Session_Manager($storage,false);
 	}
 	
 	/**
-	 * @return PLIB_User_Current the current-user-object
+	 * @return FWS_User_Current the current-user-object
 	 */
 	protected function user()
 	{
-	  return new PLIB_User_Current(null,false);
+	  return new FWS_User_Current(null,false);
 	}
 
 	/**
-	 * @return PLIB_Cookies the cookies-object
+	 * @return FWS_Cookies the cookies-object
 	 */
 	protected function cookies()
 	{
-		return new PLIB_Cookies('plib_');
+		return new FWS_Cookies('fws_');
 	}
 
 	/**
-	 * @return PLIB_URL the URL-object
+	 * @return FWS_URL the URL-object
 	 */
 	protected function url()
 	{
-		return new PLIB_URL();
+		return new FWS_URL();
 	}
 
 	/**
-	 * @return PLIB_Template_Handler the template-object
+	 * @return FWS_Template_Handler the template-object
 	 */
 	protected function tpl()
 	{
-		return new PLIB_Template_Handler();
+		return new FWS_Template_Handler();
 	}
 
 	/**
-	 * @return PLIB_Locale the property
+	 * @return FWS_Locale the property
 	 */
 	protected function locale()
 	{
-		return new PLIB_Locale_EN();
+		return new FWS_Locale_EN();
 	}
 	
 	/**
-	 * @return PLIB_Input the property
+	 * @return FWS_Input the property
 	 */
 	protected function input()
 	{
-		return PLIB_Input::get_instance();
+		return FWS_Input::get_instance();
 	}
 	
 	protected function get_print_vars()

@@ -3,7 +3,7 @@
  * Contains the simple-css-parser class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -18,11 +18,11 @@
  * TODO Please don't use this class yet because it will be rewritten to support more of the CSS-
  * standard!
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	css
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_CSS_SimpleParser extends PLIB_Object
+final class FWS_CSS_SimpleParser extends FWS_Object
 {
 	/**
 	 * The lines of the CSS-file
@@ -279,7 +279,7 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 				if($this->_order[$i][0] == 0)
 				{
 					$content .= $this->_order[$i][1]."\n";
-					if(PLIB_String::strpos($this->_order[$i][1],'*/') !== false)
+					if(FWS_String::strpos($this->_order[$i][1],'*/') !== false)
 						$content .= "\n";
 				}
 				else
@@ -292,7 +292,7 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 			}
 		}
 		
-		return PLIB_FileUtils::write($this->_target,trim($content));
+		return FWS_FileUtils::write($this->_target,trim($content));
 	}
 	
 	/**
@@ -302,11 +302,11 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 	 */
 	private function _add_to_classes($string)
 	{
-		if(PLIB_String::strpos($string,'.') !== false)
+		if(FWS_String::strpos($string,'.') !== false)
 		{
 			$split = explode('.',$string);
 			$split[1] = trim($split[1]);
-			if(PLIB_String::strpos($split[1],':') !== false)
+			if(FWS_String::strpos($split[1],':') !== false)
 				$split[1] = strtok($split[1],':');
 		}
 		else
@@ -330,10 +330,10 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 		
 			if(!$in_string)
 			{
-				if(PLIB_String::strpos($this->_content[$i],'/*') !== false)
+				if(FWS_String::strpos($this->_content[$i],'/*') !== false)
 				{
 					$this->_order[] = array(0,trim($this->_content[$i]));
-					if(PLIB_String::strpos($this->_content[$i],'*/') === false)
+					if(FWS_String::strpos($this->_content[$i],'*/') === false)
 						$in_string = true;
 					continue;
 				}
@@ -350,7 +350,7 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 			else
 			{
 				$this->_order[] = array(0,trim($this->_content[$i]));
-				if(PLIB_String::strpos($this->_content[$i],'*/') !== false)
+				if(FWS_String::strpos($this->_content[$i],'*/') !== false)
 					$in_string = false;
 			}
 		}
@@ -373,7 +373,7 @@ final class PLIB_CSS_SimpleParser extends PLIB_Object
 	 */
 	private function _parse_attributes($string)
 	{
-		if(!PLIB_String::strpos($string,';'))
+		if(!FWS_String::strpos($string,';'))
 		{
 			$split = explode(':',$string);
 			if(count($split) >= 2)

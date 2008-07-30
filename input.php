@@ -3,7 +3,7 @@
  * Contains the input-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -21,12 +21,12 @@
  * All get-values will not contain the sequence "../", for security reasons.
  * <br>
  * Note that this class is a singleton. So you can access it from everywhere via
- * {@link PLIB_Input::get_instance()}.
+ * {@link FWS_Input::get_instance()}.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Input extends PLIB_Object
+final class FWS_Input extends FWS_Object
 {
 	/**
 	 * Represents an integer
@@ -83,21 +83,21 @@ final class PLIB_Input extends PLIB_Object
 	/**
 	 * The instance of this class.
 	 *
-	 * @var PLIB_Input
+	 * @var FWS_Input
 	 */
 	private static $_instance = null;
 	
 	/**
 	 * Returns the instance of this object
 	 * 
-	 * @return PLIB_Input the instance
+	 * @return FWS_Input the instance
 	 */
 	public static function get_instance()
 	{
 		if(self::$_instance == null)
-			self::$_instance = new PLIB_Input();
+			self::$_instance = new FWS_Input();
 		
-		return PLIB_Input::$_instance;
+		return FWS_Input::$_instance;
 	}
 	
 	/**
@@ -143,7 +143,7 @@ final class PLIB_Input extends PLIB_Object
 	public function isset_var($name,$method = -1)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if($method == -1)
 			$method = $this->_get_method($name);
@@ -174,7 +174,7 @@ final class PLIB_Input extends PLIB_Object
 	public function set_predef($name,$method = -1,$type = -1,$values = null)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if($values !== null)
 			$this->_predef_values[$method.$name] = array($type,$values);
@@ -201,10 +201,10 @@ final class PLIB_Input extends PLIB_Object
 	public function get_predef($name,$method = -1,$default = null)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if(!isset($this->_predef_values[$method.$name]))
-			PLIB_Helper::error('"'.$name.'" does not exist for the method "'.$method.'"!');
+			FWS_Helper::error('"'.$name.'" does not exist for the method "'.$method.'"!');
 		
 		$type = $this->_predef_values[$method.$name];
 		if(is_array($type))
@@ -227,7 +227,7 @@ final class PLIB_Input extends PLIB_Object
 	public function get_var($name,$method = -1,$type = -1)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if($method == -1)
 			$method = $this->_get_method($name);
@@ -243,50 +243,50 @@ final class PLIB_Input extends PLIB_Object
 				case -1:
 					return $var;
 
-				case PLIB_Input::ID:
+				case FWS_Input::ID:
 					if(preg_match('/^[0-9]+$/',$var) && $var >= 1) /* $var = (int)$var; $var >= 1 */
 						return (int)$var;
 					return null;
 
-				case PLIB_Input::INTEGER:
+				case FWS_Input::INTEGER:
 					if(preg_match('/^-?[0-9]+$/',$var)) /* is_numeric($var) */
 						return (int)$var;
 					return null;
 
-				case PLIB_Input::ALPHA:
+				case FWS_Input::ALPHA:
 					if(preg_match('/^[a-z]+$/i',$var))
 						return $var;
 					return null;
 
-				case PLIB_Input::ALPHA_NUM:
+				case FWS_Input::ALPHA_NUM:
 					if(preg_match('/^[a-z0-9]+$/i',$var))
 						return $var;
 					return null;
 
-				case PLIB_Input::IDENTIFIER:
+				case FWS_Input::IDENTIFIER:
 					if(preg_match('/^[a-z_][a-z0-9_]*$/i',$var))
 						return $var;
 					return null;
 
-				case PLIB_Input::HEX_32:
+				case FWS_Input::HEX_32:
 					if(preg_match('/^[a-f0-9]{32}$/i',$var))
 						return $var;
 					return null;
 
-				case PLIB_Input::INT_BOOL:
+				case FWS_Input::INT_BOOL:
 					return ($var == 1) ? 1 : 0;
 
-				case PLIB_Input::FLOAT:
+				case FWS_Input::FLOAT:
 					$svar = strval($var);
 					$fvar = strval((float)$var);
 					if($svar == $fvar)
 						return (float)$var;
 					return null;
 
-				case PLIB_Input::STRING:
+				case FWS_Input::STRING:
 					return (string)$var;
 
-				case PLIB_Input::BOOL:
+				case FWS_Input::BOOL:
 					$svar = strval($var);
 					$fvar = strval((bool)$var);
 					if($svar == $fvar)
@@ -309,7 +309,7 @@ final class PLIB_Input extends PLIB_Object
 	 */
 	public function unescape_value($value,$method)
 	{
-		return stripslashes(PLIB_StringHelper::htmlspecialchars_back($value));
+		return stripslashes(FWS_StringHelper::htmlspecialchars_back($value));
 	}
 
 	/**
@@ -343,7 +343,7 @@ final class PLIB_Input extends PLIB_Object
 	public function set_var($name,$method,$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if($method == -1)
 		{
@@ -365,7 +365,7 @@ final class PLIB_Input extends PLIB_Object
 	public function unset_var($name,$method)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if($method == -1)
 		{
@@ -394,12 +394,12 @@ final class PLIB_Input extends PLIB_Object
 	public function correct_var($name,$method,$type,$values,$default,$set = true)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if(!is_array($values))
-			PLIB_Helper::def_error('array','values',$values);
+			FWS_Helper::def_error('array','values',$values);
 
-		//echo $name.' '.PLIB_PrintUtils::to_string($values);
+		//echo $name.' '.FWS_PrintUtils::to_string($values);
 		$var = $this->get_var($name,$method,$type);
 		if($var === null)
 			return $set && $default !== null ? $this->set_var($name,$method,$default) : $default;

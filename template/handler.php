@@ -3,7 +3,7 @@
  * Contains the template-class
  *
  * @version			$Id:handler.php 86 2007-11-30 21:41:47Z nasmussen $
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -50,11 +50,11 @@
  * echo $tpl->parse_template();
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Template_Handler extends PLIB_Object
+final class FWS_Template_Handler extends FWS_Object
 {
 	/**
 	 * Are conditions enabled? (IF,ELSE,ENDIF)
@@ -188,7 +188,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 		
 		if($path != '')
 			$this->set_path($path);
-		$this->_cache_folder = PLIB_Path::server_app().'cache';
+		$this->_cache_folder = FWS_Path::server_app().'cache';
 	}
 	
 	/**
@@ -221,17 +221,17 @@ final class PLIB_Template_Handler extends PLIB_Object
 
 	/**
 	 * Sets the path to the template-folder. If the path is empty the method
-	 * {@link PLIB_User_Current::get_theme_item_path()} will be used and it will be assumed
+	 * {@link FWS_User_Current::get_theme_item_path()} will be used and it will be assumed
 	 * that in the theme-folder is a folder called "templates" which contains
 	 * all templates.
 	 *
 	 * @param string $path the path to the templates-folder (with the trailing slash and starting
-	 * 	at PLIB_Path::server_app())
+	 * 	at FWS_Path::server_app())
 	 */
 	public function set_path($path)
 	{
-		if(!is_dir(PLIB_Path::server_app().$path))
-			PLIB_Helper::error('"'.$path.'" is no folder!');
+		if(!is_dir(FWS_Path::server_app().$path))
+			FWS_Helper::error('"'.$path.'" is no folder!');
 		
 		$this->_template_path = $path;
 	}
@@ -252,9 +252,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function set_cache_folder($folder)
 	{
 		if(!is_dir($folder))
-			PLIB_Helper::error('"'.$folder.'" is no folder!');
+			FWS_Helper::error('"'.$folder.'" is no folder!');
 		
-		$this->_cache_folder = PLIB_FileUtils::ensure_no_trailing_slash($folder);
+		$this->_cache_folder = FWS_FileUtils::ensure_no_trailing_slash($folder);
 	}
 
 	/**
@@ -364,7 +364,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 	
 	/**
 	 * Checks wether the given method of the given object may be called. If not
-	 * {@link PLIB_Helper::error()} will be called (-> end of the script).
+	 * {@link FWS_Helper::error()} will be called (-> end of the script).
 	 * This method is intended for the generated templates and should not be called
 	 * from anybody else.
 	 *
@@ -382,7 +382,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 			return true;
 		
 		if(!isset($this->_allowed_methods[$object.'.'.$method]))
-			PLIB_Helper::error('It is not allowed to call the method "'.$object.'.'.$method.'()"'
+			FWS_Helper::error('It is not allowed to call the method "'.$object.'.'.$method.'()"'
 				.' from templates! (In template "'.$this->_filename.'")');
 		
 		return true;
@@ -398,9 +398,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function is_allowed_method($object,$method)
 	{
 		if(!is_string($object))
-			PLIB_Helper::def_error('scalar','object',$object);
+			FWS_Helper::def_error('scalar','object',$object);
 		if(!is_string($method))
-			PLIB_Helper::def_error('string','method',$method);
+			FWS_Helper::def_error('string','method',$method);
 		
 		if(isset($this->_allowed_methods[$object.'.*']))
 			return true;
@@ -418,9 +418,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function add_allowed_method($object,$method)
 	{
 		if(!is_string($object))
-			PLIB_Helper::def_error('scalar','object',$object);
+			FWS_Helper::def_error('scalar','object',$object);
 		if(!is_string($method))
-			PLIB_Helper::def_error('string','method',$method);
+			FWS_Helper::def_error('string','method',$method);
 		
 		$this->_allowed_methods[$object.'.'.$method] = true;
 	}
@@ -435,9 +435,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function remove_allowed_method($object,$method)
 	{
 		if(!is_string($object))
-			PLIB_Helper::def_error('scalar','object',$object);
+			FWS_Helper::def_error('scalar','object',$object);
 		if(!is_string($method))
-			PLIB_Helper::def_error('string','method',$method);
+			FWS_Helper::def_error('string','method',$method);
 		
 		unset($this->_allowed_methods[$object.'.'.$method]);
 	}
@@ -451,9 +451,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function set_template($filename,$number = 1)
 	{
 		if(empty($filename))
-			PLIB_Helper::def_error('notempty','filename',$filename);
-		if(!PLIB_Helper::is_integer($number) || $number <= 0)
-			PLIB_Helper::def_error('intgt0','number',$number);
+			FWS_Helper::def_error('notempty','filename',$filename);
+		if(!FWS_Helper::is_integer($number) || $number <= 0)
+			FWS_Helper::def_error('intgt0','number',$number);
 
 		// save the current values to the stack
 		if($this->_filename != '')
@@ -486,7 +486,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function add_global($name,$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('empty','name',$name);
+			FWS_Helper::def_error('empty','name',$name);
 
 		$this->_static_vars[$name] = $value;
 	}
@@ -502,9 +502,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function add_global_ref($name,&$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('empty','name',$name);
+			FWS_Helper::def_error('empty','name',$name);
 		if($value === null)
-			PLIB_Helper::def_error('notnull','value',$value);
+			FWS_Helper::def_error('notnull','value',$value);
 
 		$this->_static_vars[$name] = &$value;
 	}
@@ -524,17 +524,17 @@ final class PLIB_Template_Handler extends PLIB_Object
 	public function add_array($name,&$array,$template = '',$number = 0)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('empty','name',$name);
+			FWS_Helper::def_error('empty','name',$name);
 		if($array === null)
-			PLIB_Helper::def_error('notnull','array',$array);
+			FWS_Helper::def_error('notnull','array',$array);
 		
 		$tpl = $template != '' ? $template : $this->_filename;
 		if(empty($tpl))
-			PLIB_Helper::def_error('notempty','template',$template);
+			FWS_Helper::def_error('notempty','template',$template);
 		
 		$number = $number == 0 ? $this->_number : $number;
-		if(!PLIB_Helper::is_integer($number) || $number <= 0)
-			PLIB_Helper::def_error('intgt0','number',$number);
+		if(!FWS_Helper::is_integer($number) || $number <= 0)
+			FWS_Helper::def_error('intgt0','number',$number);
 		
 		$this->_variables[$tpl.$number][$name] = &$array;
 	}
@@ -557,11 +557,11 @@ final class PLIB_Template_Handler extends PLIB_Object
 		{
 			$tpl = $template != '' ? $template : $this->_filename;
 			if(empty($tpl))
-				PLIB_Helper::def_error('notempty','template',$template);
+				FWS_Helper::def_error('notempty','template',$template);
 			
 			$number = $number == 0 ? $this->_number : $number;
-			if(!PLIB_Helper::is_integer($number) || $number <= 0)
-				PLIB_Helper::def_error('intgt0','number',$number);
+			if(!FWS_Helper::is_integer($number) || $number <= 0)
+				FWS_Helper::def_error('intgt0','number',$number);
 			
 			foreach($vars as $name => $value)
 			{
@@ -585,9 +585,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 			return array_merge($this->_static_vars,$this->_string_vars);
 		
 		if(empty($template))
-			PLIB_Helper::def_error('notempty','template',$template);
-		if(!PLIB_Helper::is_integer($number) || $number <= 0)
-			PLIB_Helper::def_error('intgt0','number',$number);
+			FWS_Helper::def_error('notempty','template',$template);
+		if(!FWS_Helper::is_integer($number) || $number <= 0)
+			FWS_Helper::def_error('intgt0','number',$number);
 		
 		$vars = $this->_static_vars;
 		if(isset($this->_variables[$template.$number]))
@@ -612,9 +612,9 @@ final class PLIB_Template_Handler extends PLIB_Object
 		$incson = $this->get_includes_enabled();
 		$this->set_includes_enabled(false);
 		
-		$parser = new PLIB_Template_Parser($this);
+		$parser = new FWS_Template_Parser($this);
 		$result = $parser->compile_template('__string_'.$this->_string_counter,null,$string);
-		eval(PLIB_String::substr($result,5,-2));
+		eval(FWS_String::substr($result,5,-2));
 		
 		$func_name = $this->get_function_name('__string_'.$this->_string_counter);
 		$str = $func_name($this,1);
@@ -636,10 +636,10 @@ final class PLIB_Template_Handler extends PLIB_Object
 	 */
 	public function parse_template($template = -1,$restore = true,$number = 1)
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 
-		if(!PLIB_Helper::is_integer($number) || $number <= 0)
-			PLIB_Helper::def_error('intgt0','number',$number);
+		if(!FWS_Helper::is_integer($number) || $number <= 0)
+			FWS_Helper::def_error('intgt0','number',$number);
 		
 		$recompile_necessary = false;
 		// Note that we use -1 as default value to prevent recursion in template-calls
@@ -650,7 +650,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 		
 		// the template must not be empty!
 		if(empty($tpl))
-			PLIB_Helper::def_error('notempty','tpl',$tpl);
+			FWS_Helper::def_error('notempty','tpl',$tpl);
 		
 		// store template-name for error-message
 		$old_tpl = $this->_filename;
@@ -665,14 +665,14 @@ final class PLIB_Template_Handler extends PLIB_Object
 			if($template_path == '')
 			{
 				$tp = str_replace(
-					PLIB_Path::client_app(),'',$user->get_theme_item_path('templates/'.$tpl)
+					FWS_Path::client_app(),'',$user->get_theme_item_path('templates/'.$tpl)
 				);
 				$template_path = dirname($tp).'/';
 			}
 			
 			// check if the file exists
-			if(!is_file(PLIB_Path::server_app().$template_path.$tpl))
-				PLIB_Helper::error('"'.PLIB_Path::server_app().$template_path.$tpl.'" is no file!');
+			if(!is_file(FWS_Path::server_app().$template_path.$tpl))
+				FWS_Helper::error('"'.FWS_Path::server_app().$template_path.$tpl.'" is no file!');
 			
 			$path = str_replace('/','_',$template_path);
 			$path = str_replace('\\','_',$path);
@@ -684,7 +684,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 			else
 			{
 				$cache_mtime = filemtime($cache_path);
-				$tpl_mtime = filemtime(PLIB_Path::server_app().$template_path.$tpl);
+				$tpl_mtime = filemtime(FWS_Path::server_app().$template_path.$tpl);
 				
 				// compare the last-modified-times
 				if($tpl_mtime > $cache_mtime)
@@ -693,7 +693,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 	
 			// retrieve the template-content if we have to recompile it
 			if($recompile_necessary)
-				$tpl_content = PLIB_FileUtils::read(PLIB_Path::server_app().$template_path.$tpl);
+				$tpl_content = FWS_FileUtils::read(FWS_Path::server_app().$template_path.$tpl);
 		}
 		
 		// recompile?
@@ -703,7 +703,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 			// if we could not save the template we eval the code directly
 			// this prevents problems if the cache-directory has not yet CHMOD 0777 (which may happen
 			// at the beginning of the installation)
-			$parser = new PLIB_Template_Parser($this);
+			$parser = new FWS_Template_Parser($this);
 			$tpl_content = $parser->compile_template($tpl,$cache_path,$tpl_content);
 			if($tpl_content !== '')
 			{
@@ -724,7 +724,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 
 				$include = false;
 				// we don't want to eval the php start- and end-tags
-				eval(PLIB_String::substr($tpl_content,5,PLIB_String::strlen($tpl_content) - 2));
+				eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
 			}
 		}
 
@@ -762,7 +762,7 @@ final class PLIB_Template_Handler extends PLIB_Object
 	 */
 	public function get_function_name($template)
 	{
-		return 'PLIB_TPL_'.md5(PLIB_Path::server_app()).'_'.str_replace('.','_',$template);
+		return 'FWS_TPL_'.md5(FWS_Path::server_app()).'_'.str_replace('.','_',$template);
 	}
 	
 	protected function get_print_vars()

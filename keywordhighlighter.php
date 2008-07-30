@@ -3,7 +3,7 @@
  * Contains the keyword-highlighter-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * Can highlight keywords in a HTML-string.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_KeywordHighlighter extends PLIB_Object
+final class FWS_KeywordHighlighter extends FWS_Object
 {
 	/**
 	 * A numeric array with all keywords that should be highlighted
@@ -50,7 +50,7 @@ final class PLIB_KeywordHighlighter extends PLIB_Object
 		parent::__construct();
 		
 		if(!is_array($keywords))
-			PLIB_Helper::def_error('array','keywords',$keywords);
+			FWS_Helper::def_error('array','keywords',$keywords);
 		
 		$this->_keywords = $keywords;
 		$this->_prefix = $prefix;
@@ -93,7 +93,7 @@ final class PLIB_KeywordHighlighter extends PLIB_Object
 		$m = array();
 		// if no mb-functions are used (e.g. they are not supported) we simply use the byte-positions
 		// as offset
-		if(PLIB_String::get_use_mb_functions())
+		if(FWS_String::get_use_mb_functions())
 		{
 			// unfortunatly preg_match_all() with PREG_OFFSET_CAPTURE does always count bytes for the
 			// offset (this doesn't change with modifier "u").
@@ -127,7 +127,7 @@ final class PLIB_KeywordHighlighter extends PLIB_Object
 			
 			// add the text in front of the match
 			if($match[1] > $p)
-				$result .= PLIB_String::substr($text,$p,$match[1] - $p);
+				$result .= FWS_String::substr($text,$p,$match[1] - $p);
 			
 			// check wether it is a valid match
 			// note that can we use the byte-position here because we search just for ASCII chars
@@ -149,13 +149,13 @@ final class PLIB_KeywordHighlighter extends PLIB_Object
 				$result .= $match[0];
 			
 			// continue after the match
-			$p = $match[1] + PLIB_String::strlen($match[0]);
+			$p = $match[1] + FWS_String::strlen($match[0]);
 		}
 		
 		// is there anything left?
-		$len = PLIB_String::strlen($text);
+		$len = FWS_String::strlen($text);
 		if($p < $len)
-			$result .= PLIB_String::substr($text,$p);
+			$result .= FWS_String::substr($text,$p);
 		
 		return $result;
 	}

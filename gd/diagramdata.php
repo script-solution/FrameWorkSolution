@@ -3,7 +3,7 @@
  * Contains the diagram-data-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The interface for all diagram-datas. The diagrams use this interface to get the data itself,
  * the text for the data-elements, the fill-color and so on.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_GD_DiagramData
+interface FWS_GD_DiagramData
 {
 	/**
 	 * @return array the data that should be displayed: <code>array(<key> => <numericValue>,...)</code>
@@ -43,7 +43,7 @@ interface PLIB_GD_DiagramData
 	 * @param mixed $key the key from the array of {@link get_data()}
 	 * @param mixed $value the value from the array of {@link get_data()}
 	 * @param float $percent the percentage
-	 * @return PLIB_GD_TextAttributes the attributes
+	 * @return FWS_GD_TextAttributes the attributes
 	 */
 	public function get_attributes_of($no,$key,$value,$percent);
 	
@@ -54,12 +54,12 @@ interface PLIB_GD_DiagramData
 	 * @param mixed $key the key from the array of {@link get_data()}
 	 * @param mixed $value the value from the array of {@link get_data()}
 	 * @param float $percent the percentage
-	 * @return PLIB_GD_Color the color
+	 * @return FWS_GD_Color the color
 	 */
 	public function get_color_of($no,$key,$value,$percent);
 	
 	/**
-	 * @return PLIB_GD_Color the background-color for the diagram
+	 * @return FWS_GD_Color the background-color for the diagram
 	 */
 	public function get_diagram_bg();
 	

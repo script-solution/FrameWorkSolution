@@ -3,7 +3,7 @@
  * Contains the task-container
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The task-container which contains all tasks, manages the execution and so on
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tasks_Container extends PLIB_Object
+class FWS_Tasks_Container extends FWS_Object
 {
 	/**
 	 * The storage-object for the tasks
 	 *
-	 * @var PLIB_Tasks_Storage
+	 * @var FWS_Tasks_Storage
 	 */
 	private $_storage;
 	
@@ -57,31 +57,31 @@ class PLIB_Tasks_Container extends PLIB_Object
 	/**
 	 * constructor
 	 * 
-	 * @param PLIB_Tasks_Storage $storage the storage-object
+	 * @param FWS_Tasks_Storage $storage the storage-object
 	 * @param string $folder the folder which contains all task-files
 	 * @param string $prefix the prefix for all task-classes
 	 */
-	public function __construct($storage,$folder,$prefix = 'PLIB_Tasks_')
+	public function __construct($storage,$folder,$prefix = 'FWS_Tasks_')
 	{
 		parent::__construct();
 		
-		if(!($storage instanceof PLIB_Tasks_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Tasks_Storage',$storage);
+		if(!($storage instanceof FWS_Tasks_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Tasks_Storage',$storage);
 		if(!is_dir($folder))
-			PLIB_Helper::error($folder.' is no existing(?) directory!');
+			FWS_Helper::error($folder.' is no existing(?) directory!');
 		
 		$this->_storage = $storage;
 		$this->_prefix = $prefix;
-		$this->_folder = PLIB_FileUtils::ensure_trailing_slash($folder);
+		$this->_folder = FWS_FileUtils::ensure_trailing_slash($folder);
 		
 		// load task-data
 		$tasks = $this->_storage->get_tasks();
 		foreach($tasks as $task)
 		{
-			if($task instanceof PLIB_Tasks_Data)
+			if($task instanceof FWS_Tasks_Data)
 				$this->_tasks[$task->get_id()] = $task;
 			else
-				PLIB_Helper::def_error('instance','task','PLIB_Tasks_Data',$task);
+				FWS_Helper::def_error('instance','task','FWS_Tasks_Data',$task);
 		}
 	}
 	
@@ -137,7 +137,7 @@ class PLIB_Tasks_Container extends PLIB_Object
 	/**
 	 * Loads the given task so that <var>$this->_task_objs[<id>]</var> is available.
 	 *
-	 * @param PLIB_Tasks_data $task the task-data
+	 * @param FWS_Tasks_data $task the task-data
 	 */
 	private function _load_task($task)
 	{
@@ -146,13 +146,13 @@ class PLIB_Tasks_Container extends PLIB_Object
 		
 		if(is_file($this->_folder.$task->get_file()))
 		{
-			$name = PLIB_FileUtils::get_name($task->get_file(),false);
+			$name = FWS_FileUtils::get_name($task->get_file(),false);
 			include_once($this->_folder.$task->get_file());
 			$class = $this->_prefix.$name;
 			if(class_exists($class))
 			{
 				$c = new $class();
-				if($c instanceof PLIB_Tasks_Base)
+				if($c instanceof FWS_Tasks_Base)
 				{
 					$this->_task_objs[$task->get_id()] = $c;
 					return;
@@ -160,7 +160,7 @@ class PLIB_Tasks_Container extends PLIB_Object
 			}
 		}
 		
-		PLIB_Helper::error(
+		FWS_Helper::error(
 			'The task-file with id '.$task->get_id().' does not exist or is invalid!',false
 		);
 	}
@@ -168,32 +168,32 @@ class PLIB_Tasks_Container extends PLIB_Object
 	/**
 	 * Determines the last execution time
 	 * 
-	 * @param PLIB_Tasks_Data $task the task-object
-	 * @return PLIB_Date the date to store
+	 * @param FWS_Tasks_Data $task the task-object
+	 * @return FWS_Date the date to store
 	 */
 	private function _get_last_execution($task)
 	{
 		$time = $task->get_time();
 		if($time)
 		{
-			$now = new PLIB_Date('now',PLIB_Date::TZ_GMT,PLIB_Date::TZ_GMT);
+			$now = new FWS_Date('now',FWS_Date::TZ_GMT,FWS_Date::TZ_GMT);
 			list($y,$m,$d,$h,$i) = explode(',',$now->to_format('Y,m,d,H,i'));
 			list($th,$ti,$ts) = explode(':',$time);
 			
 			// days
 			if($task->get_interval() % 86400 == 0)
-				$res = PLIB_Date::get_timestamp(array($th,$ti,$ts,$m,$d,$y),PLIB_Date::TZ_GMT);
+				$res = FWS_Date::get_timestamp(array($th,$ti,$ts,$m,$d,$y),FWS_Date::TZ_GMT);
 			// hours
 			else if($task->get_interval() % 3600 == 0)
-				$res = PLIB_Date::get_timestamp(array($h,$ti,$ts,$m,$d,$y),PLIB_Date::TZ_GMT);
+				$res = FWS_Date::get_timestamp(array($h,$ti,$ts,$m,$d,$y),FWS_Date::TZ_GMT);
 			// minutes
 			else
-				$res = PLIB_Date::get_timestamp(array($h,$i,$ts,$m,$d,$y),PLIB_Date::TZ_GMT);
+				$res = FWS_Date::get_timestamp(array($h,$i,$ts,$m,$d,$y),FWS_Date::TZ_GMT);
 		}
 		else
 			$res = time();
 		
-		return new PLIB_Date($res);
+		return new FWS_Date($res);
 	}
 	
 	protected function get_print_vars()

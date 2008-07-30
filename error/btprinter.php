@@ -3,7 +3,7 @@
  * Contains the backtrace-printer-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all backtrace-printers
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Error_BTPrinter
+interface FWS_Error_BTPrinter
 {
 	/**
 	 * Should print the given backtrace

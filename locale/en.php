@@ -3,7 +3,7 @@
  * Contains the default locale
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	locale
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The default locale (en)
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	locale
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Locale_EN extends PLIB_Object implements PLIB_Locale
+class FWS_Locale_EN extends FWS_Object implements FWS_Locale
 {
 	/**
 	 * The default language-entries
@@ -104,26 +104,26 @@ class PLIB_Locale_EN extends PLIB_Object implements PLIB_Locale
 	{
 		switch($type)
 		{
-			case PLIB_Locale::FORMAT_DATE:
+			case FWS_Locale::FORMAT_DATE:
 				return 'm/d/Y';
 			
-			case PLIB_Locale::FORMAT_DATE_SHORT:
+			case FWS_Locale::FORMAT_DATE_SHORT:
 				return 'm/d/y';
 			
-			case PLIB_Locale::FORMAT_DATE_LONG:
+			case FWS_Locale::FORMAT_DATE_LONG:
 				return '%\W, d. %\M Y';
 			
-			case PLIB_Locale::FORMAT_TIME:
+			case FWS_Locale::FORMAT_TIME:
 				return 'g:i A';
 			
-			case PLIB_Locale::FORMAT_TIME_SEC:
+			case FWS_Locale::FORMAT_TIME_SEC:
 				return 'g:i:s A';
 			
-			case PLIB_Locale::FORMAT_DATE_TIME_SEP:
+			case FWS_Locale::FORMAT_DATE_TIME_SEP:
 				return ' ';
 			
 			default:
-				PLIB_Helper::error('Invalid type $type!');
+				FWS_Helper::error('Invalid type $type!');
 				return '';
 		}
 	}
@@ -156,7 +156,7 @@ class PLIB_Locale_EN extends PLIB_Object implements PLIB_Locale
 	public function set_timezone($timezone)
 	{
 		if(!is_string($timezone))
-			PLIB_Helper::def_error('string','timezone',$timezone);
+			FWS_Helper::def_error('string','timezone',$timezone);
 		
 		$this->_timezone = $timezone;
 	}

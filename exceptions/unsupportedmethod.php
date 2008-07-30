@@ -3,7 +3,7 @@
  * Contains the unsupported-method-exception
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The unsupported-method-exception indicates that a method is not implemented or should not
  * be called.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Exceptions_UnsupportedMethod extends PLIB_Exceptions_Critical
+final class FWS_Exceptions_UnsupportedMethod extends FWS_Exceptions_Critical
 {
 	/**
 	 * Constructor

@@ -3,7 +3,7 @@
  * Contains the php-session-storage-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The session-storage implementation for the PHP-session
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session_Storage
+final class FWS_Session_Storage_PHP extends FWS_Object implements FWS_Session_Storage
 {
 	/**
 	 * The index of the session-data
 	 */
-	const SESS_INDEX = 'plib_sess';
+	const SESS_INDEX = 'fws_sess';
 	
 	/**
 	 * Constructor
@@ -35,7 +35,7 @@ final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session
 	}
 	
 	/**
-	 * @see PLIB_Session_Storage::load_list()
+	 * @see FWS_Session_Storage::load_list()
 	 *
 	 * @return array
 	 */
@@ -45,7 +45,7 @@ final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session
 			return array();
 		
 		// we now just the current user
-		return array(new PLIB_Session_Data(
+		return array(new FWS_Session_Data(
 			$_SESSION[self::SESS_INDEX]['sid'],
 			$_SESSION[self::SESS_INDEX]['uid'],
 			$_SESSION[self::SESS_INDEX]['uip'],
@@ -57,9 +57,9 @@ final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session
 	}
 
 	/**
-	 * @see PLIB_Session_Storage::add_user()
+	 * @see FWS_Session_Storage::add_user()
 	 *
-	 * @param PLIB_Session_Data $user
+	 * @param FWS_Session_Data $user
 	 */
 	public function add_user($user)
 	{
@@ -67,17 +67,17 @@ final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session
 	}
 
 	/**
-	 * @see PLIB_Session_Storage::get_new_user()
+	 * @see FWS_Session_Storage::get_new_user()
 	 *
-	 * @return PLIB_Session_Data
+	 * @return FWS_Session_Data
 	 */
 	public function get_new_user()
 	{
-		return new PLIB_Session_Data();
+		return new FWS_Session_Data();
 	}
 
 	/**
-	 * @see PLIB_Session_Storage::remove_user()
+	 * @see FWS_Session_Storage::remove_user()
 	 *
 	 * @param array $ids
 	 */
@@ -91,9 +91,9 @@ final class PLIB_Session_Storage_PHP extends PLIB_Object implements PLIB_Session
 	}
 
 	/**
-	 * @see PLIB_Session_Storage::update_user()
+	 * @see FWS_Session_Storage::update_user()
 	 *
-	 * @param PLIB_Session_Data $user
+	 * @param FWS_Session_Data $user
 	 */
 	public function update_user($user)
 	{

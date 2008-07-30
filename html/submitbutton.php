@@ -3,7 +3,7 @@
  * Contains the submitbutton-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<input type="submit" name="..." value="..." />
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_SubmitButton extends PLIB_HTML_Button
+class FWS_HTML_SubmitButton extends FWS_HTML_Button
 {
 	/**
 	 * Constructor

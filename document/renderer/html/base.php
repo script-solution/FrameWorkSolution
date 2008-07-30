@@ -3,7 +3,7 @@
  * Contains the base-html-renderer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -20,11 +20,11 @@
  * <br>
  * You can and have to implement the render-method by yourself.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements PLIB_Document_Renderer
+abstract class FWS_Document_Renderer_HTML_Base extends FWS_Object implements FWS_Document_Renderer
 {
 	/**
 	 * The document title
@@ -165,7 +165,7 @@ abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements P
 	 */
 	public final function add_css_file($file,$type = 'text/css',$media = null)
 	{
-		$type = PLIB_String::strtolower($type);
+		$type = FWS_String::strtolower($type);
 		$this->_css_files[$file] = array($type,$media);
 	}
 	
@@ -177,7 +177,7 @@ abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements P
 	 */
 	public final function add_css_block($block,$type = 'text/css')
 	{
-		$type = PLIB_String::strtolower($type);
+		$type = FWS_String::strtolower($type);
 		if(isset($this->_css_blocks[$type]))
 			$this->_css_blocks[$type] .= "\n".$block;
 		else
@@ -192,7 +192,7 @@ abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements P
 	 */
 	public final function add_js_file($file,$type = 'text/javascript')
 	{
-		$type = PLIB_String::strtolower($type);
+		$type = FWS_String::strtolower($type);
 		$this->_js_files[$file] = $type;
 	}
 	
@@ -204,7 +204,7 @@ abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements P
 	 */
 	public final function add_js_block($block,$type = 'text/javascript')
 	{
-		$type = PLIB_String::strtolower($type);
+		$type = FWS_String::strtolower($type);
 		if(isset($this->_js_blocks[$type]))
 			$this->_js_blocks[$type] .= "\n".$block;
 		else
@@ -212,7 +212,7 @@ abstract class PLIB_Document_Renderer_HTML_Base extends PLIB_Object implements P
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

@@ -3,7 +3,7 @@
  * Contains the 2d-pie-diagram
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.diagram
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,47 +13,47 @@
 /**
  * Draws the diagram-data as 2-dimensional pie
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.diagram
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Diagram_2dPie extends PLIB_Object implements PLIB_GD_Diagram
+final class FWS_GD_Diagram_2dPie extends FWS_Object implements FWS_GD_Diagram
 {
 	/**
 	 * The data to display
 	 *
-	 * @var PLIB_GD_DiagramData
+	 * @var FWS_GD_DiagramData
 	 */
 	private $_data;
 	
 	/**
 	 * The image
 	 *
-	 * @var PLIB_GD_Image
+	 * @var FWS_GD_Image
 	 */
 	private $_image;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_DiagramData $data the data to display
-	 * @param PLIB_GD_Image $image the image
+	 * @param FWS_GD_DiagramData $data the data to display
+	 * @param FWS_GD_Image $image the image
 	 */
 	public function __construct($data,$image)
 	{
-		if(!($data instanceof PLIB_GD_DiagramData))
-			PLIB_Helper::def_error('instance','data','PLIB_GD_DiagramData',$data);
-		if(!($image instanceof PLIB_GD_Image))
-			PLIB_Helper::def_error('instance','image','PLIB_GD_Image',$image);
+		if(!($data instanceof FWS_GD_DiagramData))
+			FWS_Helper::def_error('instance','data','FWS_GD_DiagramData',$data);
+		if(!($image instanceof FWS_GD_Image))
+			FWS_Helper::def_error('instance','image','FWS_GD_Image',$image);
 		
 		$this->_data = $data;
 		$this->_image = $image;
 	}
 	
 	/**
-	 * @see PLIB_GD_Diagram::draw_diagram()
+	 * @see FWS_GD_Diagram::draw_diagram()
 	 *
-	 * @param PLIB_GD_Rectangle $rect
+	 * @param FWS_GD_Rectangle $rect
 	 */
 	public function draw_diagram($rect)
 	{
@@ -79,8 +79,8 @@ final class PLIB_GD_Diagram_2dPie extends PLIB_Object implements PLIB_GD_Diagram
 		$radius = min($w / 2,$h / 2);
 		$xdiff = $w / 2 - $radius;
 		$ydiff = $h / 2 - $radius;
-		$ellipse = new PLIB_GD_Circle(
-			new PLIB_GD_Point($x + $radius + $xdiff,$y + $radius + $ydiff),$radius
+		$ellipse = new FWS_GD_Circle(
+			new FWS_GD_Point($x + $radius + $xdiff,$y + $radius + $ydiff),$radius
 		);
 		list($cx,$cy) = $ellipse->get_center()->get();
 		
@@ -107,15 +107,15 @@ final class PLIB_GD_Diagram_2dPie extends PLIB_Object implements PLIB_GD_Diagram
 			$size = $total == 0 || $value == 0 ? 0 : 360 / ($total / $value);
 			$percent = $max == 0 || $value == 0 ? 0 : 100 / ($max / $value);
 						
-			$p = new PLIB_GD_Point(
+			$p = new FWS_GD_Point(
 				ceil($cx + cos(deg2rad($last)) * $radius),
 				ceil($cy + sin(deg2rad($last)) * $radius)
 			);
-			$g->get_line_view(new PLIB_GD_Line($p,$ellipse->get_center()))->draw(PLIB_GD_Color::$WHITE);
+			$g->get_line_view(new FWS_GD_Line($p,$ellipse->get_center()))->draw(FWS_GD_Color::$WHITE);
 			
 			$bartitle = $this->_data->get_title_of($i,$title,$value,$percent);
 			$barattr = $this->_data->get_attributes_of($i,$title,$value,$percent);
-			$text = new PLIB_GD_Text($bartitle,$barattr);
+			$text = new FWS_GD_Text($bartitle,$barattr);
 			$g->get_text_view($text)->draw_in_circle_part($ellipse,(int)$last,(int)($last + $size));
 			
 			$last += $size;
@@ -124,7 +124,7 @@ final class PLIB_GD_Diagram_2dPie extends PLIB_Object implements PLIB_GD_Diagram
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

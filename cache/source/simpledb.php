@@ -3,7 +3,7 @@
  * Contains the simple-db-implementation for the source
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.source
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * A simple db-based implementation for the source. You can specify the table-name, a key
  * of the table and the order of the result.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.source
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Source_SimpleDB extends PLIB_Object implements PLIB_Cache_Source
+final class FWS_Cache_Source_SimpleDB extends FWS_Object implements FWS_Cache_Source
 {
 	/**
 	 * The table-name to use for the query
@@ -61,13 +61,13 @@ final class PLIB_Cache_Source_SimpleDB extends PLIB_Object implements PLIB_Cache
 		parent::__construct();
 		
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 		if($key !== null && empty($key))
-			PLIB_Helper::error('$key is not null but empty!');
+			FWS_Helper::error('$key is not null but empty!');
 		if($order !== null && empty($order))
-			PLIB_Helper::error('$order is not null but empty!');
+			FWS_Helper::error('$order is not null but empty!');
 		if(!in_array($dir,array('ASC','DESC')))
-			PLIB_Helper::def_error('inarray','dir',array('ASC','DESC'),$dir);
+			FWS_Helper::def_error('inarray','dir',array('ASC','DESC'),$dir);
 		
 		$this->_table = $table;
 		$this->_key = $key;
@@ -77,7 +77,7 @@ final class PLIB_Cache_Source_SimpleDB extends PLIB_Object implements PLIB_Cache
 	
 	public function get_content()
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		// perform query
 		$sql = 'SELECT * FROM '.$this->_table;

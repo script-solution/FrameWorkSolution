@@ -3,7 +3,7 @@
  * Contains the combobox-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<select name="..."><option value="...">...</option>...</select>
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_ComboBox extends PLIB_HTML_List
+class FWS_HTML_ComboBox extends FWS_HTML_List
 {
 	/**
 	 * The size of the combobox
@@ -115,8 +115,8 @@ class PLIB_HTML_ComboBox extends PLIB_HTML_List
 	 */
 	public final function set_size($size)
 	{
-		if(!PLIB_Helper::is_integer($size) || $size <= 0)
-			PLIB_Helper::def_error('intgt0','size',$size);
+		if(!FWS_Helper::is_integer($size) || $size <= 0)
+			FWS_Helper::def_error('intgt0','size',$size);
 		
 		$this->_size = $size;
 	}

@@ -3,7 +3,7 @@
  * Contains the error-output-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The error-output-interface for the different output-generators
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Error_Output
+interface FWS_Error_Output
 {
 	/**
 	 * Should print the given error

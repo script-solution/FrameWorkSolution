@@ -3,7 +3,7 @@
  * Contains the text-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a text with attributes which may be drawn by the text-view-class
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Text extends PLIB_Object
+final class FWS_GD_Text extends FWS_Object
 {
 	/**
 	 * The text to draw
@@ -29,7 +29,7 @@ final class PLIB_GD_Text extends PLIB_Object
 	/**
 	 * The attributes of the text
 	 *
-	 * @var PLIB_GD_TextAttributes
+	 * @var FWS_GD_TextAttributes
 	 */
 	private $_attr;
 	
@@ -37,14 +37,14 @@ final class PLIB_GD_Text extends PLIB_Object
 	 * Constructor
 	 *
 	 * @param string $text the text to draw
-	 * @param PLIB_GD_TextAttributes $attr the attributes
+	 * @param FWS_GD_TextAttributes $attr the attributes
 	 */
 	public function __construct($text,$attr)
 	{
 		parent::__construct();
 		
-		if(!($attr instanceof PLIB_GD_TextAttributes))
-			PLIB_Helper::def_error('instance','attr','PLIB_GD_TextAttributes',$attr);
+		if(!($attr instanceof FWS_GD_TextAttributes))
+			FWS_Helper::def_error('instance','attr','FWS_GD_TextAttributes',$attr);
 		
 		$this->set_text($text);
 		$this->_text = $text;
@@ -52,7 +52,7 @@ final class PLIB_GD_Text extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_GD_TextAttributes the attributes of the text
+	 * @return FWS_GD_TextAttributes the attributes of the text
 	 */
 	public function get_attributes()
 	{
@@ -80,9 +80,9 @@ final class PLIB_GD_Text extends PLIB_Object
 	/**
 	 * Determines the center-coordinates of the text based on the given coordinates
 	 *
-	 * @param PLIB_GD_Point $pos the lower-left char-corner
+	 * @param FWS_GD_Point $pos the lower-left char-corner
 	 * @param int $angle the angle with which the text should be drawn
-	 * @return PLIB_GD_Point the coordinates of the center
+	 * @return FWS_GD_Point the coordinates of the center
 	 */
 	public function get_center($pos,$angle = 0)
 	{
@@ -102,18 +102,18 @@ final class PLIB_GD_Text extends PLIB_Object
 	/**
 	 * Returns the bounds-rectangle of the text (not rotated!)
 	 *
-	 * @param PLIB_GD_Point $pos the start-position (upper-left-corner)
-	 * @return PLIB_GD_Rectangle the bounds-rectangle
+	 * @param FWS_GD_Point $pos the start-position (upper-left-corner)
+	 * @return FWS_GD_Rectangle the bounds-rectangle
 	 */
 	public function get_rectangle($pos)
 	{
-		if(!($pos instanceof PLIB_GD_Point))
-			PLIB_Helper::def_error('instance','pos','PLIB_GD_Point',$pos);
+		if(!($pos instanceof FWS_GD_Point))
+			FWS_Helper::def_error('instance','pos','FWS_GD_Point',$pos);
 		
 		$bounds = $this->get_bounds();
-		$from = new PLIB_GD_Point($pos->get_x() + $bounds[6],$pos->get_y() + $bounds[7]);
-		$size = new PLIB_GD_Dimension($bounds[2] - $bounds[6],$bounds[3] - $bounds[7]);
-		return new PLIB_GD_Rectangle($from,$size);
+		$from = new FWS_GD_Point($pos->get_x() + $bounds[6],$pos->get_y() + $bounds[7]);
+		$size = new FWS_GD_Dimension($bounds[2] - $bounds[6],$bounds[3] - $bounds[7]);
+		return new FWS_GD_Rectangle($from,$size);
 	}
 	
 	/**
@@ -261,7 +261,7 @@ final class PLIB_GD_Text extends PLIB_Object
 	 *
 	 * @param boolean $note_attr wether the attributes (underline, overline, shadow) should be
 	 * 	noticed for calculating the bounds
-	 * @return PLIB_GD_Dimension the size of the text
+	 * @return FWS_GD_Dimension the size of the text
 	 */
 	public function get_size($note_attr = true)
 	{
@@ -278,12 +278,12 @@ final class PLIB_GD_Text extends PLIB_Object
 	/**
 	 * Determines the size of the text in the rotated state.
 	 * 
-	 * @return PLIB_GD_Dimension the size of the text
+	 * @return FWS_GD_Dimension the size of the text
 	 */
 	public function get_rotated_size()
 	{
 		$ep = $this->get_extreme_points();
-		return new PLIB_GD_Dimension($ep[1] - $ep[0],$ep[3] - $ep[2]);
+		return new FWS_GD_Dimension($ep[1] - $ep[0],$ep[3] - $ep[2]);
 	}
 	
 	/**
@@ -337,7 +337,7 @@ final class PLIB_GD_Text extends PLIB_Object
 			$l += $border_size - 1;
 		}
 		
-		PLIB_GD_Utils::add_padding_custom($bounds,$t,$r,$b,$l,$angle);
+		FWS_GD_Utils::add_padding_custom($bounds,$t,$r,$b,$l,$angle);
 	}
 	
 	protected function get_print_vars()

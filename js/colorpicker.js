@@ -2,7 +2,7 @@
  * Contains the colorpicker-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -12,26 +12,26 @@
 /**
  * The id of the color-picker-area
  */
-PLIB_ColorPicker.id = 'plib_colorpicker';
+FWS_ColorPicker.id = 'fws_colorpicker';
 
 /**
  * The current instance
  */
-PLIB_ColorPicker.instance = null;
+FWS_ColorPicker.instance = null;
 
 /**
  * Constructor
  *
- * @param string libpath the path to the library
+ * @param string fwspath the path to the framework
  * @param mixed inputId the id of the input-element (which holds the color)
  * @param function onselected a function that should be called as soon as a color has been
  *	selected (optional)
  * @param function onhidden a function that should be called as soon as the color-picker has been
  *	hidden (optional
  */
-function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
+function FWS_ColorPicker(fwspath,inputId,onselected,onhidden)
 {
-	this.libpath = libpath;
+	this.fwspath = fwspath;
 	this.cols = 6;
 	this.inputId = inputId;
 	if(typeof onselected != 'undefined')
@@ -43,7 +43,7 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 	else
 		this.onhidden = null;
 	
-	PLIB_ColorPicker.instance = this;
+	FWS_ColorPicker.instance = this;
 	
 	/**
 	 * Builds the html-code for the color-picker
@@ -57,8 +57,8 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 		html += '<table>' + "\n";
 		html += '	<tbody>' + "\n";
 		html += '	<tr>' + "\n";
-		html += '		<td id="plib_cp_preview" colspan="' + (colors[0].length - 1) + '">&nbsp;</td>' + "\n";
-		html += '		<td id="plib_cp_close" onclick="PLIB_ColorPicker.instance.hide()">X</td>' + "\n";
+		html += '		<td id="fws_cp_preview" colspan="' + (colors[0].length - 1) + '">&nbsp;</td>' + "\n";
+		html += '		<td id="fws_cp_close" onclick="FWS_ColorPicker.instance.hide()">X</td>' + "\n";
 		html += '	</tr>' + "\n";
 		for(var i = 0;i < colors.length;i++)
 		{
@@ -67,8 +67,8 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 			{
 					html += '			<td id="col_' + colors[i][x] + '"';
 					html += ' style="background-color: ' + colors[i][x] + ';"';
-					html += ' onmouseover="PLIB_ColorPicker.instance.hoverCell(this.id)"';
-					html += ' onclick="PLIB_ColorPicker.instance.clickCell(this.id)"';
+					html += ' onmouseover="FWS_ColorPicker.instance.hoverCell(this.id)"';
+					html += ' onclick="FWS_ColorPicker.instance.clickCell(this.id)"';
 					html += '>&nbsp;</td>' + "\n";
 			}
 			html += '		</tr>' + "\n";
@@ -164,7 +164,7 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 	 */
 	this.hoverCell = function(cellid)
 	{
-		PLIB_ColorPicker.instance._hoverCell(cellid);
+		FWS_ColorPicker.instance._hoverCell(cellid);
 	};
 	
 	/**
@@ -174,7 +174,7 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 	 */
 	this._hoverCell = function(cellid)
 	{
-		PLIB_getElement('plib_cp_preview').innerHTML = cellid.substring(4);
+		FWS_getElement('fws_cp_preview').innerHTML = cellid.substring(4);
 	};
 	
 	/**
@@ -184,7 +184,7 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 	 */
 	this.clickCell = function(cellid)
 	{
-		PLIB_ColorPicker.instance._clickCell(cellid);
+		FWS_ColorPicker.instance._clickCell(cellid);
 	};
 	
 	/**
@@ -194,12 +194,12 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
 	 */
 	this._clickCell = function(cellid)
 	{
-		var input = PLIB_getElement(this.inputId);
+		var input = FWS_getElement(this.inputId);
 		if(input != null)
 			input.value = cellid.substring(5);
 		if(this.onselected != null)
 			this.onselected(cellid.substring(5));
-		PLIB_hideElement(PLIB_ColorPicker.id);
+		FWS_hideElement(FWS_ColorPicker.id);
 	};
 	
 	this.toggle = toggle;
@@ -211,7 +211,7 @@ function PLIB_ColorPicker(libpath,inputId,onselected,onhidden)
  */
 function hide()
 {
-	PLIB_hideElement(PLIB_ColorPicker.id);
+	FWS_hideElement(FWS_ColorPicker.id);
 	if(this.onhidden != null)
 		this.onhidden();
 }
@@ -220,7 +220,7 @@ function hide()
  * Toggles the display of the colorpicker relative to the element with given id
  *
  * @param mixed relId the id of the element to use for the positioning
- * @param string position the position (see PLIB_displayElement for the possible values)
+ * @param string position the position (see FWS_displayElement for the possible values)
  */
 function toggle(relId,position)
 {
@@ -229,11 +229,11 @@ function toggle(relId,position)
 	
 	// do we have to create it?
 	var created = false;
-	if(!PLIB_getElement(PLIB_ColorPicker.id))
+	if(!FWS_getElement(FWS_ColorPicker.id))
 	{
 		var body = document.getElementsByTagName('body')[0];
 		var element = document.createElement('div');
-		element.id = PLIB_ColorPicker.id;
+		element.id = FWS_ColorPicker.id;
 		element.zindex = 100;
 		element.innerHTML = this.getHTML();
 		body.appendChild(element);
@@ -242,21 +242,21 @@ function toggle(relId,position)
 		var element = document.createElement('link');
 		element.rel = 'stylesheet';
 		element.type = 'text/css';
-		element.href = this.libpath + 'js/colorpicker.css';
+		element.href = this.fwspath + 'js/colorpicker.css';
 		head.appendChild(element);
 		created = true;
 	}
 	
-	PLIB_ColorPicker.instance = this;
+	FWS_ColorPicker.instance = this;
 	
-	var cp = PLIB_getElement(PLIB_ColorPicker.id);
+	var cp = FWS_getElement(FWS_ColorPicker.id);
 	if(cp.style.display == 'block')
 	{
-		PLIB_hideElement(PLIB_ColorPicker.id);
+		FWS_hideElement(FWS_ColorPicker.id);
 		return;
 	}
 	
-	var rel = PLIB_getElement(relId);
+	var rel = FWS_getElement(relId);
 	
 	// we have to display it at first because otherwise offsetWidth is not set
 	cp.style.position = 'absolute';
@@ -267,10 +267,10 @@ function toggle(relId,position)
 	window.setTimeout(function() {
 		// check if the space on the right side of the relative-element is enough
 		// for our color-picker
-		var windowWidth = PLIB_getPageSize()[0];
-		if(PLIB_getPageOffsetLeft(rel) + cp.offsetWidth + rel.offsetWidth > windowWidth - 25)
-			PLIB_displayElement(PLIB_ColorPicker.id,relId,position,2);
+		var windowWidth = FWS_getPageSize()[0];
+		if(FWS_getPageOffsetLeft(rel) + cp.offsetWidth + rel.offsetWidth > windowWidth - 25)
+			FWS_displayElement(FWS_ColorPicker.id,relId,position,2);
 		else
-			PLIB_displayElement(PLIB_ColorPicker.id,relId,position,2);
+			FWS_displayElement(FWS_ColorPicker.id,relId,position,2);
 	},created ? 50 : 0);
 }

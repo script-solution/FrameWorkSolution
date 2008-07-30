@@ -3,7 +3,7 @@
  * Contains the highlighting-processor-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,18 +14,18 @@
  * The highlighting-processor which actually highlights the code.
  * Usage:
  * <code>
- * $lang = new PLIB_Highlighting_Language_XML('yourPath/php.xml');
- * $decorator = new PLIB_Highlighting_Decorator_HTML();
- * $hl = new PLIB_Highlighting_Processor($yourText,$lang,$decorator);
+ * $lang = new FWS_Highlighting_Language_XML('yourPath/php.xml');
+ * $decorator = new FWS_Highlighting_Decorator_HTML();
+ * $hl = new FWS_Highlighting_Processor($yourText,$lang,$decorator);
  * echo $hl->highlight();
  * </code>
  * Please note that the processor assumes that newlines are represented just by '\n'!
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Processor extends PLIB_Object
+final class FWS_Highlighting_Processor extends FWS_Object
 {
 	/**
 	 * Represents a string
@@ -72,14 +72,14 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 	/**
 	 * The highlighter
 	 *
-	 * @var PLIB_Highlighting_Language
+	 * @var FWS_Highlighting_Language
 	 */
 	private $_hl;
 	
 	/**
 	 * The decorator
 	 *
-	 * @var PLIB_Highlighting_Decorator
+	 * @var FWS_Highlighting_Decorator
 	 */
 	private $_decorator;
 	
@@ -101,15 +101,15 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 	 * Constructor
 	 *
 	 * @param string $text the text to highlight
-	 * @param PLIB_Highlighting_Language $hl the highlighter
-	 * @param PLIB_Highlighting_Decorator $decorator the decorator
+	 * @param FWS_Highlighting_Language $hl the highlighter
+	 * @param FWS_Highlighting_Decorator $decorator the decorator
 	 */
 	public function __construct($text,$hl,$decorator)
 	{
-		if(!($hl instanceof PLIB_Highlighting_Language))
-			PLIB_Helper::def_error('instance','hl','PLIB_Highlighting_Language',$hl);
-		if(!($decorator instanceof PLIB_Highlighting_Decorator))
-			PLIB_Helper::def_error('instance','decorator','PLIB_Highlighting_Decorator',$decorator);
+		if(!($hl instanceof FWS_Highlighting_Language))
+			FWS_Helper::def_error('instance','hl','FWS_Highlighting_Language',$hl);
+		if(!($decorator instanceof FWS_Highlighting_Decorator))
+			FWS_Helper::def_error('instance','decorator','FWS_Highlighting_Decorator',$decorator);
 		
 		$this->_text = (string)$text;
 		$this->_hl = $hl;
@@ -141,7 +141,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 			$regex .= preg_quote($sl,'/').'|';
 		foreach($mlTypes as $ml)
 			$regex .= preg_quote(key($ml),'/').'|'.preg_quote(current($ml),'/').'|';
-		$regex = PLIB_String::substr($regex,0,-1).')/s';
+		$regex = FWS_String::substr($regex,0,-1).')/s';
 		$matches = array();
 		preg_match_all($regex,$t,$matches,PREG_OFFSET_CAPTURE);
 		$matches = $matches[0];
@@ -149,7 +149,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 		$unicode = array();
 		// if no mb-functions are used (e.g. they are not supported) we simply use the byte-positions
 		// as offset
-		if(PLIB_String::get_use_mb_functions())
+		if(FWS_String::get_use_mb_functions())
 		{
 			// unfortunatly preg_match_all() with PREG_OFFSET_CAPTURE does always count bytes for the
 			// offset (this doesn't change with modifier "u").
@@ -177,7 +177,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 		$commentId = null;
 		$inStr = false;
 		$inComment = false;
-		$strlen = PLIB_String::strlen($t);
+		$strlen = FWS_String::strlen($t);
 		
 		$len = count($matches);
 		
@@ -216,7 +216,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 				$c = 0;
 				for($x = $mpos - 1;$x >= 0;$x--)
 				{
-					$char = PLIB_String::substr($t,$x,1);
+					$char = FWS_String::substr($t,$x,1);
 					if($char != $escChar)
 						break;
 					$c++;
@@ -313,7 +313,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 				// substract the number 
 				$pos -= $ucchars;
 				
-				$end = $pos + PLIB_String::strlen($mstr);
+				$end = $pos + FWS_String::strlen($mstr);
 				$this->_add_area($deniedareas,$pos,$end,self::NUMBER);
 			}
 		}
@@ -347,7 +347,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 					// substract the number
 					$pos -= $ucchars;
 					
-					$end = $pos + PLIB_String::strlen($mstr);
+					$end = $pos + FWS_String::strlen($mstr);
 					$this->_add_area($deniedareas,$pos,$end,self::REGEX,$id);
 				}
 			}
@@ -374,8 +374,8 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 			$attrs[self::REGEX][$id] = $hl->get_regexp_attributes($id);
 		foreach(array_keys($hl->get_keywords()) as $id)
 			$attrs[self::KEYWORDS][$id] = $hl->get_keyword_attributes($id);
-		$attrs[self::NUMBER] = $hl->get_attributes(PLIB_Highlighting_Language::NUMBER);
-		$attrs[self::SYMBOL] = $hl->get_attributes(PLIB_Highlighting_Language::SYMBOL);
+		$attrs[self::NUMBER] = $hl->get_attributes(FWS_Highlighting_Language::NUMBER);
+		$attrs[self::SYMBOL] = $hl->get_attributes(FWS_Highlighting_Language::SYMBOL);
 		
 		$res = '';
 		$p = 0;
@@ -385,7 +385,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 			
 			// add text between areas
 			if($s != $p)
-				$res .= $this->_decorator->get_text(PLIB_String::substr($t,$p,$s - $p));
+				$res .= $this->_decorator->get_text(FWS_String::substr($t,$p,$s - $p));
 		
 			// determine attributes
 			if(isset($area[3]) && $id !== null)
@@ -394,7 +394,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 				$attr = $attrs[$type];
 			
 			// add area
-			$attrtext = PLIB_String::substr($t,$s,$e - $s);
+			$attrtext = FWS_String::substr($t,$s,$e - $s);
 			$res .= $this->_decorator->open_attributes($attr,$attrtext);
 			$res .= $this->_decorator->get_text($attrtext);
 			$res .= $this->_decorator->close_attributes($attr);
@@ -405,7 +405,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 		
 		// add the rest
 		if($p != $len)
-			$res .= $this->_decorator->get_text(PLIB_String::substr($t,$p));
+			$res .= $this->_decorator->get_text(FWS_String::substr($t,$p));
 		
 		return $res;
 	}
@@ -433,7 +433,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 	 */
 	private function _sort_words($a,$b)
 	{
-		return PLIB_String::strlen($b) - PLIB_String::strlen($a);
+		return FWS_String::strlen($b) - FWS_String::strlen($a);
 	}
 	
 	/**
@@ -463,7 +463,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 		$pattern = '/'.($reqword ? '\\b' : '').'(';
 		foreach($words as $word)
 			$pattern .= preg_quote($word,'/').'|';
-		$pattern = PLIB_String::substr($pattern,0,-1);
+		$pattern = FWS_String::substr($pattern,0,-1);
 		$pattern .= ')'.($reqword ? '\\b' : '').'/'.(!$cs ? 'i' : '');
 		
 		// now find all matches
@@ -488,7 +488,7 @@ final class PLIB_Highlighting_Processor extends PLIB_Object
 			// substract the number
 			$pos -= $ucchars;
 			
-			$end = $pos + PLIB_String::strlen($mstr);
+			$end = $pos + FWS_String::strlen($mstr);
 			$this->_add_area($deniedareas,$pos,$end,$type,$id);
 		}
 	}

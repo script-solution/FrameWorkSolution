@@ -3,7 +3,7 @@
  * Contains the debug-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,22 +11,22 @@
  */
 
 /**
- * The error-handler for the library. Displays the errors in more detail.
- * You can change the output via {@link PLIB_Error_Handler::set_output_handler()} and you
+ * The error-handler for the framework. Displays the errors in more detail.
+ * You can change the output via {@link FWS_Error_Handler::set_output_handler()} and you
  * can also set a logger to log the errors to a file, db or something like that.
  * <br>
  * Note that the error-handler defines a maximum number of errors that will be printed (and logged).
  * As soon as the limit has been reached the script will be stopped. But you may also change the
- * limit (default=50) via {@link PLIB_Error_Handler::set_max_errors()}.
+ * limit (default=50) via {@link FWS_Error_Handler::set_max_errors()}.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_Handler extends PLIB_Singleton
+final class FWS_Error_Handler extends FWS_Singleton
 {
 	/**
-	 * @return PLIB_Error_Handler the instance of this class
+	 * @return FWS_Error_Handler the instance of this class
 	 */
 	public static function get_instance()
 	{
@@ -50,14 +50,14 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	/**
 	 * The output-implementation
 	 *
-	 * @var PLIB_Error_Output
+	 * @var FWS_Error_Output
 	 */
 	private $_output;
 	
 	/**
 	 * The logger-implementation
 	 *
-	 * @var PLIB_Error_Logger
+	 * @var FWS_Error_Logger
 	 */
 	private $_logger = null;
 	
@@ -68,7 +68,7 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	{
 		parent::__construct();
 		
-		$this->_output = new PLIB_Error_Output_Default();
+		$this->_output = new FWS_Error_Output_Default();
 	}
 	
 	/**
@@ -86,8 +86,8 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	 */
 	public function set_max_errors($count)
 	{
-		if(!PLIB_Helper::is_integer($count) || $count <= 0)
-			PLIB_Helper::def_error('intgt0','count',$count);
+		if(!FWS_Helper::is_integer($count) || $count <= 0)
+			FWS_Helper::def_error('intgt0','count',$count);
 		
 		$this->_max_errors = $count;
 	}
@@ -95,12 +95,12 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	/**
 	 * Sets the output-handler to the given implementation
 	 * 
-	 * @param PLIB_Error_Output $output the output-handler
+	 * @param FWS_Error_Output $output the output-handler
 	 */
 	public function set_output_handler($output)
 	{
-		if(!($output instanceof PLIB_Error_Output))
-			PLIB_Helper::def_error('instance','output','PLIB_Error_Output',$output);
+		if(!($output instanceof FWS_Error_Output))
+			FWS_Helper::def_error('instance','output','FWS_Error_Output',$output);
 		
 		$this->_output = $output;
 	}
@@ -108,12 +108,12 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	/**
 	 * Sets the logger to the given implementation
 	 * 
-	 * @param PLIB_Error_Logger $logger the logger
+	 * @param FWS_Error_Logger $logger the logger
 	 */
 	public function set_logger($logger)
 	{
-		if(!($logger instanceof PLIB_Error_Logger))
-			PLIB_Helper::def_error('instance','logger','PLIB_Error_Logger',$logger);
+		if(!($logger instanceof FWS_Error_Logger))
+			FWS_Helper::def_error('instance','logger','FWS_Error_Logger',$logger);
 		
 		$this->_logger = $logger;
 	}
@@ -192,7 +192,7 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 	
 	/**
 	 * Converts the given backtrace (from debug_backtrace() or exceptions) to an easier format.
-	 * This can be used for example for the PLIB_Error_Output-implementations
+	 * This can be used for example for the FWS_Error_Output-implementations
 	 *
 	 * @param array $backtrace the backtrace
 	 * @return array the "easier" backtrace
@@ -205,7 +205,7 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 			$item = array();
 			if(isset($backtrace[$i]['file']))
 			{
-				$path_char = PLIB_String::strpos($backtrace[$i]['file'],'/') === false ? '\\' : '/';
+				$path_char = FWS_String::strpos($backtrace[$i]['file'],'/') === false ? '\\' : '/';
 				$item['path'] = dirname($backtrace[$i]['file']).$path_char;
 				$item['file'] = basename($backtrace[$i]['file']);
 			}
@@ -249,15 +249,15 @@ final class PLIB_Error_Handler extends PLIB_Singleton
 				{
 					if(strpos($item['path'],$prefix) === false)
 					{
-						$end = min(PLIB_String::strlen($prefix),PLIB_String::strlen($item['path']));
+						$end = min(FWS_String::strlen($prefix),FWS_String::strlen($item['path']));
 						for($i = 0;$i < $end;$i++)
 						{
-							$pc = PLIB_String::substr($prefix,$i,1);
-							$ic = PLIB_String::substr($item['path'],$i,1);
+							$pc = FWS_String::substr($prefix,$i,1);
+							$ic = FWS_String::substr($item['path'],$i,1);
 							if($pc != $ic)
 								break;
 						}
-						$prefix = PLIB_String::substr($prefix,0,$i);
+						$prefix = FWS_String::substr($prefix,0,$i);
 					}
 				}
 			}

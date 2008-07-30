@@ -3,7 +3,7 @@
  * Contains the config-item-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,23 +13,23 @@
 /**
  * The interface for all config-item-types
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Config_Item
+interface FWS_Config_Item
 {
 	/**
 	 * Should return the data of this item
 	 *
-	 * @return PLIB_Config_Data the data of the item
+	 * @return FWS_Config_Data the data of the item
 	 */
 	public function get_data();
 	
 	/**
 	 * Should return the control for changing the value
 	 * 
-	 * @param PLIB_HTML_Formular $form the formular
+	 * @param FWS_HTML_Formular $form the formular
 	 * @return string the HTML-code for the control
 	 */
 	public function get_control($form);

@@ -3,7 +3,7 @@
  * Contains the dimension-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a dimension (width and height) for drawing with gd.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Dimension extends PLIB_Object
+final class FWS_GD_Dimension extends FWS_Object
 {
 	/**
 	 * The height of the dimension
@@ -81,9 +81,9 @@ final class PLIB_GD_Dimension extends PLIB_Object
 	public function set_size($width,$height)
 	{
 		if(!is_numeric($width) || $width < 0)
-			PLIB_Helper::def_error('numge0','width',$width);
+			FWS_Helper::def_error('numge0','width',$width);
 		if(!is_numeric($height) || $height < 0)
-			PLIB_Helper::def_error('numge0','height',$height);
+			FWS_Helper::def_error('numge0','height',$height);
 		
 		$this->_width = $width;
 		$this->_height = $height;
@@ -94,16 +94,16 @@ final class PLIB_GD_Dimension extends PLIB_Object
 	 *
 	 * @param int $width the width to add
 	 * @param int $height the height to add
-	 * @return PLIB_GD_Dimension the new dimension
+	 * @return FWS_GD_Dimension the new dimension
 	 */
 	public function derive($width,$height)
 	{
 		if(!is_numeric($width))
-			PLIB_Helper::def_error('numeric','width',$width);
+			FWS_Helper::def_error('numeric','width',$width);
 		if(!is_numeric($height))
-			PLIB_Helper::def_error('numeric','height',$height);
+			FWS_Helper::def_error('numeric','height',$height);
 		
-		return new PLIB_GD_Dimension($this->_width + $width,$this->_height + $height);
+		return new FWS_GD_Dimension($this->_width + $width,$this->_height + $height);
 	}
 	
 	/**
@@ -115,9 +115,9 @@ final class PLIB_GD_Dimension extends PLIB_Object
 	public function increase($w,$h)
 	{
 		if(!is_numeric($w) || $w < 0)
-			PLIB_Helper::def_error('numge0','w',$w);
+			FWS_Helper::def_error('numge0','w',$w);
 		if(!is_numeric($h) || $h < 0)
-			PLIB_Helper::def_error('numge0','h',$h);
+			FWS_Helper::def_error('numge0','h',$h);
 		
 		$this->_width += $w;
 		$this->_height += $h;
@@ -132,9 +132,9 @@ final class PLIB_GD_Dimension extends PLIB_Object
 	public function decrease($w,$h)
 	{
 		if(!is_numeric($w) || $w < 0)
-			PLIB_Helper::def_error('numge0','w',$w);
+			FWS_Helper::def_error('numge0','w',$w);
 		if(!is_numeric($h) || $h < 0)
-			PLIB_Helper::def_error('numge0','h',$h);
+			FWS_Helper::def_error('numge0','h',$h);
 		
 		$this->_width = max(0,$this->_width - $w);
 		$this->_height = max(0,$this->_height - $h);

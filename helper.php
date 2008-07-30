@@ -3,27 +3,27 @@
  * Contains the helper-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * Contains static helper methods for the library.
+ * Contains static helper methods for the framework.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Helper extends PLIB_UtilBase
+final class FWS_Helper extends FWS_UtilBase
 {
 	/**
 	 * A convenience method to print the backtrace
 	 */
 	public static function print_backtrace()
 	{
-		$bt = PLIB_Error_Handler::get_instance()->get_backtrace(debug_backtrace());
-		$htmlbt = new PLIB_Error_BTPrinter_HTML();
+		$bt = FWS_Error_Handler::get_instance()->get_backtrace(debug_backtrace());
+		$htmlbt = new FWS_Error_BTPrinter_HTML();
 		echo $htmlbt->print_backtrace($bt);
 	}
 	
@@ -96,7 +96,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 			// instance of a specific class
 			case 'instance':
 				if(func_num_args() != 4)
-					PLIB_Helper::error('Invalid number of arguments. 4 required');
+					FWS_Helper::error('Invalid number of arguments. 4 required');
 				
 				list(,$name,$reqtype,$arg) = func_get_args();
 				if(is_object($arg))
@@ -129,7 +129,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 			case 'intarray':
 			case 'intarray>0':
 				if(func_num_args() != 3)
-					PLIB_Helper::error('Invalid number of arguments. 3 required');
+					FWS_Helper::error('Invalid number of arguments. 3 required');
 			
 				list(,$name,$arg) = func_get_args();
 				$arg = self::_get_str_val($arg);
@@ -195,11 +195,11 @@ final class PLIB_Helper extends PLIB_UtilBase
 			
 			case 'inarray':
 				if(func_num_args() != 4)
-					PLIB_Helper::error('Invalid number of arguments. 4 required');
+					FWS_Helper::error('Invalid number of arguments. 4 required');
 			
 				list(,$name,$valid,$arg) = func_get_args();
 				$arg = self::_get_str_val($arg);
-				$valid_str = PLIB_PrintUtils::to_string($valid,true,false);
+				$valid_str = FWS_PrintUtils::to_string($valid,true,false);
 				$msg = sprintf(
 					'The argument $%s (value = "%s") is invalid. Allowed are: %s',$name,$arg,$valid_str
 				);
@@ -208,7 +208,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 			// numeric and >= x
 			case 'numgex':
 				if(func_num_args() != 4)
-					PLIB_Helper::error('Invalid number of arguments. 4 required');
+					FWS_Helper::error('Invalid number of arguments. 4 required');
 				
 				list(,$name,$min,$arg) = func_get_args();
 				$arg = self::_get_str_val($arg);
@@ -218,7 +218,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 			// numeric value between x and y
 			case 'numbetween':
 				if(func_num_args() != 5)
-					PLIB_Helper::error('Invalid number of arguments. 5 required');
+					FWS_Helper::error('Invalid number of arguments. 5 required');
 				
 				list(,$name,$min,$max,$arg) = func_get_args();
 				$arg = self::_get_str_val($arg);
@@ -228,11 +228,11 @@ final class PLIB_Helper extends PLIB_UtilBase
 				break;
 			
 			default:
-				PLIB_Helper::error('Unknown type: '.$type);
+				FWS_Helper::error('Unknown type: '.$type);
 				break;
 		}
 		
-		PLIB_Helper::error($msg);
+		FWS_Helper::error($msg);
 	}
 	
 	/**
@@ -247,8 +247,8 @@ final class PLIB_Helper extends PLIB_UtilBase
 			return 'Instance of '.get_class($val);
 		if(is_array($val))
 		{
-			$res = PLIB_PrintUtils::to_string($val,true,false);
-			$ls = new PLIB_HTML_LimitedString($res,20);
+			$res = FWS_PrintUtils::to_string($val,true,false);
+			$ls = new FWS_HTML_LimitedString($res,20);
 			return $ls->get();
 		}
 		
@@ -286,31 +286,31 @@ final class PLIB_Helper extends PLIB_UtilBase
 	 * Includes the module given by the action-parameter and returns the name.
 	 * This is the default way to handle modules. The method assumes
 	 * that the modules are at:
-	 * <code>PLIB_Path::server_app().$folder.$action.'/module.php'</code>
+	 * <code>FWS_Path::server_app().$folder.$action.'/module.php'</code>
 	 * The classes have to have the name:
 	 * <code>$prefix.$action</code>
 	 *
 	 * @param string $prefix the prefix for the module-class-names
 	 * @param string $action_param the name of the action-get-parameter
 	 * @param string $default the default-module-name
-	 * @param string $folder the folder of the modules (starting at {@link PLIB_Path::server_app()})
+	 * @param string $folder the folder of the modules (starting at {@link FWS_Path::server_app()})
 	 * @return string the module-name
 	 */
-	public static function get_module_name($prefix = 'PLIB_Module_',$action_param = 'action',
+	public static function get_module_name($prefix = 'FWS_Module_',$action_param = 'action',
 		$default = 'index',$folder = 'modules/')
 	{
 		if(empty($action_param))
-			PLIB_Helper::def_error('notempty','action_param',$action_param);
+			FWS_Helper::def_error('notempty','action_param',$action_param);
 		if(empty($default))
-			PLIB_Helper::def_error('notempty','default',$default);
-		if(!is_dir(PLIB_Path::server_app().$folder))
-			PLIB_Helper::error('"'.PLIB_Path::server_app().$folder.'" is no folder!');
+			FWS_Helper::def_error('notempty','default',$default);
+		if(!is_dir(FWS_Path::server_app().$folder))
+			FWS_Helper::error('"'.FWS_Path::server_app().$folder.'" is no folder!');
 		
-		$folder = PLIB_FileUtils::ensure_trailing_slash($folder);
-		$action = PLIB_Input::get_instance()->get_var($action_param,'get',PLIB_Input::IDENTIFIER);
+		$folder = FWS_FileUtils::ensure_trailing_slash($folder);
+		$action = FWS_Input::get_instance()->get_var($action_param,'get',FWS_Input::IDENTIFIER);
 	
 		// try to load the module
-		$filename = PLIB_Path::server_app().$folder.$action.'/module.php';
+		$filename = FWS_Path::server_app().$folder.$action.'/module.php';
 		if(file_exists($filename))
 		{
 			include_once($filename);
@@ -319,11 +319,11 @@ final class PLIB_Helper extends PLIB_UtilBase
 		}
 	
 		// use default module
-		include_once(PLIB_Path::server_app().$folder.$default.'/module.php');
+		include_once(FWS_Path::server_app().$folder.$default.'/module.php');
 		if(class_exists($prefix.$default))
 			return $default;
 	
-		PLIB_Helper::error(
+		FWS_Helper::error(
 			'Unable to load a module. The default module "'.$default.'" does not exist!',
 			E_USER_ERROR
 		);

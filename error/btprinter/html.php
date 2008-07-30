@@ -3,7 +3,7 @@
  * Contains the html-error-backtrace-printer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,14 +13,14 @@
 /**
  * The HTML-implementation of the backtrace-printer
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_BTPrinter_HTML extends PLIB_Object implements PLIB_Error_BTPrinter
+final class FWS_Error_BTPrinter_HTML extends FWS_Object implements FWS_Error_BTPrinter
 {
 	/**
-	 * @see PLIB_Error_BTPrinter::print_backtrace()
+	 * @see FWS_Error_BTPrinter::print_backtrace()
 	 *
 	 * @param array $backtrace
 	 */
@@ -33,8 +33,8 @@ final class PLIB_Error_BTPrinter_HTML extends PLIB_Object implements PLIB_Error_
 			$res .= '<li>';
 			if(isset($item['file']) && isset($item['path']))
 			{
-				$rand_str = PLIB_StringHelper::generate_random_key(10);
-				$res .= '<a href="javascript:PLIB_toggleElement(\'bt_details_'.$rand_str.'\');">';
+				$rand_str = FWS_StringHelper::generate_random_key(10);
+				$res .= '<a href="javascript:FWS_toggleElement(\'bt_details_'.$rand_str.'\');">';
 				$res .= $item['path'].'<b>'.$item['file'].'</b></a>';
 			}
 			else
@@ -72,7 +72,7 @@ final class PLIB_Error_BTPrinter_HTML extends PLIB_Object implements PLIB_Error_
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

@@ -3,7 +3,7 @@
  * Contains the base-action-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The base-action-class. Every action which may be performed should
  * inherit from this class.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Actions_Base extends PLIB_Object
+abstract class FWS_Actions_Base extends FWS_Object
 {
 	/**
 	 * The id of this action
@@ -36,7 +36,7 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	
 	/**
 	 * The success-message to display. This may be a custom message or:
-	 * <pre>PLIB_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
+	 * <pre>FWS_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
 	 *
 	 * @var boolean
 	 */
@@ -56,7 +56,7 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	private $_links = array();
 	
 	/**
-	 * The value to return in {@link PLIB_Actions_Performer::perform_actions()} if an
+	 * The value to return in {@link FWS_Actions_Performer::perform_actions()} if an
 	 * error has occurred
 	 *
 	 * @var int
@@ -103,8 +103,8 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($id) || $id < 0)
-			PLIB_Helper::def_error('intge0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id < 0)
+			FWS_Helper::def_error('intge0','id',$id);
 		
 		$this->_action_id = $id;
 	}
@@ -136,7 +136,7 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	}
 
 	/**
-	 * @return int the value to return in {@link PLIB_Actions_Performer::perform_actions()} if an
+	 * @return int the value to return in {@link FWS_Actions_Performer::perform_actions()} if an
 	 * 	error has occurred
 	 */
 	public final function get_error_return_val()
@@ -145,7 +145,7 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	}
 
 	/**
-	 * Sets the value to return in {@link PLIB_Actions_Performer::perform_actions()} if an
+	 * Sets the value to return in {@link FWS_Actions_Performer::perform_actions()} if an
 	 * error has occurred
 	 * 
 	 * @param int $val the value to return
@@ -178,10 +178,10 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	protected final function add_link($name,$url)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(empty($url))
-			PLIB_Helper::def_error('notempty','url',$url);
+			FWS_Helper::def_error('notempty','url',$url);
 		
 		$this->_links[$name] = $url;
 	}
@@ -196,14 +196,14 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 
 	/**
 	 * Sets the success-message to display. This may be a custom message or:
-	 * <pre>PLIB_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
+	 * <pre>FWS_Props::get()->locale()->lang('success_&lt;actionID&gt;)</pre>
 	 * 
 	 * @param string $msg the new value
 	 */
 	protected final function set_success_msg($msg)
 	{
 		if(empty($msg))
-			PLIB_Helper::def_error('notempty','msg',$msg);
+			FWS_Helper::def_error('notempty','msg',$msg);
 		
 		$this->_success_msg = $msg;
 	}
@@ -225,8 +225,8 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 	 */
 	protected final function set_redirect($redirect,$url = '',$time = 3)
 	{
-		if(!PLIB_Helper::is_integer($time) || $time < 0)
-			PLIB_Helper::def_error('intge0','time',$time);
+		if(!FWS_Helper::is_integer($time) || $time < 0)
+			FWS_Helper::def_error('intge0','time',$time);
 		
 		$this->_redirect = $redirect;
 		$this->_redirect_url = $url;
@@ -250,7 +250,7 @@ abstract class PLIB_Actions_Base extends PLIB_Object
 		{
 			if(count($this->_links) == 0)
 			{
-				PLIB_Helper::error(
+				FWS_Helper::error(
 					'You have no links and no redirect-url specified but want to redirect! ('
 					.get_class($this).')'
 				);

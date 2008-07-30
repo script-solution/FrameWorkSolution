@@ -3,7 +3,7 @@
  * Contains the gd-font-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,19 +13,19 @@
 /**
  * The implementation for the simple font in gd
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Font_GD extends PLIB_Object implements PLIB_GD_Font
+final class FWS_GD_Font_GD extends FWS_Object implements FWS_GD_Font
 {
 	/**
-	 * @see PLIB_GD_Font::draw()
+	 * @see FWS_GD_Font::draw()
 	 *
 	 * @param resource $img
 	 * @param string $text
-	 * @param PLIB_GD_TextAttributes $attr
-	 * @param PLIB_GD_Point $pos
+	 * @param FWS_GD_TextAttributes $attr
+	 * @param FWS_GD_Point $pos
 	 * @param int $angle
 	 * @return int
 	 */
@@ -47,10 +47,10 @@ final class PLIB_GD_Font_GD extends PLIB_Object implements PLIB_GD_Font
 	}
 
 	/**
-	 * @see PLIB_GD_Font::get_bounds()
+	 * @see FWS_GD_Font::get_bounds()
 	 *
 	 * @param string $text
-	 * @param PLIB_GD_TextAttributes $attr
+	 * @param FWS_GD_TextAttributes $attr
 	 * @param int $angle
 	 * @return array
 	 */
@@ -76,25 +76,25 @@ final class PLIB_GD_Font_GD extends PLIB_Object implements PLIB_GD_Font
 	}
 
 	/**
-	 * @see PLIB_GD_Font::get_size()
+	 * @see FWS_GD_Font::get_size()
 	 *
 	 * @param string $text
-	 * @param PLIB_GD_TextAttributes $attr
-	 * @return PLIB_GD_Dimension
+	 * @param FWS_GD_TextAttributes $attr
+	 * @return FWS_GD_Dimension
 	 */
 	public function get_size($text,$attr)
 	{
 		$fs = $attr->get_size();
-		return new PLIB_GD_Dimension(
+		return new FWS_GD_Dimension(
 			imagefontwidth($fs) * strlen($text),
 			imagefontheight($fs)
 		);
 	}
 
 	/**
-	 * @see PLIB_GD_Font::get_line_pad()
+	 * @see FWS_GD_Font::get_line_pad()
 	 *
-	 * @param PLIB_GD_TextAttributes $attr
+	 * @param FWS_GD_TextAttributes $attr
 	 * @return int
 	 */
 	public function get_line_pad($attr)
@@ -112,9 +112,9 @@ final class PLIB_GD_Font_GD extends PLIB_Object implements PLIB_GD_Font
 	}
 
 	/**
-	 * @see PLIB_GD_Font::get_line_size()
+	 * @see FWS_GD_Font::get_line_size()
 	 *
-	 * @param PLIB_GD_TextAttributes $attr
+	 * @param FWS_GD_TextAttributes $attr
 	 * @return int
 	 */
 	public function get_line_size($attr)

@@ -3,7 +3,7 @@
  * Contains the 2-dimensional cache
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -18,11 +18,11 @@
  * Additionally to the 1-dim-cache this class provides methods to search for elements
  * that match a given condition.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	array
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Array_2Dim extends PLIB_Array_1Dim
+class FWS_Array_2Dim extends FWS_Array_1Dim
 {
 	/**
 	 * Represents an AND-link which means that all conditions have to match
@@ -46,9 +46,9 @@ class PLIB_Array_2Dim extends PLIB_Array_1Dim
 	public final function set_element_field($key,$field,$value)
 	{
 		if(!is_string($field))
-			PLIB_Helper::def_error('string','field',$field);
+			FWS_Helper::def_error('string','field',$field);
 		if($value !== null && !is_scalar($value))
-			PLIB_Helper::def_error('scalar','value',$value);
+			FWS_Helper::def_error('scalar','value',$value);
 		
 		if(isset($this->_cache_content[$key]) && is_array($this->_cache_content[$key]))
 			$this->_cache_content[$key][$field] = $value;
@@ -128,9 +128,9 @@ class PLIB_Array_2Dim extends PLIB_Array_1Dim
 	public final function get_elements_with($values,$link = self::LINK_AND)
 	{
 		if(!is_array($values))
-			PLIB_Helper::def_error('array','values',$values);
+			FWS_Helper::def_error('array','values',$values);
 		if(!in_array($link,array(self::LINK_OR,self::LINK_AND)))
-			PLIB_Helper::def_error('inarray','link',array(self::LINK_OR,self::LINK_AND),$link);
+			FWS_Helper::def_error('inarray','link',array(self::LINK_OR,self::LINK_AND),$link);
 		
 		$result = array();
 		foreach($this->_cache_content as $key => $data)
@@ -157,9 +157,9 @@ class PLIB_Array_2Dim extends PLIB_Array_1Dim
 	public final function get_key_with($values,$link = self::LINK_AND)
 	{
 		if(!is_array($values))
-			PLIB_Helper::def_error('array','values',$values);
+			FWS_Helper::def_error('array','values',$values);
 		if(!in_array($link,array(self::LINK_OR,self::LINK_AND)))
-			PLIB_Helper::def_error('inarray','link',array(self::LINK_OR,self::LINK_AND),$link);
+			FWS_Helper::def_error('inarray','link',array(self::LINK_OR,self::LINK_AND),$link);
 		
 		// Note that the order of the elements is important here. Therefore we
 		// loop through the keys (which are sorted) instead of the elements

@@ -3,7 +3,7 @@
  * Contains the profiler-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * The profiler-class measures the time and the memory-usage.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Profiler extends PLIB_Object
+final class FWS_Profiler extends FWS_Object
 {
 	/**
 	 * The memory-usage at the beginning
@@ -48,8 +48,8 @@ final class PLIB_Profiler extends PLIB_Object
 	 */
 	public function get_time($accuracy = 6)
 	{
-		if(!PLIB_Helper::is_integer($accuracy) || $accuracy < 0)
-			PLIB_Helper::def_error('intge0','accuracy',$accuracy);
+		if(!FWS_Helper::is_integer($accuracy) || $accuracy < 0)
+			FWS_Helper::def_error('intge0','accuracy',$accuracy);
 
 		$stop_time = explode(' ',microtime());
 		$time = $stop_time[0] - $this->_start_time[0] + $stop_time[1] - $this->_start_time[1];

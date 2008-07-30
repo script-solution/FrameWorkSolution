@@ -3,7 +3,7 @@
  * Contains the empty-tree-storage implementation
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * An empty implementation for the tree-storage
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Tree_Storage_Empty extends PLIB_Object implements PLIB_Tree_Storage
+final class FWS_Tree_Storage_Empty extends FWS_Object implements FWS_Tree_Storage
 {
 	public function get_nodes()
 	{

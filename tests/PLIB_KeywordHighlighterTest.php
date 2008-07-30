@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_KeywordHighlighter test
+ * Contains the FWS_KeywordHighlighter test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,13 +11,13 @@
  */
 
 /**
- * PLIB_KeywordHighlighter test case.
+ * FWS_KeywordHighlighter test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_KeywordHighlighterTest extends PHPUnit_Framework_TestCase
+class FWS_KeywordHighlighterTest extends PHPUnit_Framework_TestCase
 {
 
 	/**
@@ -37,11 +37,11 @@ class PLIB_KeywordHighlighterTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_KeywordHighlighter->highlight()
+	 * Tests FWS_KeywordHighlighter->highlight()
 	 */
 	public function testHighlight()
 	{
-		$hl = new PLIB_KeywordHighlighter(array(
+		$hl = new FWS_KeywordHighlighter(array(
 			'abc','test','bla','amp'
 		),'<b>','</b>');
 		$res = $hl->highlight('das ist mein text');

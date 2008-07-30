@@ -3,7 +3,7 @@
  * Contains SMTP-email-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The SMTP-implementation for sending emails
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Email_SMTP extends PLIB_Email_Base
+final class FWS_Email_SMTP extends FWS_Email_Base
 {
 	/**
 	 * The host of the SMTP-server
@@ -95,7 +95,7 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 	public function set_smtp_host($host)
 	{
 		if(empty($host))
-			PLIB_Helper::def_error('notempty','host',$host);
+			FWS_Helper::def_error('notempty','host',$host);
 
 		$this->_smtp_host = $host;
 	}
@@ -127,8 +127,8 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 	 */
 	public function set_smtp_port($port)
 	{
-		if(!PLIB_Helper::is_integer($port) || $port <= 0)
-			PLIB_Helper::def_error('intgt0','port',$port);
+		if(!FWS_Helper::is_integer($port) || $port <= 0)
+			FWS_Helper::def_error('intgt0','port',$port);
 
 		$this->_smtp_port = $port;
 	}
@@ -317,13 +317,13 @@ final class PLIB_Email_SMTP extends PLIB_Email_Base
 		{
 			$l = fgets($this->_sock,128);
 			$str .= $l;
-			if(PLIB_String::substr($l,3,1) == " ")
+			if(FWS_String::substr($l,3,1) == " ")
 				break;
 		}
 
 		// set response-code
 		$this->_response = $str;
-		$this->_code = intval(PLIB_String::substr($str,0,3));
+		$this->_code = intval(FWS_String::substr($str,0,3));
 
 		return $str;
 	}

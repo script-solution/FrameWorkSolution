@@ -3,7 +3,7 @@
  * Contains the additional-fields-manager-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,14 +16,14 @@
  * has a parameter. Please create a subclass of it and provide a get-instance-method for your
  * source.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_AddField_Manager extends PLIB_Singleton
+abstract class FWS_AddField_Manager extends FWS_Singleton
 {
 	/**
-	 * An associative array of {@link PLIB_AddField_Field} objects:
+	 * An associative array of {@link FWS_AddField_Field} objects:
 	 * <code>array(<id> => <field>,...)</code>
 	 *
 	 * @var array
@@ -33,14 +33,14 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 	/**
 	 * Constructor
 	 * 
-	 * @param PLIB_AddField_Source $source the source for the fields
+	 * @param FWS_AddField_Source $source the source for the fields
 	 */
 	public function __construct($source)
 	{
 		parent::__construct();
 		
-		if(!($source instanceof PLIB_AddField_Source))
-			PLIB_Helper::def_error('instance','source','PLIB_AddField_Source',$source);
+		if(!($source instanceof FWS_AddField_Source))
+			FWS_Helper::def_error('instance','source','FWS_AddField_Source',$source);
 		
 		// load all fields
 		$fields = $source->get_fields();
@@ -61,7 +61,7 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 		$fields = array();
 		foreach($this->_fields as $f)
 		{
-			/* @var $f PLIB_AddField_Field */
+			/* @var $f FWS_AddField_Field */
 			if($f->get_data()->is_required())
 				$fields[] = $f;
 		}
@@ -72,13 +72,13 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 	 * Returns the field with given name
 	 * 
 	 * @param string $name the name of the field
-	 * @return PLIB_AddField_Field the field or null if not found
+	 * @return FWS_AddField_Field the field or null if not found
 	 */
 	public final function get_field_by_name($name)
 	{
 		foreach($this->_fields as $f)
 		{
-			/* @var $f PLIB_AddField_Field */
+			/* @var $f FWS_AddField_Field */
 			if($f->get_data()->get_name() == $name)
 				return $f;
 		}
@@ -90,7 +90,7 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 	 * Returns the field with given id
 	 * 
 	 * @param int $id the id of the field
-	 * @return PLIB_AddField_Field the field or null if not found
+	 * @return FWS_AddField_Field the field or null if not found
 	 */
 	public final function get_field($id)
 	{
@@ -101,7 +101,7 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 	}
 	
 	/**
-	 * @return array an array of all {@link PLIB_AddField_Field} objects
+	 * @return array an array of all {@link FWS_AddField_Field} objects
 	 */
 	public final function get_all_fields()
 	{
@@ -114,7 +114,7 @@ abstract class PLIB_AddField_Manager extends PLIB_Singleton
 	 * locations.
 	 *
 	 * @param int $loc the location
-	 * @return array an array of {@link PLIB_AddField_Field} objects
+	 * @return array an array of {@link FWS_AddField_Field} objects
 	 */
 	public final function get_fields_at($loc)
 	{

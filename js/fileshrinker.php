@@ -3,7 +3,7 @@
  * Contains the class to shrink a JS-file
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * A class to shrink a Javascript-file
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_JS_FileShrinker extends PLIB_Object
+final class FWS_JS_FileShrinker extends FWS_Object
 {
 	/**
 	 * The input-file
@@ -51,14 +51,14 @@ final class PLIB_JS_FileShrinker extends PLIB_Object
 		
 		// check parameters
 		if(empty($input_file))
-			PLIB_Helper::def_error('notempty','input_file',$input_file);
+			FWS_Helper::def_error('notempty','input_file',$input_file);
 		
 		if(!is_file($input_file))
-			PLIB_Helper::error('Invalid input file "'.$input_file.'"');
+			FWS_Helper::error('Invalid input file "'.$input_file.'"');
 		
 		$this->_input_file = $input_file;
 		
-		$this->_content = PLIB_FileUtils::read($input_file);
+		$this->_content = FWS_FileUtils::read($input_file);
 		$this->_content = preg_replace('/\r\n|\r/',"\n",$this->_content);
 		$this->_len = strlen($this->_content);
 	}

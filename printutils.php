@@ -3,7 +3,7 @@
  * Contains the print-utilities
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * This class offers some static methods to print objects, arrays and other types.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_PrintUtils extends PLIB_UtilBase
+final class FWS_PrintUtils extends FWS_UtilBase
 {
 	/**
 	 * Helper to store the layer. Note that we have to store it here instead of passing
@@ -105,7 +105,7 @@ final class PLIB_PrintUtils extends PLIB_UtilBase
 				else
 					$str .= ';';
 			}
-			$str .= PLIB_String::substr($indent,0,-1).'}';
+			$str .= FWS_String::substr($indent,0,-1).'}';
 			
 			self::$_layer--;
 		}
@@ -115,7 +115,7 @@ final class PLIB_PrintUtils extends PLIB_UtilBase
 			if(is_string($var) && $use_html)
 				$var = htmlspecialchars($var,ENT_QUOTES);
 			
-			if($var instanceof PLIB_Object)
+			if($var instanceof FWS_Object)
 			{
 				// detect recursion
 				if(in_array($var->get_object_id(),self::$_stack))

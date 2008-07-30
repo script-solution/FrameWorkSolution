@@ -3,7 +3,7 @@
  * Contains the cache-source-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all source-implementations.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Cache_Source
+interface FWS_Cache_Source
 {
 	/**
 	 * Should generate the cache-content from the corresponding source and return it.

@@ -3,7 +3,7 @@
  * Contains the config-data class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Contains all data of a config-item
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Data extends PLIB_Object
+class FWS_Config_Data extends FWS_Object
 {
 	/**
 	 * The id of the entry
@@ -131,7 +131,7 @@ class PLIB_Config_Data extends PLIB_Object
 	private function _decode_properties($properties)
 	{
 		$res = array();
-		$lines = PLIB_Array_Utils::advanced_explode("\n",$properties);
+		$lines = FWS_Array_Utils::advanced_explode("\n",$properties);
 		foreach($lines as $line)
 		{
 			$parts = explode('=',$line);

@@ -3,7 +3,7 @@
  * Contains the textbox-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<input type="text" name="..." value="..." />
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_TextBox extends PLIB_HTML_TextElement
+class FWS_HTML_TextBox extends FWS_HTML_TextElement
 {
 	/**
 	 * The maximum number of cols.
@@ -63,8 +63,8 @@ class PLIB_HTML_TextBox extends PLIB_HTML_TextElement
 	 */
 	public final function set_maxlength($maxlength)
 	{
-		if($maxlength !== null && (!PLIB_Helper::is_integer($maxlength) || $maxlength <= 0))
-			PLIB_Helper::def_error('intgt0','maxlength',$maxlength);
+		if($maxlength !== null && (!FWS_Helper::is_integer($maxlength) || $maxlength <= 0))
+			FWS_Helper::def_error('intgt0','maxlength',$maxlength);
 		
 		$this->_maxlength = $maxlength;
 	}

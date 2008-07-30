@@ -3,7 +3,7 @@
  * Contains the class which represents the current user
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,17 +11,17 @@
  */
 
 /**
- * Represents the current user. Contains a {@link PLIB_Session_Data} object and some
+ * Represents the current user. Contains a {@link FWS_Session_Data} object and some
  * more information for the current user. It manages the login-state and some
  * other stuff.
  * <br>
  * Note that you have to call {@link init} before you can use this class!
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_User_Current extends PLIB_Object
+class FWS_User_Current extends FWS_Object
 {
 	/**
 	 * No error in the login-procedure
@@ -46,21 +46,21 @@ class PLIB_User_Current extends PLIB_Object
 	/**
 	 * The data of the user
 	 *
-	 * @var PLIB_Session_Data
+	 * @var FWS_Session_Data
 	 */
  	protected $_user;
 	
 	/**
 	 * The data of this user (null if it is a guest)
 	 *
-	 * @var PLIB_User_Data
+	 * @var FWS_User_Data
 	 */
 	protected $_userdata = null;
 	
 	/**
 	 * The storage-object for the userdata
 	 *
-	 * @var PLIB_User_Storage
+	 * @var FWS_User_Storage
 	 */
 	protected $_storage;
 	
@@ -118,17 +118,17 @@ class PLIB_User_Current extends PLIB_Object
 	/**
 	 * Constructor
 	 * 
-	 * @param PLIB_User_Storage $storage the storage-object to use
+	 * @param FWS_User_Storage $storage the storage-object to use
 	 * @see initialize()
 	 */
 	public function __construct($storage)
 	{
-		$sessions = PLIB_Props::get()->sessions();
+		$sessions = FWS_Props::get()->sessions();
 		
 		parent::__construct();
 		
-		if($sessions->sessions_enabled() && !($storage instanceof PLIB_User_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_User_Storage',$storage);
+		if($sessions->sessions_enabled() && !($storage instanceof FWS_User_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_User_Storage',$storage);
 		
 		$this->_storage = $storage;
 	}
@@ -139,8 +139,8 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	public function init()
 	{
-		$sessions = PLIB_Props::get()->sessions();
-		$cookies = PLIB_Props::get()->cookies();
+		$sessions = FWS_Props::get()->sessions();
+		$cookies = FWS_Props::get()->cookies();
 		
 		$this->_init_session();
 
@@ -247,7 +247,7 @@ class PLIB_User_Current extends PLIB_Object
 	public final function set_theme($theme)
 	{
 		if(!is_string($theme))
-			PLIB_Helper::def_error('string','theme',$theme);
+			FWS_Helper::def_error('string','theme',$theme);
 		
 		$this->_theme = $theme;
 	}
@@ -255,9 +255,9 @@ class PLIB_User_Current extends PLIB_Object
 	/**
 	 * Returns the path to the given item. This allows you to provide different
 	 * themes. If the theme is empty it returns:
-	 * <code>PLIB_Path::client_app().'theme/'.$item</code>
+	 * <code>FWS_Path::client_app().'theme/'.$item</code>
 	 * otherwise:
-	 * <code>PLIB_Path::client_app().'themes/'.$this->_theme.'/'.$item</code>
+	 * <code>FWS_Path::client_app().'themes/'.$this->_theme.'/'.$item</code>
 	 * You may change this by overwriting this method!
 	 *
 	 * @param string $item the path to the item starting at a theme-folder
@@ -266,9 +266,9 @@ class PLIB_User_Current extends PLIB_Object
 	public function get_theme_item_path($item)
 	{
 		if(empty($this->_theme))
-			return PLIB_Path::client_app().'theme/'.$item;
+			return FWS_Path::client_app().'theme/'.$item;
 		
-		return PLIB_Path::client_app().'themes/'.$this->_theme.'/'.$item;
+		return FWS_Path::client_app().'themes/'.$this->_theme.'/'.$item;
 	}
 
 	/**
@@ -294,7 +294,7 @@ class PLIB_User_Current extends PLIB_Object
 	public final function set_ip_validation_type($type)
 	{
 		if(!in_array($type,array('A.B.C.D','A.B.C','A.B','none')))
-			PLIB_Helper::def_error('inarray','type',array('A.B.C.D','A.B.C','A.B','none'),$type);
+			FWS_Helper::def_error('inarray','type',array('A.B.C.D','A.B.C','A.B','none'),$type);
 
 		$this->_ip_validation_type = $type;
 	}
@@ -353,7 +353,7 @@ class PLIB_User_Current extends PLIB_Object
 	public final function set_url_sid_name($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		$this->_url_sid_name = $name;
 	}
@@ -367,7 +367,7 @@ class PLIB_User_Current extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_User_Data the user-data-object
+	 * @return FWS_User_Data the user-data-object
 	 */
 	public final function get_userdata()
 	{
@@ -384,7 +384,7 @@ class PLIB_User_Current extends PLIB_Object
 	public final function get_session_data($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		if(isset($this->_session_data[$name]))
 			return $this->_session_data[$name];
@@ -402,7 +402,7 @@ class PLIB_User_Current extends PLIB_Object
 	public final function set_session_data($name,$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
 		$this->_session_data[$name] = $value;
 	}
@@ -432,7 +432,7 @@ class PLIB_User_Current extends PLIB_Object
 	 * @param string $user the entered user-name
 	 * @param string $pw the entered password
 	 * @param string $hashpw do you want to calculate the hash of the pw before comparing it?
-	 * @return int the error-code; see PLIB_Session::LOGIN_ERROR_*
+	 * @return int the error-code; see FWS_Session::LOGIN_ERROR_*
 	 */
 	public function login($user,$pw,$hashpw = true)
 	{
@@ -467,8 +467,8 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	public function logout()
 	{
-		$sessions = PLIB_Props::get()->sessions();
-		$cookies = PLIB_Props::get()->cookies();
+		$sessions = FWS_Props::get()->sessions();
+		$cookies = FWS_Props::get()->cookies();
 
 		$sessions->logout_user($this->get_session_id(),$this->get_user_ip());
 		
@@ -514,7 +514,7 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	protected function setup_user($user,$pw)
 	{
-		$cookies = PLIB_Props::get()->cookies();
+		$cookies = FWS_Props::get()->cookies();
 
 		if($this->_use_cookies)
 		{
@@ -528,7 +528,7 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	protected function setup_guest()
 	{
-		$cookies = PLIB_Props::get()->cookies();
+		$cookies = FWS_Props::get()->cookies();
 
 		$this->_user->make_guest();
 		$this->_userdata = null;
@@ -571,9 +571,9 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	private function _init_session()
 	{
-		$cookies = PLIB_Props::get()->cookies();
-		$input = PLIB_Props::get()->input();
-		$sessions = PLIB_Props::get()->sessions();
+		$cookies = FWS_Props::get()->cookies();
+		$input = FWS_Props::get()->input();
+		$sessions = FWS_Props::get()->sessions();
 
 		$user_ip = $this->_determine_user_ip();
 		$user_agent = $this->_determine_user_agent();
@@ -583,7 +583,7 @@ class PLIB_User_Current extends PLIB_Object
 		if($cookies->isset_cookie('sid'))
 			$session_id = $cookies->get_cookie('sid');
 		else if($input->isset_var($this->_url_sid_name,'get'))
-			$session_id = $input->get_var($this->_url_sid_name,'get',PLIB_Input::STRING);
+			$session_id = $input->get_var($this->_url_sid_name,'get',FWS_Input::STRING);
 
 		// try to load the user from the session-manager
 		$user = null;
@@ -631,8 +631,8 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	private function _assign_new_session()
 	{
-		$cookies = PLIB_Props::get()->cookies();
-		$sessions = PLIB_Props::get()->sessions();
+		$cookies = FWS_Props::get()->cookies();
+		$sessions = FWS_Props::get()->sessions();
 
 		// generate new session id and store it via cookie
 	  $this->_user->set_session_id($this->_generate_session_id());
@@ -659,9 +659,9 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	private function _determine_user_agent()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$val = $input->get_var('HTTP_USER_AGENT','server',PLIB_Input::STRING);
+		$val = $input->get_var('HTTP_USER_AGENT','server',FWS_Input::STRING);
 		if($val === null)
 			$val = '';
 		return $val;
@@ -674,10 +674,10 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	private function _determine_user_ip()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		if($input->isset_var('REMOTE_ADDR','server'))
-			return $input->get_var('REMOTE_ADDR','server',PLIB_Input::STRING);
+			return $input->get_var('REMOTE_ADDR','server',FWS_Input::STRING);
 
 		$ip = getenv('REMOTE_ADDR');
 		$ip = htmlspecialchars($ip,ENT_QUOTES);
@@ -701,8 +701,8 @@ class PLIB_User_Current extends PLIB_Object
 				return $current_ip === $old_ip;
 
 			case 'A.B.C';
-				$current = PLIB_String::substr($current_ip,0,PLIB_String::strrpos($current_ip,'.'));
-				$stored = PLIB_String::substr($old_ip,0,PLIB_String::strrpos($old_ip,'.'));
+				$current = FWS_String::substr($current_ip,0,FWS_String::strrpos($current_ip,'.'));
+				$stored = FWS_String::substr($old_ip,0,FWS_String::strrpos($old_ip,'.'));
 				return $current === $stored;
 
 			case 'A.B':
@@ -724,7 +724,7 @@ class PLIB_User_Current extends PLIB_Object
 	 */
 	private function _check_user_agent($old_ua,$current_ua)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		if(!$this->_user_agent_validation)
 			return true;
@@ -732,7 +732,7 @@ class PLIB_User_Current extends PLIB_Object
 		// The browser sends a HEAD-request to the root-folder if the user has requested a page
 		// which contains the java-applet. In this request the user-agent is different which
 		// causes a logout if the user-agent-check is enabled.
-		if($input->get_var('REQUEST_METHOD','server',PLIB_Input::STRING) == 'HEAD')
+		if($input->get_var('REQUEST_METHOD','server',FWS_Input::STRING) == 'HEAD')
 			return true;
 
 		return $current_ua === $old_ua;

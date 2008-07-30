@@ -3,7 +3,7 @@
  * Contains the color-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,29 +11,29 @@
  */
 
 // init the static colors
-PLIB_GD_Color::$BLACK = new PLIB_GD_Color(0,0,0);
-PLIB_GD_Color::$BLUE = new PLIB_GD_Color(0,0,255);
-PLIB_GD_Color::$CYAN = new PLIB_GD_Color(0,255,255);
-PLIB_GD_Color::$DARK_GRAY = new PLIB_GD_Color(64,64,64);
-PLIB_GD_Color::$GRAY = new PLIB_GD_Color(128,128,128);
-PLIB_GD_Color::$GREEN = new PLIB_GD_Color(0,255,0);
-PLIB_GD_Color::$LIGHT_GRAY = new PLIB_GD_Color(192,192,192);
-PLIB_GD_Color::$MAGENTA = new PLIB_GD_Color(255,0,255);
-PLIB_GD_Color::$ORANGE = new PLIB_GD_Color(255,200,0);
-PLIB_GD_Color::$PINK = new PLIB_GD_Color(255,175,175);
-PLIB_GD_Color::$RED = new PLIB_GD_Color(255,0,0);
-PLIB_GD_Color::$WHITE = new PLIB_GD_Color(255,255,255);
-PLIB_GD_Color::$YELLOW = new PLIB_GD_Color(255,255,0);
+FWS_GD_Color::$BLACK = new FWS_GD_Color(0,0,0);
+FWS_GD_Color::$BLUE = new FWS_GD_Color(0,0,255);
+FWS_GD_Color::$CYAN = new FWS_GD_Color(0,255,255);
+FWS_GD_Color::$DARK_GRAY = new FWS_GD_Color(64,64,64);
+FWS_GD_Color::$GRAY = new FWS_GD_Color(128,128,128);
+FWS_GD_Color::$GREEN = new FWS_GD_Color(0,255,0);
+FWS_GD_Color::$LIGHT_GRAY = new FWS_GD_Color(192,192,192);
+FWS_GD_Color::$MAGENTA = new FWS_GD_Color(255,0,255);
+FWS_GD_Color::$ORANGE = new FWS_GD_Color(255,200,0);
+FWS_GD_Color::$PINK = new FWS_GD_Color(255,175,175);
+FWS_GD_Color::$RED = new FWS_GD_Color(255,0,0);
+FWS_GD_Color::$WHITE = new FWS_GD_Color(255,255,255);
+FWS_GD_Color::$YELLOW = new FWS_GD_Color(255,255,0);
 
 /**
  * Represents a color which can be specified and "exported" in multiple formats.
  * An alpha-value is also supported.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Color extends PLIB_Object
+final class FWS_GD_Color extends FWS_Object
 {
 	/**
 	 * Represents black (0,0,0)
@@ -110,7 +110,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	/**
 	 * Calculates a random color
 	 * 
-	 * @return PLIB_GD_Color the created color
+	 * @return FWS_GD_Color the created color
 	 */
 	public static function get_random_color()
 	{
@@ -119,11 +119,11 @@ final class PLIB_GD_Color extends PLIB_Object
 		switch($comp)
 		{
 			case 0:
-				return new PLIB_GD_Color($value,0,0);
+				return new FWS_GD_Color($value,0,0);
 			case 1:
-				return new PLIB_GD_Color(0,$value,0);
+				return new FWS_GD_Color(0,$value,0);
 			default:
-				return new PLIB_GD_Color(0,0,$value);
+				return new FWS_GD_Color(0,0,$value);
 		}
 	}
 	
@@ -132,12 +132,12 @@ final class PLIB_GD_Color extends PLIB_Object
 	 * 
 	 * @param int $start the start-color (0...255)
 	 * @param int $end the end-color (0...255)
-	 * @return PLIB_GD_Color the created color
+	 * @return FWS_GD_Color the created color
 	 */
 	public static function get_random_grey_color($start,$end)
 	{
 		$value = mt_rand($start,$end);
-		return new PLIB_GD_Color($value,$value,$value);
+		return new FWS_GD_Color($value,$value,$value);
 	}
 	
 	/**
@@ -206,7 +206,7 @@ final class PLIB_GD_Color extends PLIB_Object
 				break;
 			
 			default:
-				PLIB_Helper::error('Invalid number of arguments!');
+				FWS_Helper::error('Invalid number of arguments!');
 				break;
 		}
 	}
@@ -257,12 +257,12 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function get_hex($with_alpha = true,$with_hash = true)
 	{
 		$c = $with_hash ? '#' : '';
-		$c .= PLIB_StringHelper::ensure_2_chars(dechex($this->_r));
-		$c .= PLIB_StringHelper::ensure_2_chars(dechex($this->_g));
-		$c .= PLIB_StringHelper::ensure_2_chars(dechex($this->_b));
+		$c .= FWS_StringHelper::ensure_2_chars(dechex($this->_r));
+		$c .= FWS_StringHelper::ensure_2_chars(dechex($this->_g));
+		$c .= FWS_StringHelper::ensure_2_chars(dechex($this->_b));
 		if($with_alpha)
-			$c .= PLIB_StringHelper::ensure_2_chars(dechex($this->_alpha));
-		return PLIB_String::strtoupper($c);
+			$c .= FWS_StringHelper::ensure_2_chars(dechex($this->_alpha));
+		return FWS_String::strtoupper($c);
 	}
 	
 	/**
@@ -274,22 +274,22 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_hex($hex)
 	{
 		if(empty($hex))
-			PLIB_Helper::def_error('notempty','hex',$hex);
+			FWS_Helper::def_error('notempty','hex',$hex);
 		
-		if(PLIB_String::substr($hex,0,1) == '#')
-			$hex = PLIB_String::substr($hex,1);
+		if(FWS_String::substr($hex,0,1) == '#')
+			$hex = FWS_String::substr($hex,1);
 		
-		$len = PLIB_String::strlen($hex);
+		$len = FWS_String::strlen($hex);
 		if($len != 6 && $len != 8)
-			PLIB_Helper::error($hex.' is no valid color!');
+			FWS_Helper::error($hex.' is no valid color!');
 		
 		$comps = array(
-			hexdec(PLIB_String::substr($hex,0,2)),
-			hexdec(PLIB_String::substr($hex,2,2)),
-			hexdec(PLIB_String::substr($hex,4,2))
+			hexdec(FWS_String::substr($hex,0,2)),
+			hexdec(FWS_String::substr($hex,2,2)),
+			hexdec(FWS_String::substr($hex,4,2))
 		);
 		if($len > 6)
-			$comps[] = hexdec(PLIB_String::substr($hex,6,2));
+			$comps[] = hexdec(FWS_String::substr($hex,6,2));
 		
 		$this->set_comps($comps);
 	}
@@ -315,14 +315,14 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_comps($comps)
 	{
 		if(!is_array($comps) || (count($comps) != 3 && count($comps) != 4))
-			PLIB_Helper::error('$comps is no valid array!');
+			FWS_Helper::error('$comps is no valid array!');
 		
 		// check all components
 		$x = 0;
 		foreach($comps as $c)
 		{
 			if(!$this->_is_valid_comp($c,$x == 3 ? 127 : 255))
-				PLIB_Helper::error('Parameter '.($x + 1).' ('.$c.') is no valid color-component!');
+				FWS_Helper::error('Parameter '.($x + 1).' ('.$c.') is no valid color-component!');
 			$x++;
 		}
 		
@@ -352,7 +352,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_red($red)
 	{
 		if(!$this->_is_valid_comp($red))
-			PLIB_Helper::error($red.' is no valid color-component!');
+			FWS_Helper::error($red.' is no valid color-component!');
 		
 		$this->_r = $red;
 	}
@@ -373,7 +373,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_green($green)
 	{
 		if(!$this->_is_valid_comp($green))
-			PLIB_Helper::error($green.' is no valid color-component!');
+			FWS_Helper::error($green.' is no valid color-component!');
 		
 		$this->_g = $green;
 	}
@@ -394,7 +394,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_blue($blue)
 	{
 		if(!$this->_is_valid_comp($blue))
-			PLIB_Helper::error($blue.' is no valid color-component!');
+			FWS_Helper::error($blue.' is no valid color-component!');
 		
 		$this->_b = $blue;
 	}
@@ -415,7 +415,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	public function set_alpha($alpha)
 	{
 		if(!$this->_is_valid_comp($alpha,127))
-			PLIB_Helper::error($alpha.' is no valid alpha-value!');
+			FWS_Helper::error($alpha.' is no valid alpha-value!');
 		
 		$this->_alpha = $alpha;
 	}
@@ -450,7 +450,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	 * Uses this color as background and tries to calculate a "good" color which will be easy to
 	 * read on the background. Note that this method ignores the alpha-value!
 	 * 
-	 * @return PLIB_GD_Color the foreground-color
+	 * @return FWS_GD_Color the foreground-color
 	 */
 	public function get_readable_random_foreground()
 	{
@@ -540,7 +540,7 @@ final class PLIB_GD_Color extends PLIB_Object
 		foreach($color as $i => $v)
 			$color[$i] = max(0,min(255,$v));
 		
-		return new PLIB_GD_Color($color);
+		return new FWS_GD_Color($color);
 	}
 	
 	/**
@@ -552,7 +552,7 @@ final class PLIB_GD_Color extends PLIB_Object
 	 */
 	private function _is_valid_comp($comp,$limit = 255)
 	{
-		return PLIB_Helper::is_integer($comp) && $comp >= 0 && $comp <= $limit;
+		return FWS_Helper::is_integer($comp) && $comp >= 0 && $comp <= $limit;
 	}
 	
 	protected function get_print_vars()

@@ -3,7 +3,7 @@
  * Contains the resetbutton-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * 	<input type="reset" name="..." value="..." />
  * </code>
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_ResetButton extends PLIB_HTML_Button
+class FWS_HTML_ResetButton extends FWS_HTML_Button
 {
 	/**
 	 * Constructor

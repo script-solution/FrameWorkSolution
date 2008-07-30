@@ -3,7 +3,7 @@
  * Contains the cache-storage-db class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The db-based implementation of the cache-storage
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Storage_DB extends PLIB_Object implements PLIB_Cache_Storage
+final class FWS_Cache_Storage_DB extends FWS_Object implements FWS_Cache_Storage
 {
 	/**
 	 * The table-name to use for the query
@@ -52,11 +52,11 @@ final class PLIB_Cache_Storage_DB extends PLIB_Object implements PLIB_Cache_Stor
 		parent::__construct();
 		
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 		if(empty($name_col))
-			PLIB_Helper::def_error('notempty','name_col',$name_col);
+			FWS_Helper::def_error('notempty','name_col',$name_col);
 		if(empty($content_col))
-			PLIB_Helper::def_error('notempty','content_col',$content_col);
+			FWS_Helper::def_error('notempty','content_col',$content_col);
 		
 		$this->_table = $table;
 		$this->_name_column = $name_col;
@@ -65,7 +65,7 @@ final class PLIB_Cache_Storage_DB extends PLIB_Object implements PLIB_Cache_Stor
 
 	public function load()
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		$qry = $db->sql_qry(
 			'SELECT '.$this->_name_column.','.$this->_content_column.' FROM '.$this->_table
@@ -79,7 +79,7 @@ final class PLIB_Cache_Storage_DB extends PLIB_Object implements PLIB_Cache_Stor
 
 	public function store($name,$content)
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		$values =	array(
 			$this->_name_column => $name,

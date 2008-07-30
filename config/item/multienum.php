@@ -3,7 +3,7 @@
  * Contains the config-item-multi-enum class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,17 +14,17 @@
  * The implementation of the config-item "multi-enum". That means the user will get a multi-combobox
  * or multiple checkboxes.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	config.item
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
+class FWS_Config_Item_MultiEnum extends FWS_Config_Item_Default
 {
 	public function get_control($form)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
-		/* @var $form PLIB_HTML_Formular */
+		/* @var $form FWS_HTML_Formular */
 		$props = $this->_data->get_properties();
 		$options = $this->get_items($props);
 		$vals = explode(',',$this->_data->get_value());
@@ -66,7 +66,7 @@ class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
 	 */
 	protected function get_items($props)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		$options = array();
 		foreach($props as $k => $v)
@@ -80,7 +80,7 @@ class PLIB_Config_Item_MultiEnum extends PLIB_Config_Item_Default
 
 	public function get_value()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		$props = $this->_data->get_properties();
 		$vals = $input->get_var($this->_data->get_name(),'post');

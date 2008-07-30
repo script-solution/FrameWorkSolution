@@ -3,7 +3,7 @@
  * Contains the formular-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -20,11 +20,11 @@
  * <br>
  * It is also possible to set a CSS-class and CSS-attributes for all form-elements.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_Formular extends PLIB_Object
+class FWS_HTML_Formular extends FWS_Object
 {
 	/**
 	 * The condition which will be used to determine if the value from $_POST should be displayed
@@ -97,7 +97,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 	 */
 	public final function get_input_value($name,$default = '')
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		if($this->_condition)
 		{
@@ -122,7 +122,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 	 */
 	public final function get_checkbox_value($name,$default = false)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		$val = $default;
 		if($this->_condition)
@@ -144,7 +144,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 	 */
 	public final function get_radio_value($name,$value,$default = false)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		$val = $default;
 		if($this->_condition)
@@ -191,7 +191,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 	public final function set_css_attribute($name,$value)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$this->_style[$name] = $value;
 	}
@@ -205,7 +205,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 	public final function remove_css_attribute($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(isset($this->_style[$name]))
 			unset($this->_style[$name]);
@@ -232,11 +232,11 @@ class PLIB_HTML_Formular extends PLIB_Object
 	public final function set_custom_attribute($name,$value)
 	{
 		if(!is_scalar($name))
-			PLIB_Helper::def_error('scalar','name',$name);
+			FWS_Helper::def_error('scalar','name',$name);
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		if(!is_scalar($value))
-			PLIB_Helper::def_error('scalar','value',$value);
+			FWS_Helper::def_error('scalar','value',$value);
 		
 		$this->_custom[$name] = $value;
 	}
@@ -252,9 +252,9 @@ class PLIB_HTML_Formular extends PLIB_Object
 	public final function remove_custom_attribute($name)
 	{
 		if(!is_scalar($name))
-			PLIB_Helper::def_error('scalar','name',$name);
+			FWS_Helper::def_error('scalar','name',$name);
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(isset($this->_custom[$name]))
 			unset($this->_custom[$name]);
@@ -278,32 +278,32 @@ class PLIB_HTML_Formular extends PLIB_Object
 	public final function get_date_chooser($prefix,$default = 0,$add_time = true,$add_no_value = false,
 		$start_year = 1990)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
-		if(!PLIB_Helper::is_integer($start_year) || $start_year < 0 || $start_year > 2019)
-			PLIB_Helper::def_error('numbetween','start_year',0,2019,$start_year);
+		if(!FWS_Helper::is_integer($start_year) || $start_year < 0 || $start_year > 2019)
+			FWS_Helper::def_error('numbetween','start_year',0,2019,$start_year);
 		
 		$hour = -1;
 		$minute = -1;
 		if(is_array($default))
 		{
 			if(count($default) != 3)
-				PLIB_Helper::error('$default has not 3 elements!');
+				FWS_Helper::error('$default has not 3 elements!');
 			
 			$add_time = false;
 			list($day,$month,$year) = $default;
 		}
 		else
 		{
-			if(!PLIB_Helper::is_integer($default) || $default < 0)
-				PLIB_Helper::def_error('intge0','default',$default);
+			if(!FWS_Helper::is_integer($default) || $default < 0)
+				FWS_Helper::def_error('intge0','default',$default);
 			
 			if($default == 0 && !$add_no_value)
 				$default = time();
 
 			if($default != 0 || !$add_no_value)
 			{
-				$date = new PLIB_Date($default);
+				$date = new FWS_Date($default);
 				$day = $date->get_day(false);
 				$month = $date->get_month(false);
 				$year = $date->get_year();
@@ -322,7 +322,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 			switch($comp)
 			{
 				case 'd':
-					$cb = new PLIB_HTML_ComboBox($prefix.'day',null,null,$day);
+					$cb = new FWS_HTML_ComboBox($prefix.'day',null,null,$day);
 					$cb->set_options($this->_get_options(1,31,$add_no_value));
 					$this->_apply_defaults($cb);
 					if($this->_condition)
@@ -331,7 +331,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 					break;
 				
 				case 'm':
-					$cb = new PLIB_HTML_ComboBox($prefix.'month',null,null,$month);
+					$cb = new FWS_HTML_ComboBox($prefix.'month',null,null,$month);
 					$cb->set_options($this->_get_options(1,12,$add_no_value));
 					$this->_apply_defaults($cb);
 					if($this->_condition)
@@ -340,7 +340,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 					break;
 				
 				case 'Y':
-					$cb = new PLIB_HTML_ComboBox($prefix.'year',null,null,$year);
+					$cb = new FWS_HTML_ComboBox($prefix.'year',null,null,$year);
 					$cb->set_options($this->_get_options($start_year,2020,$add_no_value));
 					$this->_apply_defaults($cb);
 					if($this->_condition)
@@ -359,7 +359,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 		{
 			$result .= ' , ';
 			
-			$cb = new PLIB_HTML_ComboBox($prefix.'hour',null,null,$hour);
+			$cb = new FWS_HTML_ComboBox($prefix.'hour',null,null,$hour);
 			$cb->set_options($this->_get_options(0,23,$add_no_value));
 			$this->_apply_defaults($cb);
 			if($this->_condition)
@@ -368,7 +368,7 @@ class PLIB_HTML_Formular extends PLIB_Object
 			
 			$result .= ' : ';
 			
-			$cb = new PLIB_HTML_ComboBox($prefix.'min',null,null,$minute);
+			$cb = new FWS_HTML_ComboBox($prefix.'min',null,null,$minute);
 			$cb->set_options($this->_get_options(0,59,$add_no_value));
 			$this->_apply_defaults($cb);
 			if($this->_condition)
@@ -391,12 +391,12 @@ class PLIB_HTML_Formular extends PLIB_Object
 		$result = '';
 		
 		static $added_calendar = false;
-		$libpath = PLIB_Path::client_lib();
+		$fwspath = FWS_Path::client_fw();
 		$calendar_style = $this->get_js_calendar_style();
 		if(!$added_calendar)
 		{
-			$js = PLIB_Javascript::get_instance();
-			$caljs = $js->get_file('js/calendar.js','lib');
+			$js = FWS_Javascript::get_instance();
+			$caljs = $js->get_file('js/calendar.js','fws');
 			$result .= '<script type="text/javascript" src="'.$caljs.'"></script>'."\n";
 			$result .= '<script type="text/javascript" src="'.$this->get_js_calendar_lang().'"></script>'."\n";
 			//$result .= '<link rel="stylesheet" type="text/css" href="'.$this->get_js_calendar_style().'" />'."\n";
@@ -406,15 +406,15 @@ class PLIB_HTML_Formular extends PLIB_Object
 		$result .=<<<EOF
 <script type="text/javascript">
 <!--
-var cal_{$name} = new PLIB_Calendar('{$libpath}js/','{$name}',function(date) {
-	var input = PLIB_getElement(this.inputId);
+var cal_{$name} = new FWS_Calendar('{$fwspath}js/','{$name}',function(date) {
+	var input = FWS_getElement(this.inputId);
 	var val = this.get2Digits(date.getDate()) + ".";
 	val += this.get2Digits((date.getMonth() + 1)) + "." + date.getFullYear();
 	input.value = val;
 });
 cal_{$name}.setCSSFile('{$calendar_style}');
 cal_{$name}.setStartUpFunction(function() {
-	var input = PLIB_getElement(this.inputId);
+	var input = FWS_getElement(this.inputId);
 	if(input.value != '')
 	{
 		var parts = input.value.split('.');
@@ -447,7 +447,7 @@ EOF;
 	 */
 	protected function get_js_calendar_style()
 	{
-		return PLIB_Path::client_lib().'js/calendarstyle.css';
+		return FWS_Path::client_fw().'js/calendarstyle.css';
 	}
 	
 	/**
@@ -455,7 +455,7 @@ EOF;
 	 */
 	protected function get_js_calendar_lang()
 	{
-		return PLIB_Javascript::get_instance()->get_file('js/calendar_lang_en.js','lib');
+		return FWS_Javascript::get_instance()->get_file('js/calendar_lang_en.js','fws');
 	}
 	
 	/**
@@ -463,7 +463,7 @@ EOF;
 	 */
 	protected function get_js_calendar_image()
 	{
-		return PLIB_Path::client_lib().'js/calendar.png';
+		return FWS_Path::client_fw().'js/calendar.png';
 	}
 	
 	/**
@@ -477,13 +477,13 @@ EOF;
 	protected function get_js_calendar($prefix,$start_year,$add_no_value)
 	{
 		static $added_calendar = false;
-		$libpath = PLIB_Path::client_lib();
+		$fwspath = FWS_Path::client_fw();
 		$calendar_style = $this->get_js_calendar_style();
 		$result = '';
 		if(!$added_calendar)
 		{
-			$js = PLIB_Javascript::get_instance();
-			$caljs = $js->get_file('js/calendar.js','lib');
+			$js = FWS_Javascript::get_instance();
+			$caljs = $js->get_file('js/calendar.js','fws');
 			$result .= '<script type="text/javascript" src="'.$caljs.'"></script>'."\n";
 			$result .= '<script type="text/javascript" src="'.$this->get_js_calendar_lang().'"></script>'."\n";
 			//$result .= '<link rel="stylesheet" type="text/css" href="'.$this->get_js_calendar_style().'" />'."\n";
@@ -494,19 +494,19 @@ EOF;
 		$result .=<<<EOF
 <script type="text/javascript">
 <!--
-var cal_{$prefix} = new PLIB_Calendar('{$libpath}js/','mycal',function(date) {
-	var day = PLIB_getElement('{$prefix}day');
-	var month = PLIB_getElement('{$prefix}month');
-	var year = PLIB_getElement('{$prefix}year');
+var cal_{$prefix} = new FWS_Calendar('{$fwspath}js/','mycal',function(date) {
+	var day = FWS_getElement('{$prefix}day');
+	var month = FWS_getElement('{$prefix}month');
+	var year = FWS_getElement('{$prefix}year');
 	day.options.selectedIndex = {$add_no_value} ? date.getDate() : date.getDate() - 1;
 	month.options.selectedIndex = {$add_no_value} ? date.getMonth() + 1 : date.getMonth();
 	year.options.selectedIndex = ({$add_no_value} ? 1 : 0) + date.getFullYear() - {$start_year};
 });
 cal_{$prefix}.setCSSFile('{$calendar_style}');
 cal_{$prefix}.setStartUpFunction(function() {
-	var day = PLIB_getElement('{$prefix}day');
-	var month = PLIB_getElement('{$prefix}month');
-	var year = PLIB_getElement('{$prefix}year');
+	var day = FWS_getElement('{$prefix}day');
+	var month = FWS_getElement('{$prefix}month');
+	var year = FWS_getElement('{$prefix}year');
 	var selDay = day.options[day.options.selectedIndex].text;
 	var selMonth = month.options[month.options.selectedIndex].text;
 	var selYear = year.options[year.options.selectedIndex].text;
@@ -558,15 +558,15 @@ EOF;
 	 */
 	public final function get_date_chooser_timestamp($prefix,$add_time = true)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$year = $input->get_var($prefix.'year','post',PLIB_Input::INTEGER);
-		$month = $input->get_var($prefix.'month','post',PLIB_Input::INTEGER);
-		$day = $input->get_var($prefix.'day','post',PLIB_Input::INTEGER);
+		$year = $input->get_var($prefix.'year','post',FWS_Input::INTEGER);
+		$month = $input->get_var($prefix.'month','post',FWS_Input::INTEGER);
+		$day = $input->get_var($prefix.'day','post',FWS_Input::INTEGER);
 		if($add_time)
 		{
-			$min = $input->get_var($prefix.'min','post',PLIB_Input::INTEGER);
-			$hour = $input->get_var($prefix.'hour','post',PLIB_Input::INTEGER);
+			$min = $input->get_var($prefix.'min','post',FWS_Input::INTEGER);
+			$hour = $input->get_var($prefix.'hour','post',FWS_Input::INTEGER);
 		}
 		else
 		{
@@ -587,7 +587,7 @@ EOF;
 			$day--;
 		}*/
 
-		return PLIB_Date::get_timestamp(array($hour,$min,0,$month,$day,$year));
+		return FWS_Date::get_timestamp(array($hour,$min,0,$month,$day,$year));
 	}
 
 	/**
@@ -603,7 +603,7 @@ EOF;
 	public final function get_textarea($name,$default = '',$width = '90%',$height = 250,
 		$disabled = false)
 	{
-		$tb = new PLIB_HTML_TextArea($name,null,null,$default);
+		$tb = new FWS_HTML_TextArea($name,null,null,$default);
 		$this->_apply_defaults($tb);
 		$tb->set_css_attribute('width',$width);
 		$tb->set_css_attribute('height',$height);
@@ -626,8 +626,8 @@ EOF;
 	 */
 	public final function get_textbox($name,$default = '',$size = 15,$maxlength = null,$disabled = false)
 	{
-		$tb = new PLIB_HTML_TextBox($name,null,null,$default,PLIB_Helper::is_integer($size) ? $size : 15,$maxlength);
-		if(is_string($size) && PLIB_String::ends_with($size,'%'))
+		$tb = new FWS_HTML_TextBox($name,null,null,$default,FWS_Helper::is_integer($size) ? $size : 15,$maxlength);
+		if(is_string($size) && FWS_String::ends_with($size,'%'))
 			$tb->set_css_attribute('width',$size);
 		$this->_apply_defaults($tb);
 		$tb->set_disabled($disabled);
@@ -650,7 +650,7 @@ EOF;
 	public final function get_passwordbox($name,$default = '',$size = 15,$maxlength = null,
 		$disabled = false)
 	{
-		$pb = new PLIB_HTML_PasswordBox($name,null,$default,$size,$maxlength);
+		$pb = new FWS_HTML_PasswordBox($name,null,$default,$size,$maxlength);
 		$this->_apply_defaults($pb);
 		$pb->set_disabled($disabled);
 		return $pb->to_html();
@@ -670,7 +670,7 @@ EOF;
 	public final function get_combobox($name,$options,$default = null,$multiple = false,$size = 1,
 		$disabled = false)
 	{
-		$combo = new PLIB_HTML_ComboBox($name,null,null,$default,$size,$multiple);
+		$combo = new FWS_HTML_ComboBox($name,null,null,$default,$size,$multiple);
 		$this->_apply_defaults($combo);
 		$combo->set_options($options);
 		$combo->set_disabled($disabled);
@@ -693,9 +693,9 @@ EOF;
 	 */
 	public final function get_checkbox($name,$default = false,$value = '',$text = '',$disabled = false)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$cb = new PLIB_HTML_Checkbox($name,null,null,$default,$text,$value);
+		$cb = new FWS_HTML_Checkbox($name,null,null,$default,$text,$value);
 		$this->_apply_defaults($cb);
 		$cb->set_disabled($disabled);
 		
@@ -715,7 +715,7 @@ EOF;
 	 */
 	public final function get_radio_yesno($name,$default,$disabled = false)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		$options = array(
 			'1' => $locale->lang('yes'),
@@ -737,7 +737,7 @@ EOF;
 	public final function get_radio_boxes($name,$options,$default,$separator = '<br />',
 		$disabled = false)
 	{
-		$rbg = new PLIB_HTML_RadioButtonGroup($name,null,null,$default,$separator);
+		$rbg = new FWS_HTML_RadioButtonGroup($name,null,null,$default,$separator);
 		$this->_apply_defaults($rbg);
 		$rbg->set_options($options);
 		$rbg->set_disabled($disabled);
@@ -751,7 +751,7 @@ EOF;
 	/**
 	 * Applies the default stuff to the element (class and css-attributes)
 	 *
-	 * @param PLIB_HTML_FormElement $element the element
+	 * @param FWS_HTML_FormElement $element the element
 	 */
 	private function _apply_defaults($element)
 	{

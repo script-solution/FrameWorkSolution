@@ -3,7 +3,7 @@
  * Contains the node-data class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -17,11 +17,11 @@
  * The class recognizes changes to the attributes and stores wether something has changed.
  * This makes it possible to update just the nodes that have really changed.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tree
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Tree_NodeData extends PLIB_Object
+class FWS_Tree_NodeData extends FWS_Object
 {
 	/**
 	 * Stores wether something has changed
@@ -71,8 +71,8 @@ class PLIB_Tree_NodeData extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($id) || $id < 0)
-			PLIB_Helper::def_error('intge0','id',$id);
+		if(!FWS_Helper::is_integer($id) || $id < 0)
+			FWS_Helper::def_error('intge0','id',$id);
 		
 		$this->_id = $id;
 		$this->set_name($name);
@@ -112,7 +112,7 @@ class PLIB_Tree_NodeData extends PLIB_Object
 	public final function set_name($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$changed = $this->_name !== null && $this->_name != $name;
 		$this->_name = $name;
@@ -155,8 +155,8 @@ class PLIB_Tree_NodeData extends PLIB_Object
 	 */
 	public final function set_sort($sort)
 	{
-		if(!PLIB_Helper::is_integer($sort) || $sort <= 0)
-			PLIB_Helper::def_error('intgt0','sort',$sort);
+		if(!FWS_Helper::is_integer($sort) || $sort <= 0)
+			FWS_Helper::def_error('intgt0','sort',$sort);
 		
 		$changed = $this->_sort !== null && $this->_sort != $sort;
 		$this->_sort = $sort;

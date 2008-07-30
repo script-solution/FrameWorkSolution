@@ -3,7 +3,7 @@
  * Contains the cookie-handling functions
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -15,10 +15,10 @@
  * Additionally you have the opportunity to give all cookies a prefix to prevent
  * conflicts.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cookies extends PLIB_Object
+final class FWS_Cookies extends FWS_Object
 {
 	/**
 	 * The prefix for all cookies
@@ -60,8 +60,8 @@ final class PLIB_Cookies extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($lifetime) || $lifetime < 0)
-			PLIB_Helper::def_error('intge0','lifetime',$lifetime);
+		if(!FWS_Helper::is_integer($lifetime) || $lifetime < 0)
+			FWS_Helper::def_error('intge0','lifetime',$lifetime);
 		
 		$this->_prefix = (string)$prefix;
 		$this->_path = (string)$path;
@@ -139,8 +139,8 @@ final class PLIB_Cookies extends PLIB_Object
 	 */
 	public function set_lifetime($lifetime)
 	{
-		if(!PLIB_Helper::is_integer($lifetime) || $lifetime < 0)
-			PLIB_Helper::def_error('intge0','lifetime',$lifetime);
+		if(!FWS_Helper::is_integer($lifetime) || $lifetime < 0)
+			FWS_Helper::def_error('intge0','lifetime',$lifetime);
 
 		$this->_lifetime = $lifetime;
 	}
@@ -149,32 +149,32 @@ final class PLIB_Cookies extends PLIB_Object
 	 * Checks wether a cookie with given name exists
 	 *
 	 * @param string $name the cookie-name (without prefix)
-	 * @see PLIB_Input::isset_var()
+	 * @see FWS_Input::isset_var()
 	 * @return boolean true if it exists
 	 */
 	public function isset_cookie($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
-		return PLIB_Input::get_instance()->isset_var($this->_prefix.$name,'cookie');
+		return FWS_Input::get_instance()->isset_var($this->_prefix.$name,'cookie');
 	}
 
 	/**
 	 * Returns the value of the cookie with given value. Uses
-	 * the method get_var() of {@link PLIB_Input}.
+	 * the method get_var() of {@link FWS_Input}.
 	 *
 	 * @param string $name the name of the cookie (without prefix)
-	 * @param int $type the datatype you expect. See PLIB_*
-	 * @see PLIB_Input::get_var()
+	 * @param int $type the datatype you expect. See FWS_*
+	 * @see FWS_Input::get_var()
 	 * @return mixed the value of the cookie (null if not existing or invalid)
 	 */
-	public function get_cookie($name,$type = PLIB_Input::STRING)
+	public function get_cookie($name,$type = FWS_Input::STRING)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
-		return PLIB_Input::get_instance()->get_var($this->_prefix.$name,'cookie',$type);
+		return FWS_Input::get_instance()->get_var($this->_prefix.$name,'cookie',$type);
 	}
 
 	/**
@@ -189,11 +189,11 @@ final class PLIB_Cookies extends PLIB_Object
 	public function set_cookie($name,$value,$lifetime = -1)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
-		if(!PLIB_Helper::is_integer($lifetime))
-			PLIB_Helper::def_error('integer','lifetime',$lifetime);
+			FWS_Helper::def_error('notempty','name',$name);
+		if(!FWS_Helper::is_integer($lifetime))
+			FWS_Helper::def_error('integer','lifetime',$lifetime);
 
-		PLIB_Input::get_instance()->set_var($this->_prefix.$name,'cookie',$value);
+		FWS_Input::get_instance()->set_var($this->_prefix.$name,'cookie',$value);
 
 		$lf = $lifetime === -1 ? $this->_lifetime : $lifetime;
 		$end = $lf === 0 ? 0 : time() + $lf;
@@ -208,9 +208,9 @@ final class PLIB_Cookies extends PLIB_Object
 	public function delete_cookie($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 
-		PLIB_Input::get_instance()->unset_var($this->_prefix.$name,'cookie');
+		FWS_Input::get_instance()->unset_var($this->_prefix.$name,'cookie');
 		setcookie($this->_prefix.$name,'',time() - 3600,$this->_path,$this->_domain);
 	}
 	

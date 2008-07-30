@@ -3,7 +3,7 @@
  * Contains the data-object-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	objects
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,11 +16,11 @@
  * A data object may create, update and delete itself.
  * Additionally it may store errors for later usage.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	objects
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Objects_Data extends PLIB_Object
+abstract class FWS_Objects_Data extends FWS_Object
 {
 	/**
 	 * The table-name in the database this object belongs to
@@ -46,7 +46,7 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 		parent::__construct();
 		
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 		
 		$this->_table = $table;
 	}
@@ -99,13 +99,13 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 	 */
 	public function create()
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		$fields = $this->_get_fields();
 		
 		// no fields are not allowed
 		if(count($fields) == 0)
-			throw new PLIB_Exceptions_MissingData('Please set at least one field first!');
+			throw new FWS_Exceptions_MissingData('Please set at least one field first!');
 		
 		$db->sql_insert($this->table(),$fields);
 		
@@ -119,15 +119,15 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 	 */
 	public function update()
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		if($this->get_id() === null)
-			throw new PLIB_Exceptions_MissingData('The id is missing');
+			throw new FWS_Exceptions_MissingData('The id is missing');
 		
 		$fields = $this->_get_fields();
 		
 		if(count($fields) == 0)
-			throw new PLIB_Exceptions_MissingData('Please set at least one field first!');
+			throw new FWS_Exceptions_MissingData('Please set at least one field first!');
 		
 		$db->sql_update($this->table(),'WHERE id = '.$this->get_id(),$fields);
 	}
@@ -137,10 +137,10 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 	 */
 	public function delete()
 	{
-		$db = PLIB_Props::get()->db();
+		$db = FWS_Props::get()->db();
 
 		if($this->get_id() === null)
-			throw new PLIB_Exceptions_MissingData('The id is missing');
+			throw new FWS_Exceptions_MissingData('The id is missing');
 		
 		$db->sql_qry('DELETE FROM '.$this->table().' WHERE id = '.$this->get_id());
 	}
@@ -150,7 +150,7 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 	 * if the value is not NULL. You can force the check by setting <var>$is_required</var> to true.
 	 * The possible values for $for are:
 	 * <ul>
-	 * 	<li>timestamp		=> uses {@link PLIB_Date::is_valid_timestamp()}</li>
+	 * 	<li>timestamp		=> uses {@link FWS_Date::is_valid_timestamp()}</li>
 	 * 	<li>empty				=> has to be empty</li>
 	 * 	<li>notempty		=> has to be not-empty</li>
 	 * 	<li>id					=> has to be a positive integer
@@ -185,11 +185,11 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 					break;
 				
 				case 'timestamp':
-					$error = !PLIB_Date::is_valid_timestamp($val);
+					$error = !FWS_Date::is_valid_timestamp($val);
 					break;
 				
 				case 'id':
-					$error = !PLIB_Helper::is_integer($val) || $val <= 0;
+					$error = !FWS_Helper::is_integer($val) || $val <= 0;
 					break;
 				
 				case 'numeric':
@@ -198,7 +198,7 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 				
 				case 'enum':
 					if(!is_array($values) || count($values) == 0)
-						PLIB_Helper::def_error('array>0','values',$values);
+						FWS_Helper::def_error('array>0','values',$values);
 					
 					$error = !in_array($val,$values);
 					break;
@@ -302,12 +302,12 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 		foreach(get_class_methods(get_class($this)) as $var)
 		{
 			// TODO that's no good solution. but what is one? :/
-			if(PLIB_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id' &&
+			if(FWS_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id' &&
 				$var != 'get_print_vars')
 			{
 				$value = $this->$var();
 				if($value !== null)
-					$fields[PLIB_String::substr($var,4)] = $value;
+					$fields[FWS_String::substr($var,4)] = $value;
 			}
 		}
 		return $fields;

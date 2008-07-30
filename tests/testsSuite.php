@@ -3,26 +3,26 @@
  * Contains the testsuite
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
-define('PLIB_PATH',dirname(dirname(__FILE__)).'/');
+define('FWS_PATH',dirname(dirname(__FILE__)).'/');
 
-// init the library
-include_once(PLIB_PATH.'init.php');
+// init the framework
+include_once(FWS_PATH.'init.php');
 
 /**
  * The document-implementation for the unit-test
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_UnitTest_Document extends PLIB_Document
+class FWS_UnitTest_Document extends FWS_Document
 {
 	protected function load_db()
 	{
@@ -40,7 +40,7 @@ class PLIB_UnitTest_Document extends PLIB_Document
 	}
 }
 
-$doc = new PLIB_UnitTest_Document();
+$doc = new FWS_UnitTest_Document();
 
 /**
  * The autoloader for the test-cases
@@ -48,11 +48,11 @@ $doc = new PLIB_UnitTest_Document();
  * @param string $item the item to load
  * @return boolean wether the file has been loaded
  */
-function PLIB_UnitTest_autoloader($item)
+function FWS_UnitTest_autoloader($item)
 {
-	if(PLIB_String::ends_with($item,'Test'))
+	if(FWS_String::ends_with($item,'Test'))
 	{
-		$path = PLIB_Path::server_lib().'tests/'.$item.'.php';
+		$path = FWS_Path::server_fw().'tests/'.$item.'.php';
 		if(is_file($path))
 		{
 			include($path);
@@ -63,12 +63,12 @@ function PLIB_UnitTest_autoloader($item)
 	return false;
 }
 
-PLIB_AutoLoader::register_loader('PLIB_UnitTest_autoloader');
+FWS_AutoLoader::register_loader('FWS_UnitTest_autoloader');
 
 /**
  * Static test suite.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
@@ -80,23 +80,23 @@ class testsSuite extends PHPUnit_Framework_TestSuite
 	public function __construct()
 	{
 		$this->setName('testsSuite');
-		$this->addTestSuite('PLIB_Array_1DimTest');
-		$this->addTestSuite('PLIB_Array_2DimTest');
-		$this->addTestSuite('PLIB_StringHelperTest');
-		$this->addTestSuite('PLIB_StringTest');
-		$this->addTestSuite('PLIB_HTML_LimitedStringTest');
-		$this->addTestSuite('PLIB_KeywordHighlighterTest');
-		$this->addTestSuite('PLIB_InputTest');
-		$this->addTestSuite('PLIB_FileUtilsTest');
-		$this->addTestSuite('PLIB_GD_ColorTest');
-		$this->addTestSuite('PLIB_GD_RectangleTest');
-		$this->addTestSuite('PLIB_GD_CircleTest');
-		$this->addTestSuite('PLIB_GD_ColorFadeTest');
-		$this->addTestSuite('PLIB_DateTest');
-		$this->addTestSuite('PLIB_Array_UtilsTest');
-		$this->addTestSuite('PLIB_Progress_ManagerTest');
-		$this->addTestSuite('PLIB_AddField_FieldTest');
-		$this->addTestSuite('PLIB_GD_LineTest');
+		$this->addTestSuite('FWS_Array_1DimTest');
+		$this->addTestSuite('FWS_Array_2DimTest');
+		$this->addTestSuite('FWS_StringHelperTest');
+		$this->addTestSuite('FWS_StringTest');
+		$this->addTestSuite('FWS_HTML_LimitedStringTest');
+		$this->addTestSuite('FWS_KeywordHighlighterTest');
+		$this->addTestSuite('FWS_InputTest');
+		$this->addTestSuite('FWS_FileUtilsTest');
+		$this->addTestSuite('FWS_GD_ColorTest');
+		$this->addTestSuite('FWS_GD_RectangleTest');
+		$this->addTestSuite('FWS_GD_CircleTest');
+		$this->addTestSuite('FWS_GD_ColorFadeTest');
+		$this->addTestSuite('FWS_DateTest');
+		$this->addTestSuite('FWS_Array_UtilsTest');
+		$this->addTestSuite('FWS_Progress_ManagerTest');
+		$this->addTestSuite('FWS_AddField_FieldTest');
+		$this->addTestSuite('FWS_GD_LineTest');
 	}
 	
 	/**

@@ -3,7 +3,7 @@
  * Contains the plain-error-output-generator-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,14 +13,14 @@
 /**
  * The plain implementation of the output-generator-interface
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_Output_Plain extends PLIB_Object implements PLIB_Error_Output
+final class FWS_Error_Output_Plain extends FWS_Object implements FWS_Error_Output
 {
 	/**
-	 * @see PLIB_Error_Output::print_error()
+	 * @see FWS_Error_Output::print_error()
 	 *
 	 * @param int $no
 	 * @param string $msg
@@ -35,12 +35,12 @@ final class PLIB_Error_Output_Plain extends PLIB_Object implements PLIB_Error_Ou
 		// add html-backtrace
 		if($backtrace !== null)
 		{
-			$htmlbt = new PLIB_Error_BTPrinter_Plain();
+			$htmlbt = new FWS_Error_BTPrinter_Plain();
 			$res .= "\nBacktrace:\n".$htmlbt->print_backtrace($backtrace);
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
+			$realfile = str_replace(realpath(FWS_Path::server_app()),'',$file);
 			$realpath = str_replace($realfile,'',$file);
 			$res .= ' in '.$realpath.$realfile.', line '.$line."\n";
 		}
@@ -49,7 +49,7 @@ final class PLIB_Error_Output_Plain extends PLIB_Object implements PLIB_Error_Ou
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

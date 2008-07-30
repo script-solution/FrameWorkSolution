@@ -3,7 +3,7 @@
  * Contains the session-storage-implementation for the progress
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The session-based implementation for the progress-storage
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Progress_Storage_Session extends PLIB_Object implements PLIB_Progress_Storage
+final class FWS_Progress_Storage_Session extends FWS_Object implements FWS_Progress_Storage
 {
 	/**
 	 * The prefix of the session-variable
@@ -31,26 +31,26 @@ final class PLIB_Progress_Storage_Session extends PLIB_Object implements PLIB_Pr
 	 *
 	 * @param string $prefix the prefix for the session-variable
 	 */
-	public function __construct($prefix = 'plib_progress_')
+	public function __construct($prefix = 'fws_progress_')
 	{
 		parent::__construct();
 		
 		if(!is_string($prefix))
-			PLIB_Helper::def_error('string','prefix',$prefix);
+			FWS_Helper::def_error('string','prefix',$prefix);
 		
 		$this->_prefix = $prefix;
 	}
 	
 	public function clear()
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 
 		$user->delete_session_data($this->_prefix.'pos');
 	}
 
 	public function get_position()
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 
 		$pos = $user->get_session_data($this->_prefix.'pos');
 		if($pos === false)
@@ -61,10 +61,10 @@ final class PLIB_Progress_Storage_Session extends PLIB_Object implements PLIB_Pr
 
 	public function store_position($pos)
 	{
-		$user = PLIB_Props::get()->user();
+		$user = FWS_Props::get()->user();
 
-		if(!PLIB_Helper::is_integer($pos) || $pos < 0)
-			PLIB_Helper::def_error('intge0','pos',$pos);
+		if(!FWS_Helper::is_integer($pos) || $pos < 0)
+			FWS_Helper::def_error('intge0','pos',$pos);
 		
 		$user->set_session_data($this->_prefix.'pos',$pos);
 	}

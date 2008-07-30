@@ -3,7 +3,7 @@
  * Contains the attributes-class for the highlighting
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Stores all attributes that should be applied to some text
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Highlighting_Attributes extends PLIB_Object
+final class FWS_Highlighting_Attributes extends FWS_Object
 {
 	/**
 	 * Represents the value "sup" for the position
@@ -152,7 +152,7 @@ final class PLIB_Highlighting_Attributes extends PLIB_Object
 				return 'bgColor';
 
 			default:
-				PLIB_Helper::error('The attribute "'.$attribute.'" is unknown!');
+				FWS_Helper::error('The attribute "'.$attribute.'" is unknown!');
 				return '';
 		}
 	}
@@ -192,7 +192,7 @@ final class PLIB_Highlighting_Attributes extends PLIB_Object
 				return self::BG_COLOR;
 			
 			default:
-				PLIB_Helper::error('The attribute "'.$name.'" is unknown!');
+				FWS_Helper::error('The attribute "'.$name.'" is unknown!');
 				return -1;
 		}
 	}
@@ -212,7 +212,7 @@ final class PLIB_Highlighting_Attributes extends PLIB_Object
 		
 		if($attribute == self::FONT_FAMILY)
 		{
-			if(isset(self::$_allowedFonts[PLIB_String::strtolower($val)]))
+			if(isset(self::$_allowedFonts[FWS_String::strtolower($val)]))
 				return $val;
 			
 			return "verdana";
@@ -326,8 +326,8 @@ final class PLIB_Highlighting_Attributes extends PLIB_Object
 	 */
 	public function set($attribute,$value)
 	{
-		if(!PLIB_Helper::is_integer($attribute) || $attribute < 0 || $attribute > 11)
-			PLIB_Helper::def_error('numbetween','attribute',0,11,$attribute);
+		if(!FWS_Helper::is_integer($attribute) || $attribute < 0 || $attribute > 11)
+			FWS_Helper::def_error('numbetween','attribute',0,11,$attribute);
 		
 		$this->_attributes[$attribute] = self::get_valid_value_for($attribute,$value);
 	}

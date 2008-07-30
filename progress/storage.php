@@ -3,7 +3,7 @@
  * Contains the storage-interface for the progress
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The storage-interface for the progress. This allows multiple locations
  * to store the position.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	progress
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Progress_Storage
+interface FWS_Progress_Storage
 {
 	/**
 	 * Should read the current position from the corresponding location. If it does not exist

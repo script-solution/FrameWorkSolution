@@ -3,7 +3,7 @@
  * Contains the bbcode-error-backtrace-printer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,14 +13,14 @@
 /**
  * The BBCode-implementation of the backtrace-printer
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.btprinter
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_BTPrinter_BBCode extends PLIB_Object implements PLIB_Error_BTPrinter
+final class FWS_Error_BTPrinter_BBCode extends FWS_Object implements FWS_Error_BTPrinter
 {
 	/**
-	 * @see PLIB_Error_BTPrinter::print_backtrace()
+	 * @see FWS_Error_BTPrinter::print_backtrace()
 	 *
 	 * @param array $backtrace
 	 */
@@ -59,7 +59,7 @@ final class PLIB_Error_BTPrinter_BBCode extends PLIB_Object implements PLIB_Erro
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

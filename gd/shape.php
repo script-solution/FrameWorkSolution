@@ -3,7 +3,7 @@
  * Contains the shape-interface
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The interface for all 1 dimensional shapes
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_GD_Shape
+interface FWS_GD_Shape
 {
 	/**
 	 * Checks wether this shape intersects the given line
 	 *
-	 * @param PLIB_GD_Line $line the line
+	 * @param FWS_GD_Line $line the line
 	 * @return boolean true if so
 	 */
 	public function intersects_line($line);
@@ -30,7 +30,7 @@ interface PLIB_GD_Shape
 	/**
 	 * Checks wether this shape intersects the given circle
 	 *
-	 * @param PLIB_GD_Circle $circle the circle
+	 * @param FWS_GD_Circle $circle the circle
 	 * @return boolean true if so
 	 */
 	public function intersects_circle($circle);
@@ -38,7 +38,7 @@ interface PLIB_GD_Shape
 	/**
 	 * Checks wether this shape intersects the given rectangle
 	 *
-	 * @param PLIB_GD_Rectangle $rect the rectangle
+	 * @param FWS_GD_Rectangle $rect the rectangle
 	 * @return boolean true if so
 	 */
 	public function intersects_rect($rect);

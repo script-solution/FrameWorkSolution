@@ -3,7 +3,7 @@
  * Contains the string-helper class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -13,14 +13,14 @@
  * Contains static helper methods for strings. That means for example methods that
  * generate a string for something or manipulate a string.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_StringHelper extends PLIB_UtilBase
+final class FWS_StringHelper extends FWS_UtilBase
 {
 	/**
 	 * Checks wether the given string is a valid "id-string". That means that the array that we get
-	 * from <code>PLIB_Array_Utils::advanced_explode($sep,$ids)</code> just contains positive integers
+	 * from <code>FWS_Array_Utils::advanced_explode($sep,$ids)</code> just contains positive integers
 	 * and the number of ids is greater than 0.
 	 * If it is valid the id-array will be returned. Otherwise false
 	 *
@@ -30,11 +30,11 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function get_ids($ids,$sep = ',')
 	{
-		$ida = PLIB_Array_Utils::advanced_explode($sep,$ids);
+		$ida = FWS_Array_Utils::advanced_explode($sep,$ids);
 		if(count($ida) == 0)
 			return false;
 		
-		if(!PLIB_Array_Utils::is_integer($ida))
+		if(!FWS_Array_Utils::is_integer($ida))
 			return false;
 		
 		return $ida;
@@ -78,11 +78,11 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function get_text_part($text,$pos,$count,$pre = '...',$post = '...')
 	{
-		$len = PLIB_String::strlen($text);
+		$len = FWS_String::strlen($text);
 		$str = '';
 		if($pos > 0)
 			$str .= $pre;
-		$str .= PLIB_String::substr($text,$pos,$count);
+		$str .= FWS_String::substr($text,$pos,$count);
 		if($pos + $count < $len)
 			$str .= $post;
 		return $str;
@@ -97,8 +97,8 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function generate_random_key($length = 32)
 	{
-		if(!PLIB_Helper::is_integer($length) || $length <= 0)
-			PLIB_Helper::def_error('intgt0','length',$length);
+		if(!FWS_Helper::is_integer($length) || $length <= 0)
+			FWS_Helper::def_error('intgt0','length',$length);
 	
 		$array = array(
 			'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u',
@@ -124,31 +124,31 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function minimize_url($url,$max)
 	{
-		if(!PLIB_Helper::is_integer($max) || $max <= 0)
-			PLIB_Helper::def_error('intgt0','max',$max);
+		if(!FWS_Helper::is_integer($max) || $max <= 0)
+			FWS_Helper::def_error('intgt0','max',$max);
 	
 		if(empty($url))
-			PLIB_Helper::def_error('notempty','url',$url);
+			FWS_Helper::def_error('notempty','url',$url);
 	
 		// check if there is nothing to do
-		if(PLIB_String::strlen($url) <= $max)
+		if(FWS_String::strlen($url) <= $max)
 			return $url;
 	
 		// http:// has not to be displayed, so
-		if(PLIB_String::substr($url,0,7) == 'http://')
-			$url = PLIB_String::substr($url,7);
+		if(FWS_String::substr($url,0,7) == 'http://')
+			$url = FWS_String::substr($url,7);
 	
 		// cut the parameters
-		if(PLIB_String::strpos($url,'/') !== false)
+		if(FWS_String::strpos($url,'/') !== false)
 			$url = strtok($url,'/');
 	
 		// return if the url is short enough
-		if(PLIB_String::strlen($url) <= $max)
+		if(FWS_String::strlen($url) <= $max)
 			return $url;
 	
 		// otherwise cut a part in the middle
-		$end = PLIB_String::substr($url,-5,5);
-		$front = PLIB_String::substr($url,0,$max - 8);
+		$end = FWS_String::substr($url,-5,5);
+		$front = FWS_String::substr($url,0,$max - 8);
 		return $front.'...'.$end;
 	}
 	
@@ -161,7 +161,7 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function correct_homepage($hp)
 	{
-		if(PLIB_String::substr($hp,0,7) != 'http://')
+		if(FWS_String::substr($hp,0,7) != 'http://')
 			$hp = 'http://'.$hp;
 		if(preg_match('/^http:\/\/\S+?\.\S+$/',$hp))
 			return $hp;
@@ -194,8 +194,8 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function get_formated_data_size($size,$t_sep = ',',$d_sep = '.')
 	{
-		if(!PLIB_Helper::is_integer($size) || $size < 0)
-			PLIB_Helper::def_error('intge0','size',$size);
+		if(!FWS_Helper::is_integer($size) || $size < 0)
+			FWS_Helper::def_error('intge0','size',$size);
 	
 		$sizes = array(
 			'KiB',
@@ -230,7 +230,7 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	public static function build_int_range_sql($field,$from,$to)
 	{
 		if(empty($field))
-			PLIB_Helper::def_error('notempty','field',$field);
+			FWS_Helper::def_error('notempty','field',$field);
 	
 		$where = '';
 		if($from != '' || $to != '')
@@ -263,7 +263,7 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	public static function build_date_range_sql($field,$from,$to)
 	{
 		if(empty($field))
-			PLIB_Helper::def_error('notempty','field',$field);
+			FWS_Helper::def_error('notempty','field',$field);
 	
 		$where = '';
 		if($from != '' || $to != '')
@@ -271,14 +271,14 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 			if($from != '' && preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$from))
 			{
 				$parts = explode('.',$from);
-				$begin = PLIB_Date::get_timestamp(array(0,0,0,$parts[1],$parts[0],$parts[2]));
+				$begin = FWS_Date::get_timestamp(array(0,0,0,$parts[1],$parts[0],$parts[2]));
 				$where .= ' AND '.$field.' >= '.$begin;
 			}
 	
 			if($to != '' && preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$to))
 			{
 				$parts = explode('.',$to);
-				$end = PLIB_Date::get_timestamp(array(23,59,59,$parts[1],$parts[0],$parts[2]));
+				$end = FWS_Date::get_timestamp(array(23,59,59,$parts[1],$parts[0],$parts[2]));
 				$where .= ' AND '.$field.' <= '.$end;
 			}
 		}
@@ -311,13 +311,13 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	public static function get_default_delete_sql($ids,$table,$field)
 	{
 		if(!is_array($ids) || count($ids) == 0)
-			PLIB_Helper::def_error('array>0','ids',$ids);
+			FWS_Helper::def_error('array>0','ids',$ids);
 	
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 	
 		if(empty($field))
-			PLIB_Helper::def_error('notempty','field',$field);
+			FWS_Helper::def_error('notempty','field',$field);
 	
 		return 'SELECT id,'.$field.' FROM '.$table.' WHERE id IN ("'.implode('","',$ids).'")';
 	}
@@ -341,18 +341,18 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 		
 		$words = array();
 		$current = '';
-		for($i = 0,$len = PLIB_String::strlen($string);$i < $len;$i++)
+		for($i = 0,$len = FWS_String::strlen($string);$i < $len;$i++)
 		{
-			$c = PLIB_String::substr($string,$i,1);
+			$c = FWS_String::substr($string,$i,1);
 			
 			// skip
 			if($c == '&')
 			{
-				$end = PLIB_String::strpos($string,';',$i);
+				$end = FWS_String::strpos($string,';',$i);
 				if($end === false)
 					break;
 				
-				$current .= PLIB_String::substr($string,$i,$end - $i + 1);
+				$current .= FWS_String::substr($string,$i,$end - $i + 1);
 				$i = $end;
 				continue;
 			}
@@ -361,19 +361,19 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 			{
 				if($current != '' && !is_numeric($current))
 				{
-					$current = PLIB_String::strtolower($current);
+					$current = FWS_String::strtolower($current);
 					$words[$current] = true;
 				}
 	
 				$current = '';
 			}
-			else if(PLIB_String::is_alpha($c))
+			else if(FWS_String::is_alpha($c))
 				$current .= $c;
 		}
 	
 		if($current != '' && !is_numeric($current))
 		{
-			$current = PLIB_String::strtolower($current);
+			$current = FWS_String::strtolower($current);
 			$words[$current] = true;
 		}
 	
@@ -405,20 +405,20 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 * 		'complete' => <completeString>
 	 * 	)
 	 * </code>
-	 * @see PLIB_HTML_LimitedString
+	 * @see FWS_HTML_LimitedString
 	 */
 	public static function get_limited_string($input,$length)
 	{
-		if(!PLIB_Helper::is_integer($length) || $length <= 0)
-			PLIB_Helper::def_error('intgt0','length',$length);
+		if(!FWS_Helper::is_integer($length) || $length <= 0)
+			FWS_Helper::def_error('intgt0','length',$length);
 	
 		$copy = $input;
 	
 		$input = self::htmlspecialchars_back($input);
-		if(PLIB_String::strlen($input) > $length)
+		if(FWS_String::strlen($input) > $length)
 		{
 			$complete = $copy;
-			$input = PLIB_String::substr($input,0,$length)." ...";
+			$input = FWS_String::substr($input,0,$length)." ...";
 		}
 		else
 			$complete = '';
@@ -434,7 +434,7 @@ final class PLIB_StringHelper extends PLIB_UtilBase
 	 */
 	public static function ensure_2_chars($input)
 	{
-		if(PLIB_String::strlen($input) == 1)
+		if(FWS_String::strlen($input) == 1)
 			return '0'.$input;
 		return $input;
 	}

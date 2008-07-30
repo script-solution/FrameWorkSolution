@@ -3,7 +3,7 @@
  * Contains the highlight-language-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all highlighting-languages
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	highlighting
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Highlighting_Language
+interface FWS_Highlighting_Language
 {
 	/**
 	 * Represents a number
@@ -125,7 +125,7 @@ interface PLIB_Highlighting_Language
 	 * Returns the attributes for the regular expression with given index
 	 * 
 	 * @param id the id in the regexp-list
-	 * @return PLIB_Highlighting_Attributes the attributes-object with the attributes
+	 * @return FWS_Highlighting_Attributes the attributes-object with the attributes
 	 */
 	public function get_regexp_attributes($id);
 	
@@ -133,7 +133,7 @@ interface PLIB_Highlighting_Language
 	 * Returns the attributes for the single-line-comment with given index
 	 * 
 	 * @param id the comment-id
-	 * @return PLIB_Highlighting_Attributes the attributes-object with the attributes
+	 * @return FWS_Highlighting_Attributes the attributes-object with the attributes
 	 */
 	public function get_sl_comment_attributes($id);
 
@@ -141,7 +141,7 @@ interface PLIB_Highlighting_Language
 	 * Returns the attributes for the multi-line-comment with given index
 	 * 
 	 * @param id the comment-id
-	 * @return PLIB_Highlighting_Attributes the attributes-object with the attributes
+	 * @return FWS_Highlighting_Attributes the attributes-object with the attributes
 	 */
 	public function get_ml_comment_attributes($id);
 
@@ -149,7 +149,7 @@ interface PLIB_Highlighting_Language
 	 * Returns the attributes for the string with given index
 	 * 
 	 * @param id the string-id
-	 * @return PLIB_Highlighting_Attributes the attributes-object with the attributes
+	 * @return FWS_Highlighting_Attributes the attributes-object with the attributes
 	 */
 	public function get_string_attributes($id);
 	
@@ -157,7 +157,7 @@ interface PLIB_Highlighting_Language
 	 * Returns the attributes for the keywords of given type
 	 * 
 	 * @param id the id in the keyword-list
-	 * @return PLIB_Highlighting_Attributes the attributes-object with the attributes
+	 * @return FWS_Highlighting_Attributes the attributes-object with the attributes
 	 */
 	public function get_keyword_attributes($id);
 	
@@ -173,7 +173,7 @@ interface PLIB_Highlighting_Language
 	 * </ul>
 	 * 
 	 * @param element the element
-	 * @return PLIB_Highlighting_Attributes the attributes for that element
+	 * @return FWS_Highlighting_Attributes the attributes for that element
 	 */
 	public function get_attributes($element);
 }

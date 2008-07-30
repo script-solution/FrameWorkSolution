@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_Array_1Dim test
+ * Contains the FWS_Array_1Dim test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,16 +11,16 @@
  */
 
 /**
- * PLIB_Array_1Dim test case.
+ * FWS_Array_1Dim test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
+class FWS_Array_1DimTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var PLIB_Array_1Dim
+	 * @var FWS_Array_1Dim
 	 */
 	private $_cache;
 	
@@ -63,7 +63,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 		
-		$this->_cache = new PLIB_Array_1Dim();
+		$this->_cache = new FWS_Array_1Dim();
 		foreach($this->_content as $k => $v)
 			$this->_cache->add_element($v,$k);
 	}
@@ -78,7 +78,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Add_element()
+	 * Tests FWS_Array_1Dim->Add_element()
 	 */
 	public function testAdd_element()
 	{
@@ -97,7 +97,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Add_element_at()
+	 * Tests FWS_Array_1Dim->Add_element_at()
 	 */
 	public function testAdd_element_at()
 	{
@@ -125,7 +125,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Binary_search()
+	 * Tests FWS_Array_1Dim->Binary_search()
 	 */
 	public function testBinary_search()
 	{
@@ -137,24 +137,24 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 		$this->_cache->add_element(12);
 		
 		// asc
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_ELEMENTS,PLIB_Array_1Dim::SORT_DIR_ASC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_ELEMENTS,FWS_Array_1Dim::SORT_DIR_ASC);
 		
-		$key = $this->_cache->binary_search('abc',PLIB_Array_1Dim::SORT_DIR_ASC);
+		$key = $this->_cache->binary_search('abc',FWS_Array_1Dim::SORT_DIR_ASC);
 		self::assertEquals($key,3);
 		
 		// desc
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_ELEMENTS,PLIB_Array_1Dim::SORT_DIR_DESC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_ELEMENTS,FWS_Array_1Dim::SORT_DIR_DESC);
 		
-		$key = $this->_cache->binary_search(3,PLIB_Array_1Dim::SORT_DIR_DESC);
+		$key = $this->_cache->binary_search(3,FWS_Array_1Dim::SORT_DIR_DESC);
 		self::assertEquals($key,1);
 		
 		// test not existing
-		$key = $this->_cache->binary_search('notexisting',PLIB_Array_1Dim::SORT_DIR_DESC);
+		$key = $this->_cache->binary_search('notexisting',FWS_Array_1Dim::SORT_DIR_DESC);
 		self::assertNull($key);
 	}
 	
 	/**
-	 * Tests PLIB_Array_1Dim->Clear()
+	 * Tests FWS_Array_1Dim->Clear()
 	 */
 	public function testClear()
 	{
@@ -166,7 +166,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * Tests PLIB_Array_1Dim->Current()
+	 * Tests FWS_Array_1Dim->Current()
 	 */
 	public function testCurrent()
 	{
@@ -186,7 +186,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Element_exists()
+	 * Tests FWS_Array_1Dim->Element_exists()
 	 */
 	public function testElement_exists()
 	{
@@ -199,7 +199,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Get_element()
+	 * Tests FWS_Array_1Dim->Get_element()
 	 */
 	public function testGet_element()
 	{
@@ -213,7 +213,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Get_element_count()
+	 * Tests FWS_Array_1Dim->Get_element_count()
 	 */
 	public function testGet_element_count()
 	{
@@ -230,7 +230,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Get_elements()
+	 * Tests FWS_Array_1Dim->Get_elements()
 	 */
 	public function testGet_elements()
 	{
@@ -241,7 +241,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Get_key()
+	 * Tests FWS_Array_1Dim->Get_key()
 	 */
 	public function testGet_key()
 	{
@@ -256,7 +256,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Get_position()
+	 * Tests FWS_Array_1Dim->Get_position()
 	 */
 	public function testGet_position()
 	{
@@ -278,7 +278,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Key()
+	 * Tests FWS_Array_1Dim->Key()
 	 */
 	public function testKey()
 	{
@@ -298,7 +298,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Key_exists()
+	 * Tests FWS_Array_1Dim->Key_exists()
 	 */
 	public function testKey_exists()
 	{
@@ -312,7 +312,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Next()
+	 * Tests FWS_Array_1Dim->Next()
 	 */
 	public function testNext()
 	{
@@ -323,7 +323,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Previous()
+	 * Tests FWS_Array_1Dim->Previous()
 	 */
 	public function testPrevious()
 	{
@@ -336,7 +336,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Remove_element()
+	 * Tests FWS_Array_1Dim->Remove_element()
 	 */
 	public function testRemove_element()
 	{
@@ -355,7 +355,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Rewind()
+	 * Tests FWS_Array_1Dim->Rewind()
 	 */
 	public function testRewind()
 	{
@@ -366,7 +366,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Set_element()
+	 * Tests FWS_Array_1Dim->Set_element()
 	 */
 	public function testSet_element()
 	{
@@ -384,7 +384,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Sort()
+	 * Tests FWS_Array_1Dim->Sort()
 	 */
 	public function testSort()
 	{
@@ -395,27 +395,27 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 		
 		// elements ascending
 		asort($ar);
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_ELEMENTS,PLIB_Array_1Dim::SORT_DIR_ASC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_ELEMENTS,FWS_Array_1Dim::SORT_DIR_ASC);
 		self::assertEquals($this->_cache->get_elements(),$ar);
 		
 		// elements descending
 		arsort($ar);
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_ELEMENTS,PLIB_Array_1Dim::SORT_DIR_DESC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_ELEMENTS,FWS_Array_1Dim::SORT_DIR_DESC);
 		self::assertEquals($this->_cache->get_elements(),$ar);
 		
 		// keys ascending
 		ksort($ar);
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_KEYS,PLIB_Array_1Dim::SORT_DIR_ASC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_KEYS,FWS_Array_1Dim::SORT_DIR_ASC);
 		self::assertEquals($this->_cache->get_elements(),$ar);
 		
 		// keys descending
 		krsort($ar);
-		$this->_cache->sort(PLIB_Array_1Dim::SORT_MODE_KEYS,PLIB_Array_1Dim::SORT_DIR_DESC);
+		$this->_cache->sort(FWS_Array_1Dim::SORT_MODE_KEYS,FWS_Array_1Dim::SORT_DIR_DESC);
 		self::assertEquals($this->_cache->get_elements(),$ar);
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->To_last()
+	 * Tests FWS_Array_1Dim->To_last()
 	 */
 	public function testTo_last()
 	{
@@ -424,7 +424,7 @@ class PLIB_Array_1DimTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Array_1Dim->Valid()
+	 * Tests FWS_Array_1Dim->Valid()
 	 */
 	public function testValid()
 	{

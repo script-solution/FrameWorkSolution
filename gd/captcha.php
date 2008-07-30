@@ -3,7 +3,7 @@
  * Contains the captcha-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -16,7 +16,7 @@
  * 
  * Example:
  * <code>
- * $captcha = new PLIB_GD_Captcha();
+ * $captcha = new FWS_GD_Captcha();
  * $captcha->set_number_of_chars(5);
  * $captcha->set_size(300,100);
  * $captcha->set_wave(true,10,6);
@@ -24,11 +24,11 @@
  * $captcha->send_image();
  * </code>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Captcha extends PLIB_Object
+final class FWS_GD_Captcha extends FWS_Object
 {
 	/**
 	 * All available chars
@@ -140,14 +140,14 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	/**
 	 * The image
 	 *
-	 * @var PLIB_GD_Image
+	 * @var FWS_GD_Image
 	 */
 	private $_img;
 	
 	/**
 	 * The graphics-object for the image
 	 *
-	 * @var PLIB_GD_Graphics
+	 * @var FWS_GD_Graphics
 	 */
 	private $_g;
 	
@@ -168,7 +168,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	/**
 	 * The used background-color
 	 *
-	 * @var PLIB_GD_Color
+	 * @var FWS_GD_Color
 	 */
 	private $_bg;
 	
@@ -258,7 +258,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	private $_ttf_font_propability = 0.5;
 	
 	/**
-	 * An array of {@link PLIB_GD_Font_TTF}-objects which may be used and the fontsize for each of them.
+	 * An array of {@link FWS_GD_Font_TTF}-objects which may be used and the fontsize for each of them.
 	 * <code>array(
 	 * 	array(<font>,<size>),
 	 * 	...
@@ -400,7 +400,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		parent::__construct();
 		
 		$this->_use_transparency = function_exists('imagecreatetruecolor');
-		$this->_size = new PLIB_GD_Dimension(350,80);
+		$this->_size = new FWS_GD_Dimension(350,80);
 	}
 	
 	/**
@@ -418,8 +418,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_angle_difference($diff)
 	{
-		if(!PLIB_Helper::is_integer($diff) || $diff < 0 || $diff >= 360)
-			PLIB_Helper::def_error('numbetween','diff',0,359,$diff);
+		if(!FWS_Helper::is_integer($diff) || $diff < 0 || $diff >= 360)
+			FWS_Helper::def_error('numbetween','diff',0,359,$diff);
 		
 		$this->_angle_difference = $diff;
 	}
@@ -447,12 +447,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_background_color($start,$end)
 	{
-		if(!PLIB_Helper::is_integer($start) || $start < 0 || $start > 255)
-			PLIB_Helper::def_error('numbetween','start',0,255,$start);
-		if(!PLIB_Helper::is_integer($end) || $end < 0 || $end > 255)
-			PLIB_Helper::def_error('numbetween','end',0,255,$end);
+		if(!FWS_Helper::is_integer($start) || $start < 0 || $start > 255)
+			FWS_Helper::def_error('numbetween','start',0,255,$start);
+		if(!FWS_Helper::is_integer($end) || $end < 0 || $end > 255)
+			FWS_Helper::def_error('numbetween','end',0,255,$end);
 		if($end < $start)
-			PLIB_Helper::error('$end should be >= $start!');
+			FWS_Helper::error('$end should be >= $start!');
 		
 		$this->_background_color_start = $start;
 		$this->_background_color_end = $end;
@@ -466,12 +466,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_background_color_count($min,$max)
 	{
-		if(!PLIB_Helper::is_integer($min) || $min <= 1)
-			PLIB_Helper::def_error('intgt1','min',$min);
-		if(!PLIB_Helper::is_integer($max) || $max <= 1)
-			PLIB_Helper::def_error('intgt1','max',$max);
+		if(!FWS_Helper::is_integer($min) || $min <= 1)
+			FWS_Helper::def_error('intgt1','min',$min);
+		if(!FWS_Helper::is_integer($max) || $max <= 1)
+			FWS_Helper::def_error('intgt1','max',$max);
 		if($max < $min)
-			PLIB_Helper::error('$max should be >= $min!');
+			FWS_Helper::error('$max should be >= $min!');
 		
 		$this->_background_colors_min = $min;
 		$this->_background_colors_max = $max;
@@ -487,12 +487,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_char_trans_diff($min,$max)
 	{
-		if(!PLIB_Helper::is_integer($min) || $min < 0)
-			PLIB_Helper::def_error('intge0','min',$min);
-		if(!PLIB_Helper::is_integer($max) || $max < 0)
-			PLIB_Helper::def_error('intge0','max',$max);
+		if(!FWS_Helper::is_integer($min) || $min < 0)
+			FWS_Helper::def_error('intge0','min',$min);
+		if(!FWS_Helper::is_integer($max) || $max < 0)
+			FWS_Helper::def_error('intge0','max',$max);
 		if($max < $min)
-			PLIB_Helper::error('$max should be >= $min!');
+			FWS_Helper::error('$max should be >= $min!');
 		
 		$this->_char_trans_min_diff = $min;
 		$this->_char_trans_max_diff = $max;
@@ -507,7 +507,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	public function set_char_trans_propability($propability)
 	{
 		if(!is_numeric($propability) || $propability < 0 || $propability > 1)
-			PLIB_Helper::def_error('numbetween','propability',0,1,$propability);
+			FWS_Helper::def_error('numbetween','propability',0,1,$propability);
 		
 		$this->_char_trans_propability = $propability;
 	}
@@ -520,10 +520,10 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_size($width,$height)
 	{
-		if(!PLIB_Helper::is_integer($width) || $width <= 0)
-			PLIB_Helper::def_error('intgt0','width',$width);
-		if(!PLIB_Helper::is_integer($height) || $height <= 0)
-			PLIB_Helper::def_error('intgt0','height',$height);
+		if(!FWS_Helper::is_integer($width) || $width <= 0)
+			FWS_Helper::def_error('intgt0','width',$width);
+		if(!FWS_Helper::is_integer($height) || $height <= 0)
+			FWS_Helper::def_error('intgt0','height',$height);
 		
 		$this->_width = $width;
 		$this->_height = $height;
@@ -539,12 +539,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_noise_color($start,$end)
 	{
-		if(!PLIB_Helper::is_integer($start) || $start < 0 || $start > 255)
-			PLIB_Helper::def_error('numbetween','start',0,255,$start);
-		if(!PLIB_Helper::is_integer($end) || $end < 0 || $end > 255)
-			PLIB_Helper::def_error('numbetween','end',0,255,$end);
+		if(!FWS_Helper::is_integer($start) || $start < 0 || $start > 255)
+			FWS_Helper::def_error('numbetween','start',0,255,$start);
+		if(!FWS_Helper::is_integer($end) || $end < 0 || $end > 255)
+			FWS_Helper::def_error('numbetween','end',0,255,$end);
 		if($end < $start)
-			PLIB_Helper::error('$end should be >= $start!');
+			FWS_Helper::error('$end should be >= $start!');
 		
 		$this->_noise_color_start = $start;
 		$this->_noise_color_end = $end;
@@ -559,10 +559,10 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_noise_distance($distance,$diff)
 	{
-		if(!PLIB_Helper::is_integer($distance) || $distance <= 0)
-			PLIB_Helper::def_error('intgt0','distance',$distance);
-		if(!PLIB_Helper::is_integer($diff) || $diff < 0)
-			PLIB_Helper::def_error('intge0','diff',$diff);
+		if(!FWS_Helper::is_integer($distance) || $distance <= 0)
+			FWS_Helper::def_error('intgt0','distance',$distance);
+		if(!FWS_Helper::is_integer($diff) || $diff < 0)
+			FWS_Helper::def_error('intge0','diff',$diff);
 		
 		$this->_noise_distance = $distance;
 		$this->_noise_distance_diff = $diff;
@@ -575,8 +575,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_number_of_chars($number)
 	{
-		if(!PLIB_Helper::is_integer($number) || $number <= 0)
-			PLIB_Helper::def_error('intgt0','number',$number);
+		if(!FWS_Helper::is_integer($number) || $number <= 0)
+			FWS_Helper::def_error('intgt0','number',$number);
 		
 		$this->_number_of_chars = $number;
 	}
@@ -589,8 +589,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_number_of_noise_shapes($number)
 	{
-		if(!PLIB_Helper::is_integer($number) || $number < 0)
-			PLIB_Helper::def_error('intge0','number',$number);
+		if(!FWS_Helper::is_integer($number) || $number < 0)
+			FWS_Helper::def_error('intge0','number',$number);
 		
 		$this->_number_of_noise_shapes = $number;
 	}
@@ -604,10 +604,10 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_shape_lines($number,$length = 10)
 	{
-		if(!PLIB_Helper::is_integer($number) || $number < 0)
-			PLIB_Helper::def_error('intge0','number',$number);
-		if(!PLIB_Helper::is_integer($length) || $length < 0)
-			PLIB_Helper::def_error('intge0','length',$length);
+		if(!FWS_Helper::is_integer($number) || $number < 0)
+			FWS_Helper::def_error('intge0','number',$number);
+		if(!FWS_Helper::is_integer($length) || $length < 0)
+			FWS_Helper::def_error('intge0','length',$length);
 		
 		$this->_shape_lines = $number;
 		$this->_shape_line_length = $length;
@@ -621,12 +621,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_shape_size($min,$max)
 	{
-		if(!PLIB_Helper::is_integer($min) || $min <= 0)
-			PLIB_Helper::def_error('intgt0','min',$min);
-		if(!PLIB_Helper::is_integer($max) || $max <= 0)
-			PLIB_Helper::def_error('intgt0','max',$max);
+		if(!FWS_Helper::is_integer($min) || $min <= 0)
+			FWS_Helper::def_error('intgt0','min',$min);
+		if(!FWS_Helper::is_integer($max) || $max <= 0)
+			FWS_Helper::def_error('intgt0','max',$max);
 		if($max < $min)
-			PLIB_Helper::error('$max should be >= $min!');
+			FWS_Helper::error('$max should be >= $min!');
 		
 		$this->_shape_min_size = $min;
 		$this->_shape_max_size = $max;
@@ -640,7 +640,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	public function set_ttf_font_propability($propability)
 	{
 		if(!is_numeric($propability) || $propability < 0 || $propability > 1)
-			PLIB_Helper::def_error('numbetween','propability',0,1,$propability);
+			FWS_Helper::def_error('numbetween','propability',0,1,$propability);
 		
 		$this->_ttf_font_propability = $propability;
 	}
@@ -652,8 +652,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_ttf_font_size_difference($size_diff)
 	{
-		if(!PLIB_Helper::is_integer($size_diff) || $size_diff < 0)
-			PLIB_Helper::def_error('intge0','size_diff',$size_diff);
+		if(!FWS_Helper::is_integer($size_diff) || $size_diff < 0)
+			FWS_Helper::def_error('intge0','size_diff',$size_diff);
 		
 		$this->_ttf_font_size_difference = $size_diff;
 	}
@@ -661,15 +661,15 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	/**
 	 * Adds the given TTF-font to the list of the usable fonts.
 	 * 
-	 * @param PLIB_GD_Font_TTF $font the font to add
+	 * @param FWS_GD_Font_TTF $font the font to add
 	 * @param int $size the size for this font
 	 */
 	public function add_ttf_font($font,$size)
 	{
-		if(!($font instanceof PLIB_GD_Font_TTF))
-			PLIB_Helper::def_error('instance','font','PLIB_GD_Font_TTF',$font);
-		if(!PLIB_Helper::is_integer($size) || $size <= 0)
-			PLIB_Helper::def_error('intgt0','size',$size);
+		if(!($font instanceof FWS_GD_Font_TTF))
+			FWS_Helper::def_error('instance','font','FWS_GD_Font_TTF',$font);
+		if(!FWS_Helper::is_integer($size) || $size <= 0)
+			FWS_Helper::def_error('intgt0','size',$size);
 		
 		$this->_ttf_fonts[] = array($font,$size);
 	}
@@ -691,10 +691,10 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_wave($use_wave,$amplitude = 16,$period = 6)
 	{
-		if(!PLIB_Helper::is_integer($amplitude) || $amplitude <= 0)
-			PLIB_Helper::def_error('intgt0','amplitude',$amplitude);
-		if(!PLIB_Helper::is_integer($period) || $period <= 0)
-			PLIB_Helper::def_error('intgt0','period',$period);
+		if(!FWS_Helper::is_integer($amplitude) || $amplitude <= 0)
+			FWS_Helper::def_error('intgt0','amplitude',$amplitude);
+		if(!FWS_Helper::is_integer($period) || $period <= 0)
+			FWS_Helper::def_error('intgt0','period',$period);
 		
 		$this->_use_waves = (boolean)$use_wave;
 		$this->_wave_amplitude = $amplitude;
@@ -709,8 +709,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_horizontal_lines($lines)
 	{
-		if(!PLIB_Helper::is_integer($lines) || $lines < 0)
-			PLIB_Helper::def_error('intge0','lines',$lines);
+		if(!FWS_Helper::is_integer($lines) || $lines < 0)
+			FWS_Helper::def_error('intge0','lines',$lines);
 		
 		$this->_horizontal_lines = $lines;
 	}
@@ -723,8 +723,8 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 */
 	public function set_vertical_lines($lines)
 	{
-		if(!PLIB_Helper::is_integer($lines) || $lines < 0)
-			PLIB_Helper::def_error('intge0','lines',$lines);
+		if(!FWS_Helper::is_integer($lines) || $lines < 0)
+			FWS_Helper::def_error('intge0','lines',$lines);
 		
 		$this->_vertical_lines = $lines;
 	}
@@ -741,18 +741,18 @@ final class PLIB_GD_Captcha extends PLIB_Object
 			// (the given dark color will cause the algo to generate a color with a
 			// min-brightness-distance which will lead to a bright color because a dark
 			// color would have a too low distance)
-			$color = new PLIB_GD_Color(50,50,50);
+			$color = new FWS_GD_Color(50,50,50);
 			$this->_bg = $color->get_readable_random_foreground();
 		}
 		else
 		{
 			$color = mt_rand($this->_background_color_start,$this->_background_color_end);
-			$this->_bg = new PLIB_GD_Color($color,$color,$color);
+			$this->_bg = new FWS_GD_Color($color,$color,$color);
 		}
 		
 		// create image
 		$truecolor = $this->_use_transparency && function_exists('imagecolorallocatealpha');
-		$this->_img = new PLIB_GD_Image($this->_width,$this->_height,$truecolor);
+		$this->_img = new FWS_GD_Image($this->_width,$this->_height,$truecolor);
 		$this->_g = $this->_img->get_graphics();
 		$imgres = $this->_img->get_image();
 		
@@ -779,7 +779,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 			}
 			
 			// draw colorfade in the background
-			$rect = new PLIB_GD_Rectangle(0,0,$this->_width,$this->_height);
+			$rect = new FWS_GD_Rectangle(0,0,$this->_width,$this->_height);
 			$this->_g->get_rect_view($rect)->fill_colorfade($colors,1);
 		}
 		else
@@ -822,7 +822,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		$grey_colors = array();
 		for($i = 0;$i < 10;$i++)
 		{
-			$grey_colors[] = PLIB_GD_Color::get_random_grey_color(
+			$grey_colors[] = FWS_GD_Color::get_random_grey_color(
 				$this->_noise_color_start,$this->_noise_color_end
 			);
 		}
@@ -857,7 +857,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 			$ew = mt_rand($this->_width / 2,$this->_width + $this->_width / 2);
 			$eh = mt_rand($this->_height * 2,$this->_height * 4);
 			$color = $this->_bg->get_readable_random_foreground();
-			$ellipse = new PLIB_GD_Ellipse(new PLIB_GD_Point($ex,$ey),new PLIB_GD_Dimension($ew,$eh));
+			$ellipse = new FWS_GD_Ellipse(new FWS_GD_Point($ex,$ey),new FWS_GD_Dimension($ew,$eh));
 			$this->_g->get_ellipse_view($ellipse)->draw($color);
 		}
 		
@@ -869,7 +869,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 			$ew = mt_rand($this->_width * 1.5,$this->_width * 2);
 			$eh = mt_rand($this->_height / 2,$this->_height + $this->_height / 2);
 			$color = $this->_bg->get_readable_random_foreground();
-			$ellipse = new PLIB_GD_Ellipse(new PLIB_GD_Point($ex,$ey),new PLIB_GD_Dimension($ew,$eh));
+			$ellipse = new FWS_GD_Ellipse(new FWS_GD_Point($ex,$ey),new FWS_GD_Dimension($ew,$eh));
 			$this->_g->get_ellipse_view($ellipse)->draw($color);
 		}
 		
@@ -899,15 +899,15 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		}
 		
 		// draw border
-		$rect = new PLIB_GD_Rectangle(0,0,$this->_width - 1,$this->_height - 1);
-		$bordercolor = PLIB_GD_Color::$DARK_GRAY;
+		$rect = new FWS_GD_Rectangle(0,0,$this->_width - 1,$this->_height - 1);
+		$bordercolor = FWS_GD_Color::$DARK_GRAY;
 		$this->_g->get_rect_view($rect)->draw($bordercolor);
 		
 		$this->_used_chars = $chars;
 	}
 	
 	/**
-	 * @return PLIB_GD_Image the image-instance
+	 * @return FWS_GD_Image the image-instance
 	 */
 	public function get_image()
 	{
@@ -956,14 +956,14 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		);
 	
 		// determine char-width
-		$attr = new PLIB_GD_TextAttributes($ttf,$fontsize,$color);
-		$text = new PLIB_GD_Text($char,$attr);
+		$attr = new FWS_GD_TextAttributes($ttf,$fontsize,$color);
+		$text = new FWS_GD_Text($char,$attr);
 		$w = $text->get_width();
 		$width = $w + $border * 2;
 		
 		// draw char
 		$y = mt_rand(-10,10);
-		$rect = new PLIB_GD_Rectangle($x,$y,$width,$this->_height);
+		$rect = new FWS_GD_Rectangle($x,$y,$width,$this->_height);
 		$this->_g->get_text_view($text)->draw_in_rect($rect,null,null,$angle);
 	}
 	
@@ -973,7 +973,7 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	 * @param int $img_width contains the used image-width after the call
 	 * @param int $img_height contains the used image-height after the call
 	 * @param int $char the character which the image contains
-	 * @return PLIB_GD_Image the created image
+	 * @return FWS_GD_Image the created image
 	 */
 	private function create_char_image(&$img_width,&$img_height,&$char)
 	{
@@ -986,11 +986,11 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		
 		// create the image with required size
 		$truecolor = $this->_use_transparency && function_exists('imagecolorallocatealpha');
-		$img = new PLIB_GD_Image($img_width,$img_height,$truecolor);
+		$img = new FWS_GD_Image($img_width,$img_height,$truecolor);
 		
 		// set background
 		if($truecolor)
-			$trans_colour = new PLIB_GD_Color(0,0,0,127);
+			$trans_colour = new FWS_GD_Color(0,0,0,127);
 		else
 			$trans_colour = $this->_bg;
 		$img->set_background($trans_colour);
@@ -1058,12 +1058,12 @@ final class PLIB_GD_Captcha extends PLIB_Object
 	/**
 	 * Draws a random shape at the given position and given size
 	 * 
-	 * @param PLIB_GD_Image $img the image
+	 * @param FWS_GD_Image $img the image
 	 * @param int $x the x-coordinate
 	 * @param int $y the y-coordinate
 	 * @param int $width the width of the shape
 	 * @param int $height the height of the shape
-	 * @param PLIB_GD_Color $color the color to use
+	 * @param FWS_GD_Color $color the color to use
 	 */
 	private function draw_shape($img,$x,$y,$width,$height,$color)
 	{
@@ -1077,14 +1077,14 @@ final class PLIB_GD_Captcha extends PLIB_Object
 			// draws a cross with 2 lines
 			case 0:
 				imagesetthickness($imgres,2);
-				$g->draw_line(new PLIB_GD_Point($x,$y),new PLIB_GD_Point($x + $width,$y + $width),$color);
-				$g->draw_line(new PLIB_GD_Point($x,$y + $height),new PLIB_GD_Point($x + $width,$y),$color);
+				$g->draw_line(new FWS_GD_Point($x,$y),new FWS_GD_Point($x + $width,$y + $width),$color);
+				$g->draw_line(new FWS_GD_Point($x,$y + $height),new FWS_GD_Point($x + $width,$y),$color);
 				imagesetthickness($imgres,1);
 				break;
 			// a filled ellipse
 			case 1:
-				$center = new PLIB_GD_Point($x + $width / 2,$y + $height / 2);
-				$ellipse = new PLIB_GD_Ellipse($center,new PLIB_GD_Dimension($width,$height));
+				$center = new FWS_GD_Point($x + $width / 2,$y + $height / 2);
+				$ellipse = new FWS_GD_Ellipse($center,new FWS_GD_Dimension($width,$height));
 				$g->get_ellipse_view($ellipse)->fill($color);
 				break;
 			// a filled triangle
@@ -1098,13 +1098,13 @@ final class PLIB_GD_Captcha extends PLIB_Object
 				break;
 			// a filled rectangle
 			case 3:
-				$rect = new PLIB_GD_Rectangle($x,$y,$width,$height);
+				$rect = new FWS_GD_Rectangle($x,$y,$width,$height);
 				$g->get_rect_view($rect)->fill($color);
 				break;
 			// a filled ellipse
 			case 4:
-				$center = new PLIB_GD_Point($x + $width / 2,$y + $height / 2);
-				$ellipse = new PLIB_GD_Ellipse($center,new PLIB_GD_Dimension($width,$height));
+				$center = new FWS_GD_Point($x + $width / 2,$y + $height / 2);
+				$ellipse = new FWS_GD_Ellipse($center,new FWS_GD_Dimension($width,$height));
 				$g->get_ellipse_view($ellipse)->fill($color);
 				break;
 		}

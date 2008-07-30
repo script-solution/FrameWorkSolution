@@ -3,7 +3,7 @@
  * Contains the DatabaseConnection-exception
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The DatabaseConnectionException indicates that an error occurred while trying to
  * connect to the database
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Exceptions_DatabaseConnection extends PLIB_Exceptions_Critical
+final class FWS_Exceptions_DatabaseConnection extends FWS_Exceptions_Critical
 {
 	/**
 	 * Constructor

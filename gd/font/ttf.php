@@ -3,7 +3,7 @@
  * Contains the captcha-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a TTF-font
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.font
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Font_TTF extends PLIB_Object implements PLIB_GD_Font
+final class FWS_GD_Font_TTF extends FWS_Object implements FWS_GD_Font
 {
 	/**
 	 * The folder of the font-file
@@ -50,7 +50,7 @@ final class PLIB_GD_Font_TTF extends PLIB_Object implements PLIB_GD_Font
 		parent::__construct();
 		
 		if(empty($file) || !is_file($file))
-			PLIB_Helper::error('"'.$file.'" is no file!');
+			FWS_Helper::error('"'.$file.'" is no file!');
 		
 		$this->_folder = dirname($file).'/';
 		$this->_name = basename($file);
@@ -101,7 +101,7 @@ final class PLIB_GD_Font_TTF extends PLIB_Object implements PLIB_GD_Font
 		
 		$min_y = min($bounds[1],$bounds[3],$bounds[5],$bounds[7]);
 		$max_y = max($bounds[1],$bounds[3],$bounds[5],$bounds[7]);
-		return new PLIB_GD_Dimension($max_x - $min_x,$max_y - $min_y);
+		return new FWS_GD_Dimension($max_x - $min_x,$max_y - $min_y);
 	}
 	
 	public function draw($img,$text,$attr,$pos,$angle = 0)
@@ -137,7 +137,7 @@ final class PLIB_GD_Font_TTF extends PLIB_Object implements PLIB_GD_Font
 		$filename = $this->_name;
 		
 		// correct folder and filename if necessary
-		if($folder != '' && PLIB_String::substr($folder,-1,1) != '/')
+		if($folder != '' && FWS_String::substr($folder,-1,1) != '/')
 			$folder .= '/';
 	
 		// ensure it is a file
@@ -154,7 +154,7 @@ final class PLIB_GD_Font_TTF extends PLIB_Object implements PLIB_GD_Font
 		preg_match('/[0-9\.]+/',$gd['GD Version'],$result);
 		if($result[0] < '2.0.18')
 		{
-			$file_without_ext = PLIB_String::substr($filename,0,PLIB_String::strrpos($filename,'.'));
+			$file_without_ext = FWS_String::substr($filename,0,FWS_String::strrpos($filename,'.'));
 			$ttf_font					= $file_without_ext;
 			if(!@putenv('GDFONTPATH='.$folder))
 				$ttf_font				= $folder.$filename;

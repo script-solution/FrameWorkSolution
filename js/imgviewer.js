@@ -2,7 +2,7 @@
  * Contains the javascript image-viewer functions
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -39,7 +39,7 @@ var ivConfig = {
  * @param int blockPadding how much padding do you have for the block? (in pixel) (default=0)
  * @param string errorMsg the message to display if the image can't be loaded
  */
-function PLIB_configureImageViewer(showBG,bgOpacity,bgFadeSteps,imgFadeSteps,imgResizeSteps,
+function FWS_configureImageViewer(showBG,bgOpacity,bgFadeSteps,imgFadeSteps,imgResizeSteps,
 	timeout,initialBlockSize,loadingImg,blockPadding,errorMsg)
 {
 	ivConfig.showBG = showBG;
@@ -56,30 +56,30 @@ function PLIB_configureImageViewer(showBG,bgOpacity,bgFadeSteps,imgFadeSteps,img
 
 /**
  * Shows the image from the given URL. The complete page will get a background with the defined
- * opacity. The id of the background-div is "plib_image_viewer_bg". So you can specify
+ * opacity. The id of the background-div is "fws_image_viewer_bg". So you can specify
  * CSS-attributes for it.
- * The image will be loaded in another div-area, that has the id "plib_image_viewer". As soon as
+ * The image will be loaded in another div-area, that has the id "fws_image_viewer". As soon as
  * the image is loaded it will be resized smoothly to the complete size. A click on it hides it.
- * The image will get the id "plib_image_viewer_img".
+ * The image will get the id "fws_image_viewer_img".
  *
- * Note that you can configure many values with PLIB_configureImageViewer().
+ * Note that you can configure many values with FWS_configureImageViewer().
  *
  * @param string imgURL the URL of the image
  */
-function PLIB_showImage(imgURL)
+function FWS_showImage(imgURL)
 {
-	var size = PLIB_getWindowSize();
-	var psize = PLIB_getPageSize();
-	var offset = PLIB_getScrollOffset();
+	var size = FWS_getWindowSize();
+	var psize = FWS_getPageSize();
+	var offset = FWS_getScrollOffset();
 	
 	// create background
 	if(ivConfig.showBG)
 	{
 		var bg;
-		if((bg = PLIB_getElement('plib_image_viewer_bg')) == null)
+		if((bg = FWS_getElement('fws_image_viewer_bg')) == null)
 		{
 			bg = document.createElement('div');
-			bg.id = 'plib_image_viewer_bg';
+			bg.id = 'fws_image_viewer_bg';
 			bg.style.width = size[0] + 'px';
 			bg.style.height = psize[1]  + 'px';
 			document.getElementsByTagName('body')[0].appendChild(bg);
@@ -99,21 +99,21 @@ function PLIB_showImage(imgURL)
 			bg.style.left = '0px';
 			bg.style.top = '0px';
 		}
-		PLIB_setOpacity(bg,0);
-		PLIB_showElement(bg.id);
+		FWS_setOpacity(bg,0);
+		FWS_showElement(bg.id);
 	}
 
 	// create image-container
 	var el;
-	if((el = PLIB_getElement('plib_image_viewer')) == null)
+	if((el = FWS_getElement('fws_image_viewer')) == null)
 	{
 		el = document.createElement('div');
 		el.style.position = 'absolute';
-		el.id = 'plib_image_viewer';
+		el.id = 'fws_image_viewer';
 		el.style.overflow = 'hidden';
 		el.onclick = function() {
-			PLIB_hideElement(bg.id);
-			PLIB_hideElement(el.id);
+			FWS_hideElement(bg.id);
+			FWS_hideElement(el.id);
 		};
 		document.getElementsByTagName('body')[0].appendChild(el);
 	}
@@ -128,9 +128,9 @@ function PLIB_showImage(imgURL)
 	el.style.left = (size[0] / 2 - iinitialSize / 2 + offset[0]) + 'px';
 	
 	// set content
-	var html = '<img id="plib_image_viewer_img" src="" />';
+	var html = '<img id="fws_image_viewer_img" src="" />';
 	if(ivConfig.loadingImg != null)
-		html += '<img id="plib_image_viewer_loadimg" src="' + ivConfig.loadingImg + '" />';
+		html += '<img id="fws_image_viewer_loadimg" src="' + ivConfig.loadingImg + '" />';
 	el.innerHTML = html;
 	
 	// fade in the background
@@ -138,14 +138,14 @@ function PLIB_showImage(imgURL)
 		_fadeIn(bg.id,ivConfig.bgOpacity,ivConfig.bgFadeSteps);
 	
 	// fade in the image and resize it as soon as the image has been loaded
-	var img = PLIB_getElement('plib_image_viewer_img');
+	var img = FWS_getElement('fws_image_viewer_img');
 	img.style.visibility = 'hidden';
-	PLIB_setOpacity(img,0);
+	FWS_setOpacity(img,0);
 	
 	// set the position of the loading-image
 	if(ivConfig.loadingImg != null)
 	{
-		var loadImg = PLIB_getElement('plib_image_viewer_loadimg');
+		var loadImg = FWS_getElement('fws_image_viewer_loadimg');
 		loadImg.style.position = 'absolute';
 		loadImg.style.left = ((iinitialSize + ivConfig.blockPadding * 2) / 2 - loadImg.width / 2) + 'px';
 		loadImg.style.top = ((iinitialSize + ivConfig.blockPadding * 2) / 2 - loadImg.height / 2) + 'px';
@@ -195,17 +195,17 @@ function _fadeIn(elId,max,steps,i)
 	if(typeof i == 'undefined')
 		i = 0;
 
-	var el = PLIB_getElement(elId);
+	var el = FWS_getElement(elId);
 	if(i < steps)
 	{
-		PLIB_setOpacity(el,i * max / steps);
+		FWS_setOpacity(el,i * max / steps);
 		window.setTimeout(
 			'_fadeIn("' + elId + '",' + max + ',' + steps + ',' + (i + 1) + ')',
 			ivConfig.timeout
 		);
 	}
 	else
-		PLIB_setOpacity(el,max);
+		FWS_setOpacity(el,max);
 }
 
 /**
@@ -224,8 +224,8 @@ function _smoothResize(elId,imgId,width,height,steps,i)
 	if(typeof i == 'undefined')
 		i = 0;
 	
-	var el = PLIB_getElement(elId);
-	var img = PLIB_getElement(imgId);
+	var el = FWS_getElement(elId);
+	var img = FWS_getElement(imgId);
 	var csize = [parseInt(el.style.width),parseInt(el.style.height)];
 	var wdiff = width - csize[0];
 	var hdiff = height - csize[1];

@@ -3,7 +3,7 @@
  * Contains the MySQL-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -13,13 +13,13 @@
  * The MySQL-interface. This makes it easier to perform DB-actions.
  * It raises errors automaticly and performs debugging-operations if enabled
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_MySQL extends PLIB_Singleton
+final class FWS_MySQL extends FWS_Singleton
 {
 	/**
-	 * @return PLIB_MySQL the instance of this class (only one is allowed!)
+	 * @return FWS_MySQL the instance of this class (only one is allowed!)
 	 */
 	public static function get_instance()
 	{
@@ -50,7 +50,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	/**
 	 * The timer for internal time-measurement
 	 *
-	 * @var PLIB_Profiler
+	 * @var FWS_Profiler
 	 */
 	private $_profiler;
 
@@ -82,7 +82,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	{
 		parent::__construct();
 		
-		$this->_profiler = new PLIB_Profiler();
+		$this->_profiler = new FWS_Profiler();
 	}
 
 	/**
@@ -93,7 +93,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param string $mysql_password the password to the MySQL-DB
 	 * @param string $mysql_database the database with which you want to work
 	 * @param boolean $die_on_no_db do you want to exit the script if the database-selection failed?
-	 * @throws PLIB_Exceptions_DatabaseConnection if the connection fails or the database can't be
+	 * @throws FWS_Exceptions_DatabaseConnection if the connection fails or the database can't be
 	 * 	selected
 	 */
 	public function connect($mysql_host,$mysql_login,$mysql_password,$mysql_database,
@@ -104,11 +104,11 @@ final class PLIB_MySQL extends PLIB_Singleton
 			return;
 		
 		if(!$this->_con = @mysql_connect($mysql_host,$mysql_login,$mysql_password,true))
-			throw new PLIB_Exceptions_DatabaseConnection(mysql_error(),mysql_errno());
+			throw new FWS_Exceptions_DatabaseConnection(mysql_error(),mysql_errno());
 
 		if(!@mysql_select_db($mysql_database,$this->_con) && $die_on_no_db)
 		{
-			throw new PLIB_Exceptions_DatabaseConnection(
+			throw new FWS_Exceptions_DatabaseConnection(
 				mysql_error($this->_con),mysql_errno($this->_con)
 			);
 		}
@@ -151,7 +151,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	public function init($charset)
 	{
 		if(empty($charset))
-			PLIB_Helper::def_error('notempty','charset',$charset);
+			FWS_Helper::def_error('notempty','charset',$charset);
 
 		$version = $this->get_server_version();
 		if($version >= '4.1')
@@ -233,7 +233,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param string $sql the sql-statement
 	 * @param boolean $error do you want to stop if an error occurred? (default is true)
 	 * @return array an associative array with the first row
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_fetch($sql,$error = true)
 	{
@@ -249,7 +249,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 			$err = mysql_error($this->_con);
 			$errno = mysql_errno($this->_con);
 			$this->rollback_transaction();
-			throw new PLIB_Exceptions_DatabaseQuery($err,$sql,$errno);
+			throw new FWS_Exceptions_DatabaseQuery($err,$sql,$errno);
 		}
 
 		$this->_total_queries++;
@@ -276,7 +276,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param string $sql the SQL-query
 	 * @param boolean $error do you want to stop if an error occurred? (default is true)
 	 * @return resource the result-resource
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_qry($sql,$error = true)
 	{
@@ -289,7 +289,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 			$err = mysql_error($this->_con);
 			$errno = mysql_errno($this->_con);
 			$this->rollback_transaction();
-			throw new PLIB_Exceptions_DatabaseQuery($err,$sql,$errno);
+			throw new FWS_Exceptions_DatabaseQuery($err,$sql,$errno);
 		}
 
 		$this->_total_queries++;
@@ -318,15 +318,15 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param string $where the where statement
 	 * @param boolean $error do you want to stop if an error occurred? (default is true)
 	 * @return int the number of found rows
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_num($table,$row,$where,$error = true)
 	{
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 
 		if(empty($row))
-			PLIB_Helper::def_error('notempty','row',$row);
+			FWS_Helper::def_error('notempty','row',$row);
 
 		$sql = 'SELECT COUNT('.$row.') as num FROM '.$table.' '.$where.' LIMIT 1';
 		$qry = $this->sql_qry($sql,$error);
@@ -355,15 +355,15 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param array $values an associative array with the fields to update
 	 * @param boolean $error raise an error if the query fails?
 	 * @return resource the result-resource of mysql_query()
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_insert($table,$values,$error = true)
 	{
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 
 		if(!is_array($values) || count($values) == 0)
-			PLIB_Helper::def_error('array>0','values',$values);
+			FWS_Helper::def_error('array>0','values',$values);
 
 		$sql = 'INSERT INTO '.$table.' SET '.$this->get_update_fields($values);
 		return $this->sql_qry($sql,$error);
@@ -392,15 +392,15 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param array $values an associative array with the fields to update
 	 * @param boolean $error raise an error if the query fails?
 	 * @return resource the result-resource of mysql_query()
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_update($table,$where,$values,$error = true)
 	{
 		if(empty($table))
-			PLIB_Helper::def_error('notempty','table',$table);
+			FWS_Helper::def_error('notempty','table',$table);
 
 		if(!is_array($values) || count($values) == 0)
-			PLIB_Helper::def_error('array>0','values',$values);
+			FWS_Helper::def_error('array>0','values',$values);
 
 		$sql = 'UPDATE '.$table.' SET '.$this->get_update_fields($values);
 		$sql .= ' '.$where;
@@ -414,7 +414,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param string $sql the SQL-query
 	 * @param boolean $error die on error?
 	 * @return array a numeric array with all rows or false if an error occurred
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function sql_rows($sql,$error = true)
 	{
@@ -438,7 +438,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 * @param boolean $return do you want to get the result or print it?
 	 * @return mixed the result-table if <var>$return</var> == true or an empty
 	 * 	string
-	 * @throws PLIB_Exceptions_DatabaseQuery if the query fails (and $error is true)
+	 * @throws FWS_Exceptions_DatabaseQuery if the query fails (and $error is true)
 	 */
 	public function print_result_from_sql($sql,$return = false)
 	{
@@ -468,8 +468,8 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$res .= ' table.sql_debug td {border: 1px solid #bbb; padding: 3px;}'."\n";
 		$res .= ' table.sql_debug thead td {background-color: #008; color: #fff;}'."\n";
 		$res .= '</style>'."\n";
-		$res .= '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/basic.js"></script>'."\n";
-		$res .= '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/table_sorter.js">';
+		$res .= '<script type="text/javascript" src="'.FWS_Path::client_fw().'js/basic.js"></script>'."\n";
+		$res .= '<script type="text/javascript" src="'.FWS_Path::client_fw().'js/table_sorter.js">';
 		$res .= '</script>'."\n";
 		$res .= '<table id="sql_debug" class="sql_debug" width="100%">'."\n";
 		
@@ -499,7 +499,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$res .= ' </tbody>'."\n";
 		$res .= '</table>'."\n";
 
-		$res .= '<script type="text/javascript">var sorter = new PLIB_TableSorter("sql_debug");';
+		$res .= '<script type="text/javascript">var sorter = new FWS_TableSorter("sql_debug");';
 		$res .= '</script>'."\n";
 
 		$this->sql_free($qry);
@@ -527,7 +527,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 			$where .= $link.' ('.$part.')';
 		
 		if($where != '')
-			$where = ' WHERE '.PLIB_String::substr($where,PLIB_String::strlen($link));
+			$where = ' WHERE '.FWS_String::substr($where,FWS_String::strlen($link));
 		return $where;
 	}
 
@@ -625,7 +625,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 	 */
 	public function print_performed_queries()
 	{
-		echo PLIB_PrintUtils::to_string($this->_saved_queries);
+		echo FWS_PrintUtils::to_string($this->_saved_queries);
 	}
 
 	/**
@@ -648,7 +648,7 @@ final class PLIB_MySQL extends PLIB_Singleton
 		$sql = '';
 		foreach($values as $k => $v)
 			$sql .= '`'.$k.'` = '.$this->get_sql_value($v).',';
-		return PLIB_String::substr($sql,0,-1);
+		return FWS_String::substr($sql,0,-1);
 	}
 	
 	/**

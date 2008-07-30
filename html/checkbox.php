@@ -3,7 +3,7 @@
  * Contains the checkbox-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a checkbox
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	html
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_HTML_Checkbox extends PLIB_HTML_FormElement
+class FWS_HTML_Checkbox extends FWS_HTML_FormElement
 {
 	/**
 	 * The text of the checkbox

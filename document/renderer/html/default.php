@@ -3,7 +3,7 @@
  * Contains the default html-renderer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -26,11 +26,11 @@
  * It contains also the breadcrumbs which can be added step by step and be build to a string
  * at the end.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Renderer_HTML_Base
+abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_HTML_Base
 {
 	/**
 	 * The template that should be displayed
@@ -85,7 +85,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	/**
 	 * The action-performer-object
 	 *
-	 * @var PLIB_Actions_Performer
+	 * @var FWS_Actions_Performer
 	 */
 	protected $_action_perf;
 	
@@ -100,7 +100,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 			
 			$this->_action_perf = $this->load_action_perf();
 		}
-		catch(PLIB_Exceptions_Critical $e)
+		catch(FWS_Exceptions_Critical $e)
 		{
 			echo $e;
 		}
@@ -194,7 +194,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	public final function set_template($tpl)
 	{
 		if(empty($tpl))
-			PLIB_Helper::def_error('notempty','tpl',$tpl);
+			FWS_Helper::def_error('notempty','tpl',$tpl);
 		
 		$this->_template = $tpl;
 	}
@@ -224,7 +224,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	 */
 	public final function add_action($id,$name)
 	{
-		$doc = PLIB_Props::get()->doc();
+		$doc = FWS_Props::get()->doc();
 		$this->_action_perf->add_actions($doc->get_module_name(),array($id => $name));
 	}
 	
@@ -235,18 +235,18 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	 * @param int $id the id of the action
 	 * @param string $module the module-name
 	 * @param string $name the name of the action
-	 * @param string $folder the folder of the modules (starting at PLIB_Path::server_app())
-	 * @return PLIB_Actions_Base the action or null if an error occurred
+	 * @param string $folder the folder of the modules (starting at FWS_Path::server_app())
+	 * @return FWS_Actions_Base the action or null if an error occurred
 	 * @see add_action()
 	 */
 	public final function add_module_action($id,$module,$name,$folder)
 	{
-		PLIB_FileUtils::ensure_trailing_slash($folder);
-		$cfolder = PLIB_Path::server_app().$folder.$module;
+		FWS_FileUtils::ensure_trailing_slash($folder);
+		$cfolder = FWS_Path::server_app().$folder.$module;
 		if(!is_dir($cfolder))
-			PLIB_Helper::error('"'.$cfolder.'" is no folder!');
+			FWS_Helper::error('"'.$cfolder.'" is no folder!');
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$file = $cfolder.'/action_'.$name.'.php';
 		if(is_file($file))
@@ -262,7 +262,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 			}
 		}
 		else
-			PLIB_Helper::error('"'.$file.'" is no file!');
+			FWS_Helper::error('"'.$file.'" is no file!');
 		
 		return null;
 	}
@@ -292,7 +292,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	/**
 	 * Generates the location-string
 	 *
-	 * @param PLIB_Document_Renderer_HTML_Default $renderer the current page
+	 * @param FWS_Document_Renderer_HTML_Default $renderer the current page
 	 * @param string $linkclass the linkclass to use. Use an empty string if you want to use a class.
 	 * @param string $sep the separator ( &raquo; by default)
 	 * @return array the position and document-title
@@ -322,18 +322,18 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	 * Should include, instantiate and return the action-performer-object.
 	 * You may overwrite this method to change the behaviour
 	 *
-	 * @return PLIB_Actions_Performer the action-performer
+	 * @return FWS_Actions_Performer the action-performer
 	 */
 	protected function load_action_perf()
 	{
-		$c = new PLIB_Actions_Performer();
+		$c = new FWS_Actions_Performer();
 		return $c;
 	}
 	
 	/**
-	 * @see PLIB_Document_Renderer::render()
+	 * @see FWS_Document_Renderer::render()
 	 *
-	 * @param PLIB_Document $doc
+	 * @param FWS_Document $doc
 	 */
 	public final function render($doc)
 	{
@@ -363,13 +363,13 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 			$this->before_render();
 			if($this->_template !== null)
 			{
-				$tpl = PLIB_Props::get()->tpl();
+				$tpl = FWS_Props::get()->tpl();
 				$res .= $tpl->parse_template($this->_template);
 			}
 			
 			$this->before_finish();
 		}
-		catch(PLIB_Exceptions_Critical $e)
+		catch(FWS_Exceptions_Critical $e)
 		{
 			$res = $e->__toString();
 		}
@@ -422,8 +422,8 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	 */
 	protected function content()
 	{
-		$doc = PLIB_Props::get()->doc();
-		$tpl = PLIB_Props::get()->tpl();
+		$doc = FWS_Props::get()->doc();
+		$tpl = FWS_Props::get()->tpl();
 		
 		// run the module
 		$tpl->set_template($this->get_template());
@@ -444,7 +444,7 @@ abstract class PLIB_Document_Renderer_HTML_Default extends PLIB_Document_Rendere
 	protected abstract function footer();
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

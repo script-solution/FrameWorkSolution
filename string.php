@@ -3,14 +3,14 @@
  * Contains a class with string-methods to support multibyte-strings
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 // set the default value
-PLIB_String::set_use_mb_functions(function_exists('mb_strlen'));
+FWS_String::set_use_mb_functions(function_exists('mb_strlen'));
 
 /**
  * A class which provides all string-functions that are affected of multibyte issues.
@@ -18,10 +18,10 @@ PLIB_String::set_use_mb_functions(function_exists('mb_strlen'));
  * If your application uses a multibyte charset you <b>should</b> use this class instead
  * of the default PHP string-functions!
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_String extends PLIB_UtilBase
+final class FWS_String extends FWS_UtilBase
 {
 	/**
 	 * Indicates wether multibyte-functions should be used
@@ -35,7 +35,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function get_use_mb_functions()
 	{
-		return PLIB_String::$_use_mb;
+		return FWS_String::$_use_mb;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function set_use_mb_functions($use_mb,$encoding = 'UTF-8')
 	{
-		PLIB_String::$_use_mb = $use_mb;
+		FWS_String::$_use_mb = $use_mb;
 		if($use_mb)
 			mb_internal_encoding($encoding);
 	}
@@ -60,7 +60,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function substr_count($haystack,$needle)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_substr_count($haystack,$needle);
 		
 		return substr_count($haystack,$needle);
@@ -74,7 +74,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function strtoupper($str)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_strtoupper($str);
 		
 		return strtoupper($str);
@@ -88,7 +88,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function strtolower($str)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_strtolower($str);
 		
 		return strtolower($str);
@@ -105,7 +105,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function strrpos($haystack,$needle,$offset = 0)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_strrpos($haystack,$needle,$offset);
 		
 		return strrpos($haystack,$needle,$offset);
@@ -122,7 +122,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function strpos($haystack,$needle,$offset = 0)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_strpos($haystack,$needle,$offset);
 		
 		return strpos($haystack,$needle,$offset);
@@ -139,7 +139,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function stripos($haystack,$needle,$offset = 0)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_stripos($haystack,$needle,$offset);
 		
 		return stripos($haystack,$needle,$offset);
@@ -153,7 +153,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function strlen($str)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_strlen($str);
 		
 		return strlen($str);
@@ -176,7 +176,7 @@ final class PLIB_String extends PLIB_UtilBase
 	public static function mail($to,$subject,$message,$additional_headers = '',
 		$additional_parameters = '')
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 			return mb_send_mail($to,$subject,$message,$additional_headers,$additional_parameters);
 		
 		return mail($to,$subject,$message,$additional_headers,$additional_parameters);
@@ -192,7 +192,7 @@ final class PLIB_String extends PLIB_UtilBase
 	 */
 	public static function substr($str,$start,$len = null)
 	{
-		if(PLIB_String::$_use_mb)
+		if(FWS_String::$_use_mb)
 		{
 			// it seems as if there is no other way than checking here if the parameter
 			// has been specified. 0 and null lead to other behavior...
@@ -218,19 +218,19 @@ final class PLIB_String extends PLIB_UtilBase
 	public static function starts_with($str,$start,$offset = 0)
 	{
 		if(!is_string($str))
-			PLIB_Helper::def_error('string','str',$str);
+			FWS_Helper::def_error('string','str',$str);
 		if(!is_string($start))
-			PLIB_Helper::def_error('string','start',$start);
+			FWS_Helper::def_error('string','start',$start);
 		
-		$ilen = PLIB_String::strlen($str);
-		$slen = PLIB_String::strlen($start);
+		$ilen = FWS_String::strlen($str);
+		$slen = FWS_String::strlen($start);
 		if($slen == 0)
-			PLIB_Helper::error('strlen($start) has to be > 0!');
+			FWS_Helper::error('strlen($start) has to be > 0!');
 		
-		if(!PLIB_Helper::is_integer($offset) || $offset < 0 || ($offset >= $ilen && $offset > 0))
-			PLIB_Helper::def_error('numbetween','offset',0,$ilen - 1,$offset);
+		if(!FWS_Helper::is_integer($offset) || $offset < 0 || ($offset >= $ilen && $offset > 0))
+			FWS_Helper::def_error('numbetween','offset',0,$ilen - 1,$offset);
 		
-		return PLIB_String::substr($str,$offset,$slen) == $start;
+		return FWS_String::substr($str,$offset,$slen) == $start;
 	}
 	
 	/**
@@ -243,15 +243,15 @@ final class PLIB_String extends PLIB_UtilBase
 	public static function ends_with($str,$end)
 	{
 		if(!is_string($str))
-			PLIB_Helper::def_error('string','str',$str);
+			FWS_Helper::def_error('string','str',$str);
 		if(!is_string($end))
-			PLIB_Helper::def_error('string','end',$end);
+			FWS_Helper::def_error('string','end',$end);
 		
-		$elen = PLIB_String::strlen($end);
+		$elen = FWS_String::strlen($end);
 		if($elen == 0)
-			PLIB_Helper::error('strlen($end) has to be > 0!');
+			FWS_Helper::error('strlen($end) has to be > 0!');
 		
-		return PLIB_String::substr($str,-$elen) == $end;
+		return FWS_String::substr($str,-$elen) == $end;
 	}
 	
 	/**

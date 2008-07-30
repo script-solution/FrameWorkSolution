@@ -3,7 +3,7 @@
  * Contains the ellipse-view-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,30 +13,30 @@
 /**
  * The view for a ellipse which allows the painting of it
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_View_Ellipse extends PLIB_GD_View
+class FWS_GD_View_Ellipse extends FWS_GD_View
 {
 	/**
 	 * The ellipse
 	 *
-	 * @var PLIB_GD_Ellipse
+	 * @var FWS_GD_Ellipse
 	 */
 	protected $_ellipse;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_Image $img the image
-	 * @param PLIB_GD_Ellipse $ellipse the ellipse
+	 * @param FWS_GD_Image $img the image
+	 * @param FWS_GD_Ellipse $ellipse the ellipse
 	 */
 	public function __construct($img,$ellipse)
 	{
 		parent::__construct($img);
-		if(!($ellipse instanceof PLIB_GD_Ellipse))
-			PLIB_Helper::def_error('instance','ellipse','PLIB_GD_Ellipse',$ellipse);
+		if(!($ellipse instanceof FWS_GD_Ellipse))
+			FWS_Helper::def_error('instance','ellipse','FWS_GD_Ellipse',$ellipse);
 		
 		$this->_ellipse = $ellipse;
 	}
@@ -44,7 +44,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Draws the ellipse with the given color
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @return the result of imageellipse()
 	 */
 	public final function draw($color)
@@ -55,7 +55,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Draws the given part of the ellipse with given color
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @param int $start the start-degree
 	 * @param int $end the end-degree
 	 * @return the result of imagearc()
@@ -68,7 +68,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Fills the ellipse with the given color
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @return the result of imagefilledellipse()
 	 */
 	public final function fill($color)
@@ -79,7 +79,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Fills the given part of the ellipse with given color
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @param int $start the start-degree
 	 * @param int $end the end-degree
 	 * @param int $type the type: IMG_ARC_PIE, IMG_ARC_CHORD, IMG_ARC_NOFILL, IMG_ARC_EDGED
@@ -98,7 +98,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	 */
 	public final function fill_colorfade($colors,$step = 1)
 	{
-		$cf = new PLIB_GD_ColorFade(360,360 / $step,$colors);
+		$cf = new FWS_GD_ColorFade(360,360 / $step,$colors);
 		$cfcolors = $cf->get_colors();
 		
 		$angle = 0;
@@ -121,14 +121,14 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Does the actual painting
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @param string $func an empty string for draw() and 'filled' for fill()
 	 * @return the result of image*ellipse()
 	 */
 	private function _paint($color,$func)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		list($x,$y) = $this->_ellipse->get_center()->get();
 		$size = $this->_ellipse->get_size();
@@ -140,7 +140,7 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	/**
 	 * Does the actual painting (a part of the ellipse)
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @param int $start the start-degree
 	 * @param int $end the end-degree
 	 * @param string $func an empty string for draw() and 'filled' for fill()
@@ -150,11 +150,11 @@ class PLIB_GD_View_Ellipse extends PLIB_GD_View
 	 */
 	private function _paint_part($color,$start,$end,$func,$type = -1)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		if($func != '' && !in_array($type,array(IMG_ARC_PIE,IMG_ARC_CHORD,IMG_ARC_NOFILL,IMG_ARC_EDGED)))
 		{
-			PLIB_Helper::def_error('inarray','type',
+			FWS_Helper::def_error('inarray','type',
 				array(IMG_ARC_PIE,IMG_ARC_CHORD,IMG_ARC_NOFILL,IMG_ARC_EDGED),$type);
 		}
 		

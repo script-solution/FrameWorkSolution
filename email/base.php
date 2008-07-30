@@ -3,7 +3,7 @@
  * Contains the email-base-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The base-class for sending emails. Contains the attributes for the emails (subject, body,
  * receiver, ...) and provides methods to change them
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	email
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Email_Base extends PLIB_Object
+abstract class FWS_Email_Base extends FWS_Object
 {
 	/**
 	 * the subject of the email
@@ -67,7 +67,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	 *
 	 * @var string
 	 */
-	private $_xmailer = 'PHPLib';
+	private $_xmailer = 'FrameWorkSolution';
 	
 	/**
 	 * The charset for the email
@@ -129,7 +129,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_subject($value)
 	{
 		if(empty($value))
-			PLIB_Helper::def_error('notempty','value',$value);
+			FWS_Helper::def_error('notempty','value',$value);
 		
 		$this->_subject = $value;
 	}
@@ -153,8 +153,8 @@ abstract class PLIB_Email_Base extends PLIB_Object
 		foreach($recipients as $recipient)
 		{
 			$recipient = trim($recipient);
-			if(!PLIB_StringHelper::is_valid_email($recipient))
-				PLIB_Helper::error('The email-address "'.$recipient.'" is invalid!');
+			if(!FWS_StringHelper::is_valid_email($recipient))
+				FWS_Helper::error('The email-address "'.$recipient.'" is invalid!');
 		
 			$this->_recipient .= $recipient;
 		}
@@ -176,7 +176,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_message($value)
 	{
 		if(empty($value))
-			PLIB_Helper::def_error('notempty','value',$value);
+			FWS_Helper::def_error('notempty','value',$value);
 		
 		$this->_message = $value;
 	}
@@ -196,8 +196,8 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	 */
 	public final function set_from($value)
 	{
-		if(!PLIB_StringHelper::is_valid_email($value))
-			PLIB_Helper::error('The email-address "'.$value.'" is invalid!');
+		if(!FWS_StringHelper::is_valid_email($value))
+			FWS_Helper::error('The email-address "'.$value.'" is invalid!');
 		
 		$this->_from = $value;
 	}
@@ -226,7 +226,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function add_bcc_recipient($email = '')
 	{
 		if(empty($email))
-			PLIB_Helper::def_error('notempty','email',$email);
+			FWS_Helper::def_error('notempty','email',$email);
 
 		$this->_bcc_recipients[] = $email;
 	}
@@ -239,7 +239,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_bcc_recipients(&$recipients)
 	{
 		if(!is_array($recipients))
-			PLIB_Helper::def_error('array','recipients',$recipients);
+			FWS_Helper::def_error('array','recipients',$recipients);
 
 		$this->_bcc_recipients = &$recipients;
 	}
@@ -260,7 +260,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_content_type($content_type)
 	{
 		if(empty($content_type))
-			PLIB_Helper::def_error('notempty','content_type',$content_type);
+			FWS_Helper::def_error('notempty','content_type',$content_type);
 		
 		$this->_content_type = $content_type;
 	}
@@ -281,7 +281,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_charset($charset)
 	{
 		if(empty($charset))
-			PLIB_Helper::def_error('notempty','charset',$charset);
+			FWS_Helper::def_error('notempty','charset',$charset);
 		
 		$this->_charset = $charset;
 	}
@@ -302,7 +302,7 @@ abstract class PLIB_Email_Base extends PLIB_Object
 	public final function set_xmailer($xmailer)
 	{
 		if(empty($xmailer))
-			PLIB_Helper::def_error('notempty','xmailer',$xmailer);
+			FWS_Helper::def_error('notempty','xmailer',$xmailer);
 		
 		$this->_xmailer = $xmailer;
 	}

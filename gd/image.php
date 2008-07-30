@@ -3,7 +3,7 @@
  * Contains the point-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -15,41 +15,41 @@
  * the image and provides methods for saving the image, sending it to the browser, rotate
  * it and other stuff.
  * <br>
- * Additionally you have access to the corresponding {@link PLIB_GD_Graphics}-object which
+ * Additionally you have access to the corresponding {@link FWS_GD_Graphics}-object which
  * provides many methods to paint something on the image.
  * <br>
  * An example for the usage:
  * <code>
- * $img = new PLIB_GD_Image(100,80);
+ * $img = new FWS_GD_Image(100,80);
  * $g = $img->get_graphics();
- * $g->draw_line(new PLIB_GD_Point(0,0),new PLIB_GD_Point(100,80),PLIB_GD_Color::$RED);
+ * $g->draw_line(new FWS_GD_Point(0,0),new FWS_GD_Point(100,80),FWS_GD_Color::$RED);
  * $img->send('png');
  * $img->destroy();
  * </code>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_GD_Image extends PLIB_Object
+final class FWS_GD_Image extends FWS_Object
 {
 	/**
 	 * Loads the image of given type from file
 	 *
 	 * @param string $file the file to load
 	 * @param string $type the image-type: jpeg,png,gif,wbmp,xbm
-	 * @return PLIB_GD_Image the image-instance
+	 * @return FWS_GD_Image the image-instance
 	 */
 	public static function load_from($file,$type = 'png')
 	{
 		if(!is_file($file))
-			PLIB_Helper::error('"'.$file.'" is no file!');
+			FWS_Helper::error('"'.$file.'" is no file!');
 		if(!in_array($type,array('jpeg','png','gif','wbmp','xbm')))
-			PLIB_Helper::def_error('inarray','type',array('jpeg','png','gif','wbmp','xbm'),$type);
+			FWS_Helper::def_error('inarray','type',array('jpeg','png','gif','wbmp','xbm'),$type);
 		
 		$func = 'imagecreatefrom'.$type;
 		$image = $func($file);
-		$img = new PLIB_GD_Image(1,1);
+		$img = new FWS_GD_Image(1,1);
 		$img->_width = imagesx($image);
 		$img->_height = imagesy($image);
 		$img->_image = $image;
@@ -80,7 +80,7 @@ final class PLIB_GD_Image extends PLIB_Object
 	/**
 	 * The background-color (if known)
 	 *
-	 * @var PLIB_GD_Color
+	 * @var FWS_GD_Color
 	 */
 	private $_bgcolor = null;
 	
@@ -102,10 +102,10 @@ final class PLIB_GD_Image extends PLIB_Object
 	{
 		parent::__construct();
 		
-		if(!PLIB_Helper::is_integer($width) || $width <= 0)
-			PLIB_Helper::def_error('intgt0','width',$width);
-		if(!PLIB_Helper::is_integer($height) || $height <= 0)
-			PLIB_Helper::def_error('intgt0','height',$height);
+		if(!FWS_Helper::is_integer($width) || $width <= 0)
+			FWS_Helper::def_error('intgt0','width',$width);
+		if(!FWS_Helper::is_integer($height) || $height <= 0)
+			FWS_Helper::def_error('intgt0','height',$height);
 		
 		$this->_width = $width;
 		$this->_height = $height;
@@ -173,37 +173,37 @@ final class PLIB_GD_Image extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_GD_Graphics the graphics-object for this image
+	 * @return FWS_GD_Graphics the graphics-object for this image
 	 */
 	public function get_graphics()
 	{
 		if(!isset(self::$_graphics[$this->_object_id]))
-			self::$_graphics[$this->_object_id] = new PLIB_GD_Graphics($this);
+			self::$_graphics[$this->_object_id] = new FWS_GD_Graphics($this);
 		
 		return self::$_graphics[$this->_object_id];
 	}
 	
 	/**
-	 * @return PLIB_GD_Rectangle the bounds-rectangle of the image
+	 * @return FWS_GD_Rectangle the bounds-rectangle of the image
 	 */
 	public function get_bounds_rect()
 	{
-		return new PLIB_GD_Rectangle(0,0,$this->_width - 1,$this->_height - 1);
+		return new FWS_GD_Rectangle(0,0,$this->_width - 1,$this->_height - 1);
 	}
 	
 	/**
 	 * Rotates the image by the given angle
 	 *
 	 * @param int $angle the angle
-	 * @param PLIB_GD_Color $bgcolor the background-color for the rotation
+	 * @param FWS_GD_Color $bgcolor the background-color for the rotation
 	 * @param boolean $ignore_transparence if enabled transparent colors are ignored (otherwise kept)
 	 */
 	public function rotate($angle,$bgcolor,$ignore_transparence = false)
 	{
-		if(!PLIB_Helper::is_integer($angle))
-			PLIB_Helper::def_error('integer','angle',$angle);
-		if(!($bgcolor instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','bgcolor','PLIB_GD_Color',$bgcolor);
+		if(!FWS_Helper::is_integer($angle))
+			FWS_Helper::def_error('integer','angle',$angle);
+		if(!($bgcolor instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','bgcolor','FWS_GD_Color',$bgcolor);
 		
 		imagerotate($this->_image,$angle,$bgcolor->get_color($this->_image),(bool)$ignore_transparence);
 	}
@@ -211,18 +211,18 @@ final class PLIB_GD_Image extends PLIB_Object
 	/**
 	 * Waves the given rectangle in this image
 	 *
-	 * @param PLIB_GD_Rectangle $rect the rectangle to wave
+	 * @param FWS_GD_Rectangle $rect the rectangle to wave
 	 * @param float $amplitude the amplitude of the wave
 	 * @param int $period the period of the wave
 	 */
 	public function wave_region($rect,$amplitude = 4.5,$period = 30)
 	{
-		if(!($rect instanceof PLIB_GD_Rectangle))
-			PLIB_Helper::def_error('instance','rect','PLIB_GD_Rectangle',$rect);
-		if(!PLIB_Helper::is_integer($amplitude) || $amplitude <= 0)
-			PLIB_Helper::def_error('intgt0','amplitude',$amplitude);
-		if(!PLIB_Helper::is_integer($period) || $period <= 0)
-			PLIB_Helper::def_error('intgt0','period',$period);
+		if(!($rect instanceof FWS_GD_Rectangle))
+			FWS_Helper::def_error('instance','rect','FWS_GD_Rectangle',$rect);
+		if(!FWS_Helper::is_integer($amplitude) || $amplitude <= 0)
+			FWS_Helper::def_error('intgt0','amplitude',$amplitude);
+		if(!FWS_Helper::is_integer($period) || $period <= 0)
+			FWS_Helper::def_error('intgt0','period',$period);
 		
 		// cache vars of the rectangle
 		list($x,$y) = $rect->get_location()->get();
@@ -277,12 +277,12 @@ final class PLIB_GD_Image extends PLIB_Object
 	/**
 	 * Sets the background to the given color
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 */
 	public function set_background($color)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		imagefill($this->_image,0,0,$color->get_color($this->_image));
 		$this->_bgcolor = $color;

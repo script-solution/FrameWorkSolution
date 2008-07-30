@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_Input test
+ * Contains the FWS_Input test
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -11,16 +11,16 @@
  */
 
 /**
- * PLIB_Input test case.
+ * FWS_Input test case.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_InputTest extends PHPUnit_Framework_TestCase
+class FWS_InputTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * @var PLIB_Input
+	 * @var FWS_Input
 	 */
 	private $_input;
 
@@ -29,7 +29,7 @@ class PLIB_InputTest extends PHPUnit_Framework_TestCase
 	 */
 	public function __construct()
 	{
-		$this->_input = PLIB_Input::get_instance();
+		$this->_input = FWS_Input::get_instance();
 	}
 
 	/**
@@ -71,107 +71,107 @@ class PLIB_InputTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Input->correct_var()
+	 * Tests FWS_Input->correct_var()
 	 */
 	public function testCorrect_var()
 	{
-		$res = $this->_input->correct_var('#abc','get',PLIB_Input::STRING,array('a','b'),'c');
+		$res = $this->_input->correct_var('#abc','get',FWS_Input::STRING,array('a','b'),'c');
 		self::assertEquals($res,'a');
 		
-		$res = $this->_input->correct_var('#abc','get',PLIB_Input::STRING,array('x','y'),'c');
-		$res2 = $this->_input->get_var('#abc','get',PLIB_Input::STRING);
+		$res = $this->_input->correct_var('#abc','get',FWS_Input::STRING,array('x','y'),'c');
+		$res2 = $this->_input->get_var('#abc','get',FWS_Input::STRING);
 		self::assertEquals($res,'c');
 		self::assertEquals($res2,'c');
 	}
 
 	/**
-	 * Tests PLIB_Input->get_predef()
+	 * Tests FWS_Input->get_predef()
 	 */
 	public function testGet_predef()
 	{
-		$this->_input->set_predef('int','get',PLIB_Input::INTEGER);
+		$this->_input->set_predef('int','get',FWS_Input::INTEGER);
 		$res = $this->_input->get_predef('int','get');
 		self::assertEquals($res,1123);
 		
-		$this->_input->set_predef('float','get',PLIB_Input::FLOAT,array(1.0,0.4,0.2));
+		$this->_input->set_predef('float','get',FWS_Input::FLOAT,array(1.0,0.4,0.2));
 		$res = $this->_input->get_predef('float','get',1.0);
 		self::assertEquals($res,0.4);
 		
-		$this->_input->set_predef('float','get',PLIB_Input::FLOAT,array(1.0,0.3,0.2));
+		$this->_input->set_predef('float','get',FWS_Input::FLOAT,array(1.0,0.3,0.2));
 		$res = $this->_input->get_predef('float','get',1.0);
 		self::assertEquals($res,1.0);
 	}
 
 	/**
-	 * Tests PLIB_Input->get_var()
+	 * Tests FWS_Input->get_var()
 	 */
 	public function testGet_var()
 	{
-		$res = $this->_input->get_var('int','get',PLIB_Input::INTEGER);
+		$res = $this->_input->get_var('int','get',FWS_Input::INTEGER);
 		self::assertEquals($res,1123);
 		
-		$res = $this->_input->get_var('int','get',PLIB_Input::HEX_32);
+		$res = $this->_input->get_var('int','get',FWS_Input::HEX_32);
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('float','get',PLIB_Input::FLOAT);
+		$res = $this->_input->get_var('float','get',FWS_Input::FLOAT);
 		self::assertEquals($res,0.4);
 		
-		$res = $this->_input->get_var('float','get',PLIB_Input::INTEGER);
+		$res = $this->_input->get_var('float','get',FWS_Input::INTEGER);
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('hex32','get',PLIB_Input::HEX_32);
+		$res = $this->_input->get_var('hex32','get',FWS_Input::HEX_32);
 		self::assertEquals($res,md5('120'));
 		
-		$res = $this->_input->get_var('hex32','get',PLIB_Input::INTEGER);
+		$res = $this->_input->get_var('hex32','get',FWS_Input::INTEGER);
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('bool','get',PLIB_Input::BOOL);
+		$res = $this->_input->get_var('bool','get',FWS_Input::BOOL);
 		self::assertEquals($res,true);
 		
-		$res = $this->_input->get_var('intbool','get',PLIB_Input::INT_BOOL);
+		$res = $this->_input->get_var('intbool','get',FWS_Input::INT_BOOL);
 		self::assertEquals($res,1);
 		
-		$res = $this->_input->get_var('intbool','get',PLIB_Input::BOOL);
+		$res = $this->_input->get_var('intbool','get',FWS_Input::BOOL);
 		self::assertEquals($res,true);
 		
-		$res = $this->_input->get_var('alpha','get',PLIB_Input::BOOL);
+		$res = $this->_input->get_var('alpha','get',FWS_Input::BOOL);
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('alpha','get',PLIB_Input::ALPHA);
+		$res = $this->_input->get_var('alpha','get',FWS_Input::ALPHA);
 		self::assertEquals($res,'abc');
 		
-		$res = $this->_input->get_var('alphanum','get',PLIB_Input::ALPHA_NUM);
+		$res = $this->_input->get_var('alphanum','get',FWS_Input::ALPHA_NUM);
 		self::assertEquals($res,'abc123');
 		
-		$res = $this->_input->get_var('identifier','get',PLIB_Input::IDENTIFIER);
+		$res = $this->_input->get_var('identifier','get',FWS_Input::IDENTIFIER);
 		self::assertEquals($res,'AbCd123_');
 		
-		$res = $this->_input->get_var('notexisting','get',PLIB_Input::STRING);
+		$res = $this->_input->get_var('notexisting','get',FWS_Input::STRING);
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('123#456','post',PLIB_Input::STRING);
+		$res = $this->_input->get_var('123#456','post',FWS_Input::STRING);
 		self::assertEquals($res,"\n\n\n\n");
 		
 		$res = $this->_input->get_var("a\n\rb",'get');
 		self::assertNull($res);
 		
-		$res = $this->_input->get_var('ab','get',PLIB_Input::STRING);
+		$res = $this->_input->get_var('ab','get',FWS_Input::STRING);
 		self::assertEquals($res,"cd");
 		
-		$res = $this->_input->get_var('123#456','post',PLIB_Input::STRING);
+		$res = $this->_input->get_var('123#456','post',FWS_Input::STRING);
 		self::assertEquals($res,"\n\n\n\n");
 		
-		$res = $this->_input->get_var('test','post',PLIB_Input::STRING);
+		$res = $this->_input->get_var('test','post',FWS_Input::STRING);
 		self::assertEquals($res,"abc &amp; def &#039; &quot;");
 		
-		$res = $this->_input->get_var('HTTP_USER_AGENT','server',PLIB_Input::STRING);
+		$res = $this->_input->get_var('HTTP_USER_AGENT','server',FWS_Input::STRING);
 		self::assertEquals(
 			$res,'Mein Useragent &amp; mehr &lt;script&gt;alert(&quot;huhu&quot;);&lt;/script&gt;'
 		);
 	}
 
 	/**
-	 * Tests PLIB_Input->isset_var()
+	 * Tests FWS_Input->isset_var()
 	 */
 	public function testIsset_var()
 	{
@@ -183,7 +183,7 @@ class PLIB_InputTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Input->set_var()
+	 * Tests FWS_Input->set_var()
 	 */
 	public function testSet_var()
 	{
@@ -196,7 +196,7 @@ class PLIB_InputTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Tests PLIB_Input->unset_var()
+	 * Tests FWS_Input->unset_var()
 	 */
 	public function testUnset_var()
 	{

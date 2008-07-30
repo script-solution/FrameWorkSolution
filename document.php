@@ -3,7 +3,7 @@
  * Contains the document-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -14,7 +14,7 @@
  * the things such as MIME-type, charset, headers in general, wether GZip should be used,
  * wether a redirection should be done and so on.
  * <br>
- * The document contains an instance of {@link PLIB_Document_Renderer} which should build the
+ * The document contains an instance of {@link FWS_Document_Renderer} which should build the
  * result that should be sent to the browser. This may be an HTML-page, an image, a download
  * or anything else.
  * <br>
@@ -29,10 +29,10 @@
  * this method inits the module. This gives the module (among other things) the chance to exchange
  * the renderer, setting document-parameters and so on. 
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Document extends PLIB_Object
+class FWS_Document extends FWS_Object
 {
 	/**
 	 * Redirect information:
@@ -86,7 +86,7 @@ class PLIB_Document extends PLIB_Object
 	/**
 	 * The module
 	 *
-	 * @var PLIB_Module
+	 * @var FWS_Module
 	 */
 	private $_module;
 	
@@ -100,7 +100,7 @@ class PLIB_Document extends PLIB_Object
 	/**
 	 * The renderer-instance for this document
 	 * 
-	 * @var PLIB_Document_Renderer
+	 * @var FWS_Document_Renderer
 	 */
 	private $_renderer = null;
 
@@ -115,7 +115,7 @@ class PLIB_Document extends PLIB_Object
 			
 			$this->_module = $this->load_module();
 		}
-		catch(PLIB_Exceptions_Critical $e)
+		catch(FWS_Exceptions_Critical $e)
 		{
 			echo $e;
 		}
@@ -227,27 +227,27 @@ class PLIB_Document extends PLIB_Object
 	 * Will immediately quit the current script!
 	 *
 	 * @param string $url the URL where you want to redirect to
-	 * 	Note that you have to start with {@link PLIB_Path::client_app()}! (or http://)
+	 * 	Note that you have to start with {@link FWS_Path::client_app()}! (or http://)
 	 */
 	public final function redirect($url)
 	{
 		if(empty($url))
-			PLIB_Helper::def_error('notempty','url',$url);
+			FWS_Helper::def_error('notempty','url',$url);
 
 		$this->finish();
 
 		header("Connection: close");
 		header("HTTP/1.1 303 REDIRECT");
 
-		if(!PLIB_String::starts_with($url,'http://'))
+		if(!FWS_String::starts_with($url,'http://'))
 		{
-			$parts = explode('/',PLIB_Path::outer());
+			$parts = explode('/',FWS_Path::outer());
 			$path = '';
 			for($i = 0;$i < 3;$i++)
 				$path .= $parts[$i] . '/';
 
-			if(PLIB_String::starts_with($url,'/'))
-				$url = PLIB_String::substr($url,1);
+			if(FWS_String::starts_with($url,'/'))
+				$url = FWS_String::substr($url,1);
 
 			$url = $path.$url;
 		}
@@ -257,7 +257,7 @@ class PLIB_Document extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Module the module that is used
+	 * @return FWS_Module the module that is used
 	 */
 	public final function get_module()
 	{
@@ -276,57 +276,57 @@ class PLIB_Document extends PLIB_Object
 	 * Returns the default renderer. If it is already set the instance will be returned. Otherwise
 	 * it will be created, set and returned.
 	 *
-	 * @return PLIB_Document_Renderer_HTML_Default the default renderer
+	 * @return FWS_Document_Renderer_HTML_Default the default renderer
 	 */
 	public function use_default_renderer()
 	{
-		throw new PLIB_Exceptions_UnsupportedMethod("This method is not implemented");
+		throw new FWS_Exceptions_UnsupportedMethod("This method is not implemented");
 	}
 	
 	/**
 	 * Sets the GD-image-renderer, if not already done and returns it
 	 *
-	 * @return PLIB_Document_Renderer_GDImage the GD-image-renderer
+	 * @return FWS_Document_Renderer_GDImage the GD-image-renderer
 	 */
 	public function use_gdimage_renderer()
 	{
-		if($this->_renderer instanceof PLIB_Document_Renderer_GDImage)
+		if($this->_renderer instanceof FWS_Document_Renderer_GDImage)
 			return $this->_renderer;
 		
-		$this->_renderer = new PLIB_Document_Renderer_GDImage();
+		$this->_renderer = new FWS_Document_Renderer_GDImage();
 		return $this->_renderer;
 	}
 	
 	/**
 	 * Sets the raw-renderer, if not already done and returns it
 	 *
-	 * @return PLIB_Document_Renderer_Raw the plain-renderer
+	 * @return FWS_Document_Renderer_Raw the plain-renderer
 	 */
 	public function use_raw_renderer()
 	{
-		if($this->_renderer instanceof PLIB_Document_Renderer_Raw)
+		if($this->_renderer instanceof FWS_Document_Renderer_Raw)
 			return $this->_renderer;
 		
-		$this->_renderer = new PLIB_Document_Renderer_Raw();
+		$this->_renderer = new FWS_Document_Renderer_Raw();
 		return $this->_renderer;
 	}
 	
 	/**
 	 * Sets the download-renderer, if not already done and returns it
 	 *
-	 * @return PLIB_Document_Renderer_Download the download-renderer
+	 * @return FWS_Document_Renderer_Download the download-renderer
 	 */
 	public function use_download_renderer()
 	{
-		if($this->_renderer instanceof PLIB_Document_Renderer_Download)
+		if($this->_renderer instanceof FWS_Document_Renderer_Download)
 			return $this->_renderer;
 		
-		$this->_renderer = new PLIB_Document_Renderer_Download();
+		$this->_renderer = new FWS_Document_Renderer_Download();
 		return $this->_renderer;
 	}
 	
 	/**
-	 * @return PLIB_Document_Renderer the current renderer (null = not set)
+	 * @return FWS_Document_Renderer the current renderer (null = not set)
 	 */
 	public final function get_renderer()
 	{
@@ -336,12 +336,12 @@ class PLIB_Document extends PLIB_Object
 	/**
 	 * Sets the renderer that should be used
 	 *
-	 * @param PLIB_Document_Renderer $renderer the renderer
+	 * @param FWS_Document_Renderer $renderer the renderer
 	 */
 	public final function set_renderer($renderer)
 	{
-		if(!($renderer instanceof PLIB_Document_Renderer))
-			PLIB_Helper::def_error('instance','renderer','PLIB_Document_Renderer',$renderer);
+		if(!($renderer instanceof FWS_Document_Renderer))
+			FWS_Helper::def_error('instance','renderer','FWS_Document_Renderer',$renderer);
 		
 		$this->_renderer = $renderer;
 	}
@@ -369,7 +369,7 @@ class PLIB_Document extends PLIB_Object
 		$this->prepare_rendering();
 		
 		if($this->_renderer === null)
-			PLIB_Helper::error('Please specify the renderer that should be used!');
+			FWS_Helper::error('Please specify the renderer that should be used!');
 		
 		// render the document
 		$res = $this->_renderer->render($this);
@@ -391,10 +391,10 @@ class PLIB_Document extends PLIB_Object
 	 */
 	protected function load_module()
 	{
-		$this->_module_name = PLIB_Helper::get_module_name(
-			'PLIB_Module_','action','index','module/'
+		$this->_module_name = FWS_Helper::get_module_name(
+			'FWS_Module_','action','index','module/'
 		);
-		$class = 'PLIB_Module_'.$this->_module_name;
+		$class = 'FWS_Module_'.$this->_module_name;
 		return new $class();
 	}
 	
@@ -416,13 +416,13 @@ class PLIB_Document extends PLIB_Object
 	 */
 	protected function finish()
 	{
-		$sessions = PLIB_Props::get()->sessions();
-		$db = PLIB_Props::get()->db();
+		$sessions = FWS_Props::get()->sessions();
+		$db = FWS_Props::get()->db();
 
-		if($sessions instanceof PLIB_Session_Manager)
+		if($sessions instanceof FWS_Session_Manager)
 			$sessions->finalize();
 
-		if($db instanceof PLIB_MySQL)
+		if($db instanceof FWS_MySQL)
 			$db->disconnect();
 	}
 	
@@ -480,7 +480,7 @@ class PLIB_Document extends PLIB_Object
 		$gzip_size = strlen($res);
 		$gzip_crc = crc32($res);
 		$res = gzcompress($res,$level);
-		// note that we can't use PLIB_String (with multibyte enabled) here
+		// note that we can't use FWS_String (with multibyte enabled) here
 		$res = substr($res,0,-4);
 
 		$result = "\x1f\x8b\x08\x00\x00\x00\x00\x00";
@@ -497,15 +497,15 @@ class PLIB_Document extends PLIB_Object
 	 */
 	private function _get_client_encoding()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$encoding = $input->get_var('HTTP_ACCEPT_ENCODING','server',PLIB_Input::STRING);
+		$encoding = $input->get_var('HTTP_ACCEPT_ENCODING','server',FWS_Input::STRING);
 		if($encoding === null)
 	    return false;
 
-		if(PLIB_String::strpos($encoding,'x-gzip') !== false)
+		if(FWS_String::strpos($encoding,'x-gzip') !== false)
 			return 'x-gzip';
-		if(PLIB_String::strpos($encoding,'gzip') !== false)
+		if(FWS_String::strpos($encoding,'gzip') !== false)
 			return 'gzip';
 
 		return false;

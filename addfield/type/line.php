@@ -3,7 +3,7 @@
  * Contains the line-class for the additional-fields
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * Represents a single line as additional field
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AddField_Type_Line extends PLIB_AddField_Type_Default
+class FWS_AddField_Type_Line extends FWS_AddField_Type_Default
 {
 	protected function get_formular_field_impl($formular,$value)
 	{

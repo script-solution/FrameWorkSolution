@@ -3,7 +3,7 @@
  * Contains the default-error-output-generator-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,14 +13,14 @@
 /**
  * The default implementation of the output-generator-interface
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	error.output
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_Output
+final class FWS_Error_Output_Default extends FWS_Object implements FWS_Error_Output
 {
 	/**
-	 * @see PLIB_Error_Output::print_error()
+	 * @see FWS_Error_Output::print_error()
 	 *
 	 * @param int $no
 	 * @param string $msg
@@ -31,7 +31,7 @@ final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_
 	public function print_error($no,$msg,$file,$line,$backtrace)
 	{
 		// javascript-clap-code
-		$res = '<script type="text/javascript" src="'.PLIB_Path::client_lib().'js/basic.js"></script>'."\n";
+		$res = '<script type="text/javascript" src="'.FWS_Path::client_fw().'js/basic.js"></script>'."\n";
 		
 		$htmlmsg = str_replace("\n",'<br />',$msg);
 		$res .= '<div style="font-size: 12px; padding-bottom: 5px;">'."\n";
@@ -40,20 +40,20 @@ final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_
 		// add html-backtrace
 		if($backtrace !== null)
 		{
-			$htmlbt = new PLIB_Error_BTPrinter_HTML();
+			$htmlbt = new FWS_Error_BTPrinter_HTML();
 			$res .= $htmlbt->print_backtrace($backtrace);
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
+			$realfile = str_replace(realpath(FWS_Path::server_app()),'',$file);
 			$realpath = str_replace($realfile,'',$file);
 			$res .= ' in '.$realpath.'<b>'.$realfile.'</b>, line <b>'.$line.'</b>'."\n";
 			$res .= '<br />'."\n";
 		}
 		
 		// add bbcode-block
-		$rand_str = PLIB_StringHelper::generate_random_key(10);
-		$res .= '<a href="javascript:PLIB_toggleElement(\'error_bbcode_'.$rand_str.'\');">Show BBCode';
+		$rand_str = FWS_StringHelper::generate_random_key(10);
+		$res .= '<a href="javascript:FWS_toggleElement(\'error_bbcode_'.$rand_str.'\');">Show BBCode';
 		$res .= ' for the error-message (to post somewhere)</a>'."\n";
 		$res .= '<div id="error_bbcode_'.$rand_str.'" style="padding: 5px; margin-top: 5px;';
 		$res .= ' line-height: 15px; border: 1px dotted #AAAAAA; display: none;';
@@ -64,12 +64,12 @@ final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_
 		$res .= '[b][color=#FF0000]'.$msg.'[/color][/b]';
 		if($backtrace !== null)
 		{
-			$bbcbt = new PLIB_Error_BTPrinter_BBCode();
+			$bbcbt = new FWS_Error_BTPrinter_BBCode();
 			$res .= $bbcbt->print_backtrace($backtrace);
 		}
 		else
 		{
-			$realfile = str_replace(realpath(PLIB_Path::server_app()),'',$file);
+			$realfile = str_replace(realpath(FWS_Path::server_app()),'',$file);
 			$realpath = str_replace($file,'',$realfile);
 			$res .= ' in '.$realpath.'[b]'.$realfile.'[/b], line [b]'.$line.'[/b]';
 		}
@@ -82,7 +82,7 @@ final class PLIB_Error_Output_Default extends PLIB_Object implements PLIB_Error_
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

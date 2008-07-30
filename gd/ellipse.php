@@ -3,7 +3,7 @@
  * Contains the ellipse-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,47 +13,47 @@
 /**
  * Represents an ellipse for drawing with GD
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_Ellipse extends PLIB_Object
+class FWS_GD_Ellipse extends FWS_Object
 {
 	/**
 	 * The center-point
 	 *
-	 * @var PLIB_GD_Point
+	 * @var FWS_GD_Point
 	 */
 	protected $_center;
 	
 	/**
 	 * The size of the ellipse
 	 *
-	 * @var PLIB_GD_Dimension
+	 * @var FWS_GD_Dimension
 	 */
 	protected $_size;
 
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_Point $center the center-point
-	 * @param PLIB_GD_Dimension $size the size of the ellipse
+	 * @param FWS_GD_Point $center the center-point
+	 * @param FWS_GD_Dimension $size the size of the ellipse
 	 */
 	public function __construct($center,$size)
 	{
 		parent::__construct();
 		
-		if(!($center instanceof PLIB_GD_Point))
-			PLIB_Helper::def_error('instance','center','PLIB_GD_Point',$center);
-		if(!($size instanceof PLIB_GD_Dimension))
-			PLIB_Helper::def_error('instance','size','PLIB_GD_Dimension',$size);
+		if(!($center instanceof FWS_GD_Point))
+			FWS_Helper::def_error('instance','center','FWS_GD_Point',$center);
+		if(!($size instanceof FWS_GD_Dimension))
+			FWS_Helper::def_error('instance','size','FWS_GD_Dimension',$size);
 		
 		$this->_center = $center;
 		$this->_size = $size;
 	}
 	
 	/**
-	 * @return PLIB_GD_Point the center-point
+	 * @return FWS_GD_Point the center-point
 	 */
 	public function get_center()
 	{
@@ -61,7 +61,7 @@ class PLIB_GD_Ellipse extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_GD_Dimension the size
+	 * @return FWS_GD_Dimension the size
 	 */
 	public function get_size()
 	{

@@ -3,7 +3,7 @@
  * Contains some file-utility-functions
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,13 +12,13 @@
 /**
  * Contains all paths that we need to know. They are stored statically so that can
  * access them from everywhere.
- * You have to set the inner- and lib-path by yourself!
+ * You have to set the inner- and fws-path by yourself!
  * You may also set the outer-path!
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Path extends PLIB_UtilBase
+final class FWS_Path extends FWS_UtilBase
 {
 	/**
 	 * The relative path to the application from the servers point of view
@@ -35,18 +35,18 @@ final class PLIB_Path extends PLIB_UtilBase
 	private static $_client_app = '';
 	
 	/**
-	 * The relative path to the library from the servers point of view
+	 * The relative path to the framework from the servers point of view
 	 *
 	 * @var unknown_type
 	 */
-	private static $_server_lib = 'lib/';
+	private static $_server_fw = 'fws/';
 	
 	/**
-	 * The relative path to the library from the clients point of view
+	 * The relative path to the framework from the clients point of view
 	 *
 	 * @var string
 	 */
-	private static $_client_lib = 'lib/';
+	private static $_client_fw = 'fws/';
 	
 	/**
 	 * The outer-path
@@ -78,25 +78,25 @@ final class PLIB_Path extends PLIB_UtilBase
 	}
 	
 	/**
-	 * Sets the value of the path to the library (relative with trailing slash!) from the
+	 * Sets the value of the path to the framework (relative with trailing slash!) from the
 	 * servers point of view.
 	 * 
 	 * @param string $path the new value
 	 */
-	public static function set_server_lib($path)
+	public static function set_server_fw($path)
 	{
-		self::$_server_lib = $path;
+		self::$_server_fw = $path;
 	}
 	
 	/**
-	 * Sets the value of the path to the library (relative with trailing slash!) from the
+	 * Sets the value of the path to the framework (relative with trailing slash!) from the
 	 * clients point of view.
 	 * 
 	 * @param string $path the new value
 	 */
-	public static function set_client_lib($path)
+	public static function set_client_fw($path)
 	{
-		self::$_client_lib = $path;
+		self::$_client_fw = $path;
 	}
 	
 	/**
@@ -126,19 +126,19 @@ final class PLIB_Path extends PLIB_UtilBase
 	}
 	
 	/**
-	 * @return string the relative path to the library from the servers point of view
+	 * @return string the relative path to the framework from the servers point of view
 	 */
-	public static function server_lib()
+	public static function server_fw()
 	{
-		return self::$_server_lib;
+		return self::$_server_fw;
 	}
 	
 	/**
-	 * @return string the relative path to the library from the clients point of view
+	 * @return string the relative path to the framework from the clients point of view
 	 */
-	public static function client_lib()
+	public static function client_fw()
 	{
-		return self::$_client_lib;
+		return self::$_client_fw;
 	}
 	
 	/**
@@ -151,8 +151,8 @@ final class PLIB_Path extends PLIB_UtilBase
 	{
 		if(self::$_outer === null)
 		{
-			$input = PLIB_Input::get_instance();
-			$https = $input->get_var('HTTPS','server',PLIB_Input::STRING);
+			$input = FWS_Input::get_instance();
+			$https = $input->get_var('HTTPS','server',FWS_Input::STRING);
 			// protocol
 			if($https !== null && !empty($https) && strtolower($https) != 'off')
 				$proto = 'https://';
@@ -160,13 +160,13 @@ final class PLIB_Path extends PLIB_UtilBase
 				$proto = 'http://';
 			
 			// request uri
-			$request_uri = $input->get_var('REQUEST_URI','server',PLIB_Input::STRING);
-			$url = $proto.$input->get_var('HTTP_HOST','server',PLIB_Input::STRING);
+			$request_uri = $input->get_var('REQUEST_URI','server',FWS_Input::STRING);
+			$url = $proto.$input->get_var('HTTP_HOST','server',FWS_Input::STRING);
 			if(!$request_uri)
-				$request_uri = $input->get_var('SCRIPT_NAME','server',PLIB_Input::STRING);
+				$request_uri = $input->get_var('SCRIPT_NAME','server',FWS_Input::STRING);
 			
 			// ensure that we get the directory with a trailing slash
-			if(!PLIB_String::ends_with($request_uri,'/'))
+			if(!FWS_String::ends_with($request_uri,'/'))
 				$url .= dirname($request_uri).'/';
 			else
 				$url .= $request_uri;

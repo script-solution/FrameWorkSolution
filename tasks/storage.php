@@ -3,7 +3,7 @@
  * Contains the task-storage-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,16 +13,16 @@
 /**
  * The interface for all task-storage types
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	tasks
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Tasks_Storage
+interface FWS_Tasks_Storage
 {
 	/**
 	 * Should read all avaiable tasks and return an array with all task-objects
 	 *
-	 * @return array an array of {@link PLIB_Tasks_Data}
+	 * @return array an array of {@link FWS_Tasks_Data}
 	 */
 	public function get_tasks();
 	
@@ -37,7 +37,7 @@ interface PLIB_Tasks_Storage
 	/**
 	 * Should store the given task.
 	 *
-	 * @param PLIB_Tasks_Data $task the task to store
+	 * @param FWS_Tasks_Data $task the task to store
 	 */
 	public function store_task($task);
 	

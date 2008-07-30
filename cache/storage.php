@@ -3,7 +3,7 @@
  * Contains the cache-storage-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all storage-implementations.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Cache_Storage
+interface FWS_Cache_Storage
 {
 	/**
 	 * Should load the cache-objects from the corresponding source and return it

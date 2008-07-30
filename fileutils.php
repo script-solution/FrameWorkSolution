@@ -3,7 +3,7 @@
  * Contains some file-utility-functions
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * Utility functions for files
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_FileUtils extends PLIB_UtilBase
+final class FWS_FileUtils extends FWS_UtilBase
 {
 	/**
 	 * Cleans the given path. Forces the use of '/' as separator and removes '..'.
@@ -63,7 +63,7 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	 */
 	public static function ensure_trailing_slash(&$path)
 	{
-		if(PLIB_String::substr($path,-1) != '/')
+		if(FWS_String::substr($path,-1) != '/')
 			$path .= '/';
 		
 		return $path;
@@ -77,8 +77,8 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	 */
 	public static function ensure_no_trailing_slash(&$path)
 	{
-		if(PLIB_String::substr($path,-1) == '/')
-			$path = PLIB_String::substr($path,0,-1);
+		if(FWS_String::substr($path,-1) == '/')
+			$path = FWS_String::substr($path,0,-1);
 		
 		return $path;
 	}
@@ -101,9 +101,9 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 		if($with_ext)
 			return $path;
 		
-		$pos = PLIB_String::strrpos($path,'.');
+		$pos = FWS_String::strrpos($path,'.');
 		if($pos !== false)
-			return PLIB_String::substr($path,0,$pos);
+			return FWS_String::substr($path,0,$pos);
 		
 		return $path;
 	}
@@ -118,20 +118,20 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function get_extension($filename,$lower = true)
 	{
 		if(empty($filename))
-			PLIB_Helper::def_error('notempty','filename',$filename);
+			FWS_Helper::def_error('notempty','filename',$filename);
 	
 		// we're not interested in the path
 		$filename = basename($filename);
 		
-		$pos = PLIB_String::strrpos($filename,'.');
+		$pos = FWS_String::strrpos($filename,'.');
 		if($pos !== false)
 		{
-			$extension = PLIB_String::substr($filename,$pos + 1);
-			return $lower ? PLIB_String::strtolower($extension) : $extension;
+			$extension = FWS_String::substr($filename,$pos + 1);
+			return $lower ? FWS_String::strtolower($extension) : $extension;
 		}
 		
 		if($lower)
-			return PLIB_String::strtolower($filename);
+			return FWS_String::strtolower($filename);
 		
 		return $filename;
 	}
@@ -146,11 +146,11 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function is_writable($path)
 	{
 		if(empty($path))
-			PLIB_Helper::def_error('notempty','path',$path);
+			FWS_Helper::def_error('notempty','path',$path);
 		
-		$end = PLIB_String::substr($path,-1);
+		$end = FWS_String::substr($path,-1);
 		if($end == '/')
-			$path = PLIB_String::substr($path,0,-1);
+			$path = FWS_String::substr($path,0,-1);
 		
 		// if the file / dir does not exist it can't have a valid chmod
 		if(!file_exists($path))
@@ -202,7 +202,7 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function get_dir_size($directory,$recursive = false)
 	{
 		if(!is_dir($directory))
-			PLIB_Helper::error('"'.$directory.'" is no directory!');
+			FWS_Helper::error('"'.$directory.'" is no directory!');
 		
 		$directory = self::ensure_trailing_slash($directory);
 		return self::_get_dir_size($directory,(bool)$recursive);
@@ -246,7 +246,7 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function get_dir_content($directory,$recursive = false,$abs = false)
 	{
 		if(!is_dir($directory))
-			PLIB_Helper::error('"'.$directory.'" is no directory!');
+			FWS_Helper::error('"'.$directory.'" is no directory!');
 		
 		$directory = self::ensure_trailing_slash($directory);
 		$res = array();
@@ -291,9 +291,9 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function delete_folder($folder)
 	{
 		if(empty($folder))
-			PLIB_Helper::def_error('notempty','folder',$folder);
+			FWS_Helper::def_error('notempty','folder',$folder);
 		if(!is_dir($folder))
-			PLIB_Helper::error('"'.$folder.'" is no folder!');
+			FWS_Helper::error('"'.$folder.'" is no folder!');
 		
 		self::_delete_folder($folder);
 	}
@@ -376,11 +376,11 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 	public static function copy($source,$target)
 	{
 		if(empty($source))
-			PLIB_Helper::def_error('notempty','source',$source);
+			FWS_Helper::def_error('notempty','source',$source);
 		if(empty($target))
-			PLIB_Helper::def_error('notempty','target',$target);
+			FWS_Helper::def_error('notempty','target',$target);
 		if(!is_file($source))
-			PLIB_Helper::error('"'.$source.'" is no file!');
+			FWS_Helper::error('"'.$source.'" is no file!');
 
 		if(is_file($source))
 		{
@@ -408,7 +408,7 @@ final class PLIB_FileUtils extends PLIB_UtilBase
 		$a = new ZipArchive();
 		if(!$a->open($target,ZIPARCHIVE::CREATE))
 			return false;
-		$paths = PLIB_FileUtils::get_dir_content($folder,true,true);
+		$paths = FWS_FileUtils::get_dir_content($folder,true,true);
 		foreach($paths as $path)
 		{
 			$relitem = str_replace($folder,'',$path);

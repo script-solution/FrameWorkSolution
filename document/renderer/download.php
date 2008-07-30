@@ -3,7 +3,7 @@
  * Contains the download-renderer-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -18,11 +18,11 @@
  * By default the download-renderer displays messages in plain-text instead of sending the file
  * if any messages have been set.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	document.renderer
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Document_Renderer
+class FWS_Document_Renderer_Download extends FWS_Object implements FWS_Document_Renderer
 {
 	/**
 	 * The file which content should be sent to the browser
@@ -74,7 +74,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 	public final function set_file($file)
 	{
 		if(!is_file($file))
-			PLIB_Helper::error('"'.$file.'" is no file or doesn\'t exist!');
+			FWS_Helper::error('"'.$file.'" is no file or doesn\'t exist!');
 		
 		$this->_file = $file;
 	}
@@ -87,7 +87,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 	public final function set_name($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$this->_name = $name;
 	}
@@ -103,9 +103,9 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 	}
 
 	/**
-	 * @see PLIB_Document_Renderer::render()
+	 * @see FWS_Document_Renderer::render()
 	 *
-	 * @param PLIB_Document $doc
+	 * @param FWS_Document $doc
 	 * @return string
 	 */
 	public function render($doc)
@@ -114,7 +114,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 		$doc->get_module()->run();
 		
 		// handle messages
-		$msgs = PLIB_Props::get()->msgs();
+		$msgs = FWS_Props::get()->msgs();
 		if($msgs->contains_msg())
 		{
 			$this->handle_msgs($msgs);
@@ -136,7 +136,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 				$this->_name = basename($this->_file);
 		}
 		else if($this->_name === null)
-			PLIB_Helper::error('You have to set the name for the download if'
+			FWS_Helper::error('You have to set the name for the download if'
 				.' you don\'t send an existing file!');
 		
 		if($this->_set_header)
@@ -147,9 +147,9 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 		}
 		
 		if($this->_file !== null)
-			$this->_content = PLIB_FileUtils::read($this->_file);
+			$this->_content = FWS_FileUtils::read($this->_file);
 		else if($this->_content === null)
-			PLIB_Helper::error('You have to set the content to send if you don\'t send a file!');
+			FWS_Helper::error('You have to set the content to send if you don\'t send a file!');
 		
 		return $this->_content;
 	}
@@ -157,7 +157,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 	/**
 	 * Handles the collected messages
 	 * 
-	 * @param PLIB_Document_Messages $msgs
+	 * @param FWS_Document_Messages $msgs
 	 */
 	protected function handle_msgs($msgs)
 	{
@@ -176,7 +176,7 @@ class PLIB_Document_Renderer_Download extends PLIB_Object implements PLIB_Docume
 	}
 
 	/**
-	 * @see PLIB_Object::get_print_vars()
+	 * @see FWS_Object::get_print_vars()
 	 *
 	 * @return array
 	 */

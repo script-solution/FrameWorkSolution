@@ -3,7 +3,7 @@
  * Contains the date-class for the additional-fields
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,20 +13,20 @@
 /**
  * Represents a date as additional field
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield.type
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
+class FWS_AddField_Type_Date extends FWS_AddField_Type_Default
 {
 	public function get_value_from_formular($default = null)
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
 		$field_name = $this->_data->get_name();
-		$day = $input->get_var('add_'.$field_name.'_day','post',PLIB_Input::INTEGER);
-		$month = $input->get_var('add_'.$field_name.'_month','post',PLIB_Input::INTEGER);
-		$year = $input->get_var('add_'.$field_name.'_year','post',PLIB_Input::INTEGER);
+		$day = $input->get_var('add_'.$field_name.'_day','post',FWS_Input::INTEGER);
+		$month = $input->get_var('add_'.$field_name.'_month','post',FWS_Input::INTEGER);
+		$year = $input->get_var('add_'.$field_name.'_year','post',FWS_Input::INTEGER);
 		if($day === null || $month === null || $year === null || $day == -1 || $month == -1 || $year == -1)
 			return $default !== null ? $default : '0000-00-00';
 
@@ -62,7 +62,7 @@ class PLIB_AddField_Type_Date extends PLIB_AddField_Type_Default
 	
 	protected function get_display_value($value)
 	{
-		$locale = PLIB_Props::get()->locale();
+		$locale = FWS_Props::get()->locale();
 
 		$parts = explode('-',$value);
 		// invalid date?

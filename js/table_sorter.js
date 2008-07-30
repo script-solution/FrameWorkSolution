@@ -2,7 +2,7 @@
  * Contains the javascript-table-sorter
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,10 +14,10 @@
  *
  * @param mixed tableID the id of the table to sort
  */
-function PLIB_TableSorter(tableID)
+function FWS_TableSorter(tableID)
 {
 	this.tableID = tableID;
-	this.table = PLIB_getElement(tableID);
+	this.table = FWS_getElement(tableID);
 	this.lastColumn = -1;
 	this.lastDir = 0;
 

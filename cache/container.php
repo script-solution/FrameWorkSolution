@@ -3,7 +3,7 @@
  * Contains the cache-container-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The container for all caches
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	cache
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Cache_Container extends PLIB_Object
+final class FWS_Cache_Container extends FWS_Object
 {
 	/**
 	 * All cache-objects
@@ -37,7 +37,7 @@ final class PLIB_Cache_Container extends PLIB_Object
 	/**
 	 * The storage-object that will be used to load and store the cache-objects
 	 *
-	 * @var PLIB_Cache_Storage
+	 * @var FWS_Cache_Storage
 	 */
 	private $_storage;
 	
@@ -45,14 +45,14 @@ final class PLIB_Cache_Container extends PLIB_Object
 	 * Constructor. Note that you have to call #init_content() for each
 	 * cache-object before you can use it!
 	 *
-	 * @param PLIB_Cache_Storage $storage the storage-object
+	 * @param FWS_Cache_Storage $storage the storage-object
 	 */
 	public function __construct($storage)
 	{
 		parent::__construct();
 		
-		if(!($storage instanceof PLIB_Cache_Storage))
-			PLIB_Helper::def_error('instance','storage','PLIB_Cache_Storage',$storage);
+		if(!($storage instanceof FWS_Cache_Storage))
+			FWS_Helper::def_error('instance','storage','FWS_Cache_Storage',$storage);
 	
 		$this->_storage = $storage;
 		
@@ -64,22 +64,22 @@ final class PLIB_Cache_Container extends PLIB_Object
 	
 	/**
 	 * Inits the content with given name and source. This method
-	 * will create the {@link PLIB_Cache_Content} instance which will be usable
+	 * will create the {@link FWS_Cache_Content} instance which will be usable
 	 * afterwards
 	 *
 	 * @param string $name the name of the cache
-	 * @param PLIB_Cache_Source $source the source-implementation
+	 * @param FWS_Cache_Source $source the source-implementation
 	 */
 	public function init_content($name,$source)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
-		if(!($source instanceof PLIB_Cache_Source))
-			PLIB_Helper::def_error('instance','source',PLIB_Cache_Source,$source);
+			FWS_Helper::def_error('notempty','name',$name);
+		if(!($source instanceof FWS_Cache_Source))
+			FWS_Helper::def_error('instance','source',FWS_Cache_Source,$source);
 		
 		if(isset($this->_cache_contents[$name]))
 		{
-			$this->_caches[$name] = new PLIB_Cache_Content($name,$source);
+			$this->_caches[$name] = new FWS_Cache_Content($name,$source);
 			
 			$val = $this->_cache_contents[$name];
 			// if the cache isn't valid, we have to reload and store it here
@@ -108,9 +108,9 @@ final class PLIB_Cache_Container extends PLIB_Object
 	public function set_content($name,$object)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		if(!is_object($object))
-			PLIB_Helper::def_error('object','object',$object);
+			FWS_Helper::def_error('object','object',$object);
 		
 		$this->_caches[$name] = $object;
 		if(isset($this->_cache_contents[$name]))
@@ -119,7 +119,7 @@ final class PLIB_Cache_Container extends PLIB_Object
 	
 	/**
 	 * @return array an associative array with all cache-entries:
-	 * 	<code>array(<name> => <PLIB_Cache_Content>,...)</code>
+	 * 	<code>array(<name> => <FWS_Cache_Content>,...)</code>
 	 */
 	public function get_caches()
 	{
@@ -131,13 +131,13 @@ final class PLIB_Cache_Container extends PLIB_Object
 	 * before you can do that!
 	 *
 	 * @param string $name the name
-	 * @return PLIB_Cache_Content the cache-object or null if not found
+	 * @return FWS_Cache_Content the cache-object or null if not found
 	 * @see init_content()
 	 */
 	public function get_cache($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(isset($this->_caches[$name]))
 			return $this->_caches[$name];
@@ -180,7 +180,7 @@ final class PLIB_Cache_Container extends PLIB_Object
 	public function store($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		if(isset($this->_caches[$name]))
 			$this->_storage->store($name,$this->_caches[$name]->get_elements());
@@ -208,12 +208,12 @@ final class PLIB_Cache_Container extends PLIB_Object
 	public function reload($name)
 	{
 		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
+			FWS_Helper::def_error('notempty','name',$name);
 		
 		$cache = $this->get_cache($name);
 		if($cache !== null)
 		{
-			if($cache instanceof PLIB_Cache_Content)
+			if($cache instanceof FWS_Cache_Content)
 				$cache->reload();
 		}
 	}
@@ -228,7 +228,7 @@ final class PLIB_Cache_Container extends PLIB_Object
 	{
 		foreach($this->_caches as $cache)
 		{
-			if($cache instanceof PLIB_Cache_Content)
+			if($cache instanceof FWS_Cache_Content)
 				$cache->reload();
 		}
 	}

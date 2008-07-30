@@ -3,7 +3,7 @@
  * Contains the empty session-storage-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The "empty" implementation for the session-storage. This class may be used if you don't want
  * to allow logins
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session.storage
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Session_Storage_Empty extends PLIB_Object implements PLIB_Session_Storage
+final class FWS_Session_Storage_Empty extends FWS_Object implements FWS_Session_Storage
 {
 	public function load_list()
 	{
@@ -27,7 +27,7 @@ final class PLIB_Session_Storage_Empty extends PLIB_Object implements PLIB_Sessi
 	
 	public function get_new_user()
 	{
-		return new PLIB_Session_Data();
+		return new FWS_Session_Data();
 	}
 	
 	public function add_user($user)

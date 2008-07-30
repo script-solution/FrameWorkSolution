@@ -3,7 +3,7 @@
  * Contains the user-data-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * This class contains all data which belongs to the user.
  * You may extend this class to add more data.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	user
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_User_Data extends PLIB_Object
+class FWS_User_Data extends FWS_Object
 {
 	/**
 	 * The id of the user (0 if it is a guest)

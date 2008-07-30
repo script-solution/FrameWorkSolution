@@ -2,7 +2,7 @@
  * Contains the AJAX-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	js
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -12,7 +12,7 @@
 /**
  * Constructor for the AJAX-class
  */
-function PLIB_Ajax()
+function FWS_Ajax()
 {
 	// properties
 	this.mimeType = 'text/plain; charset=UTF-8';
@@ -84,7 +84,7 @@ function sendGetRequest(url,onfinish)
 {
 	// we have to do this for every request with IE
 	if(this.xmlHttp == null || Browser.isIE)
-		this.xmlHttp = PLIB_getXmlHttpObject();
+		this.xmlHttp = FWS_getXmlHttpObject();
 	
 	// copy to local variables
 	var cxmlHttp = this.xmlHttp;
@@ -126,13 +126,13 @@ function sendGetRequest(url,onfinish)
  * @param mixed id the id of the bar
  * @param string message the message to display (default=Please wait)
  */
-function PLIB_displayWaitBar(id,message)
+function FWS_displayWaitBar(id,message)
 {
 	if(typeof message == 'undefined')
 		message = 'Please wait';
 	
 	// do we have to create the element?
-	var bar = PLIB_getElement(id);
+	var bar = FWS_getElement(id);
 	if(!bar)
 	{
 		var body = document.getElementsByTagName('body')[0];
@@ -144,11 +144,11 @@ function PLIB_displayWaitBar(id,message)
 		element.innerHTML = 'Please wait...';
 		body.appendChild(element);
 		
-		bar = PLIB_getElement(id);
+		bar = FWS_getElement(id);
 	}
 	
 	// determine width
-	var pageSize = PLIB_getPageSize();
+	var pageSize = FWS_getPageSize();
 	var width = pageSize[0] - 23;
 	
 	// display
@@ -163,7 +163,7 @@ function PLIB_displayWaitBar(id,message)
  * 
  * @return object the object
  */
-function PLIB_getXmlHttpObject()
+function FWS_getXmlHttpObject()
 {
 	var req = null;
 	if(typeof XMLHttpRequest != "undefined")

@@ -3,7 +3,7 @@
  * Contains the locale-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -13,10 +13,10 @@
  * The locale-interface which contains all stuff that may be different in different countries,
  * areas and so on.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_Locale
+interface FWS_Locale
 {
 	/**
 	 * Represents the format for a date (without time)
@@ -93,7 +93,7 @@ interface PLIB_Locale
 	
 	/**
 	 * Returns the date-format of given type for this locale
-	 * (in {@link PLIB_Date::to_format()}-syntax).
+	 * (in {@link FWS_Date::to_format()}-syntax).
 	 * 
 	 * @param string $type the type of format
 	 * @return string the format

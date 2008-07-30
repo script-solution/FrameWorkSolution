@@ -3,7 +3,7 @@
  * Contains the font-interface
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,11 +13,11 @@
 /**
  * The interface for all fonts that can be used
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_GD_Font
+interface FWS_GD_Font
 {
 	/**
 	 * Determines the bounds of the ttf-text. The result will be:
@@ -33,7 +33,7 @@ interface PLIB_GD_Font
 	 * </code>
 	 * 
 	 * @param string $text the text
-	 * @param PLIB_GD_TextAttributes $attr the attributes
+	 * @param FWS_GD_TextAttributes $attr the attributes
 	 * @param int $angle the angle with which the text should be drawn
 	 * @return array an array with all coordinates. see imagettfbbox()
 	 */
@@ -43,8 +43,8 @@ interface PLIB_GD_Font
 	 * Determines the size of the text
 	 *
 	 * @param string $text the text
-	 * @param PLIB_GD_TextAttributes $attr the attributes
-	 * @return PLIB_GD_Dimension the size of the text
+	 * @param FWS_GD_TextAttributes $attr the attributes
+	 * @return FWS_GD_Dimension the size of the text
 	 */
 	public function get_size($text,$attr);
 	
@@ -53,22 +53,22 @@ interface PLIB_GD_Font
 	 *
 	 * @param resource $img the image-resource
 	 * @param string $text the text to draw
-	 * @param PLIB_GD_TextAttributes $attr the attributes
-	 * @param PLIB_GD_Point $pos the position (bottom left at the base-line)
+	 * @param FWS_GD_TextAttributes $attr the attributes
+	 * @param FWS_GD_Point $pos the position (bottom left at the base-line)
 	 * @param int $angle the angle of the text
 	 * @return int the result
 	 */
 	public function draw($img,$text,$attr,$pos,$angle = 0);
 	
 	/**
-	 * @param PLIB_GD_TextAttributes $attr the attributes
+	 * @param FWS_GD_TextAttributes $attr the attributes
 	 * @return int the line-size that should be used for underlines or overlines depending on
 	 * 	the font-size
 	 */
 	public function get_line_size($attr);
 	
 	/**
-	 * @param PLIB_GD_TextAttributes $attr the attributes
+	 * @param FWS_GD_TextAttributes $attr the attributes
 	 * @return int the padding that should be used for underlines or overlines depending on
 	 * 	the font-size
 	 */

@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the action-performer for the {@link PLIB_Actions_Base}-class
+ * Contains the action-performer for the {@link FWS_Actions_Base}-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * Will be used to determine which action has to be performed, if any.
  * And, of course, the action will also be started and finished from here.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Actions_Performer extends PLIB_Object
+class FWS_Actions_Performer extends FWS_Object
 {
 	/**
 	 * An associative array with all announced actions:
@@ -49,7 +49,7 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 *
 	 * @var string
 	 */
-	private $_prefix = 'PLIB_Action_';
+	private $_prefix = 'FWS_Action_';
 	
 	/**
 	 * The folder which contains the modules
@@ -89,26 +89,26 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 * Sets the folder which contains the modules
 	 * 
 	 * @param string $folder the new value (with trailing slash and starting at
-	 * 	{@link PLIB_Path::server_app()})
+	 * 	{@link FWS_Path::server_app()})
 	 */
 	public final function set_mod_folder($folder)
 	{
-		if(!is_dir(PLIB_Path::server_app().$folder))
-			PLIB_Helper::error('"'.PLIB_Path::server_app().$folder.'" is no folder!');
+		if(!is_dir(FWS_Path::server_app().$folder))
+			FWS_Helper::error('"'.FWS_Path::server_app().$folder.'" is no folder!');
 		
-		$this->_mod_folder = PLIB_FileUtils::ensure_trailing_slash($folder);
+		$this->_mod_folder = FWS_FileUtils::ensure_trailing_slash($folder);
 	}
 
 	/**
 	 * Adds the given action to the container. Note that the action has
-	 * to be an instance of an inherited class of {@link PLIB_Actions_Base}!
+	 * to be an instance of an inherited class of {@link FWS_Actions_Base}!
 	 *
-	 * @param PLIB_Actions_Base $action an instance of an inherited class of {@link PLIB_Actions_Base}
+	 * @param FWS_Actions_Base $action an instance of an inherited class of {@link FWS_Actions_Base}
 	 */
 	public final function add_action($action)
 	{
-		if(!($action instanceof PLIB_Actions_Base))
-			PLIB_Helper::def_error('instance','action','PLIB_Actions_Base',$action);
+		if(!($action instanceof FWS_Actions_Base))
+			FWS_Helper::def_error('instance','action','FWS_Actions_Base',$action);
 
 		$this->_actions[$action->get_action_id()] = $action;
 	}
@@ -132,18 +132,18 @@ class PLIB_Actions_Performer extends PLIB_Object
 	public final function add_actions($module_name,$actions)
 	{
 		if(empty($module_name))
-			PLIB_Helper::def_error('notempty','module_name',$module_name);
+			FWS_Helper::def_error('notempty','module_name',$module_name);
 
 		if(!is_array($actions))
-			PLIB_Helper::def_error('array','actions',$actions);
+			FWS_Helper::def_error('array','actions',$actions);
 
 		foreach($actions as $id => $name)
 		{
-			if(!PLIB_Helper::is_integer($id))
-				PLIB_Helper::def_error('integer','actions[id]',$id);
+			if(!FWS_Helper::is_integer($id))
+				FWS_Helper::def_error('integer','actions[id]',$id);
 			
 			if(empty($name))
-				PLIB_Helper::def_error('notempty','actions['.$id.']',$name);
+				FWS_Helper::def_error('notempty','actions['.$id.']',$name);
 			
 			// Are there additional parameters?
 			if(is_array($name))
@@ -154,14 +154,14 @@ class PLIB_Actions_Performer extends PLIB_Object
 				$name = $name[0];
 			}
 			
-			$filename = PLIB_Path::server_app().$this->_mod_folder.$module_name.'/action_'.$name.'.php';
+			$filename = FWS_Path::server_app().$this->_mod_folder.$module_name.'/action_'.$name.'.php';
 			if(!is_file($filename))
-				PLIB_Helper::error('The file "'.$filename.'" does not exist!');
+				FWS_Helper::error('The file "'.$filename.'" does not exist!');
 			
 			include_once($filename);
 			$classname = $this->_prefix.$module_name.'_'.$name;
 			if(!class_exists($classname))
-				PLIB_Helper::error('The class "'.$classname.'" does not exist!');
+				FWS_Helper::error('The class "'.$classname.'" does not exist!');
 			
 			$c = new $classname($id);
 			$this->_actions[$id] = $c;
@@ -179,11 +179,11 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 */
 	public function get_action_type()
 	{
-		$input = PLIB_Props::get()->input();
+		$input = FWS_Props::get()->input();
 
-		$action_type = $input->get_var('action_type','post',PLIB_Input::INTEGER);
+		$action_type = $input->get_var('action_type','post',FWS_Input::INTEGER);
 		if($action_type === null)
-			$action_type = $input->get_var('at','get',PLIB_Input::INTEGER);
+			$action_type = $input->get_var('at','get',FWS_Input::INTEGER);
 
 		return $action_type;
 	}
@@ -201,9 +201,9 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 */
 	public final function perform_actions()
 	{
-		$locale = PLIB_Props::get()->locale();
-		$msgs = PLIB_Props::get()->msgs();
-		$doc = PLIB_Props::get()->doc();
+		$locale = FWS_Props::get()->locale();
+		$msgs = FWS_Props::get()->msgs();
+		$doc = FWS_Props::get()->doc();
 
 		$action_type = $this->get_action_type();
 		if($action_type === null)
@@ -215,7 +215,7 @@ class PLIB_Actions_Performer extends PLIB_Object
 
 		// perform the action
 		$c = $this->_actions[$action_type];
-		/* @var $c PLIB_Actions_Base */
+		/* @var $c FWS_Actions_Base */
 		
 		$this->before_action_performed($action_type,$c);
 		
@@ -284,7 +284,7 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 * You may overwrite this to do something before the action will be performed
 	 * 
 	 * @param int $id the action-id
-	 * @param PLIB_Actions_Base $action the action-instance
+	 * @param FWS_Actions_Base $action the action-instance
 	 */
 	protected function before_action_performed($id,$action)
 	{
@@ -297,7 +297,7 @@ class PLIB_Actions_Performer extends PLIB_Object
 	 * You may also change the message that should be displayed
 	 *
 	 * @param int $id the action-id
-	 * @param PLIB_Actions_Base $action the action-instance
+	 * @param FWS_Actions_Base $action the action-instance
 	 * @param string $message the message that has been returned from the action
 	 */
 	protected function after_action_performed($id,$action,&$message)

@@ -3,7 +3,7 @@
  * Contains the rectangle-class
  * 
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,23 +13,23 @@
 /**
  * Represents a rectangle for drawing with gd.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
+class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 {
 	/**
 	 * The position of the rectangle
 	 *
-	 * @var PLIB_GD_Point
+	 * @var FWS_GD_Point
 	 */
 	private $_pos;
 	
 	/**
 	 * The size of the rectangle
 	 *
-	 * @var PLIB_GD_Dimension
+	 * @var FWS_GD_Dimension
 	 */
 	private $_size;
 	
@@ -37,9 +37,9 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	 * There are multiple ways to create a rectangle:
 	 * <ul>
 	 * 	<li><var>__construct()</var>: creates an empty rectangle at (0,0)</li>
-	 * 	<li><var>__construct($pos,$size)</var>: with $pos as {@link PLIB_GD_Point} and $size as
-	 * 	{@link PLIB_GD_Dimension}</li>
-	 * 	<li><var>__construct($pos1,$pos2)</var>: with $pos1 and $pos2 as {@link PLIB_GD_Point}</li>
+	 * 	<li><var>__construct($pos,$size)</var>: with $pos as {@link FWS_GD_Point} and $size as
+	 * 	{@link FWS_GD_Dimension}</li>
+	 * 	<li><var>__construct($pos1,$pos2)</var>: with $pos1 and $pos2 as {@link FWS_GD_Point}</li>
 	 * 	<li><var>__construct($x,$y,$width,$height)</var></li>
 	 * </ul>
 	 */
@@ -47,8 +47,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	{
 		parent::__construct();
 		
-		$pos = new PLIB_GD_Point(0,0);
-		$size = new PLIB_GD_Dimension(0,0);
+		$pos = new FWS_GD_Point(0,0);
+		$size = new FWS_GD_Dimension(0,0);
 		switch(func_num_args())
 		{
 			// __construct()
@@ -59,12 +59,12 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 			// __construct($pos,$size)
 			// __construct($pos1,$pos2)
 			case 2:
-				if(!($arg1 instanceof PLIB_GD_Point))
-					PLIB_Helper::def_error('instance','arg1','PLIB_GD_Point',$arg1);
+				if(!($arg1 instanceof FWS_GD_Point))
+					FWS_Helper::def_error('instance','arg1','FWS_GD_Point',$arg1);
 				
 				$pos->set_position($arg1->get_x(),$arg1->get_y());
 				
-				if($arg2 instanceof PLIB_GD_Point)
+				if($arg2 instanceof FWS_GD_Point)
 				{
 					$size->set_size(
 						abs($arg2->get_x() - $arg1->get_x()),
@@ -73,8 +73,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 				}
 				else
 				{
-					if(!($arg2 instanceof PLIB_GD_Dimension))
-						PLIB_Helper::def_error('instance','arg2','PLIB_GD_Dimension',$arg2);
+					if(!($arg2 instanceof FWS_GD_Dimension))
+						FWS_Helper::def_error('instance','arg2','FWS_GD_Dimension',$arg2);
 					
 					$size->set_size($arg2->get_width(),$arg2->get_height());
 				}
@@ -87,7 +87,7 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 				break;
 			
 			default:
-				PLIB_Helper::error('Invalid number of arguments!');
+				FWS_Helper::error('Invalid number of arguments!');
 				break;
 		}
 		
@@ -96,7 +96,7 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	}
 	
 	/**
-	 * @return PLIB_GD_Point the location of the rectangle
+	 * @return FWS_GD_Point the location of the rectangle
 	 */
 	public function get_location()
 	{
@@ -106,18 +106,18 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	/**
 	 * Sets the location of the rectangle
 	 *
-	 * @param PLIB_GD_Point $loc the new value
+	 * @param FWS_GD_Point $loc the new value
 	 */
 	public function set_location($loc)
 	{
-		if(!($loc instanceof PLIB_GD_Point))
-			PLIB_Helper::def_error('instance','loc','PLIB_GD_Point',$loc);
+		if(!($loc instanceof FWS_GD_Point))
+			FWS_Helper::def_error('instance','loc','FWS_GD_Point',$loc);
 		
 		$this->_pos = $loc;
 	}
 	
 	/**
-	 * @return PLIB_GD_Dimension the size of the rectangle
+	 * @return FWS_GD_Dimension the size of the rectangle
 	 */
 	public function get_size()
 	{
@@ -127,12 +127,12 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	/**
 	 * Sets the size of the rectangle
 	 *
-	 * @param PLIB_GD_Dimension $size the new value
+	 * @param FWS_GD_Dimension $size the new value
 	 */
 	public function set_size($size)
 	{
-		if(!($size instanceof PLIB_GD_Dimension))
-			PLIB_Helper::def_error('instance','size','PLIB_GD_Dimension',$size);
+		if(!($size instanceof FWS_GD_Dimension))
+			FWS_Helper::def_error('instance','size','FWS_GD_Dimension',$size);
 		
 		$this->_size = $size;
 	}
@@ -140,7 +140,7 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	/**
 	 * Appends the given rectangle to this one. That means the resulting rectangle contains both.
 	 *
-	 * @param PLIB_GD_Rectangle $rect the rectangle
+	 * @param FWS_GD_Rectangle $rect the rectangle
 	 */
 	public function append($rect)
 	{
@@ -191,8 +191,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function contains_point($point)
 	{
-		if(!($point instanceof PLIB_GD_Point))
-			PLIB_Helper::def_error('instance','point','PLIB_GD_Point',$point);
+		if(!($point instanceof FWS_GD_Point))
+			FWS_Helper::def_error('instance','point','FWS_GD_Point',$point);
 		
 		// has to be not-empty
 		list($w,$h) = $this->get_size()->get();
@@ -206,8 +206,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function contains_line($line)
 	{
-		if(!($line instanceof PLIB_GD_Line))
-			PLIB_Helper::def_error('instance','line','PLIB_GD_Line',$line);
+		if(!($line instanceof FWS_GD_Line))
+			FWS_Helper::def_error('instance','line','FWS_GD_Line',$line);
 		
 		// the start- and end-point of the line have to be in the rectangle
 		return $this->contains_point($line->get_from()) && $this->contains_point($line->get_to());
@@ -215,8 +215,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function contains_circle($circle)
 	{
-		if(!($circle instanceof PLIB_GD_Circle))
-			PLIB_Helper::def_error('instance','circle','PLIB_GD_Circle',$circle);
+		if(!($circle instanceof FWS_GD_Circle))
+			FWS_Helper::def_error('instance','circle','FWS_GD_Circle',$circle);
 		
 		// has to be not-empty
 		list($w,$h) = $this->get_size()->get();
@@ -248,8 +248,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function contains_rect($rect)
 	{
-		if(!($rect instanceof PLIB_GD_Rectangle))
-			PLIB_Helper::def_error('instance','rect','PLIB_GD_Rectangle',$rect);
+		if(!($rect instanceof FWS_GD_Rectangle))
+			FWS_Helper::def_error('instance','rect','FWS_GD_Rectangle',$rect);
 		
 		// has to be not-empty
 		list($tw,$th) = $this->get_size()->get();
@@ -270,8 +270,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 
 	public final function intersects_line($line)
 	{
-		if(!($line instanceof PLIB_GD_Line))
-			PLIB_Helper::def_error('instance','line','PLIB_GD_Line',$line);
+		if(!($line instanceof FWS_GD_Line))
+			FWS_Helper::def_error('instance','line','FWS_GD_Line',$line);
 		
 		// use the implementation of the line
 		return $line->intersects_rect($this);
@@ -279,8 +279,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function intersects_circle($circle)
 	{
-		if(!($circle instanceof PLIB_GD_Circle))
-			PLIB_Helper::def_error('instance','circle','PLIB_GD_Circle',$circle);
+		if(!($circle instanceof FWS_GD_Circle))
+			FWS_Helper::def_error('instance','circle','FWS_GD_Circle',$circle);
 		
 		$center = $circle->get_center();
 		$radius = $circle->get_radius();
@@ -298,7 +298,7 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 		);
 		foreach($points as $p)
 		{
-			if($center->distance(new PLIB_GD_Point($p[0],$p[1])) < $radius)
+			if($center->distance(new FWS_GD_Point($p[0],$p[1])) < $radius)
 				return true;
 		}
 		
@@ -306,7 +306,7 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 		// and increase the size by 2 * radius.
 		// if this contains the center of the circle this rectangle contains the
 		// circle
-		$con_rect = new PLIB_GD_Rectangle(
+		$con_rect = new FWS_GD_Rectangle(
 			$tx - $radius,$ty - $radius,$tw + $radius * 2,$th + $radius * 2
 		);
 		return $con_rect->contains_point($center);
@@ -314,8 +314,8 @@ class PLIB_GD_Rectangle extends PLIB_Object implements PLIB_GD_Shape2D
 	
 	public final function intersects_rect($rect)
 	{
-		if(!($rect instanceof PLIB_GD_Rectangle))
-			PLIB_Helper::def_error('instance','rect','PLIB_GD_Rectangle',$rect);
+		if(!($rect instanceof FWS_GD_Rectangle))
+			FWS_Helper::def_error('instance','rect','FWS_GD_Rectangle',$rect);
 		
 		// has to be not-empty
 		list($tw,$th) = $this->get_size()->get();

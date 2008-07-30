@@ -1,9 +1,9 @@
 <?php
 /**
- * Contains the PLIB_Exceptions_Critical-class
+ * Contains the FWS_Exceptions_Critical-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -15,11 +15,11 @@
  * this class to indicate that an error is critical and therefore the script-execution should
  * be stopped
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Exceptions_Critical extends Exception
+abstract class FWS_Exceptions_Critical extends Exception
 {
 	/**
 	 * Constructor
@@ -36,7 +36,7 @@ abstract class PLIB_Exceptions_Critical extends Exception
 	{
 		$msg = '<span style="color: #f00; font-size: 16px;">';
 		$msg .= '<b>Critical error! Stopping script-execution...</b></span><br />';
-		$msg .= PLIB_Error_Handler::get_instance()->get_error_message(
+		$msg .= FWS_Error_Handler::get_instance()->get_error_message(
 			$this->getCode(),$this->getMessage(),$this->getFile(),$this->getLine(),$this->getTrace()
 		);
 		return $msg;

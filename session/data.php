@@ -3,7 +3,7 @@
  * Contains the session-data-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -15,11 +15,11 @@
  * to read and write the properties of the user and stores wether something
  * has changed in this object.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	session
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_Session_Data extends PLIB_Object
+class FWS_Session_Data extends FWS_Object
 {
 	/**
 	 * Stores wether this entry has changed
@@ -209,8 +209,8 @@ class PLIB_Session_Data extends PLIB_Object
 	 */
 	public final function set_user_id($value)
 	{
-		if(!PLIB_Helper::is_integer($value) || $value < 0)
-			PLIB_Helper::def_error('intge0','value',$value);
+		if(!FWS_Helper::is_integer($value) || $value < 0)
+			FWS_Helper::def_error('intge0','value',$value);
 
 		$this->_has_changed |= $value != $this->_user_id;
 		$this->_user_id = $value;
@@ -232,7 +232,7 @@ class PLIB_Session_Data extends PLIB_Object
 	public final function set_user_name($value)
 	{
 		if(!is_string($value))
-			PLIB_Helper::def_error('string','value',$value);
+			FWS_Helper::def_error('string','value',$value);
 
 		$this->_has_changed |= $value != $this->_user_name;
 		$this->_user_name = $value;
@@ -254,7 +254,7 @@ class PLIB_Session_Data extends PLIB_Object
 	public final function set_user_ip($value)
 	{
 		if(!is_string($value))
-			PLIB_Helper::def_error('string','value',$value);
+			FWS_Helper::def_error('string','value',$value);
 
 		$this->_has_changed |= $value != $this->_user_ip;
 		$this->_user_ip = $value;
@@ -276,7 +276,7 @@ class PLIB_Session_Data extends PLIB_Object
 	public final function set_session_id($value)
 	{
 		if(!is_string($value))
-			PLIB_Helper::def_error('string','value',$value);
+			FWS_Helper::def_error('string','value',$value);
 
 		$this->_has_changed |= $value != $this->_session_id;
 		$this->_session_id = $value;
@@ -297,8 +297,8 @@ class PLIB_Session_Data extends PLIB_Object
 	 */
 	public final function set_date($value)
 	{
-		if(!PLIB_Helper::is_integer($value) || $value < 0)
-			PLIB_Helper::def_error('intge0','value',$value);
+		if(!FWS_Helper::is_integer($value) || $value < 0)
+			FWS_Helper::def_error('intge0','value',$value);
 
 		$this->_has_changed |= $value != $this->_date;
 		$this->_date = $value;
@@ -320,7 +320,7 @@ class PLIB_Session_Data extends PLIB_Object
 	public final function set_user_agent($value)
 	{
 		if(!is_string($value))
-			PLIB_Helper::def_error('string','value',$value);
+			FWS_Helper::def_error('string','value',$value);
 
 		$this->_has_changed |= $value != $this->_user_agent;
 		$this->_user_agent = $value;
@@ -342,7 +342,7 @@ class PLIB_Session_Data extends PLIB_Object
 	public final function set_session_data($value)
 	{
 		if(!is_string($value))
-			PLIB_Helper::def_error('string','value',$value);
+			FWS_Helper::def_error('string','value',$value);
 
 		$this->_has_changed |= $value != $this->_session_data;
 		$this->_session_data = $value;

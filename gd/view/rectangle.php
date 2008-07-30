@@ -3,7 +3,7 @@
  * Contains the rectangle-view-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,31 +13,31 @@
 /**
  * The view for a rectangle which allows the painting of it
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	gd.view
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_GD_View_Rectangle extends PLIB_GD_View
+class FWS_GD_View_Rectangle extends FWS_GD_View
 {
 	/**
 	 * The rectangle
 	 *
-	 * @var PLIB_GD_Rectangle
+	 * @var FWS_GD_Rectangle
 	 */
 	protected $_rect;
 	
 	/**
 	 * Constructor
 	 *
-	 * @param PLIB_GD_Image $img the image
-	 * @param PLIB_GD_Rectangle $rect the rectangle
+	 * @param FWS_GD_Image $img the image
+	 * @param FWS_GD_Rectangle $rect the rectangle
 	 */
 	public function __construct($img,$rect)
 	{
 		parent::__construct($img);
 		
-		if(!($rect instanceof PLIB_GD_Rectangle))
-			PLIB_Helper::def_error('instance','rect','PLIB_GD_Rectangle',$rect);
+		if(!($rect instanceof FWS_GD_Rectangle))
+			FWS_Helper::def_error('instance','rect','FWS_GD_Rectangle',$rect);
 		
 		$this->_rect = $rect;
 	}
@@ -45,10 +45,10 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Fills the rectangle with rounded corners with given radius
 	 *
-	 * @param PLIB_GD_Color $color the color of the rectangle
+	 * @param FWS_GD_Color $color the color of the rectangle
 	 * @param int $radius the radius of the corners
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
 	public final function fill_rounded($color,$radius = 3,$angle = 0,$pos = null)
 	{
@@ -58,10 +58,10 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Draws the rectangle with rounded corners with given radius
 	 *
-	 * @param PLIB_GD_Color $color the color of the rectangle
+	 * @param FWS_GD_Color $color the color of the rectangle
 	 * @param int $radius the radius of the corners
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
 	public final function draw_rounded($color,$radius = 3,$angle = 0,$pos = null)
 	{
@@ -71,9 +71,9 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Draws the rectangle with the given color
 	 *
-	 * @param PLIB_GD_Color $color
+	 * @param FWS_GD_Color $color
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @return the result of imagerectangle()
 	 */
 	public final function draw($color,$angle = 0,$pos = null)
@@ -84,9 +84,9 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Fills the rectangle with the given color
 	 *
-	 * @param PLIB_GD_Color $color
+	 * @param FWS_GD_Color $color
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @return the result of imagefilledrectangle()
 	 */
 	public final function fill($color,$angle = 0,$pos = null)
@@ -98,18 +98,18 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * Fills the rectangle with a color-fade with the given colors and given step-width.
 	 *
 	 * @param array $colors an array with all colors that should be used. These may be instances of
-	 * 	PLIB_GD_Color or arrays with the 3 or 4 color-components
+	 * 	FWS_GD_Color or arrays with the 3 or 4 color-components
 	 * @param int $step the step-size
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
 	public final function fill_colorfade($colors,$step = 1,$angle = 0,$pos = null)
 	{
-		if(!PLIB_Helper::is_integer($step) || $step <= 0)
-			PLIB_Helper::def_error('intgt0','step',$step);
+		if(!FWS_Helper::is_integer($step) || $step <= 0)
+			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_rect->get_size()->get_width();
-		$cf = new PLIB_GD_ColorFade($distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade($distance,$distance / $step,$colors);
 		$cfcolors = $cf->get_colors();
 		$img = $this->get_image_res();
 		
@@ -156,16 +156,16 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * right with a slightly (<var>$color_diff</var>) different color so that it looks 3 dimensional.
 	 * Note that this method fills the rectangle, too. So you shouldn't call fill(), too.
 	 *
-	 * @param PLIB_GD_Color $color the color of the rectangle
+	 * @param FWS_GD_Color $color the color of the rectangle
 	 * @param int $color_diff the difference of the color on the top and right to the given color
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @return boolean the result of imagefilledrectangle() or imagefilledpolygon()
 	 */
 	public final function fill_3d($color,$color_diff = 80,$angle = 0,$pos = null)
 	{
-		if(!PLIB_Helper::is_integer($color_diff) || $color_diff <= 0)
-			PLIB_Helper::def_error('intgt0','color_diff',$color_diff);
+		if(!FWS_Helper::is_integer($color_diff) || $color_diff <= 0)
+			FWS_Helper::def_error('intgt0','color_diff',$color_diff);
 		
 		$res = $this->_paint($color,$angle,$pos,'filled');
 		
@@ -173,18 +173,18 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 		$mycolor->brighter($color_diff);
 		$paint_points = $this->get_paint_points($angle,$pos);
 		$lview = $this->get_graphics()->get_line_view(
-			new PLIB_GD_Line(
-				new PLIB_GD_Point($paint_points[0],$paint_points[1]),
-				new PLIB_GD_Point($paint_points[6],$paint_points[7])
+			new FWS_GD_Line(
+				new FWS_GD_Point($paint_points[0],$paint_points[1]),
+				new FWS_GD_Point($paint_points[6],$paint_points[7])
 			)
 		);
 		$lview->draw($mycolor);
 		
 		$mycolor->darker($color_diff * 2);
 		$lview = $this->get_graphics()->get_line_view(
-			new PLIB_GD_Line(
-				new PLIB_GD_Point($paint_points[4],$paint_points[5]),
-				new PLIB_GD_Point($paint_points[6],$paint_points[7])
+			new FWS_GD_Line(
+				new FWS_GD_Point($paint_points[4],$paint_points[5]),
+				new FWS_GD_Point($paint_points[6],$paint_points[7])
 			)
 		);
 		$lview->draw($mycolor);
@@ -195,16 +195,16 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Does the actual painting
 	 *
-	 * @param PLIB_GD_Color $color the color
+	 * @param FWS_GD_Color $color the color
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @param string $func an empty string for draw() and 'filled' for fill()
 	 * @return the result of image*rectangle()
 	 */
 	private function _paint($color,$angle,$pos,$func)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
 		
 		$img = $this->get_image_res();
 		
@@ -225,20 +225,20 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	/**
 	 * Does the actual painting for the rounded-methods
 	 *
-	 * @param PLIB_GD_Color $color the color of the rectangle
+	 * @param FWS_GD_Color $color the color of the rectangle
 	 * @param int $radius the radius of the corners
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @param string $func the function: 'filled' or ''
 	 */
 	private function _paint_rounded($color,$radius,$angle,$pos,$func)
 	{
-		if(!($color instanceof PLIB_GD_Color))
-			PLIB_Helper::def_error('instance','color','PLIB_GD_Color',$color);
-		if(!PLIB_Helper::is_integer($radius) || $radius <= 0)
-			PLIB_Helper::def_error('intgt0','radius',$radius);
-		if(!PLIB_Helper::is_integer($angle))
-			PLIB_Helper::def_error('integer','angle',$angle);
+		if(!($color instanceof FWS_GD_Color))
+			FWS_Helper::def_error('instance','color','FWS_GD_Color',$color);
+		if(!FWS_Helper::is_integer($radius) || $radius <= 0)
+			FWS_Helper::def_error('intgt0','radius',$radius);
+		if(!FWS_Helper::is_integer($angle))
+			FWS_Helper::def_error('integer','angle',$angle);
 		
 		list($w,$h) = $this->_rect->get_size()->get();
 		$img = $this->_img->get_image();
@@ -321,7 +321,7 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * Determines the paint-points for the rotation of the rectangle
 	 * 
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
 	protected final function get_paint_points($angle,$pos)
 	{
@@ -341,32 +341,32 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 	 * 
 	 * @param array $points rotates all points by the specified angle around the specified position
 	 * @param int $angle the angle to use (in degree)
-	 * @param PLIB_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 */
 	protected final function rotate_points(&$points,$angle,$pos)
 	{
-		if(!PLIB_Helper::is_integer($angle))
-			PLIB_Helper::def_error('integer','angle',$angle);
-		if($pos !== null && !($pos instanceof PLIB_GD_BoxPosition))
-			PLIB_Helper::def_error('instance','pos','PLIB_GD_BoxPosition',$pos);
+		if(!FWS_Helper::is_integer($angle))
+			FWS_Helper::def_error('integer','angle',$angle);
+		if($pos !== null && !($pos instanceof FWS_GD_BoxPosition))
+			FWS_Helper::def_error('instance','pos','FWS_GD_BoxPosition',$pos);
 		
 		if($pos === null)
-			$pos = new PLIB_GD_BoxPosition();
+			$pos = new FWS_GD_BoxPosition();
 		
 		$size = $this->_rect->get_size();
 		
 		// determine horizontal position
 		switch($pos->get_hpos())
 		{
-			case PLIB_GD_BoxPosition::FIRST:
+			case FWS_GD_BoxPosition::FIRST:
 				$ptx = 0;
 				break;
 			
-			case PLIB_GD_BoxPosition::LAST:
+			case FWS_GD_BoxPosition::LAST:
 				$ptx = $size->get_width();
 				break;
 			
-			case PLIB_GD_BoxPosition::MIDDLE:
+			case FWS_GD_BoxPosition::MIDDLE:
 				$ptx = $size->get_width() / 2;
 				break;
 		}
@@ -374,15 +374,15 @@ class PLIB_GD_View_Rectangle extends PLIB_GD_View
 		// determine vertical position
 		switch($pos->get_vpos())
 		{
-			case PLIB_GD_BoxPosition::FIRST:
+			case FWS_GD_BoxPosition::FIRST:
 				$pty = 0;
 				break;
 			
-			case PLIB_GD_BoxPosition::LAST:
+			case FWS_GD_BoxPosition::LAST:
 				$pty = $size->get_height();
 				break;
 			
-			case PLIB_GD_BoxPosition::MIDDLE:
+			case FWS_GD_BoxPosition::MIDDLE:
 				$pty = $size->get_height() / 2;
 				break;
 		}

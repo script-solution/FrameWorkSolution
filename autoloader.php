@@ -3,20 +3,20 @@
  * Contains the autoloader-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * The autoloader for the library. It can load items and you may also register other load-
+ * The autoloader for the framework. It can load items and you may also register other load-
  * functions to search at different locations for the item or something like that.
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class PLIB_AutoLoader extends PLIB_UtilBase
+class FWS_AutoLoader extends FWS_UtilBase
 {
 	/**
 	 * All registered loaders
@@ -34,7 +34,7 @@ class PLIB_AutoLoader extends PLIB_UtilBase
 	public static function register_loader($loader)
 	{
 		if(!is_callable($loader))
-			PLIB_Helper::error('The given loader is not callable!');
+			FWS_Helper::error('The given loader is not callable!');
 		
 		self::$_loader[] = $loader;
 	}
@@ -48,13 +48,13 @@ class PLIB_AutoLoader extends PLIB_UtilBase
 	public static function load_item($item)
 	{
 		// Note that we don't use the MB-functions here for performance issues
-		if(substr($item,0,5) == 'PLIB_')
+		if(substr($item,0,4) == 'FWS_')
 		{
-			$myitem = substr($item,5);
+			$myitem = substr($item,4);
 			$myitem = str_replace('_','/',$myitem);
 			$myitem = strtolower($myitem);
 			$myitem .= '.php';
-			$path = PLIB_Path::server_lib().$myitem;
+			$path = FWS_Path::server_fw().$myitem;
 			
 			if(is_file($path))
 			{

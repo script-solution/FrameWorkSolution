@@ -3,7 +3,7 @@
  * Contains the interface for the additional fields
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -13,14 +13,14 @@
 /**
  * The interface for all additional fields
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	addfield
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-interface PLIB_AddField_Field
+interface FWS_AddField_Field
 {
 	/**
-	 * @return PLIB_AddField_Data the data-object of this field
+	 * @return FWS_AddField_Data the data-object of this field
 	 */
 	public function get_data();
 	
@@ -40,7 +40,7 @@ interface PLIB_AddField_Field
 	/**
 	 * Should build the control for the formular which allows the user to edit this field.
 	 *
-	 * @param PLIB_HTML_Formular the formular that should be used
+	 * @param FWS_HTML_Formular the formular that should be used
 	 * @param mixed $value the default value
 	 * @return string the HTML-code for the formular-control
 	 */

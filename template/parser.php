@@ -3,7 +3,7 @@
  * Contains the template-parser
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -14,11 +14,11 @@
  * The template-parser which gets a string and converts the "template-code" to
  * valid PHP-code which can be executed.
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @subpackage	template
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Template_Parser extends PLIB_Object
+final class FWS_Template_Parser extends FWS_Object
 {
 	/**
 	 * The regular expression for an ident
@@ -95,21 +95,21 @@ final class PLIB_Template_Parser extends PLIB_Object
 	/**
 	 * The instance of the template-handler
 	 *
-	 * @var PLIB_Template_Handler
+	 * @var FWS_Template_Handler
 	 */
 	private $_tpl;
 	
 	/**
 	 * constructor
 	 *
-	 * @param PLIB_Template_Handler $tpl the template-handler
+	 * @param FWS_Template_Handler $tpl the template-handler
 	 */
 	public function __construct($tpl)
 	{
 		parent::__construct();
 		
-		if(!($tpl instanceof PLIB_Template_Handler))
-			PLIB_Helper::def_error('instance','tpl','PLIB_Template_Handler',$tpl);
+		if(!($tpl instanceof FWS_Template_Handler))
+			FWS_Helper::def_error('instance','tpl','FWS_Template_Handler',$tpl);
 		
 		$this->_tpl = $tpl;
 		
@@ -266,7 +266,7 @@ final class PLIB_Template_Parser extends PLIB_Object
 		// write to file
 		if($cache_file !== null)
 		{
-			$written = PLIB_FileUtils::write($cache_file,$result);
+			$written = FWS_FileUtils::write($cache_file,$result);
 			if($written > 0)
 				return '';
 		}
@@ -400,7 +400,7 @@ final class PLIB_Template_Parser extends PLIB_Object
 					$res .= $matches['cbr'];
 			}
 			else
-				PLIB_Helper::error('Invalid condition-part "'.$part.'"!');
+				FWS_Helper::error('Invalid condition-part "'.$part.'"!');
 		}
 		
 		$res .= ')';
@@ -458,14 +458,14 @@ final class PLIB_Template_Parser extends PLIB_Object
 		$res = '(';
 		
 		if($pop1[0] == '$' && strpbrk($pop1,'+-*/%') === false &&
-				$pop1[PLIB_String::strlen($pop1) - 1] != ')')
+				$pop1[FWS_String::strlen($pop1) - 1] != ')')
 			$res .= 'isset('.$pop1.') && ';
 		
 		if($cmp != '' && $op2 != '')
 		{
 			$pop2 = $this->_parse_objvar($op2);
 			if($pop2[0] == '$' && strpbrk($pop2,'+-*/%') === false &&
-					$pop2[PLIB_String::strlen($pop2) - 1] != ')')
+					$pop2[FWS_String::strlen($pop2) - 1] != ')')
 				$res .= 'isset('.$pop2.') && ';
 		}
 		
@@ -496,12 +496,12 @@ final class PLIB_Template_Parser extends PLIB_Object
 		if($this->_tpl->get_method_calls_enabled() &&
 			preg_match('/^'.$this->_regex_objcall.'$/',$value))
 		{
-			$dot = PLIB_String::strpos($value,'.');
-			$var = PLIB_String::substr($value,0,$dot);
-			$other = PLIB_String::substr($value,$dot + 1);
-			$bracket = PLIB_String::strpos($other,'(');
-			$func = PLIB_String::substr($other,0,$bracket);
-			$arguments = PLIB_String::substr($other,$bracket + 1,-1);
+			$dot = FWS_String::strpos($value,'.');
+			$var = FWS_String::substr($value,0,$dot);
+			$other = FWS_String::substr($value,$dot + 1);
+			$bracket = FWS_String::strpos($other,'(');
+			$func = FWS_String::substr($other,0,$bracket);
+			$arguments = FWS_String::substr($other,$bracket + 1,-1);
 			$arguments = trim($arguments);
 			
 			$res = '($tpl->check_allowed_method(\''.$var.'\',\''.$func.'\')?';
@@ -597,8 +597,8 @@ final class PLIB_Template_Parser extends PLIB_Object
 				$res .= $this->_parse_var($value);
 			else
 			{
-				$varname = PLIB_String::substr($value,0,$dotpos);
-				$prop = PLIB_String::substr($value,$dotpos + 1);
+				$varname = FWS_String::substr($value,0,$dotpos);
+				$prop = FWS_String::substr($value,$dotpos + 1);
 				if($prop == 'length')
 					$res .= 'count('.$this->_parse_var($varname).')';
 				else if($prop == 'last')

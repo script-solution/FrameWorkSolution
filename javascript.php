@@ -3,7 +3,7 @@
  * Contains the javascript-class
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -13,19 +13,19 @@
  * A class to cache and use javascript-files.
  * Example:
  * <code>
- * $js = PLIB_Javascript::get_instance();
- * $js->set_cache_folder(PLIB_Path::server_app().'cache');
+ * $js = FWS_Javascript::get_instance();
+ * $js->set_cache_folder(FWS_Path::server_app().'cache');
  * // will return the name of the cache-file
  * echo $js->get_file('myfile.js');
  * </code>
  * 
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_Javascript extends PLIB_Singleton
+final class FWS_Javascript extends FWS_Singleton
 {
 	/**
-	 * @return PLIB_Javascript the instance of this class
+	 * @return FWS_Javascript the instance of this class
 	 */
 	public static function get_instance()
 	{
@@ -47,7 +47,7 @@ final class PLIB_Javascript extends PLIB_Singleton
 	private $_shrink = true;
 	
 	/**
-	 * @return string the cache-folder or null if not set (starting at PLIB_Path::server_app()!)
+	 * @return string the cache-folder or null if not set (starting at FWS_Path::server_app()!)
 	 */
 	public function get_cache_folder()
 	{
@@ -58,17 +58,17 @@ final class PLIB_Javascript extends PLIB_Singleton
 	 * Sets the cache folder for shrinked javascript-files. This method assumes that the folder
 	 * is writable!
 	 * 
-	 * @param string $folder the new value (starting at PLIB_Path::server_app()!)
+	 * @param string $folder the new value (starting at FWS_Path::server_app()!)
 	 */
 	public function set_cache_folder($folder)
 	{
 		if(empty($folder))
-			PLIB_Helper::def_error('notempty','folder',$folder);
-		$rfolder = PLIB_Path::server_app().$folder;
+			FWS_Helper::def_error('notempty','folder',$folder);
+		$rfolder = FWS_Path::server_app().$folder;
 		if(!file_exists($rfolder) || !is_dir($rfolder))
-			PLIB_Helper::error('"'.$rfolder.'" is no valid folder!');
+			FWS_Helper::error('"'.$rfolder.'" is no valid folder!');
 		
-		$this->_cache = PLIB_FileUtils::ensure_trailing_slash($folder);
+		$this->_cache = FWS_FileUtils::ensure_trailing_slash($folder);
 	}
 	
 	/**
@@ -85,42 +85,42 @@ final class PLIB_Javascript extends PLIB_Singleton
 	/**
 	 * Returns the javascript-file to use for the given file. This file will be cached and a shrinked
 	 * version will be used.
-	 * If $source is "lib" the fill be assumed at:
-	 * <code><libpath><file></code>
+	 * If $source is 'fws' the fill be assumed at:
+	 * <code><fwspath><file></code>
 	 * Otherwise:
 	 * <code><path><file></code>
 	 * 
 	 * @param string $file the js-file
-	 * @param string $source if $source = "lib" the PHPLib will be used as root
+	 * @param string $source if $source = 'fws' the FrameWorkSolution will be used as root
 	 */
 	public function get_file($file,$source = 'def')
 	{
 		if(empty($file))
-			PLIB_Helper::def_error('notempty','file',$file);
+			FWS_Helper::def_error('notempty','file',$file);
 		
 		if($this->_cache === null)
 		{
-			PLIB_Helper::error(
-				'Please specify the cache-folder first via PLIB_Javascript::set_cache_folder()!'
+			FWS_Helper::error(
+				'Please specify the cache-folder first via FWS_Javascript::set_cache_folder()!'
 			);
 		}
 		
 		$prefix = '';
-		if($source == 'lib')
-			$prefix = 'plib_';
+		if($source == 'fws')
+			$prefix = 'fws_';
 		
 		// init some vars
-		$filepath = $source == 'lib' ? PLIB_Path::server_lib().$file : PLIB_Path::server_app().$file;
+		$filepath = $source == 'fws' ? FWS_Path::server_fw().$file : FWS_Path::server_app().$file;
 		$shrinked = $this->_shrink;
 		if($this->_shrink)
 		{
 			$filename = basename($file);
 			$modtime = @filemtime($filepath);
-			$ext = PLIB_FileUtils::get_extension($filename);
+			$ext = FWS_FileUtils::get_extension($filename);
 			$suffix = '_shrinked';
 			$cache_file = preg_replace('/[^a-z0-9_]/','_',$file);
 			$output_file = $this->_cache.$prefix.$cache_file.$suffix.'.'.$ext;
-			$server_output = PLIB_Path::server_app().$output_file;
+			$server_output = FWS_Path::server_app().$output_file;
 			
 			// determine if we have to recache the file
 			$recache = !is_file($server_output);
@@ -132,9 +132,9 @@ final class PLIB_Javascript extends PLIB_Singleton
 			
 			if($recache)
 			{
-				$shrinker = new PLIB_JS_FileShrinker($filepath);
+				$shrinker = new FWS_JS_FileShrinker($filepath);
 				$output = $shrinker->get_shrinked_content();
-				if(!PLIB_FileUtils::write($server_output,$output))
+				if(!FWS_FileUtils::write($server_output,$output))
 				{
 					$output_file = $file;
 					$shrinked = false;
@@ -145,11 +145,11 @@ final class PLIB_Javascript extends PLIB_Singleton
 			$output_file = $file;
 		
 		if($shrinked)
-			return PLIB_Path::client_app().$output_file;
+			return FWS_Path::client_app().$output_file;
 		
-		if($source == 'lib')
-			return PLIB_Path::client_lib().$file;
-		return PLIB_Path::client_app().$file;
+		if($source == 'fws')
+			return FWS_Path::client_fw().$file;
+		return FWS_Path::client_app().$file;
 	}
 	
 	protected function get_print_vars()

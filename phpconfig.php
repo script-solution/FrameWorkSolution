@@ -3,7 +3,7 @@
  * Contains some PHP-config-functions
  *
  * @version			$Id$
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,10 +12,10 @@
 /**
  * Utility functions to get information about PHP
  *
- * @package			PHPLib
+ * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class PLIB_PHPConfig extends PLIB_UtilBase
+final class FWS_PHPConfig extends FWS_UtilBase
 {
 	/**
 	 * Just a short-hand for:
@@ -37,7 +37,7 @@ final class PLIB_PHPConfig extends PLIB_UtilBase
 	public static function is_enabled($flag)
 	{
 		$val = @ini_get($flag);
-		return $val == 1 || PLIB_String::strtolower($val) == 'on';
+		return $val == 1 || FWS_String::strtolower($val) == 'on';
 	}
 	
 	/**
