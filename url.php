@@ -2,7 +2,7 @@
 /**
  * Contains the URL-class
  *
- * @version			$Id$
+ * @version			$Id: url.php 28 2008-07-30 19:24:34Z nasmussen $
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
@@ -319,9 +319,6 @@ class FWS_URL extends FWS_Object
 	 */
 	public final function set($name,$value)
 	{
-		if($value === null)
-			FWS_Helper::def_error('notnull','value',$value);
-		
 		$this->_params[$name] = $value;
 	}
 	
@@ -367,7 +364,7 @@ class FWS_URL extends FWS_Object
 		{
 			$url .= '?';
 			foreach($params as $k => $v)
-				$url .= $k.'='.urlencode($v).$this->_separator;
+				$url .= urlencode($k).'='.urlencode($v).$this->_separator;
 			$url = FWS_String::substr($url,0,-FWS_String::strlen($this->_separator));
 		}
 		
