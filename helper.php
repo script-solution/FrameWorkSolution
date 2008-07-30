@@ -286,7 +286,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 	 * Includes the module given by the action-parameter and returns the name.
 	 * This is the default way to handle modules. The method assumes
 	 * that the modules are at:
-	 * <code>PLIB_Path::server_app().$folder.$action.'/module_'.$action.'.php'</code>
+	 * <code>PLIB_Path::server_app().$folder.$action.'/module.php'</code>
 	 * The classes have to have the name:
 	 * <code>$prefix.$action</code>
 	 *
@@ -310,7 +310,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 		$action = PLIB_Input::get_instance()->get_var($action_param,'get',PLIB_Input::IDENTIFIER);
 	
 		// try to load the module
-		$filename = PLIB_Path::server_app().$folder.$action.'/module_'.$action.'.php';
+		$filename = PLIB_Path::server_app().$folder.$action.'/module.php';
 		if(file_exists($filename))
 		{
 			include_once($filename);
@@ -319,7 +319,7 @@ final class PLIB_Helper extends PLIB_UtilBase
 		}
 	
 		// use default module
-		include_once(PLIB_Path::server_app().$folder.$default.'/module_'.$default.'.php');
+		include_once(PLIB_Path::server_app().$folder.$default.'/module.php');
 		if(class_exists($prefix.$default))
 			return $default;
 	
