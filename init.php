@@ -21,8 +21,30 @@ include_once(PLIB_PATH.'path.php');
 PLIB_Path::set_server_lib(PLIB_PATH);
 PLIB_Path::set_client_lib(PLIB_PATH);
 
+// set error-display-mode
+@ini_set('display_errors',1);
+error_reporting(E_ALL | E_STRICT);
+
+// we don't want to have magic-quotes-runtime enabled
+set_magic_quotes_runtime(0);
+
+// set default timezone for the case that PLIB_Date is not used
+date_default_timezone_set('Europe/Berlin');
+
+// if register-globals is activated we delete the registered variables
+if(@ini_get('register_globals'))
+{
+	foreach(@array($_REQUEST,$_SERVER,$_FILES,$_ENV) as $array)
+	{
+		if(is_array($array))
+		{
+			foreach($array as $k => $v)
+				unset(${$k});
+		}
+	}
+}
+
 // we need some basic stuff
-include_once(PLIB_Path::server_lib().'general.php');
 include_once(PLIB_Path::server_lib().'helper.php');
 include_once(PLIB_Path::server_lib().'string.php');
 include_once(PLIB_Path::server_lib().'autoloader.php');

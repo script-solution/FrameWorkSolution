@@ -21,6 +21,7 @@
  * $captcha->set_size(300,100);
  * $captcha->set_wave(true,10,6);
  * $captcha->create_image();
+ * $captcha->send_image();
  * </code>
  * 
  * @package			PHPLib
@@ -903,8 +904,21 @@ final class PLIB_GD_Captcha extends PLIB_Object
 		$this->_g->get_rect_view($rect)->draw($bordercolor);
 		
 		$this->_used_chars = $chars;
-		
-		// finish
+	}
+	
+	/**
+	 * @return PLIB_GD_Image the image-instance
+	 */
+	public function get_image()
+	{
+		return $this->_img;
+	}
+	
+	/**
+	 * Sends the image to the browser
+	 */
+	public function send_image()
+	{
 		$this->_img->send();
 	}
 	

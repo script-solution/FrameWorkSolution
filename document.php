@@ -9,45 +9,31 @@
  * @link				http://www.script-solution.de
  */
 
-// TODO move some stuff (actions, ...) to the page-class
-
 /**
- * This class can be used to build a the response that is send to the browser.
+ * This class can be used to build a the response that is send to the browser. You can set
+ * the things such as MIME-type, charset, headers in general, wether GZip should be used,
+ * wether a redirection should be done and so on.
  * <br>
- * You can set various attributes for the document such as MIME-type, charset, title, javascript-
- * files, CSS-files and so on.
+ * The document contains an instance of {@link PLIB_Document_Renderer} which should build the
+ * result that should be sent to the browser. This may be an HTML-page, an image, a download
+ * or anything else.
  * <br>
- * The method {@link render} renders the set template, sets the headers, compresses the result, if
- * you like, and returns it.
+ * A document is also responsible for loading the module and storing it. But you may also "disable"
+ * modules by returning <var>null</var> in load_module().
  * <br>
- * Note that you have to call <var>_finish()</var> before the script ends because
- * this method performs actions like closing the db-connection, writing session-data
- * to the storage and so on.
+ * The method {@link render} will return the result that should be sent to the browser. By default
+ * it grabs the result from the renderer, sends the headers, compresses the result if required,
+ * finishes the document (closing db-connection, ...) and returns the result.
  * <br>
- * Additionally it contains a timer to measure the time for the script and you may set
- * errors to the document
+ * At the beginning of the render-method <var>prepare_rendering()</var> will be called. By default
+ * this method inits the module. This gives the module (among other things) the chance to exchange
+ * the renderer, setting document-parameters and so on. 
  *
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
- * @see finish()
  */
-abstract class PLIB_Document extends PLIB_Object
+class PLIB_Document extends PLIB_Object
 {
-	/**
-	 * The action-performer-object
-	 *
-	 * @var PLIB_Actions_Performer
-	 */
-	protected $_action_perf;
-
-	/**
-	 * The result of the action in this run.
-	 *
-	 * @see perform_actions()
-	 * @var integer
-	 */
-	private $_action_result = 0;
-	
 	/**
 	 * Redirect information:
 	 * <pre>
@@ -77,32 +63,11 @@ abstract class PLIB_Document extends PLIB_Object
 	private $_charset = 'UTF-8';
 	
 	/**
-	 * An array of CSS files that should be used
+	 * The header that should be set
 	 *
 	 * @var array
 	 */
-	private $_css_files = array();
-	
-	/**
-	 * An array of CSS-blocks that should be used
-	 *
-	 * @var array
-	 */
-	private $_css_blocks = array();
-	
-	/**
-	 * An array of javascript files that should be used
-	 *
-	 * @var array
-	 */
-	private $_js_files = array();
-	
-	/**
-	 * An array of javascript-blocks that should be used
-	 *
-	 * @var array
-	 */
-	private $_js_blocks = array();
+	private $_header = array();
 	
 	/**
 	 * Wether the browser may cache the result
@@ -116,37 +81,29 @@ abstract class PLIB_Document extends PLIB_Object
 	 *
 	 * @var boolean
 	 */
-	private $_use_gzip = true;
+	private $_use_gzip = false;
 	
 	/**
-	 * The document title
+	 * The module
+	 *
+	 * @var PLIB_Module
+	 */
+	private $_module;
+	
+	/**
+	 * The name of the current module
 	 *
 	 * @var string
 	 */
-	private $_title = '';
+	protected $_module_name;
 	
 	/**
-	 * The template that should be displayed
-	 *
-	 * @var string
+	 * The renderer-instance for this document
+	 * 
+	 * @var PLIB_Document_Renderer
 	 */
-	private $_template = null;
-	
-	/**
-	 * Stores wether the document has been shown successfully or something unexpected
-	 * has happened (missing parameter, no access, ...).
-	 *
-	 * @var boolean
-	 */
-	private $_error = false;
-	
-	/**
-	 * The header that should be set
-	 *
-	 * @var array
-	 */
-	private $_header = array();
-	
+	private $_renderer = null;
+
 	/**
 	 * Constructor
 	 */
@@ -156,117 +113,12 @@ abstract class PLIB_Document extends PLIB_Object
 		{
 			parent::__construct();
 			
-			$this->_action_perf = $this->load_action_perf();
-			
-			// set document
-			PLIB_Props::get()->set_doc($this);
+			$this->_module = $this->load_module();
 		}
 		catch(PLIB_Exceptions_Critical $e)
 		{
 			echo $e;
 		}
-	}
-	
-	/**
-	 * Renders the page and returns the result
-	 * 
-	 * @return string the result
-	 */
-	public function render()
-	{
-		$res = '';
-		if($this->_template !== null)
-		{
-			$tpl = PLIB_Props::get()->tpl();
-			$res = $tpl->parse_template($this->_template);
-		
-			// compress the result?
-			if($this->_use_gzip)
-				$res = $this->gzip($res);
-		}
-		
-		// set header
-		$this->send_header();
-		
-		return $res;
-	}
-	
-	/**
-	 * Sends all set headers
-	 */
-	public function send_header()
-	{
-		$this->set_header('Content-Type',$this->_mimetype.'; charset='.$this->_charset,false);
-		if(!$this->_allow_cache)
-		{
-			// Expires in the past
-			$this->set_header('Expires','Mon, 1 Jan 2001 00:00:00 GMT');
-			// Always modified
-	 		$this->set_header('Last-Modified',gmdate('D, d M Y H:i:s').' GMT');
-	 		$this->set_header(
-	 			'Cache-Control','no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
-	 		);
-			// HTTP 1.0
-			$this->set_header('Pragma','no-cache');
-		}
-		
-		if(!headers_sent())
-		{
-			foreach($this->_header as $name => $value)
-				header($name.': '.$value);
-		}
-	}
-	
-	/**
-	 * @return string the template that should be displayed (null if not set)
-	 */
-	public final function get_template()
-	{
-		return $this->_template;
-	}
-	
-	/**
-	 * Sets the template that should be displayed
-	 *
-	 * @param string $tpl the template
-	 */
-	public final function set_template($tpl)
-	{
-		if(empty($tpl))
-			PLIB_Helper::def_error('notempty','tpl',$tpl);
-		
-		$this->_template = $tpl;
-	}
-	
-	/**
-	 * Sets the given header
-	 *
-	 * @param string $name the header-name
-	 * @param string $value the header-value
-	 * @param boolean $overwrite wether the header-value should be overwritten, if necessary
-	 */
-	public final function set_header($name,$value,$overwrite = true)
-	{
-		if($overwrite || !isset($this->_header[$name]))
-			$this->_header[$name] = $value;
-	}
-	
-	/**
-	 * @return string the document-title
-	 */
-	public final function get_title()
-	{
-		return $this->_title;
-	}
-	
-	/**
-	 * Sets the title for the document
-	 *
-	 * @param string $title the new title
-	 */
-	public final function set_title($title)
-	{
-		$this->_title = (string)$title;
 	}
 	
 	/**
@@ -342,138 +194,6 @@ abstract class PLIB_Document extends PLIB_Object
 	}
 	
 	/**
-	 * @return array all CSS files in the format:
-	 * 	<code>
-	 * 	array(array('file' => ..., 'media' => ..., 'type => ...), ...)
-	 * 	</code>
-	 */
-	public final function get_css_files()
-	{
-		$files = array();
-		foreach($this->_css_files as $file => $attr)
-		{
-			$files[] = array(
-				'src' => $file,
-				'media' => $attr[1],
-				'type' => $attr[0]
-			);
-		}
-		return $files;
-	}
-	
-	/**
-	 * @return array all CSS blocks in the format:
-	 * 	<code>
-	 * 	array(array('code' => ..., 'type' => ...), ...)
-	 * 	</code>
-	 */
-	public final function get_css_blocks()
-	{
-		$blocks = array();
-		foreach($this->_css_blocks as $type => $code)
-		{
-			$blocks[] = array(
-				'code' => $code,
-				'src' => $type
-			);
-		}
-		return $blocks;
-	}
-	
-	/**
-	 * @return array all javascript files in the format:
-	 * 	<code>
-	 * 	array(array('file' => ..., 'type => ...), ...)
-	 * 	</code>
-	 */
-	public final function get_js_files()
-	{
-		$files = array();
-		foreach($this->_js_files as $file => $type)
-		{
-			$files[] = array(
-				'src' => $file,
-				'type' => $type
-			);
-		}
-		return $files;
-	}
-	
-	/**
-	 * @return array all javascript blocks in the format:
-	 * 	<code>
-	 * 	array(array('code' => ..., 'type' => ...), ...)
-	 * 	</code>
-	 */
-	public final function get_js_blocks()
-	{
-		$blocks = array();
-		foreach($this->_js_blocks as $type => $code)
-		{
-			$blocks[] = array(
-				'code' => $code,
-				'type' => $type
-			);
-		}
-		return $blocks;
-	}
-	
-	/**
-	 * Adds the given CSS file with given MIME-type and for the given media to the document
-	 *
-	 * @param string $file the file
-	 * @param string $type the MIME-type (text/css by default)
-	 * @param string $media the media (null by default)
-	 */
-	public final function add_css_file($file,$type = 'text/css',$media = null)
-	{
-		$type = PLIB_String::strtolower($type);
-		$this->_css_files[$file] = array($type,$media);
-	}
-	
-	/**
-	 * Adds the given CSS-definitions with given MIME-type to the document
-	 *
-	 * @param string $block your CSS definitions
-	 * @param string $type the MIME-type (text/css by default)
-	 */
-	public final function add_css_block($block,$type = 'text/css')
-	{
-		$type = PLIB_String::strtolower($type);
-		if(isset($this->_css_blocks[$type]))
-			$this->_css_blocks[$type] .= "\n".$block;
-		else
-			$this->_css_blocks[$type] = $block;
-	}
-	
-	/**
-	 * Adds the given javascript-file to the document
-	 *
-	 * @param string $file the file
-	 * @param string $type the MIME-type (text/javascript by default)
-	 */
-	public final function add_js_file($file,$type = 'text/javascript')
-	{
-		$type = PLIB_String::strtolower($type);
-		$this->_js_files[$file] = $type;
-	}
-	
-	/**
-	 * Adds the given javascript block to the document
-	 *
-	 * @param string $block your javascript
-	 * @param string $type the MIME-type (text/javascript by default)
-	 */
-	public final function add_js_block($block,$type = 'text/javascript')
-	{
-		$type = PLIB_String::strtolower($type);
-		if(isset($this->_js_blocks[$type]))
-			$this->_js_blocks[$type] .= "\n".$block;
-		else
-			$this->_js_blocks[$type] = $block;
-	}
-	
-	/**
 	 * @return mixed information about a redirect:
 	 * <pre>
 	 * 	array(
@@ -537,9 +257,164 @@ abstract class PLIB_Document extends PLIB_Object
 	}
 	
 	/**
+	 * @return PLIB_Module the module that is used
+	 */
+	public final function get_module()
+	{
+		return $this->_module;
+	}
+	
+	/**
+	 * @return string the name of the module that is used
+	 */
+	public final function get_module_name()
+	{
+		return $this->_module_name;
+	}
+	
+	/**
+	 * Returns the default renderer. If it is already set the instance will be returned. Otherwise
+	 * it will be created, set and returned.
+	 *
+	 * @return PLIB_Document_Renderer_HTML_Default the default renderer
+	 */
+	public function use_default_renderer()
+	{
+		throw new PLIB_Exceptions_UnsupportedMethod("This method is not implemented");
+	}
+	
+	/**
+	 * Sets the GD-image-renderer, if not already done and returns it
+	 *
+	 * @return PLIB_Document_Renderer_GDImage the GD-image-renderer
+	 */
+	public function use_gdimage_renderer()
+	{
+		if($this->_renderer instanceof PLIB_Document_Renderer_GDImage)
+			return $this->_renderer;
+		
+		$this->_renderer = new PLIB_Document_Renderer_GDImage();
+		return $this->_renderer;
+	}
+	
+	/**
+	 * Sets the raw-renderer, if not already done and returns it
+	 *
+	 * @return PLIB_Document_Renderer_Raw the plain-renderer
+	 */
+	public function use_raw_renderer()
+	{
+		if($this->_renderer instanceof PLIB_Document_Renderer_Raw)
+			return $this->_renderer;
+		
+		$this->_renderer = new PLIB_Document_Renderer_Raw();
+		return $this->_renderer;
+	}
+	
+	/**
+	 * Sets the download-renderer, if not already done and returns it
+	 *
+	 * @return PLIB_Document_Renderer_Download the download-renderer
+	 */
+	public function use_download_renderer()
+	{
+		if($this->_renderer instanceof PLIB_Document_Renderer_Download)
+			return $this->_renderer;
+		
+		$this->_renderer = new PLIB_Document_Renderer_Download();
+		return $this->_renderer;
+	}
+	
+	/**
+	 * @return PLIB_Document_Renderer the current renderer (null = not set)
+	 */
+	public final function get_renderer()
+	{
+		return $this->_renderer;
+	}
+	
+	/**
+	 * Sets the renderer that should be used
+	 *
+	 * @param PLIB_Document_Renderer $renderer the renderer
+	 */
+	public final function set_renderer($renderer)
+	{
+		if(!($renderer instanceof PLIB_Document_Renderer))
+			PLIB_Helper::def_error('instance','renderer','PLIB_Document_Renderer',$renderer);
+		
+		$this->_renderer = $renderer;
+	}
+	
+	/**
+	 * Sets the given header
+	 *
+	 * @param string $name the header-name
+	 * @param string $value the header-value
+	 * @param boolean $overwrite wether the header-value should be overwritten, if existing
+	 */
+	public final function set_header($name,$value,$overwrite = true)
+	{
+		if($overwrite || !isset($this->_header[$name]))
+			$this->_header[$name] = $value;
+	}
+	
+	/**
+	 * Renders the page and returns the result
+	 * 
+	 * @return string the result
+	 */
+	public function render()
+	{
+		$this->prepare_rendering();
+		
+		if($this->_renderer === null)
+			PLIB_Helper::error('Please specify the renderer that should be used!');
+		
+		// render the document
+		$res = $this->_renderer->render($this);
+		
+		// send header and return result
+		$this->_send_header();
+		$this->finish();
+		
+		// use gzip, if required
+		if($this->is_gzip())
+			$res = $this->_gzip($res);
+		return $res;
+	}
+
+	/**
+	 * Determines the module to load and returns it
+	 *
+	 * @return BS_Front_Module the module
+	 */
+	protected function load_module()
+	{
+		$this->_module_name = PLIB_Helper::get_module_name(
+			'PLIB_Module_','action','index','module/'
+		);
+		$class = 'PLIB_Module_'.$this->_module_name;
+		return new $class();
+	}
+	
+	/**
+	 * This will be called before the renderer will be used. So you can overwrite this method
+	 * and add any initialisation stuff.
+	 * <br>
+	 * By default just the module will be initialized
+	 */
+	protected function prepare_rendering()
+	{
+		// init the module
+		if($this->_module !== null)
+			$this->_module->init($this);
+	}
+	
+	/**
 	 * Finishes the page. Closes the database-connection and other things
 	 */
-	public function finish()
+	protected function finish()
 	{
 		$sessions = PLIB_Props::get()->sessions();
 		$db = PLIB_Props::get()->db();
@@ -550,156 +425,32 @@ abstract class PLIB_Document extends PLIB_Object
 		if($db instanceof PLIB_MySQL)
 			$db->disconnect();
 	}
-
-	/**
-	 * Should include, instantiate and return the action-performer-object.
-	 * You may overwrite this method to change the behaviour
-	 *
-	 * @return PLIB_Actions_Performer the action-performer
-	 */
-	protected function load_action_perf()
-	{
-		$c = new PLIB_Actions_Performer();
-		return $c;
-	}
 	
 	/**
-	 * Loads the action-class in the given module with given name, adds it to the action-performer
-	 * and returns it.
-	 *
-	 * @param int $id the id of the action
-	 * @param string $module the module-name
-	 * @param string $name the name of the action
-	 * @param string $folder the folder of the modules (starting at PLIB_Path::server_app())
-	 * @return PLIB_Actions_Base the action or null if an error occurred
-	 * @see add_action()
+	 * Sends all set headers
 	 */
-	public final function add_module_action($id,$module,$name,$folder)
+	private function _send_header()
 	{
-		PLIB_FileUtils::ensure_trailing_slash($folder);
-		$cfolder = PLIB_Path::server_app().$folder.$module;
-		if(!is_dir($cfolder))
-			PLIB_Helper::error('"'.$cfolder.'" is no folder!');
-		if(empty($name))
-			PLIB_Helper::def_error('notempty','name',$name);
-		
-		$file = $cfolder.'/action_'.$name.'.php';
-		if(is_file($file))
+		// TODO change that!
+		$this->set_header('Content-Type',$this->_mimetype.'; charset='.$this->_charset,false);
+		if(!$this->_allow_cache)
 		{
-			$prefix = $this->_action_perf->get_prefix();
-			include_once($file);
-			$classname = $prefix.$module.'_'.$name;
-			if(class_exists($classname))
-			{
-				$action = new $classname($id);
-				$this->_action_perf->add_action($action);
-				return $action;
-			}
-		}
-		else
-			PLIB_Helper::error('"'.$file.'" is no file!');
-		
-		return null;
-	}
-
-	/**
-	 * Performs the necessary action
-	 * You will find the result in get_action_result()
-	 */
-	public final function perform_actions()
-	{
-		$this->_action_result = $this->_action_perf->perform_actions();
-	}
-
-	/**
-	 * @return the result of the action in this run. This is:
-	 * <pre>
-	 * 	-1 = error
-	 * 	 0 = success / nothing done
-	 * 	 1 = success + status-page
-	 * </pre>
-	 */
-	public final function get_action_result()
-	{
-		return $this->_action_result;
-	}
-	
-	/**
-	 * Reports an error in this module
-	 * 
-	 * @see error_occurred()
-	 */
-	public function set_error()
-	{
-		$this->_error = true;
-	}
-
-	/**
-	 * Returns wether the module has been shown successfully or something unexpected
-	 * has happened (missing parameter, no access, ...).
-	 *
-	 * @return boolean wether an error has been occurred
-	 * @see set_error()
-	 */
-	public function error_occurred()
-	{
-		return $this->_error;
-	}
-	
-	/**
-	 * Instantiates {@link PLIB_HTML_Formular} with the action-result of the document,
-	 * adds it as 'form' to the template with all methods allowed and returns
-	 * the instance.
-	 *
-	 * @return PLIB_HTML_Formular the created formular
-	 */
-	public function request_formular()
-	{
-		$doc = PLIB_Props::get()->doc();
-		$tpl = PLIB_Props::get()->tpl();
-
-		$form = new PLIB_HTML_Formular($doc->get_action_result() === -1);
-		$tpl->add_array('form',$form);
-		$tpl->add_allowed_method('form','*');
-		return $form;
-	}
-
-	/**
-	 * Reports an error and stores that the module has not finished in a correct way.
-	 * Note that you have to specify a message if the type is no error and no no-access-msg!
-	 *
-	 * @param int $type the type. see PLIB_Messages::MSG_TYPE_*
-	 * @param string $message you can specify the message to display here, if you like
-	 */
-	public function report_error($type = PLIB_Messages::MSG_TYPE_ERROR,$message = '')
-	{
-		$locale = PLIB_Props::get()->locale();
-		$msgs = PLIB_Props::get()->msgs();
-
-		// determine message to report
-		$msg = '';
-		if($message !== '')
-			$msg = $message;
-		else
-		{
-			switch($type)
-			{
-				case PLIB_Messages::MSG_TYPE_NO_ACCESS:
-					$msg = $locale->lang('permission_denied');
-					break;
-				
-				case PLIB_Messages::MSG_TYPE_ERROR:
-					$msg = $locale->lang('invalid_page');
-					break;
-					
-				default:
-					PLIB_Helper::error('Missing message or invalid type: '.$type);
-			}
+			// Expires in the past
+			$this->set_header('Expires','Mon, 1 Jan 2001 00:00:00 GMT');
+			// Always modified
+	 		$this->set_header('Last-Modified',gmdate('D, d M Y H:i:s').' GMT');
+	 		$this->set_header(
+	 			'Cache-Control','no-store, no-cache, must-revalidate, post-check=0, pre-check=0'
+	 		);
+			// HTTP 1.0
+			$this->set_header('Pragma','no-cache');
 		}
 		
-		// report error
-		$this->set_error();
-		$msgs->add_message($msg,$type);
+		if(!headers_sent())
+		{
+			foreach($this->_header as $name => $value)
+				header($name.': '.$value);
+		}
 	}
 	
 	/**
@@ -708,7 +459,7 @@ abstract class PLIB_Document extends PLIB_Object
 	 * @param string $res the result
 	 * @return string the modified result
 	 */
-	public final function gzip($res)
+	private function _gzip($res)
 	{
 		// don't do it if the server does it already
 		if(ini_get('output_handler') == 'ob_gzhandler')

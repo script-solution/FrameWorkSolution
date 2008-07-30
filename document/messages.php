@@ -4,6 +4,7 @@
  *
  * @version			$Id$
  * @package			PHPLib
+ * @subpackage	document
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -12,38 +13,38 @@
 /**
  * The message-container. Collects messages (errors, warnings and notices) which
  * may be displayed at some place and time in the document.
- * This class is abstract because add_messages() has to be implemented!
  * 
  * @package			PHPLib
+ * @subpackage	document
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class PLIB_Messages extends PLIB_Object
+class PLIB_Document_Messages extends PLIB_Object
 {
 	/**
 	 * Represents an error.
 	 * This is intended for failures. For example if the user hasn't filled
 	 * a required field in a formular.
 	 */
-	const MSG_TYPE_ERROR			= 0;
+	const ERROR			= 0;
 	
 	/**
 	 * Represents a warning.
 	 * This may be used for something which is not wrong but may cause trouble.
 	 * So it should work if you ignore it but you should consider changing something.
 	 */
-	const MSG_TYPE_WARNING		= 1;
+	const WARNING		= 1;
 	
 	/**
 	 * Represents a notice.
 	 * Notices may be success-messages after an action or similar.
 	 */
-	const MSG_TYPE_NOTICE			= 2;
+	const NOTICE			= 2;
 	
 	/**
 	 * Represents a no-access problem.
 	 * This may be used if a user has no access to a module for example.
 	 */
-	const MSG_TYPE_NO_ACCESS	= 3;
+	const NO_ACCESS	= 3;
 	
 	/**
 	 * Contains all messages
@@ -51,10 +52,10 @@ abstract class PLIB_Messages extends PLIB_Object
 	 * @var array
 	 */
 	private $_messages = array(
-		self::MSG_TYPE_ERROR => array(),
-		self::MSG_TYPE_WARNING => array(),
-		self::MSG_TYPE_NOTICE => array(),
-		self::MSG_TYPE_NO_ACCESS => array()
+		self::ERROR => array(),
+		self::WARNING => array(),
+		self::NOTICE => array(),
+		self::NO_ACCESS => array()
 	);
 	
 	/**
@@ -63,6 +64,18 @@ abstract class PLIB_Messages extends PLIB_Object
 	 * @var array
 	 */
 	private $_links = array();
+	
+	/**
+	 * Clears the messages and links
+	 */
+	public final function clear()
+	{
+		$this->_messages[self::ERROR] = array();
+		$this->_messages[self::WARNING] = array();
+		$this->_messages[self::NOTICE] = array();
+		$this->_messages[self::NO_ACCESS] = array();
+		$this->_links = array();
+	}
 	
 	/**
 	 * @return array an array of links that may be displayed somewhere
@@ -96,7 +109,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function add_error($msg)
 	{
-		$this->add_message($msg,self::MSG_TYPE_ERROR);
+		$this->add_message($msg,self::ERROR);
 	}
 	
 	/**
@@ -106,7 +119,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function add_warning($msg)
 	{
-		$this->add_message($msg,self::MSG_TYPE_WARNING);
+		$this->add_message($msg,self::WARNING);
 	}
 	
 	/**
@@ -116,7 +129,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function add_notice($msg)
 	{
-		$this->add_message($msg,self::MSG_TYPE_NOTICE);
+		$this->add_message($msg,self::NOTICE);
 	}
 	
 	/**
@@ -126,16 +139,16 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function add_noaccess($msg)
 	{
-		$this->add_message($msg,self::MSG_TYPE_NO_ACCESS);
+		$this->add_message($msg,self::NO_ACCESS);
 	}
 	
 	/**
 	 * Adds the given message of given type to the container
 	 *
 	 * @param string $msg the message
-	 * @param int $type the message-type; see PLIB_Messages::MSG_TYPE_*
+	 * @param int $type the message-type; see PLIB_Messages::*
 	 */
-	public final function add_message($msg,$type = self::MSG_TYPE_NOTICE)
+	public final function add_message($msg,$type = self::NOTICE)
 	{
 		if(!$this->_is_valid_type($type))
 			PLIB_Helper::error('Invalid type: '.$type.'!');
@@ -147,12 +160,21 @@ abstract class PLIB_Messages extends PLIB_Object
 	}
 	
 	/**
+	 * @return boolean true if the container contains any message
+	 */
+	public final function contains_msg()
+	{
+		return $this->contains(self::ERROR) || $this->contains(self::WARNING) ||
+			$this->contains(self::NO_ACCESS) || $this->contains(self::NOTICE);
+	}
+	
+	/**
 	 * @return boolean wether an error has been added
 	 * @see contains($type)
 	 */
 	public final function contains_error()
 	{
-		return $this->contains(self::MSG_TYPE_ERROR);
+		return $this->contains(self::ERROR);
 	}
 	
 	/**
@@ -161,7 +183,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function contains_warning()
 	{
-		return $this->contains(self::MSG_TYPE_WARNING);
+		return $this->contains(self::WARNING);
 	}
 	
 	/**
@@ -170,7 +192,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function contains_notice()
 	{
-		return $this->contains(self::MSG_TYPE_NOTICE);
+		return $this->contains(self::NOTICE);
 	}
 	
 	/**
@@ -179,13 +201,13 @@ abstract class PLIB_Messages extends PLIB_Object
 	 */
 	public final function contains_no_access()
 	{
-		return $this->contains(self::MSG_TYPE_NO_ACCESS);
+		return $this->contains(self::NO_ACCESS);
 	}
 	
 	/**
 	 * Checks wether a message of given type exists
 	 *
-	 * @param int $type the message-type; see PLIB_Messages::MSG_TYPE_*
+	 * @param int $type the message-type; see PLIB_Messages::*
 	 * @return boolean true if there has been added a message of given type
 	 */
 	public final function contains($type)
@@ -216,7 +238,7 @@ abstract class PLIB_Messages extends PLIB_Object
 	/**
 	 * Returns all messages of given type
 	 *
-	 * @param int $type the message-type; see PLIB_Messages::MSG_TYPE_*
+	 * @param int $type the message-type; see PLIB_Messages::*
 	 * @return array a numeric array with all messages of the type
 	 * @see get_all_messages()
 	 */
@@ -229,9 +251,27 @@ abstract class PLIB_Messages extends PLIB_Object
 	}
 	
 	/**
-	 * The method which should add the messages.
+	 * Determines the name of the given type
+	 *
+	 * @param int $type the type
+	 * @return string the name
 	 */
-	public abstract function add_messages();
+	public function get_type_name($type)
+	{
+		switch($type)
+		{
+			case PLIB_Document_Messages::ERROR:
+				return 'Error';
+			case PLIB_Document_Messages::NOTICE:
+				return 'Notice';
+			case PLIB_Document_Messages::WARNING:
+				return 'Warning';
+			case PLIB_Document_Messages::NO_ACCESS:
+				return 'No-Access';
+		}
+		
+		return '';
+	}
 	
 	/**
 	 * Checks wether the given type is valid
@@ -242,10 +282,10 @@ abstract class PLIB_Messages extends PLIB_Object
 	private function _is_valid_type($type)
 	{
 		$valid = array(
-			self::MSG_TYPE_ERROR,
-			self::MSG_TYPE_WARNING,
-			self::MSG_TYPE_NOTICE,
-			self::MSG_TYPE_NO_ACCESS
+			self::ERROR,
+			self::WARNING,
+			self::NOTICE,
+			self::NO_ACCESS
 		);
 		return in_array($type,$valid);
 	}

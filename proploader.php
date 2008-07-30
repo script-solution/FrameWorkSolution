@@ -38,6 +38,22 @@ class PLIB_PropLoader extends PLIB_Object
 	}
 	
 	/**
+	 * @return PLIB_Document the document
+	 */
+	protected function doc()
+	{
+		return new PLIB_Document();
+	}
+	
+	/**
+	 * @return PLIB_Document_Messages the messages-container
+	 */
+	protected function msgs()
+	{
+		return new PLIB_Document_Messages();
+	}
+	
+	/**
 	 * @return PLIB_Profiler the profiler-instance
 	 */
 	protected function profiler()

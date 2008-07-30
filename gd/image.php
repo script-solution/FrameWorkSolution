@@ -188,7 +188,7 @@ final class PLIB_GD_Image extends PLIB_Object
 	 */
 	public function get_bounds_rect()
 	{
-		return new PLIB_GD_Rectangle(0,0,$this->_width,$this->_height);
+		return new PLIB_GD_Rectangle(0,0,$this->_width - 1,$this->_height - 1);
 	}
 	
 	/**
@@ -321,6 +321,33 @@ final class PLIB_GD_Image extends PLIB_Object
 	}
 	
 	/**
+	 * Outputs the image in the given format
+	 *
+	 * @param string $format the format (png,jpeg,gif,wbmp,xbm)
+	 */
+	public function output($format = 'png')
+	{
+		switch($format)
+		{
+			case 'jpeg':
+				imagejpeg($this->_image);
+				break;
+			case 'gif':
+				imagegif($this->_image);
+				break;
+			case 'wbmp':
+				imagewbmp($this->_image);
+				break;
+			case 'xbm':
+				imagexbm($this->_image);
+				break;
+			default:
+				imagepng($this->_image);
+				break;
+		}
+	}
+	
+	/**
 	 * Sends the image to the browser in the given format.
 	 * Will destroy (imagedestroy()) the image!
 	 *
@@ -335,24 +362,7 @@ final class PLIB_GD_Image extends PLIB_Object
 			if(!$allow_cache)
 				header('Cache-control: no-cache, no-store');
 			
-			switch($format)
-			{
-				case 'png':
-					imagepng($this->_image);
-					break;
-				case 'jpeg':
-					imagejpeg($this->_image);
-					break;
-				case 'gif':
-					imagegif($this->_image);
-					break;
-				case 'wbmp':
-					imagewbmp($this->_image);
-					break;
-				case 'xbm':
-					imagexbm($this->_image);
-					break;
-			}
+			$this->output($format);
 		}
 		else
 			echo 'Unable to send image: Headers already sent!';

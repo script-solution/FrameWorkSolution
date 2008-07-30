@@ -10,10 +10,10 @@
  */
 
 /**
- * The module-class which is the base-class for all modules.
- * A module displays the part between the header and footer. Additionally
- * the module may contain actions that can be performed at specific conditions,
- * can specify the location in the page and other things.
+ * The module-class which is the base-class for all modules. Modules are used by the class
+ * {@link PLIB_Document} and are intended to provide a modular and more independend architecture.
+ * A module can control the complete result that will be sent to the browser by switching and
+ * manipulating the renderer of the document and the changing properties of the document itself.
  *
  * @package			PHPLib
  * @author			Nils Asmussen <nils@script-solution.de>
@@ -21,6 +21,36 @@
  */
 abstract class PLIB_Module extends PLIB_Object
 {
+	/**
+	 * Stores wether the module has been shown successfully or something unexpected
+	 * has happened (missing parameter, no access, ...).
+	 *
+	 * @var boolean
+	 */
+	private $_error = false;
+	
+	/**
+	 * Reports an error in this module
+	 * 
+	 * @see error_occurred()
+	 */
+	public final function set_error()
+	{
+		$this->_error = true;
+	}
+
+	/**
+	 * Returns wether the module has been shown successfully or something unexpected
+	 * has happened (missing parameter, no access, ...).
+	 *
+	 * @return boolean wether an error has been occurred
+	 * @see set_error()
+	 */
+	public final function error_occurred()
+	{
+		return $this->_error;
+	}
+	
 	/**
 	 * The init-method for this module. Will be called at the very beginning and is intended
 	 * for preparing the document. For example setting the content-type, adding bread-crumbs and so
@@ -63,13 +93,38 @@ abstract class PLIB_Module extends PLIB_Object
 	 * Reports an error and stores that the module has not finished in a correct way.
 	 * Note that you have to specify a message if the type is no error and no no-access-msg!
 	 *
-	 * @param int $type the type. see PLIB_Messages::MSG_TYPE_*
+	 * @param int $type the type. see PLIB_Document_Messages::*
 	 * @param string $message you can specify the message to display here, if you like
 	 */
-	protected function report_error($type = PLIB_Messages::MSG_TYPE_ERROR,$message = '')
+	protected function report_error($type = PLIB_Document_Messages::ERROR,$message = '')
 	{
-		$doc = PLIB_Props::get()->doc();
-		$doc->report_error($type,$message);
+		$locale = PLIB_Props::get()->locale();
+		$msgs = PLIB_Props::get()->msgs();
+
+		// determine message to report
+		$msg = '';
+		if($message !== '')
+			$msg = $message;
+		else
+		{
+			switch($type)
+			{
+				case PLIB_Document_Messages::NO_ACCESS:
+					$msg = $locale->lang('permission_denied');
+					break;
+				
+				case PLIB_Document_Messages::ERROR:
+					$msg = $locale->lang('invalid_page');
+					break;
+					
+				default:
+					PLIB_Helper::error('Missing message or invalid type: '.$type);
+			}
+		}
+		
+		// report error
+		$this->set_error();
+		$msgs->add_message($msg,$type);
 	}
 	
 	/**

@@ -302,7 +302,8 @@ abstract class PLIB_Objects_Data extends PLIB_Object
 		foreach(get_class_methods(get_class($this)) as $var)
 		{
 			// TODO that's no good solution. but what is one? :/
-			if(PLIB_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id')
+			if(PLIB_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id' &&
+				$var != 'get_print_vars')
 			{
 				$value = $this->$var();
 				if($value !== null)

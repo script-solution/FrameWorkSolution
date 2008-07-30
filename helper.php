@@ -330,37 +330,5 @@ final class PLIB_Helper extends PLIB_UtilBase
 	
 		return '';
 	}
-	
-	/**
-	 * Generates the location-string
-	 *
-	 * @param PLIB_Page $page the current page
-	 * @param string $linkclass the linkclass to use. Use an empty string if you want to use a class.
-	 * @param string $sep the separator ( &raquo; by default)
-	 * @return array the position and document-title
-	 */
-	public static function generate_location($page,$linkclass = '',$sep = ' &raquo; ')
-	{
-		if(!($page instanceof PLIB_Page))
-			PLIB_Helper::def_error('instance','page','PLIB_Page',$page);
-	
-		$links = array();
-		foreach($page->get_location() as $item)
-		{
-			list($name,$url) = $item;
-			if($url == '')
-				$links[] = $name;
-			else
-			{
-				$link = '<a ';
-				if($linkclass)
-					$link .= 'class="'.$linkclass.'" ';
-				$link .= 'href="'.$url.'">'.$name.'</a>';
-				$links[] = $link;
-			}
-		}
-		
-		return implode($sep,$links);
-	}
 }
 ?>

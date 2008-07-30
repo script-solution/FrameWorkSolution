@@ -13,8 +13,8 @@
  * The date-class to format dates for the output. You may use this for timestamps or
  * in general for any date.
  * <br>
- * This class depends on {@link PLIB_Locale}. That means that $base->locale will be used
- * for texts, date-formats, timezone and so on.
+ * This class depends on {@link PLIB_Locale}. That means that PLIB_Props::get()->locale() will
+ * be used for texts, date-formats, timezone and so on.
  * <br>
  * PLIB_Date lets you specify an 'input-timezone' and an 'output-timezone'. That means you can
  * choose in which timezone your date is and in what you want to interpret it. So for example

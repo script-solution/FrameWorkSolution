@@ -39,13 +39,6 @@ class PLIB_PropAccessor extends PLIB_Object
 	private $_instances = array();
 	
 	/**
-	 * The document
-	 *
-	 * @var PLIB_Document
-	 */
-	protected $_doc = null;
-	
-	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -84,9 +77,6 @@ class PLIB_PropAccessor extends PLIB_Object
 	 */
 	public final function get_all()
 	{
-		if($this->_doc !== null)
-			return array_merge($this->_instances,array('doc' => $this->_doc));
-		
 		return $this->_instances;
 	}
 	
@@ -105,24 +95,19 @@ class PLIB_PropAccessor extends PLIB_Object
 	}
 	
 	/**
-	 * @return PLIB_Document the document-instance (has to be set manually!)
+	 * @return PLIB_Document the document-instance
 	 */
 	public function doc()
 	{
-		return $this->_doc;
+		return $this->get('doc');
 	}
 	
 	/**
-	 * Sets the document instance for this request
-	 *
-	 * @param PLIB_Document $doc the document
+	 * @return PLIB_Document_Messages the messages-container
 	 */
-	public function set_doc($doc)
+	public function msgs()
 	{
-		if(!($doc instanceof PLIB_Document))
-			PLIB_Helper::def_error('instance','doc','PLIB_Document',$doc);
-		
-		$this->_doc = $doc;
+		return $this->get('msgs');
 	}
 	
 	/**
