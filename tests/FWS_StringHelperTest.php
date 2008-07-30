@@ -2,7 +2,7 @@
 /**
  * Contains the FWS_StringHelper test
  *
- * @version			$Id$
+ * @version			$Id: PLIB_StringHelperTest.php 25 2008-07-30 12:41:15Z nasmussen $
  * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

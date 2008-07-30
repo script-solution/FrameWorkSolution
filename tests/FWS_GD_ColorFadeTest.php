@@ -2,7 +2,7 @@
 /**
  * Contains the FWS_GD_ColorFade test
  *
- * @version			$Id$
+ * @version			$Id: PLIB_GD_ColorFadeTest.php 25 2008-07-30 12:41:15Z nasmussen $
  * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
