@@ -87,14 +87,6 @@ class FWS_PropLoader extends FWS_Object
 	}
 
 	/**
-	 * @return FWS_URL the URL-object
-	 */
-	protected function url()
-	{
-		return new FWS_URL();
-	}
-
-	/**
 	 * @return FWS_Template_Handler the template-object
 	 */
 	protected function tpl()

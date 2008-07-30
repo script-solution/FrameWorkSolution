@@ -426,6 +426,21 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
+	 * Removes all allowed methods for the given object
+	 *
+	 * @param string $object the name of the object in the template
+	 */
+	public function remove_allowed_methods($object)
+	{
+		foreach(array_keys($this->_allowed_methods) as $k)
+		{
+			list($o,) = explode('.',$k);
+			if($o == $object)
+				unset($this->_allowed_methods[$k]);
+		}
+	}
+	
+	/**
 	 * Removes the given method of the given object (the name in the template) from the allowed
 	 * methods. You may use '*' as wildcard for all methods for <var>$method</var>.
 	 * 

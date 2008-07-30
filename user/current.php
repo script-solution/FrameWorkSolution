@@ -15,7 +15,7 @@
  * more information for the current user. It manages the login-state and some
  * other stuff.
  * <br>
- * Note that you have to call {@link init} before you can use this class!
+ * Note that you have to call {@link init} if you want to allow logins!
  *
  * @package			FrameWorkSolution
  * @subpackage	user
@@ -131,18 +131,16 @@ class FWS_User_Current extends FWS_Object
 			FWS_Helper::def_error('instance','storage','FWS_User_Storage',$storage);
 		
 		$this->_storage = $storage;
+		$this->_init_session();
 	}
 	
 	/**
-	 * Inits all stuff to use this class. You HAVE to call this method if you want to use it.
-	 * Even if you don't allow logins!
+	 * Inits all stuff to use this class. You HAVE to call this method if you want to allow logins.
 	 */
 	public function init()
 	{
 		$sessions = FWS_Props::get()->sessions();
 		$cookies = FWS_Props::get()->cookies();
-		
-		$this->_init_session();
 
 		if($sessions->sessions_enabled())
 		{

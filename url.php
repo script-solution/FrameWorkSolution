@@ -12,10 +12,6 @@
 /**
  * This class makes it easier to create an URL. It appends automaticly the session-id,
  * if necessary, appends the external variables and so on.
- * Please note that some variables are lazy initialized. So please call $this->init() to do
- * that if you extend this class and implement additional methods.
- * 
- * TODO what to finalize here?
  *
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
@@ -23,113 +19,141 @@
 class FWS_URL extends FWS_Object
 {
 	/**
+	 * Will always append the session-id
+	 */
+	const SID_FORCE = 0;
+	
+	/**
+	 * Will append the session-id if the user has disabled cookies
+	 */
+	const SID_AUTO = 1;
+	
+	/**
+	 * Will never append the session-id
+	 */
+	const SID_OFF = 2;
+	
+	/**
+	 * Contains the path and file of $_SERVER['PHP_SELF']
+	 *
+	 * @var array
+	 */
+	private static $_phpself = null;
+	
+	/**
 	 * The session-id which will be appended
 	 *
 	 * @var mixed
 	 */
-	protected $_session_id = -1;
+	private static $_session_id = -1;
 
 	/**
 	 * The external variables (as string)
 	 *
 	 * @var string
 	 */
-	protected $_extern_vars = '';
+	private static $_extern_vars = '';
 
 	/**
 	 * Do you want to append extern get-parameter?
 	 *
 	 * @var boolean
 	 */
-	protected $_append_extern = true;
+	private static $_append_extern = true;
 
 	/**
-	 * The name of the action-get-parameter
-	 *
-	 * @var string
+	 * @return boolean wether extern parameters will be appended
 	 */
-	protected $_action_param = 'action';
+	public static function append_extern_vars()
+	{
+		return self::$_append_extern;
+	}
+
+	/**
+	 * Sets wether to append the extern parameters (of other projects)
+	 * Please note that you have to overwrite the is_intern() method!
+	 *
+	 * @param boolean $append the new value
+	 */
+	public static function set_append_extern_vars($append)
+	{
+		self::$_append_extern = $append;
+	}
+
+	/**
+	 * @return array an array of the form <code>array(<param_name>,<session_id>)</code> or false
+	 */
+	public static function get_session_id()
+	{
+		$user = FWS_Props::get()->user();
+
+		if(self::$_session_id !== false)
+			return array($user->get_url_sid_name(),$user->get_session_id());
+
+		return false;
+	}
+
+	/**
+	 * Is the session-id used?
+	 *
+	 * @return boolean true if the session-id is used
+	 */
+	public static function needs_session_id()
+	{
+		return self::$_session_id !== false;
+	}
 	
 	/**
-	 * The prefix for the URL-constants
+	 * The session-id-policy
 	 *
-	 * @var string
+	 * @var int
 	 */
-	protected $_url_constants_prefix = '';
+	private $_sid_policy = self::SID_AUTO;
 	
 	/**
-	 * The cached $_SERVER['PHP_SELF']
+	 * The separator for the parameters
 	 *
 	 * @var string
 	 */
-	private $_phpself = null;
+	private $_separator = '&amp;';
+	
+	/**
+	 * Wether the URL should be absolute
+	 *
+	 * @var boolean
+	 */
+	private $_absolute = false;
+	
+	/**
+	 * The path that should be used (null = current one)
+	 *
+	 * @var string
+	 */
+	private $_path = null;
+	
+	/**
+	 * The file that should be used (null = current one)
+	 *
+	 * @var string
+	 */
+	private $_file = null;
+	
+	/**
+	 * The parameter for the URL
+	 *
+	 * @var array
+	 */
+	private $_params = array();
 
 	/**
 	 * Constructor
 	 */
 	public function __construct()
 	{
-		$input = FWS_Props::get()->input();
-
 		parent::__construct();
 		
-		$this->_phpself = $input->get_var('PHP_SELF','server',FWS_Input::STRING);
-	}
-
-	/**
-	 * @return string the action-parameter-name
-	 */
-	public function get_action_param()
-	{
-		return $this->_action_param;
-	}
-
-	/**
-	 * Sets the action-parameter-name
-	 *
-	 * @param string $name the new value
-	 */
-	public function set_action_param($name)
-	{
-		$this->_action_param = $name;
-	}
-
-	/**
-	 * @return boolean wether extern variables will be appended
-	 */
-	public function append_extern_vars()
-	{
-		return $this->_append_extern;
-	}
-
-	/**
-	 * Sets wether to append the external variables.
-	 * Please note that you have to overwrite the is_intern() method!
-	 *
-	 * @param boolean $append the new value
-	 */
-	public function set_append_extern_vars($append)
-	{
-		$this->_append_extern = $append;
-	}
-	
-	/**
-	 * @return string the prefix for the constants
-	 */
-	public function get_constants_prefix()
-	{
-		return $this->_constants_prefix;
-	}
-	
-	/**
-	 * Sets the prefix for the constants. For example "BS_" if your constants are named
-	 * like "BS_<name>". The prefix may also be empty.
-	 * 
-	 * @param string $prefix the new value
-	 */
-	public function set_constants_prefix($prefix)
-	{
-		$this->_constants_prefix = $prefix;
+		if(self::$_phpself === null)
+			$this->init();
 	}
 
 	/**
@@ -152,7 +176,7 @@ class FWS_URL extends FWS_Object
 	/**
 	 * @return array an associative array with the external variables
 	 */
-	public function get_extern_vars()
+	public final function get_extern_vars()
 	{
 		$input = FWS_Props::get()->input();
 
@@ -166,192 +190,242 @@ class FWS_URL extends FWS_Object
 	}
 
 	/**
-	 * Builds an URL for the given file (for example for the inc-directory)
-	 * Note that this method does NOT append the external vars. Therefore you should
-	 * always create a link to a standalone-file!
-	 *
-	 * @param string $file the file (starting at {@link FWS_Path::client_app()})
-	 * @param string $additional additional parameters
-	 * @param string $separator the separator for the parameters (default = &amp;)
-	 * @param boolean $absolute use the absolute URL or {@link FWS_Path::client_app()}?
-	 * @return string the url
+	 * @return string the file that should be used (null = current one)
 	 */
-	public function get_file_url($file,$additional = '',$separator = '&amp;',$absolute = false)
+	public final function get_file()
 	{
-		$this->init();
+		return $this->_file;
+	}
 
-		// Note that we don't append the external vars here because this leads always to
-		// a standalone file!
-		$parameters = '';
-		if($separator == '&')
-			$parameters .= str_replace('&amp;','&',$this->_session_id);
+	/**
+	 * Sets the file that should be used (null = current one)
+	 * 
+	 * @param string $file the new value
+	 * @see set_path()
+	 */
+	public final function set_file($file)
+	{
+		if($file !== null && !is_string($file))
+			FWS_Helper::def_error('string','file',$file);
+		
+		$this->_file = $file;
+	}
+
+	/**
+	 * @return string the path (including protocol and so on, if needed) to use (null = current one)
+	 */
+	public final function get_path()
+	{
+		return $this->_path;
+	}
+
+	/**
+	 * Sets the path (including protocol and so on, if needed) to use (null = current one)
+	 * 
+	 * @param string $path the new value
+	 * @see set_file()
+	 */
+	public final function set_path($path)
+	{
+		if($path !== null && !is_string($path))
+			FWS_Helper::def_error('string','path',$path);
+		
+		if($path == '')
+			$this->_path = '';
 		else
-			$parameters .= $this->_session_id;
-		$parameters .= $additional;
-
-		$first_sep = FWS_String::strpos($file,'?') !== false ? $separator : '?';
-		$base = $absolute ? FWS_Path::outer() : FWS_Path::client_app();
-		if($parameters == '')
-			$url = $base.$file;
-		else if($separator == '&' && $parameters[0] == $separator)
-			$url = $base.$file.$first_sep.FWS_String::substr($parameters,1);
-		else if($separator == '&amp;' && FWS_String::substr($parameters,0,5) == '&amp;')
-			$url = $base.$file.$first_sep.FWS_String::substr($parameters,5);
-		else
-			$url = $base.$file.$first_sep.$parameters;
-
-		return $url;
+			$this->_path = FWS_FileUtils::ensure_trailing_slash($path);
 	}
 	
 	/**
-	 * Works the same like get_url but is mainly intended for usage in the templates.
-	 * You can use the following shortcut for the constants (in <var>$additional</var>):
-	 * <code>$<name></code>
-	 * This will be mapped to the constant:
-	 * <code><constants_prefix><name></code>
-	 * Note that the constants will be assumed to be in uppercase!
-	 * 
-	 * @param string $target the action-parameter (0 = current, -1 = none)
-	 * @param string $additional additional parameters
-	 * @param string $separator the separator of the params (default is &amp;)
-	 * @param boolean $force_sid forces the method to append the session-id
-	 * @return string the url
+	 * @return int the session-id-policy (self::SID_FORCE, self::SID_AUTO, self::SID_OFF)
 	 */
-	public function simple_url($target = 0,$additional = '',$separator = '&amp;',$force_sid = false)
+	public final function get_sid_policy()
 	{
-		if($additional != '')
-		{
-			$additional = preg_replace(
-				'/\$([a-z0-9_]+)/ie',
-				$this->_constants_prefix.'\\1',
-				$additional
-			);
-		}
-		return $this->get_url($target,$additional,$separator,$force_sid);
+		$this->_sid_policy;
 	}
-
+	
 	/**
-	 * The main method. This generates an URL with given parameters and returns it.
-	 * The extern-variables (if you want it) and the session-id (if necessary)
-	 * will be appended.
-	 * The file will be <var>$_SERVER['PHP_SELF']</var>.
+	 * Sets the session-id-policy
 	 *
-	 * @param string $target the action-parameter (0 = current, -1 = none)
-	 * @param string $additional additional parameters
-	 * @param string $seperator the separator of the params (default is &amp;)
-	 * @param boolean $force_sid forces the method to append the session-id
-	 * @return string the url
+	 * @param int $policy the session-id-policy (self::SID_FORCE, self::SID_AUTO, self::SID_OFF)
 	 */
-	public function get_url($target = 0,$additional = '',$separator = '&amp;',$force_sid = false)
+	public final function set_sid_policy($policy)
 	{
-		$input = FWS_Props::get()->input();
-		$user = FWS_Props::get()->user();
-
-		$this->init();
-
-		if($target === -1)
-			$action = '';
-		else if($target === 0)
-		{
-			$action_param = $input->get_var($this->_action_param,'get',FWS_Input::STRING);
-			if($action_param == null)
-				$action = '';
-			else
-				$action = $this->_action_param.'='.$action_param;
-		}
+		$vals = array(self::SID_FORCE,self::SID_AUTO,self::SID_OFF);
+		if(!in_array($policy,$vals))
+			FWS_Helper::def_error('inarray','policy',$vals,$policy);
+		
+		$this->_sid_policy = $policy;
+	}
+	
+	/**
+	 * @return string the separator for the parameters
+	 */
+	public final function get_separator()
+	{
+		return $this->_separator;
+	}
+	
+	/**
+	 * Sets the separator for the parameters
+	 *
+	 * @param string $sep the new value
+	 */
+	public final function set_separator($sep)
+	{
+		if(!is_string($sep))
+			FWS_Helper::def_error('string','sep',$sep);
+		
+		$this->_separator = $sep;
+	}
+	
+	/**
+	 * @return boolean true if an absolute URL will be generated
+	 */
+	public final function is_absolute()
+	{
+		return $this->_absolute;
+	}
+	
+	/**
+	 * Sets wether an absolute URL should be generated
+	 *
+	 * @param boolean $abs the new value
+	 */
+	public final function set_absolute($abs)
+	{
+		$this->_absolute = $abs ? true : false;
+	}
+	
+	/**
+	 * Returns the value of the given parameter (not urlencoded!)
+	 *
+	 * @param string $name the name of the parameter
+	 * @return mixed the value of it or <var>null</var> if it doesn't exist
+	 */
+	public final function get($name)
+	{
+		if(!isset($this->_params[$name]))
+			return null;
+		
+		return $this->_params[$name];
+	}
+	
+	/**
+	 * Sets the parameter with given name to given value
+	 *
+	 * @param string $name the name of the parameter
+	 * @param mixed $value the value of the parameter (not urlencoded!)
+	 */
+	public final function set($name,$value)
+	{
+		if($value === null)
+			FWS_Helper::def_error('notnull','value',$value);
+		
+		$this->_params[$name] = $value;
+	}
+	
+	/**
+	 * Builds the URL with the specified properties and returns it
+	 *
+	 * @return string the URL
+	 */
+	public function to_url()
+	{
+		$url = '';
+		
+		// append path
+		if($this->_path !== null)
+			$url .= $this->_path;
 		else
-			$action = $this->_action_param.'='.$target;
-
-		$parameters = $action;
-		if($separator == '&')
 		{
-			if($force_sid)
-				$parameters .= '&'.$user->get_url_sid_name().'='.$user->get_session_id();
+			if($this->_absolute)
+				$url .= FWS_Path::outer();
 			else
-				$parameters .= str_replace('&amp;','&',$this->_session_id);
-			$parameters .= str_replace('&amp;','&',$this->_extern_vars);
+				$url .= self::$_phpself[0];
 		}
+		
+		// append file
+		if($this->_file !== null)
+			$url .= $this->_file;
 		else
+			$url .= self::$_phpself[1];
+		
+		// append extern and sid
+		$params = array_merge($this->_params,self::$_extern_vars);
+		if($this->_sid_policy == self::SID_FORCE)
 		{
-			if($force_sid)
-				$parameters .= '&amp;'.$user->get_url_sid_name().'='.$user->get_session_id();
-			else
-				$parameters .= $this->_session_id;
-			$parameters .= $this->_extern_vars;
+			$sid = $this->get_session_param(true);
+			if($sid !== false)
+				$params[$sid[0]] = $sid[1];
 		}
-		$parameters .= $additional;
-
-		if($parameters == '')
-			$url = $this->_phpself;
-		else if($separator == '&' && $parameters[0] == $separator)
-			$url = $this->_phpself.'?'.FWS_String::substr($parameters,1);
-		else if($separator == '&amp;' && FWS_String::substr($parameters,0,5) == '&amp;')
-			$url = $this->_phpself.'?'.FWS_String::substr($parameters,5);
-		else
-			$url = $this->_phpself.'?'.$parameters;
-
+		else if($this->_sid_policy != self::SID_OFF && self::$_session_id !== false)
+			$params[self::$_session_id[0]] = self::$_session_id[1];
+		
+		// append params
+		if(count($params) > 0)
+		{
+			$url .= '?';
+			foreach($params as $k => $v)
+				$url .= $k.'='.urlencode($v).$this->_separator;
+			$url = FWS_String::substr($url,0,-FWS_String::strlen($this->_separator));
+		}
+		
 		return $url;
-	}
-
-	/**
-	 * Is the session-id used?
-	 *
-	 * @return boolean true if the session-id is used
-	 */
-	public function use_session_id()
-	{
-		$this->init();
-
-		return $this->_session_id != '';
 	}
 
 	/**
 	 * initializes everything
-	 *
 	 */
 	protected function init()
 	{
 		$input = FWS_Props::get()->input();
-		$cookies = FWS_Props::get()->cookies();
-		$user = FWS_Props::get()->user();
-
-		if($this->_session_id !== -1)
-			return;
-
+		
+		$phpself = $input->get_var('PHP_SELF','server',FWS_Input::STRING);
+		self::$_phpself = array(dirname($phpself).'/',basename($phpself));
+		
 		// init the extern-variables
-		$this->_extern_vars = '';
-		if($this->_append_extern)
+		self::$_extern_vars = array();
+		if(self::$_append_extern)
 		{
 			foreach($input->get_vars_from_method('get') as $key => $value)
 			{
 				if(!$this->is_intern($key))
-					$this->_extern_vars .= '&amp;'.$key.'='.$value;
+					self::$_extern_vars[$key] = $value;
 			}
 		}
-
+		
+		self::$_session_id = $this->get_session_param();
+	}
+	
+	/**
+	 * Returns the session-parameter-data
+	 *
+	 * @param boolean $force wether you want to force a session-id
+	 * @return mixed an array with the key and value or false if no sid should be used
+	 */
+	protected function get_session_param($force = false)
+	{
+		$cookies = FWS_Props::get()->cookies();
+		$user = FWS_Props::get()->user();
+		
 		// can we find the cookie?
-		$use_sid = false;
+		$use_sid = $force;
 
 		// NOTE: we don't use $input here because we always set the cookies in that class!
 		// so we will always find them there, no matter if the user has activated cookies or not
-		if(isset($_COOKIE))
+		if(!$use_sid && isset($_COOKIE))
 			$use_sid = !isset($_COOKIE[$cookies->get_prefix().'sid']);
-		else
-		{
-			global $HTTP_COOKIE_VARS;
-			$use_sid = !isset($HTTP_COOKIE_VARS[$cookies->get_prefix().'sid']);
-		}
 
-		if($user instanceof FWS_User_Current && $use_sid)
+		if($use_sid && $user instanceof FWS_User_Current)
 		{
 			$sid = $user->get_session_id();
 			if($sid)
-				$this->_session_id = '&amp;'.$user->get_url_sid_name().'='.$sid;
-			else
-				$this->_session_id = '';
+				return array($user->get_url_sid_name(),$sid);
+			return false;
 		}
-		else
-			$this->_session_id = '';
+		
+		return false;
 	}
 	
 	protected function get_print_vars()

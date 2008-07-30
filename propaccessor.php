@@ -143,14 +143,6 @@ class FWS_PropAccessor extends FWS_Object
 	}
 
 	/**
-	 * @return FWS_URL the URL-object
-	 */
-	public function url()
-	{
-		return $this->get('url');
-	}
-
-	/**
 	 * @return FWS_Template_Handler the template-object
 	 */
 	public function tpl()
