@@ -257,7 +257,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * @return FWS_Module the module that is used
+	 * @return FWS_Module the module that is used (may be null)
 	 */
 	public final function get_module()
 	{
@@ -265,7 +265,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * @return string the name of the module that is used
+	 * @return string the name of the module that is used (may be null)
 	 */
 	public final function get_module_name()
 	{
@@ -387,15 +387,12 @@ class FWS_Document extends FWS_Object
 	/**
 	 * Determines the module to load and returns it
 	 *
-	 * @return BS_Front_Module the module
+	 * @return BS_Front_Module the module (may be null)
 	 */
 	protected function load_module()
 	{
-		$this->_module_name = FWS_Helper::get_module_name(
-			'FWS_Module_','action','index','module/'
-		);
-		$class = 'FWS_Module_'.$this->_module_name;
-		return new $class();
+		// by default we can't load a module
+		return null;
 	}
 	
 	/**
