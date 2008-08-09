@@ -210,12 +210,21 @@ class FWS_Document extends FWS_Object
 	
 	/**
 	 * Requests a redirect via meta-tag to the given URL after the given time (in seconds).
-	 *
-	 * @param string $url the target-URL
+	 * 
+	 * @param mixed $url the target-URL. It has to be either an instance of {@link FWS_URL} or a string
 	 * @param int $time the number of seconds to wait
 	 */
 	public final function request_redirect($url,$time = 3)
 	{
+		if(!is_string($url) && !($url instanceof FWS_URL))
+			FWS_Helper::def_error('instance','url','FWS_URL',$url);
+		else if($url instanceof FWS_URL)
+		{
+			$url->set_absolute(true);
+			$url->set_separator('&');
+			$url = $url->to_url();
+		}
+		
 		$this->_redirect = array(
 			'url' => $url,
 			'time' => $time
@@ -225,33 +234,25 @@ class FWS_Document extends FWS_Object
 	/**
 	 * Redirects the user to the given URL. Takes care of IIS and other stuff.
 	 * Will immediately quit the current script!
-	 *
-	 * @param string $url the URL where you want to redirect to
-	 * 	Note that you have to start with {@link FWS_Path::client_app()}! (or http://)
+	 * 
+	 * @param FWS_URL $url the URL where you want to redirect to. It has to be either an instance
+	 * 	of {@link FWS_URL} or an absolute URL in form of a string
 	 */
 	public final function redirect($url)
 	{
-		if(empty($url))
-			FWS_Helper::def_error('notempty','url',$url);
-
+		if(!is_string($url) && !($url instanceof FWS_URL))
+			FWS_Helper::def_error('instance','url','FWS_URL',$url);
+		else if($url instanceof FWS_URL)
+		{
+			$url->set_absolute(true);
+			$url->set_separator('&');
+			$url = $url->to_url();
+		}
+		
 		$this->finish();
 
 		header("Connection: close");
 		header("HTTP/1.1 303 REDIRECT");
-
-		if(!FWS_String::starts_with($url,'http://'))
-		{
-			$parts = explode('/',FWS_Path::outer());
-			$path = '';
-			for($i = 0;$i < 3;$i++)
-				$path .= $parts[$i] . '/';
-
-			if(FWS_String::starts_with($url,'/'))
-				$url = FWS_String::substr($url,1);
-
-			$url = $path.$url;
-		}
-
 		header('Location: '.$url);
 		exit;
 	}

@@ -76,9 +76,9 @@ abstract class FWS_Actions_Base extends FWS_Object
 	 * The URL to redirect to.
 	 * If it has not been specified the first URL in <var>$this->get_links()</var> will be used.
 	 *
-	 * @var string
+	 * @var FWS_URL
 	 */
-	private $_redirect_url = '';
+	private $_redirect_url = null;
 	
 	/**
 	 * The time to wait before the redirect
@@ -173,15 +173,16 @@ abstract class FWS_Actions_Base extends FWS_Object
 	 * Adds the given link to the action
 	 * 
 	 * @param string $links the name of the link
-	 * @param string $url the URL of the link
+	 * @param FWS_URL $url the URL of the link (may also be a string, if you want to specify the URL
+	 * 	manually)
 	 */
 	protected final function add_link($name,$url)
 	{
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 		
-		if(empty($url))
-			FWS_Helper::def_error('notempty','url',$url);
+		if(!is_string($url) && !($url instanceof FWS_URL))
+			FWS_Helper::def_error('instance','url','FWS_URL',$url);
 		
 		$this->_links[$name] = $url;
 	}
@@ -220,13 +221,16 @@ abstract class FWS_Actions_Base extends FWS_Object
 	 * Sets wether the user should be redirected
 	 * 
 	 * @param boolean $redirect the new value
-	 * @param string $url the URL to redirect to (may be empty to use the first link)
+	 * @param FWS_URL $url the URL to redirect to (may be null to use the first link). May also be
+	 * 	a string, if you want to specify the URL manually.
 	 * @see add_link($name,$url)
 	 */
-	protected final function set_redirect($redirect,$url = '',$time = 3)
+	protected final function set_redirect($redirect,$url = null,$time = 3)
 	{
 		if(!FWS_Helper::is_integer($time) || $time < 0)
 			FWS_Helper::def_error('intge0','time',$time);
+		if(!is_string($url) && $url !== null && !($url instanceof FWS_URL))
+			FWS_Helper::def_error('instance','url','FWS_URL',$url);
 		
 		$this->_redirect = $redirect;
 		$this->_redirect_url = $url;
@@ -242,7 +246,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	}
 
 	/**
-	 * @return string the URL to redirect to
+	 * @return mixed the URL to redirect to (may be an instance of FWS_URL or a string)
 	 */
 	public final function get_redirect_url()
 	{

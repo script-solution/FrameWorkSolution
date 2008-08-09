@@ -259,7 +259,12 @@ class FWS_Actions_Performer extends FWS_Object
 					$success_msg = $locale->lang('success_'.$action_type);
 
 				foreach($c->get_links() as $name => $url)
-					$msgs->add_link($name,$url);
+				{
+					if($url instanceof FWS_URL)
+						$msgs->add_link($name,$url->to_url());
+					else
+						$msgs->add_link($name,$url);
+				}
 				
 				$msgs->add_notice($success_msg);
 				if($c->get_redirect())
@@ -271,7 +276,6 @@ class FWS_Actions_Performer extends FWS_Object
 			else if($c->get_redirect())
 			{
 				$url = $c->get_redirect_url();
-				$url = str_replace('&amp;','&',$url);
 				$doc->redirect($url);
 			}
 		}

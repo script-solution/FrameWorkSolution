@@ -46,7 +46,7 @@ abstract class FWS_Module extends FWS_Object
 	 * @return boolean wether an error has been occurred
 	 * @see set_error()
 	 */
-	public final function error_occurred()
+	public function error_occurred()
 	{
 		return $this->_error;
 	}

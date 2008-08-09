@@ -85,10 +85,11 @@ class FWS_URL extends FWS_Object
 	 */
 	public static function get_session_id()
 	{
-		$user = FWS_Props::get()->user();
-
 		if(self::$_session_id !== false)
+		{
+			$user = FWS_Props::get()->user();
 			return array($user->get_url_sid_name(),$user->get_session_id());
+		}
 
 		return false;
 	}
@@ -137,6 +138,13 @@ class FWS_URL extends FWS_Object
 	 * @var string
 	 */
 	private $_file = null;
+	
+	/**
+	 * The anchor that should be appended
+	 *
+	 * @var string
+	 */
+	private $_anchor = null;
 	
 	/**
 	 * The parameter for the URL
@@ -241,7 +249,7 @@ class FWS_URL extends FWS_Object
 	 */
 	public final function get_sid_policy()
 	{
-		$this->_sid_policy;
+		return $this->_sid_policy;
 	}
 	
 	/**
@@ -298,6 +306,24 @@ class FWS_URL extends FWS_Object
 	}
 	
 	/**
+	 * @return string the anchor that will be appended to the URL (null if no exists)
+	 */
+	public final function get_anchor()
+	{
+		return $this->_anchor;
+	}
+	
+	/**
+	 * Sets the anchor that should be appended to the URL
+	 *
+	 * @param string $anchor the new value (without # and not urlencoded!)
+	 */
+	public final function set_anchor($anchor)
+	{
+		$this->_anchor = $anchor;
+	}
+	
+	/**
 	 * Returns the value of the given parameter (not urlencoded!)
 	 *
 	 * @param string $name the name of the parameter
@@ -315,11 +341,37 @@ class FWS_URL extends FWS_Object
 	 * Sets the parameter with given name to given value
 	 *
 	 * @param string $name the name of the parameter
-	 * @param mixed $value the value of the parameter (not urlencoded!)
+	 * @param mixed $value the value of the parameter (not urlencoded!). May also be an array.
+	 * @return FWS_URL this instance
 	 */
 	public final function set($name,$value)
 	{
 		$this->_params[$name] = $value;
+		return $this;
+	}
+	
+	/**
+	 * Copies the values of the given parameters from the given URL to this one
+	 *
+	 * @param FWS_URL $url the URL-instance
+	 * @param array $params an array of parameter-names
+	 */
+	public final function copy_params($url,$params)
+	{
+		foreach($params as $name)
+			$this->_params[$name] = $url->get($name);
+	}
+	
+	/**
+	 * Removes the parameter with given name from the parameters
+	 *
+	 * @param string $name the name of the parameter
+	 * @return FWS_URL this instance
+	 */
+	public final function remove($name)
+	{
+		unset($this->_params[$name]);
+		return $this;
 	}
 	
 	/**
@@ -349,7 +401,10 @@ class FWS_URL extends FWS_Object
 			$url .= self::$_phpself[1];
 		
 		// append extern and sid
-		$params = array_merge($this->_params,self::$_extern_vars);
+		$params = $this->_params;
+		if(self::$_append_extern)
+			$params = array_merge($this->_params,self::$_extern_vars);
+		
 		if($this->_sid_policy == self::SID_FORCE)
 		{
 			$sid = $this->get_session_param(true);
@@ -364,9 +419,22 @@ class FWS_URL extends FWS_Object
 		{
 			$url .= '?';
 			foreach($params as $k => $v)
-				$url .= urlencode($k).'='.urlencode($v).$this->_separator;
+			{
+				if(is_array($v))
+				{
+					$ek = urlencode($k.'[]');
+					foreach($v as $vv)
+						$url .= $ek.'='.$vv.$this->_separator;
+				}
+				else
+					$url .= urlencode($k).'='.urlencode($v).$this->_separator;
+			}
 			$url = FWS_String::substr($url,0,-FWS_String::strlen($this->_separator));
 		}
+		
+		// append anchor
+		if($this->_anchor !== null)
+			$url .= '#'.urlencode($this->_anchor);
 		
 		return $url;
 	}

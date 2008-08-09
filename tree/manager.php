@@ -114,22 +114,10 @@ class FWS_Tree_Manager extends FWS_Object
 	}
 	
 	/**
-	 * Will be called as soon as any of the nodes will be accessed. This gives you the opportunity
-	 * to initialize the nodes lazy.
-	 */
-	protected function first_node_access()
-	{
-		
-	}
-	
-	/**
 	 * Removes all nodes from the tree
 	 */
 	public final function clear()
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		foreach($this->_nodes as $node)
 			$this->remove_node($node->get_id());
 	}
@@ -145,9 +133,6 @@ class FWS_Tree_Manager extends FWS_Object
 		if(!FWS_Helper::is_integer($id) || $id <= 0)
 			FWS_Helper::def_error('intgt0','id',$id);
 
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		return isset($this->_nodes[$id]);
 	}
 
@@ -157,9 +142,6 @@ class FWS_Tree_Manager extends FWS_Object
 	 */
 	public final function get_node_name($id)
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		if($this->node_exists($id))
 			return $this->_nodes[$id]->get_name();
 
@@ -171,9 +153,6 @@ class FWS_Tree_Manager extends FWS_Object
 	 */
 	public final function get_node_count()
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		return count($this->_nodes);
 	}
 	
@@ -185,9 +164,6 @@ class FWS_Tree_Manager extends FWS_Object
 	 */
 	public final function store_changes()
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		$nodes = array();
 		foreach($this->_nodes as $node)
 		{
@@ -218,9 +194,6 @@ class FWS_Tree_Manager extends FWS_Object
 			FWS_Helper::def_error('numgex','index',-1,$index);
 		if($parent_id == $id)
 			FWS_Helper::error('You can\'t add the node as a child of itself ;)');
-		
-		if($this->_root === null)
-			$this->first_node_access();
 		
 		// load nodes and check if they exist
 		$n = $this->get_node($id);
@@ -269,9 +242,6 @@ class FWS_Tree_Manager extends FWS_Object
 		if(!($data instanceof FWS_Tree_NodeData))
 			FWS_Helper::def_error('instance','data','FWS_Tree_NodeData',$data);
 		
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		// is it a root-node?
 		if($parent_id == 0)
 			$n = $this->_root->add_data_at($data,$index);
@@ -299,9 +269,6 @@ class FWS_Tree_Manager extends FWS_Object
 	{
 		if(!FWS_Helper::is_integer($id) || $id <= 0)
 			FWS_Helper::def_error('intgt0','id',$id);
-		
-		if($this->_root === null)
-			$this->first_node_access();
 		
 		$n = $this->get_node($id);
 		if($n !== null)
@@ -396,9 +363,6 @@ class FWS_Tree_Manager extends FWS_Object
 		if(!FWS_Helper::is_integer($id) || $id < 0)
 			FWS_Helper::def_error('intge0','id',$id);
 		
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		if($id == 0)
 			return $this->_root->get_child_count();
 		
@@ -419,9 +383,6 @@ class FWS_Tree_Manager extends FWS_Object
 	{
 		if(!FWS_Helper::is_integer($id) || $id <= 0)
 			FWS_Helper::def_error('intgt0','id',$id);
-		
-		if($this->_root === null)
-			$this->first_node_access();
 		
 		if(isset($this->_nodes[$id]))
 			return $this->_nodes[$id];
@@ -455,9 +416,6 @@ class FWS_Tree_Manager extends FWS_Object
 		if(!FWS_Array_Utils::is_integer($ids))
 			FWS_Helper::def_error('intarray','ids',$ids);
 		
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		$result = array();
 		foreach($ids as $id)
 		{
@@ -474,9 +432,6 @@ class FWS_Tree_Manager extends FWS_Object
 	 */
 	public final function get_all_nodes()
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		$result = array();
 		$this->_get_all_nodes($result,$this->_root);
 		return $result;
@@ -492,9 +447,6 @@ class FWS_Tree_Manager extends FWS_Object
 	{
 		if(!FWS_Helper::is_integer($id) || $id < 0)
 			FWS_Helper::def_error('intge0','id',$id);
-		
-		if($this->_root === null)
-			$this->first_node_access();
 		
 		if($id == 0)
 			$node = $this->_root;
@@ -600,9 +552,6 @@ class FWS_Tree_Manager extends FWS_Object
 	 */
 	public final function to_xml()
 	{
-		if($this->_root === null)
-			$this->first_node_access();
-		
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 		$xml .= '<nodes>'."\n";
 		foreach($this->_root->get_childs() as $node)

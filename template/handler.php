@@ -694,7 +694,7 @@ final class FWS_Template_Handler extends FWS_Object
 			$cache_path = $this->_cache_folder.'/'.$path.$tpl.'.php';
 			
 			// check if we have to recompile the template
-			if(!file_exists($cache_path) || !function_exists($func_name))
+			if(!file_exists($cache_path))
 				$recompile_necessary = true;
 			else
 			{
@@ -712,7 +712,6 @@ final class FWS_Template_Handler extends FWS_Object
 		}
 		
 		// recompile?
-		$include = true;
 		if($recompile_necessary)
 		{
 			// if we could not save the template we eval the code directly
@@ -737,16 +736,9 @@ final class FWS_Template_Handler extends FWS_Object
 					$this->_showed_chmod_warning = true;
 				}
 
-				$include = false;
 				// we don't want to eval the php start- and end-tags
 				eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
 			}
-		}
-
-		if($include && isset($cache_path))
-		{
-			// include the cached file (just once)
-			include_once($cache_path);
 		}
 		
 		// detect recursions
@@ -755,6 +747,10 @@ final class FWS_Template_Handler extends FWS_Object
 			die('It seems that the template "'.$tpl.'" includes itself :)');
 		
 		array_push($this->_tpl_calls,$tpl);
+
+		// include the cached file (just once)
+		if(isset($cache_path))
+			include_once($cache_path);
 		
 		// call the function with corresponding part-argument
 		$func_name = $this->get_function_name($tpl);
