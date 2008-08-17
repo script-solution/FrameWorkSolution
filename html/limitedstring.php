@@ -410,7 +410,7 @@ final class FWS_HTML_LimitedString extends FWS_Object
 		return $str;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

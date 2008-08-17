@@ -334,7 +334,7 @@ class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 			$ry < $ty + $th && $ry + $rh > $ty;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

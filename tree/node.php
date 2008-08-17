@@ -316,7 +316,7 @@ final class FWS_Tree_Node extends FWS_Object
 		return $pos;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		// replace the parent to prevent recursion
 		$vars = get_object_vars($this);

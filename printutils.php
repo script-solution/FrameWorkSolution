@@ -19,7 +19,7 @@ final class FWS_PrintUtils extends FWS_UtilBase
 {
 	/**
 	 * Helper to store the layer. Note that we have to store it here instead of passing
-	 * it by parameter because we call the __toString() methods of the objects which
+	 * it by parameter because we call the get_dump() methods of the objects which
 	 * would cause that we loose the layer.
 	 *
 	 * @var int
@@ -122,7 +122,11 @@ final class FWS_PrintUtils extends FWS_UtilBase
 					return '<span style="color: red;"><i>*RECURSION*</i></span>';
 				
 				array_push(self::$_stack,$var->get_object_id());
-				$str .= $var->__toString($use_html);
+				// TODO don't do this by default
+				if(method_exists($var,'__ToString'))
+					$str .= $var->__ToString();
+				else
+					$str .= $var->get_dump($use_html);
 				array_pop(self::$_stack);
 			}
 			else if(is_object($var))

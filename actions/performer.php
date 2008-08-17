@@ -309,7 +309,7 @@ class FWS_Actions_Performer extends FWS_Object
 		// be default we do nothing
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

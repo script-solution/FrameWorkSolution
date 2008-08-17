@@ -167,7 +167,7 @@ class FWS_GD_Circle extends FWS_GD_Ellipse implements FWS_GD_Shape2D
 		parent::shrink($w,$h);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

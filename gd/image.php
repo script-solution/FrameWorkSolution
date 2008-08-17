@@ -379,7 +379,7 @@ final class FWS_GD_Image extends FWS_Object
 		imagedestroy($this->_image);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -599,7 +599,7 @@ final class FWS_Input extends FWS_Object
 		return $input;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -547,7 +547,7 @@ final class FWS_Highlighting_Processor extends FWS_Object
 		$areas[$this->_area_counter++] = array($start,$end,$type,$id);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

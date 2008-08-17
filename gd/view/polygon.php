@@ -104,7 +104,7 @@ class FWS_GD_View_Polygon extends FWS_GD_View
 		return $funcname($img,$points,count($points) / 2,$color->get_color($img));
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -34,7 +34,7 @@ class FWS_UnitTest_Document extends FWS_Document
 		return null;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

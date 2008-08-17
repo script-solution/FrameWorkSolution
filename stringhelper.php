@@ -26,7 +26,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 *
 	 * @param string $ids the id-string
 	 * @param string $sep the id-separator
-	 * @return mixed the id-array if valid or false
+	 * @return array|boolean the id-array if valid or false
 	 */
 	public static function get_ids($ids,$sep = ',')
 	{
@@ -157,7 +157,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 * If the URL is not valid (e.g. empty) false will be returned.
 	 *
 	 * @param string $hp the input-URL
-	 * @return mixed the corrected URL or false
+	 * @return string|boolean the corrected URL or false
 	 */
 	public static function correct_homepage($hp)
 	{
@@ -173,7 +173,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 * Checks wether the given email-address is valid
 	 *
 	 * @param string $mail the email-address to check
-	 * @return mixed the email-address if it's valid otherwise false
+	 * @return boolean true if valid
 	 */
 	public static function is_valid_email($mail)
 	{
@@ -429,7 +429,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	/**
 	 * Ensures that the result has at least 2 chars
 	 *
-	 * @param string $input the input-string (should be numeric)
+	 * @param string|int $input the input-string (should be numeric)
 	 * @return string the result string
 	 */
 	public static function ensure_2_chars($input)

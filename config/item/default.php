@@ -61,7 +61,7 @@ abstract class FWS_Config_Item_Default extends FWS_Object implements FWS_Config_
 		return '';
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

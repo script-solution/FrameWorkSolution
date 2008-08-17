@@ -238,7 +238,7 @@ class FWS_Config_Data extends FWS_Object
 		return $this->_suffix;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

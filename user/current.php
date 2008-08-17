@@ -542,8 +542,8 @@ class FWS_User_Current extends FWS_Object
 	/**
 	 * checks the user. if the user is loggedin a value is invalid he/she will be logged out
 	 *
-	 * @param mixed $user the username
-	 * @param mixed $pw the password
+	 * @param string|boolean $user the username
+	 * @param string|boolean $pw the password
 	 */
 	protected function check_user($user = false,$pw = false)
 	{
@@ -736,7 +736,7 @@ class FWS_User_Current extends FWS_Object
 		return $current_ua === $old_ua;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

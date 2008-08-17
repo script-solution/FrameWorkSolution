@@ -166,7 +166,7 @@ class FWS_PropAccessor extends FWS_Object
 		return $this->get('input');
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

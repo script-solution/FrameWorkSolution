@@ -90,7 +90,7 @@ final class FWS_Cache_Storage_File extends FWS_Object implements FWS_Cache_Stora
 		return $c;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

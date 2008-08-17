@@ -39,7 +39,7 @@ final class FWS_Tree_Storage_Empty extends FWS_Object implements FWS_Tree_Storag
 		// do noting
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

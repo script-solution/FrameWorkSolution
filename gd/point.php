@@ -138,7 +138,7 @@ final class FWS_GD_Point extends FWS_Object
 		return sqrt($x2 * $x2 + $y2 * $y2);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

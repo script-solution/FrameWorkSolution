@@ -220,7 +220,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	 * perform_action()-method.
 	 *
 	 * @param mixed $id the id of the action
-	 * @param mixed $name the name of the action
+	 * @param string $name the name of the action
 	 */
 	public final function add_action($id,$name)
 	{
@@ -426,11 +426,14 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		$tpl = FWS_Props::get()->tpl();
 		
 		// run the module
-		$tpl->set_template($this->get_template());
-		
-		$doc->get_module()->run();
-		
-		$tpl->restore_template();
+		if($doc->get_module() !== null)
+		{
+			$tpl->set_template($this->get_template());
+			
+			$doc->get_module()->run();
+			
+			$tpl->restore_template();
+		}
 	}
 	
 	/**
@@ -444,13 +447,13 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	protected abstract function footer();
 
 	/**
-	 * @see FWS_Object::get_print_vars()
+	 * @see FWS_Object::get_dump_vars()
 	 *
 	 * @return array
 	 */
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
-		return array_merge(parent::get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_dump_vars(),get_object_vars($this));
 	}
 }
 ?>

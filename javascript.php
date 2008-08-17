@@ -152,7 +152,7 @@ final class FWS_Javascript extends FWS_Singleton
 		return FWS_Path::client_app().$file;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

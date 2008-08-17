@@ -117,7 +117,7 @@ final class FWS_HTTP extends FWS_Object
 	 * Performs a GET-request for the given path
 	 *
 	 * @param string $path the path (may include parameter)
-	 * @return mixed the reply (without header) or false if failed
+	 * @return string|boolean the reply (without header) or false if failed
 	 */
 	public function get($path)
 	{
@@ -135,7 +135,7 @@ final class FWS_HTTP extends FWS_Object
 	 *
 	 * @param string $path the path
 	 * @param array $vars an associative array with the vars to send via POST
-	 * @return mixed the reply (without header) or false if failed
+	 * @return string|boolean the reply (without header) or false if failed
 	 */
 	public function post($path,$vars)
 	{
@@ -243,7 +243,7 @@ final class FWS_HTTP extends FWS_Object
 		return FWS_String::substr($reply,$cut + 4);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

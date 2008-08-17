@@ -128,11 +128,11 @@ abstract class FWS_Module extends FWS_Object
 	}
 	
 	/**
-	 * @see FWS_Object::get_print_vars()
+	 * @see FWS_Object::get_dump_vars()
 	 *
 	 * @return array
 	 */
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

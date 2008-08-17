@@ -62,7 +62,7 @@ final class FWS_Progress_Storage_PHPSession extends FWS_Object implements FWS_Pr
 		$_SESSION[$this->_prefix.'pos'] = $pos;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

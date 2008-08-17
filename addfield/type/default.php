@@ -165,7 +165,7 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 		return $value;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

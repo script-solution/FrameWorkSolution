@@ -98,7 +98,7 @@ final class FWS_Cache_Source_SimpleDB extends FWS_Object implements FWS_Cache_So
 		return $rows;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

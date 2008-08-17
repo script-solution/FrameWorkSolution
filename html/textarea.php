@@ -72,9 +72,9 @@ class FWS_HTML_TextArea extends FWS_HTML_TextElement
 		return $html;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
-		return array_merge(parent::get_print_vars(),get_object_vars($this));
+		return array_merge(parent::get_dump_vars(),get_object_vars($this));
 	}
 }
 ?>

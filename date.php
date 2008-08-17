@@ -79,7 +79,7 @@ final class FWS_Date extends FWS_Object
 	 * 	return $d->to_date($show_time,$relative);
 	 * </code>
 	 * 
-	 * @param mixed $date the date
+	 * @param string|array|int $date the date
 	 * @param boolean $show_time show the time?
 	 * @param boolean $relative do you want to show a relative date like "Today", "2 minutes ago", ...
 	 * 	if applicable?
@@ -110,7 +110,7 @@ final class FWS_Date extends FWS_Object
 	 * </code>
 	 * You may also modify the date before the timestamp-creation. For example with '+1day'.
 	 *
-	 * @param mixed $date the date
+	 * @param string|array|int $date the date
 	 * @param int $input_tz the input-timezone. That means the timezone of the date you specify. By
 	 * 	default it is self::TZ_USER.
 	 * @param string $mod the parameter for #modify(). will modify the date before the timestamp
@@ -133,7 +133,7 @@ final class FWS_Date extends FWS_Object
 	 * </code>
 	 * 
 	 * @param string $format the date-format
-	 * @param mixed $date the date ('now' by default)
+	 * @param string|array|int $date the date ('now' by default)
 	 * @return string the formated date to print
 	 * @see to_format
 	 */
@@ -308,7 +308,7 @@ final class FWS_Date extends FWS_Object
 	 * Note that all arguments are optional. Not given arguments are considered as the current one.
 	 * So if you specify just hour, minute and seconds the current date is used for the remaining 3.
 	 * 
-	 * @param mixed $date the date to set (default 'now')
+	 * @param string|array|int $date the date to set (default 'now')
 	 * @param int $input_tz the input-timezone. That means the timezone of the date you specify
 	 * @param int $output_tz the output-timezone. That means the timezone in which you want to
 	 * 	print the date or something like that.
@@ -712,7 +712,7 @@ final class FWS_Date extends FWS_Object
 		return $string;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		// we provide the fields this way because DateTime has no __toString()-method
 		$vars = get_object_vars($this);

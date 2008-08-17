@@ -114,9 +114,9 @@ class FWS_Config_Group extends FWS_Object
 		return $this->_sort;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
-		return get_print_vars($this);
+		return get_dump_vars($this);
 	}
 }
 ?>

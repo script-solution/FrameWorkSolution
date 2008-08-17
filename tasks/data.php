@@ -205,7 +205,7 @@ class FWS_Tasks_Data extends FWS_Object
 		$this->_time = $time;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

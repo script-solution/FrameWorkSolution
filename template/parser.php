@@ -643,7 +643,7 @@ final class FWS_Template_Parser extends FWS_Object
 		return preg_replace('/[^a-z0-9_]/','_',$item).'_c';
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

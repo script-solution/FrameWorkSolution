@@ -196,7 +196,7 @@ class FWS_Tasks_Container extends FWS_Object
 		return new FWS_Date($res);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

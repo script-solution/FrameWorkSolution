@@ -357,7 +357,7 @@ class FWS_Session_Data extends FWS_Object
 		$this->set_user_name('');
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

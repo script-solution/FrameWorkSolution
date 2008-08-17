@@ -127,7 +127,7 @@ abstract class FWS_AddField_Manager extends FWS_Singleton
 		return $res;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

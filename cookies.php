@@ -214,7 +214,7 @@ final class FWS_Cookies extends FWS_Object
 		setcookie($this->_prefix.$name,'',time() - 3600,$this->_path,$this->_domain);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

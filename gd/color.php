@@ -555,7 +555,7 @@ final class FWS_GD_Color extends FWS_Object
 		return FWS_Helper::is_integer($comp) && $comp >= 0 && $comp <= $limit;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

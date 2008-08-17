@@ -101,7 +101,7 @@ class FWS_GD_Ellipse extends FWS_Object
 		$this->_size->decrease($w,$h);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

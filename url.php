@@ -493,7 +493,7 @@ class FWS_URL extends FWS_Object
 		return false;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -306,7 +306,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 		$this->_shadow = (bool)$val;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -265,7 +265,7 @@ class FWS_Session_Manager extends FWS_Object
 			$this->_user_list[$user->get_session_id().$user->get_user_ip()] = $user;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

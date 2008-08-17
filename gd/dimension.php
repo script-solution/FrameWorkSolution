@@ -140,7 +140,7 @@ final class FWS_GD_Dimension extends FWS_Object
 		$this->_height = max(0,$this->_height - $h);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

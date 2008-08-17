@@ -222,7 +222,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 		return $c % 2 == 1;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

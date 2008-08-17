@@ -303,7 +303,7 @@ abstract class FWS_Objects_Data extends FWS_Object
 		{
 			// TODO that's no good solution. but what is one? :/
 			if(FWS_String::substr($var,0,4) == 'get_' && $var != 'get_id' && $var != 'get_object_id' &&
-				$var != 'get_print_vars')
+				$var != 'get_dump_vars')
 			{
 				$value = $this->$var();
 				if($value !== null)
@@ -313,7 +313,7 @@ abstract class FWS_Objects_Data extends FWS_Object
 		return $fields;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

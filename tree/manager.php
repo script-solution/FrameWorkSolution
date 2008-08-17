@@ -138,7 +138,7 @@ class FWS_Tree_Manager extends FWS_Object
 
 	/**
 	 * @param int $id the id of the node
-	 * @return mixed the name of the node with given id or false if not found
+	 * @return string|boolean the name of the node with given id or false if not found
 	 */
 	public final function get_node_name($id)
 	{
@@ -560,7 +560,7 @@ class FWS_Tree_Manager extends FWS_Object
 		return $xml;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

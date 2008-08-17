@@ -29,7 +29,7 @@ class FWS_AutoLoader extends FWS_UtilBase
 	 * Registers the given loader. This may be a function or a method.
 	 * It will be called if the default load-method couldn't find the item.
 	 * 
-	 * @param mixed $loader the loader-function / -method
+	 * @param string|array $loader the loader-function / -method
 	 */
 	public static function register_loader($loader)
 	{

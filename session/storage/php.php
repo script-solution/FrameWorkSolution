@@ -108,7 +108,7 @@ final class FWS_Session_Storage_PHP extends FWS_Object implements FWS_Session_St
 		);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -110,7 +110,7 @@ class FWS_PropLoader extends FWS_Object
 		return FWS_Input::get_instance();
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

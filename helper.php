@@ -24,6 +24,8 @@ final class FWS_Helper extends FWS_UtilBase
 	{
 		$bt = FWS_Error_Handler::get_instance()->get_backtrace(debug_backtrace());
 		$htmlbt = new FWS_Error_BTPrinter_HTML();
+		// print js file, just to be sure
+		echo '<script type="text/javascript" src="'.FWS_Path::client_fw().'js/basic.js"></script>'."\n";
 		echo $htmlbt->print_backtrace($bt);
 	}
 	

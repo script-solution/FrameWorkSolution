@@ -44,7 +44,7 @@ class FWS_Document extends FWS_Object
 	 * </pre>
 	 * Contains false if no redirect is required
 	 *
-	 * @var mixed
+	 * @var array|boolean
 	 */
 	private $_redirect = false;
 	
@@ -194,7 +194,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * @return mixed information about a redirect:
+	 * @return array|boolean information about a redirect:
 	 * <pre>
 	 * 	array(
 	 * 		'url' => &lt;URL&gt;,
@@ -211,7 +211,7 @@ class FWS_Document extends FWS_Object
 	/**
 	 * Requests a redirect via meta-tag to the given URL after the given time (in seconds).
 	 * 
-	 * @param mixed $url the target-URL. It has to be either an instance of {@link FWS_URL} or a string
+	 * @param FWS_URL|string $url the target-URL
 	 * @param int $time the number of seconds to wait
 	 */
 	public final function request_redirect($url,$time = 3)
@@ -415,13 +415,9 @@ class FWS_Document extends FWS_Object
 	protected function finish()
 	{
 		$sessions = FWS_Props::get()->sessions();
-		$db = FWS_Props::get()->db();
-
+		
 		if($sessions instanceof FWS_Session_Manager)
 			$sessions->finalize();
-
-		if($db instanceof FWS_MySQL)
-			$db->disconnect();
 	}
 	
 	/**
@@ -491,7 +487,7 @@ class FWS_Document extends FWS_Object
 	/**
 	 * Checks wether the client accepts gzip
 	 *
-	 * @return mixed the encoding if the client supports it or false
+	 * @return string|boolean the encoding if the client supports it or false
 	 */
 	private function _get_client_encoding()
 	{
@@ -509,7 +505,7 @@ class FWS_Document extends FWS_Object
 		return false;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

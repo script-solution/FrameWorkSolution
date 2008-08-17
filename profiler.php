@@ -68,7 +68,7 @@ final class FWS_Profiler extends FWS_Object
 		return $mem - $this->_start_mem;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

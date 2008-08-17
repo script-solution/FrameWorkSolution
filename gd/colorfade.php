@@ -180,7 +180,7 @@ final class FWS_GD_ColorFade extends FWS_Object
 		return $res;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

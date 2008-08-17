@@ -409,7 +409,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 		$points = $paint_points;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

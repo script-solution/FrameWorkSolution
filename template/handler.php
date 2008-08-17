@@ -776,7 +776,7 @@ final class FWS_Template_Handler extends FWS_Object
 		return 'FWS_TPL_'.md5(FWS_Path::server_app()).'_'.str_replace('.','_',$template);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

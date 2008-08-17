@@ -56,42 +56,43 @@ abstract class FWS_Object
 	}
 	
 	/**
-	 * Prints this object. The method does the following:
+	 * Prints the dump of this object. The method does the following:
 	 * <code>
-	 * echo '<pre>'.$this.'</pre>';
+	 * echo '<pre>'.$this->get_dump().'</pre>';
 	 * </code>
 	 * 
 	 * @param boolean $use_html print the object as HTML?
 	 */
-	public final function print_obj($use_html = true)
+	public final function dump($use_html = true)
 	{
 		if($use_html)
-			echo $this->__toString(true);
+			echo $this->get_dump(true);
 		else
-			echo '<pre>'.$this->__toString(false).'</pre>';
+			echo '<pre>'.$this->get_dump(false).'</pre>';
+	}
+	
+	/**
+	 * Builds the dump of this object. It uses {@link get_dump_vars} and formats this via
+	 * {@link FWS_PrintUtils}.
+	 *
+	 * @param boolean $use_html wether HTML should be used
+	 * @return string the dump
+	 */
+	public final function get_dump($use_html = true)
+	{
+		return FWS_PrintUtils::obj_to_string($this,$this->get_dump_vars(),$use_html);
 	}
 	
 	/**
 	 * Should return an array with all variables of the class that should be printed
-	 * by __toString(). If you overwrite this method you may use:
-	 * <code>array_merge(parent::get_print_vars(),get_object_vars($this))</code>
+	 * by dump() and get_dump(). If you overwrite this method you may use:
+	 * <code>array_merge(parent::get_dump_vars(),get_object_vars($this))</code>
 	 * By default you should return:
 	 * <code>get_object_vars($this)</code>
 	 *
 	 * @return array an associative array with all variables
 	 * @see get_object_vars()
 	 */
-	protected abstract function get_print_vars();
-	
-	/**
-	 * The toString-method of all classes that inherit from {@link FWS_Object}
-	 * 
-	 * @param boolean $use_html do you want to print it as HTML? (true by default)
-	 * @return string information about the object
-	 */
-	public function __toString($use_html = true)
-	{
-		return FWS_PrintUtils::obj_to_string($this,$this->get_print_vars(),$use_html);
-	}
+	protected abstract function get_dump_vars();
 }
 ?>

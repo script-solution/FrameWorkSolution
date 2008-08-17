@@ -340,7 +340,7 @@ final class FWS_GD_Text extends FWS_Object
 		FWS_GD_Utils::add_padding_custom($bounds,$t,$r,$b,$l,$angle);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

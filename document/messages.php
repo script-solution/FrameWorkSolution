@@ -290,7 +290,7 @@ class FWS_Document_Messages extends FWS_Object
 		return in_array($type,$valid);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -415,7 +415,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	 */
 	public abstract function send_mail();
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

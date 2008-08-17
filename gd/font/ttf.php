@@ -163,7 +163,7 @@ final class FWS_GD_Font_TTF extends FWS_Object implements FWS_GD_Font
 		return $ttf_font;
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

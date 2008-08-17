@@ -69,7 +69,7 @@ final class FWS_Progress_Storage_Session extends FWS_Object implements FWS_Progr
 		$user->set_session_data($this->_prefix.'pos',$pos);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

@@ -172,7 +172,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	/**
 	 * Adds the given link to the action
 	 * 
-	 * @param string $links the name of the link
+	 * @param string $name the name of the link
 	 * @param FWS_URL $url the URL of the link (may also be a string, if you want to specify the URL
 	 * 	manually)
 	 */
@@ -246,7 +246,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	}
 
 	/**
-	 * @return mixed the URL to redirect to (may be an instance of FWS_URL or a string)
+	 * @return FWS_URL|string the URL to redirect to
 	 */
 	public final function get_redirect_url()
 	{
@@ -290,11 +290,11 @@ abstract class FWS_Actions_Base extends FWS_Object
 	 * Performs the action and returns the error-message if any or an empty
 	 * string
 	 *
-	 * @return mixed the error-message or an empty string. May be an array, too
+	 * @return string|array the error-message or an empty string. May be an array, too
 	 */
 	public abstract function perform_action();
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}

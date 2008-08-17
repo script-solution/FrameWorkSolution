@@ -530,7 +530,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 		return new FWS_GD_Point($x,$y);
 	}
 	
-	protected function get_print_vars()
+	protected function get_dump_vars()
 	{
 		return get_object_vars($this);
 	}
