@@ -129,7 +129,7 @@ function toggleRows(indices)
 	for(var i = 0;i < aindices.length;i++)
 	{
 		var index = parseInt(aindices[i]);
-		if(index)
+		if(index >= 0)
 			this.toggleRowSelected(index);
 	}
 }

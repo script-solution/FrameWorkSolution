@@ -473,6 +473,7 @@ class FWS_URL extends FWS_Object
 	{
 		$cookies = FWS_Props::get()->cookies();
 		$user = FWS_Props::get()->user();
+		$sessions = FWS_Props::get()->sessions();
 		
 		// can we find the cookie?
 		$use_sid = $force;
@@ -482,7 +483,7 @@ class FWS_URL extends FWS_Object
 		if(!$use_sid && isset($_COOKIE))
 			$use_sid = !isset($_COOKIE[$cookies->get_prefix().'sid']);
 
-		if($use_sid && $user instanceof FWS_User_Current)
+		if($use_sid && $sessions->sessions_enabled())
 		{
 			$sid = $user->get_session_id();
 			if($sid)
