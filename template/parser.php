@@ -93,6 +93,13 @@ final class FWS_Template_Parser extends FWS_Object
 	private $_regex_math;
 	
 	/**
+	 * All variable-container that have been used
+	 *
+	 * @var array
+	 */
+	private $_var_container = array();
+	
+	/**
 	 * The instance of the template-handler
 	 *
 	 * @var FWS_Template_Handler
@@ -116,7 +123,10 @@ final class FWS_Template_Parser extends FWS_Object
 		// define some regexs to parse the templates
 		
 		// the basic ones
-		$this->_regex_ident = '(?:[A-Za-z_]\w*)';
+		if($this->_tpl->get_access_to_foreign_tpls())
+			$this->_regex_ident = '(?:(?:[A-Za-z0-9_\.]+\#)?[A-Za-z_]\w*)';
+		else
+			$this->_regex_ident = '(?:[A-Za-z_]\w*)';
 		$this->_regex_cmp = '(?:==|===|!=|!==|>|<|>=|<=)';
 		$regex_num = '(?:-?\d+(?:\.\d+)?)';
 		$regex_dstr = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"';
@@ -257,7 +267,12 @@ final class FWS_Template_Parser extends FWS_Object
 		$result = '<?php'."\n"
 		 .'function '.$this->_tpl->get_function_name($template).'($tpl,$number) {'."\n"
 		 .'$tplvars = $tpl->get_variables(\''.$template.'\',$number);'."\n";
-		$result .= '$html = "";'."\n"
+		if($this->_tpl->get_access_to_foreign_tpls())
+		{
+			foreach($this->_var_container as $name => $value)
+				$result .= '$'.$name.' = $tpl->get_variables(\''.$value.'\',1);'."\n";
+		}
+		$result .= "\n".'$html = "";'."\n"
 		 .'$html .=<<<EOF'."\n"
 		 .$content."\n".'EOF;'."\n"
 		 .'return $html;'."\n".'}'."\n"
@@ -625,8 +640,19 @@ final class FWS_Template_Parser extends FWS_Object
 	 */
 	private function _parse_var($value)
 	{
+		$res = '';
+		if($this->_tpl->get_access_to_foreign_tpls() && ($pos = FWS_String::strpos($value,'#')) !== false)
+		{
+			$file = FWS_String::substr($value,0,$pos);
+			$varname = preg_replace('/[^a-z0-9_A-Z]/','_',$file);
+			$value = FWS_String::substr($value,$pos + 1);
+			$this->_var_container[$varname] = $file;
+			$res = '$'.$varname;
+		}
+		else
+			$res = '$tplvars';
+		
 		$parts = explode(':',$value);
-		$res = '$tplvars';
 		foreach($parts as $p)
 			$res .= '[\''.$p.'\']';
 		return $res;

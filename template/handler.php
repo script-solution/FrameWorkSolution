@@ -92,6 +92,13 @@ final class FWS_Template_Handler extends FWS_Object
 	private $_limit_method_calls = true;
 	
 	/**
+	 * Is it allowed to access variables of other templates?
+	 *
+	 * @var boolean
+	 */
+	private $_access_to_foreign_tpls = false;
+	
+	/**
 	 * All methods that are callable from templates
 	 *
 	 * @var array
@@ -347,6 +354,24 @@ final class FWS_Template_Handler extends FWS_Object
 	public function set_limit_method_calls($limit)
 	{
 		$this->_limit_method_calls = (bool)$limit;
+	}
+	
+	/**
+	 * @return boolean wether it is possible to access variables of foreign templates
+	 */
+	public function get_access_to_foreign_tpls()
+	{
+		return $this->_access_to_foreign_tpls;
+	}
+	
+	/**
+	 * Sets wether it is possible to access variables of foreign templates
+	 *
+	 * @param boolean $access the new value
+	 */
+	public function set_access_to_foreign_tpls($access)
+	{
+		$this->_access_to_foreign_tpls = (bool)$access;
 	}
 	
 	/**
