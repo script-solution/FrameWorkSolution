@@ -75,7 +75,8 @@ class FWS_PropLoader extends FWS_Object
 	 */
 	protected function user()
 	{
-	  return new FWS_User_Current(null,false);
+		$storage = new FWS_User_Storage_Empty();
+	  return new FWS_User_Current($storage);
 	}
 
 	/**

@@ -123,11 +123,9 @@ class FWS_User_Current extends FWS_Object
 	 */
 	public function __construct($storage)
 	{
-		$sessions = FWS_Props::get()->sessions();
-		
 		parent::__construct();
 		
-		if($sessions->sessions_enabled() && !($storage instanceof FWS_User_Storage))
+		if(!($storage instanceof FWS_User_Storage))
 			FWS_Helper::def_error('instance','storage','FWS_User_Storage',$storage);
 		
 		$this->_storage = $storage;
