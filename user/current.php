@@ -372,12 +372,13 @@ class FWS_User_Current extends FWS_Object
 
 	/**
 	 * returns the session-data with the given name
-	 * or false if not found
+	 * or $default if not found
 	 *
 	 * @param string $name the name of the data
-	 * @return mixed the data or false if not found
+	 * @param mixed $default the value to return if the session-data is not present
+	 * @return mixed the data or $default if not found
 	 */
-	public final function get_session_data($name)
+	public final function get_session_data($name,$default = false)
 	{
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
@@ -385,7 +386,7 @@ class FWS_User_Current extends FWS_Object
 		if(isset($this->_session_data[$name]))
 			return $this->_session_data[$name];
 
-		return false;
+		return $default;
 	}
 
 	/**
