@@ -70,7 +70,6 @@ final class FWS_Input extends FWS_Object
 	
 	/**
 	 * Represents an identifier, that means a-zA-Z0-9_.
-	 * Note that it has to start with a-z or '_'!
 	 */
 	const IDENTIFIER				= 8;
 	
@@ -264,7 +263,7 @@ final class FWS_Input extends FWS_Object
 					return null;
 
 				case FWS_Input::IDENTIFIER:
-					if(preg_match('/^[a-z_][a-z0-9_]*$/i',$var))
+					if(preg_match('/^[a-z0-9_]+$/i',$var))
 						return $var;
 					return null;
 
