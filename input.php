@@ -211,6 +211,27 @@ final class FWS_Input extends FWS_Object
 		
 		return $this->get_var($name,$method,$this->_predef_values[$method.$name]);
 	}
+	
+	/**
+	 * Returns an array with all values of the given input-variables
+	 *
+	 * @param array $names an array with all names
+	 * @param string $method the method for all variables:
+	 * 											 (get,post,cookie,server); -1 if this doesn't matter
+	 * @param int $type the type of all variables: INTEGER,STRING,INT_BOOL,BOOL,FLOAT,ID,...;
+	 * 									-1 if this doesn't matter
+	 * @return array an associative array with all values
+	 */
+	public function get_vars($names,$method = -1,$type = -1)
+	{
+		if(!is_array($names))
+			FWS_Helper::def_error('array','names',$names);
+		
+		$vars = array();
+		foreach($names as $name)
+			$vars[$name] = $this->get_var($name,$method,$type);
+		return $vars;
+	}
 
 	/**
 	 * Returns the value of a variable and ensures that it has the expected type
