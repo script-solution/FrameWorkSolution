@@ -205,7 +205,100 @@ final class FWS_GD_Image extends FWS_Object
 		if(!($bgcolor instanceof FWS_GD_Color))
 			FWS_Helper::def_error('instance','bgcolor','FWS_GD_Color',$bgcolor);
 		
-		imagerotate($this->_image,$angle,$bgcolor->get_color($this->_image),(bool)$ignore_transparence);
+		// just available if PHP was compiled with bundled version of GD
+		if(function_exists('imagerotate'))
+			imagerotate($this->_image,$angle,$bgcolor->get_color($this->_image),(bool)$ignore_transparence);
+		else
+			$this->_rotate_self($angle,$bgcolor);
+	}
+	
+	/**
+	 * Rotates the image by the given angle (manually)
+	 *
+	 * @param int $angle the angle
+	 * @param FWS_GD_Color $bgcolor the background-color for the rotation
+	 * @param boolean $ignore_transparence if enabled transparent colors are ignored (otherwise kept)
+	 */
+	private function _rotate_self($angle,$bgcolor)
+	{
+		$width = $this->_width;
+		$height = $this->_height;
+		if($this->is_truecolor())
+		{
+			$nimg = imagecreatetruecolor($width,$height);
+			$trans_colour = imagecolorallocatealpha($nimg,0,0,0,127);
+		}
+		else
+		{
+			$nimg = imagecreate($width,$height);
+			$trans_colour = imagecolorallocate(
+				$nimg,$bgcolor->get_red(),$bgcolor->get_green(),$bgcolor->get_blue()
+			);
+		}
+    imagefill($nimg,0,0,$trans_colour);
+		
+		$dx_x = $this->_rot_x(-$angle, 1.0, 0.0);
+    $dx_y = $this->_rot_y(-$angle, 1.0, 0.0);
+    $dy_x = $this->_rot_x(-$angle, 0.0, 1.0);
+    $dy_y = $this->_rot_y(-$angle, 0.0, 1.0);
+    
+    $x0 = $this->_rot_x(-$angle,-$width / 2.0,-$height / 2.0) + $width / 2.0;
+    $y0 = $this->_rot_y(-$angle,-$width / 2.0,-$height / 2.0) + $height / 2.0;
+    
+    $img = $this->_image;
+    $x1 = $x0;
+    $y1 = $y0;
+    for($y = 0;$y < $height;$y++)
+    {
+      $x2 = $x1;
+      $y2 = $y1;
+      for($x = 0;$x < $width;$x++)
+      {
+      	if($x2 >= 0 && $x2 < $width && $y2 >= 0 && $y2 < $height)
+					$pixel = imagecolorat($img,$x2,$y2);
+				else
+					$pixel = $trans_colour;
+				
+				imagesetpixel($nimg,$x,$y,$pixel);
+				$x2 += $dx_x;
+				$y2 += $dx_y;
+      }
+      $x1 += $dy_x;
+      $y1 += $dy_y;
+    }
+		
+		imagedestroy($img);
+		$this->_image = $nimg;
+	}
+	
+	/**
+	 * Rotates the x position of a point.
+	 * 
+	 * @param int $angle the angle to rotate by
+	 * @param int $x the x-position
+	 * @param int $y the y-position
+	 * @return the new x-position
+	 */
+	private function _rot_x($angle,$x,$y)
+	{
+		$cos = cos($angle / 180.0 * pi());
+		$sin = sin($angle / 180.0 * pi());
+		return $x * $cos + $y * -$sin;
+	}
+  
+	/**
+	 * Rotates the y position of a point.
+	 * 
+	 * @param int $angle the angle to rotate by
+	 * @param int $x the x-position
+	 * @param int $y the y-position
+	 * @return the new y-position
+	 */
+	private function _rot_y($angle,$x,$y)
+	{
+		$cos = cos($angle / 180.0 * pi());
+		$sin = sin($angle / 180.0 * pi());
+		return $x * $sin + $y * $cos;
 	}
 	
 	/**
