@@ -428,11 +428,14 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		// run the module
 		if($doc->get_module() !== null)
 		{
-			$tpl->set_template($this->get_template());
+			$template = $this->get_template();
+			if($template !== null)
+				$tpl->set_template($template);
 			
 			$doc->get_module()->run();
 			
-			$tpl->restore_template();
+			if($template !== null)
+				$tpl->restore_template();
 		}
 	}
 	
