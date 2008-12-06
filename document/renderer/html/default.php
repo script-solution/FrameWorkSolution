@@ -266,6 +266,14 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		
 		return null;
 	}
+	
+	/**
+	 * @return FWS_Actions_Performer the action-performer-instance
+	 */
+	public final function get_action_performer()
+	{
+		return $this->_action_perf;
+	}
 
 	/**
 	 * Performs the necessary action
