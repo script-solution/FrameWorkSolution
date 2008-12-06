@@ -44,7 +44,7 @@ final class FWS_Session_Storage_PHP extends FWS_Object implements FWS_Session_St
 		if(!isset($_SESSION[self::SESS_INDEX]))
 			return array();
 		
-		// we now just the current user
+		// we know just the current user
 		return array(new FWS_Session_Data(
 			$_SESSION[self::SESS_INDEX]['sid'],
 			$_SESSION[self::SESS_INDEX]['uid'],
