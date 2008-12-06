@@ -586,7 +586,6 @@ class FWS_User_Current extends FWS_Object
 		$user = null;
 		if(!empty($session_id))
 			$user = $sessions->get_user($session_id,$user_ip);
-		
 		// check the data of the user
 		if($user !== null)
 		{
@@ -621,6 +620,11 @@ class FWS_User_Current extends FWS_Object
 		  $this->_assign_new_session();
 		  $sessions->add_user($this->_user);
 	  }
+	  
+	  // refresh cookie
+		$cookies->set_cookie(
+			'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
+		);
 	}
 	
 	/**
@@ -633,9 +637,6 @@ class FWS_User_Current extends FWS_Object
 
 		// generate new session id and store it via cookie
 	  $this->_user->set_session_id($this->_generate_session_id());
-		$cookies->set_cookie(
-			'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
-		);
 	}
 
 	/**
