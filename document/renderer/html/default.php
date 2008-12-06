@@ -77,7 +77,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	/**
 	 * The result of the action in this run.
 	 *
-	 * @see perform_actions()
+	 * @see FWS_Actions_Performer::perform_action()
 	 * @var integer
 	 */
 	private $_action_result = 0;
@@ -271,9 +271,9 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	 * Performs the necessary action
 	 * You will find the result in get_action_result()
 	 */
-	public final function perform_actions()
+	public final function perform_action()
 	{
-		$this->_action_result = $this->_action_perf->perform_actions();
+		$this->_action_result = $this->_action_perf->perform_action();
 	}
 
 	/**

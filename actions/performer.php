@@ -192,39 +192,58 @@ class FWS_Actions_Performer extends FWS_Object
 	 * Performs an requested action.
 	 * And displays the error-message if any occurred or the status-page if enabled
 	 *
-	 * @return int the result of this function:
+	 * @return int the result of the action:
 	 * <pre>
 	 * 	-1 = error,
 	 * 	0 = success / nothing done,
 	 * 	1 = success + status-page
 	 * </pre>
 	 */
-	public final function perform_actions()
+	public final function perform_action()
 	{
-		$locale = FWS_Props::get()->locale();
-		$msgs = FWS_Props::get()->msgs();
-		$doc = FWS_Props::get()->doc();
-
 		$action_type = $this->get_action_type();
 		if($action_type === null)
 			return 0;
 
+		return $this->perform_action_by_id($action_type);
+	}
+	
+	/**
+	 * Performs the action with given id, if available
+	 *
+	 * @param mixed $id the action-id
+	 * @return int the result of the action:
+	 * <pre>
+	 * 	-1 = error,
+	 * 	0 = success / nothing done,
+	 * 	1 = success + status-page
+	 * </pre>
+	 */
+	public final function perform_action_by_id($id)
+	{
+		$locale = FWS_Props::get()->locale();
+		$msgs = FWS_Props::get()->msgs();
+		$doc = FWS_Props::get()->doc();
+		
+		if(empty($id))
+			FWS_Helper::def_error('notempty','id',$id);
+		
 		// action unknown?
-		if(!isset($this->_actions[$action_type]))
+		if(!isset($this->_actions[$id]))
 			return 0;
-
+		
 		// perform the action
-		$c = $this->_actions[$action_type];
+		$c = $this->_actions[$id];
 		/* @var $c FWS_Actions_Base */
 		
-		$this->before_action_performed($action_type,$c);
+		$this->before_action_performed($id,$c);
 		
-		if(isset($this->_add_params[$action_type]))
-			$message = call_user_func_array(array($c,'perform_action'),$this->_add_params[$action_type]);
+		if(isset($this->_add_params[$id]))
+			$message = call_user_func_array(array($c,'perform_action'),$this->_add_params[$id]);
 		else
 			$message = $c->perform_action();
 		
-		$this->after_action_performed($action_type,$c,$message);
+		$this->after_action_performed($id,$c,$message);
 
 		// has an error occurred?
 		if($message)
@@ -256,7 +275,7 @@ class FWS_Actions_Performer extends FWS_Object
 				if($c->get_success_msg() != '')
 					$success_msg = $c->get_success_msg();
 				else
-					$success_msg = $locale->lang('success_'.$action_type);
+					$success_msg = $locale->lang('success_'.$id);
 
 				foreach($c->get_links() as $name => $url)
 				{

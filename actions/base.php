@@ -56,7 +56,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	private $_links = array();
 	
 	/**
-	 * The value to return in {@link FWS_Actions_Performer::perform_actions()} if an
+	 * The value to return in {@link FWS_Actions_Performer::perform_action()} if an
 	 * error has occurred
 	 *
 	 * @var int
@@ -136,7 +136,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	}
 
 	/**
-	 * @return int the value to return in {@link FWS_Actions_Performer::perform_actions()} if an
+	 * @return int the value to return in {@link FWS_Actions_Performer::perform_action()} if an
 	 * 	error has occurred
 	 */
 	public final function get_error_return_val()
@@ -145,7 +145,7 @@ abstract class FWS_Actions_Base extends FWS_Object
 	}
 
 	/**
-	 * Sets the value to return in {@link FWS_Actions_Performer::perform_actions()} if an
+	 * Sets the value to return in {@link FWS_Actions_Performer::perform_action()} if an
 	 * error has occurred
 	 * 
 	 * @param int $val the value to return
