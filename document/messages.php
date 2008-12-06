@@ -66,9 +66,44 @@ class FWS_Document_Messages extends FWS_Object
 	private $_links = array();
 	
 	/**
+	 * A list of listeners
+	 *
+	 * @var array
+	 */
+	private $_listener = array();
+	
+	/**
+	 * Adds the given listener to the list
+	 *
+	 * @param FWS_Document_MsgListener $listener your listener
+	 */
+	public function add_listener($listener)
+	{
+		if(!($listener instanceof FWS_Document_MsgListener))
+			FWS_Helper::def_error('instanceof','listener','FWS_Document_MsgListener',$listener);
+		
+		$this->_listener[] = $listener;
+	}
+	
+	/**
+	 * Removes the given listener from the list
+	 *
+	 * @param FWS_Document_MsgListener $listener your listener
+	 */
+	public function remove_listener($listener)
+	{
+		if(!($listener instanceof FWS_Document_MsgListener))
+			FWS_Helper::def_error('instanceof','listener','FWS_Document_MsgListener',$listener);
+		
+		$index = array_search($listener,$this->_listener,true);
+		if($index !== false)
+			unset($this->_listener[$index]);
+	}
+	
+	/**
 	 * Clears the messages and links
 	 */
-	public final function clear()
+	public function clear()
 	{
 		$this->_messages[self::ERROR] = array();
 		$this->_messages[self::WARNING] = array();
@@ -91,7 +126,7 @@ class FWS_Document_Messages extends FWS_Object
 	 * @param string $name the name or title of the link
 	 * @param string $url the URL of the link
 	 */
-	public final function add_link($name,$url)
+	public function add_link($name,$url)
 	{
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
@@ -148,7 +183,7 @@ class FWS_Document_Messages extends FWS_Object
 	 * @param string $msg the message
 	 * @param int $type the message-type; see FWS_Messages::*
 	 */
-	public final function add_message($msg,$type = self::NOTICE)
+	public function add_message($msg,$type = self::NOTICE)
 	{
 		if(!$this->_is_valid_type($type))
 			FWS_Helper::error('Invalid type: '.$type.'!');
@@ -157,12 +192,16 @@ class FWS_Document_Messages extends FWS_Object
 			FWS_Helper::def_error('notempty','msg',$msg);
 		
 		$this->_messages[$type][] = $msg;
+		
+		// notify listeners
+		foreach($this->_listener as $l)
+			$l->received_msg($type,$msg);
 	}
 	
 	/**
 	 * @return boolean true if the container contains any message
 	 */
-	public final function contains_msg()
+	public function contains_msg()
 	{
 		return $this->contains(self::ERROR) || $this->contains(self::WARNING) ||
 			$this->contains(self::NO_ACCESS) || $this->contains(self::NOTICE);
@@ -210,7 +249,7 @@ class FWS_Document_Messages extends FWS_Object
 	 * @param int $type the message-type; see FWS_Messages::*
 	 * @return boolean true if there has been added a message of given type
 	 */
-	public final function contains($type)
+	public function contains($type)
 	{
 		if(!$this->_is_valid_type($type))
 			FWS_Helper::error('Invalid type: '.$type.'!');
