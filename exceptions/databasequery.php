@@ -25,7 +25,14 @@ final class FWS_Exceptions_DatabaseQuery extends FWS_Exceptions_Critical
 	 *
 	 * @var string
 	 */
-	private $_query = '';
+	private $_query;
+	
+	/**
+	 * The error-message
+	 *
+	 * @var string
+	 */
+	private $_message;
 	
 	/**
 	 * Constructor
@@ -40,7 +47,16 @@ final class FWS_Exceptions_DatabaseQuery extends FWS_Exceptions_Critical
 		$msg .= 'MySQL-Query: '."\n".$query;
 		parent::__construct($msg,$number);
 		
+		$this->_message = $message;
 		$this->_query = $query;
+	}
+	
+	/**
+	 * @return string the mysql-error-message
+	 */
+	public function get_mysql_error()
+	{
+		return $this->_message;
 	}
 	
 	/**
