@@ -181,7 +181,7 @@ final class FWS_MySQL extends FWS_Singleton
 	 */
 	public function get_server_version()
 	{
-		return mysql_get_server_info($this->_con);
+		return @mysql_get_server_info($this->_con);
 	}
 	
 	/**
