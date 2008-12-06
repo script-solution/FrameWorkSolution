@@ -415,9 +415,7 @@ class FWS_Document extends FWS_Object
 	protected function finish()
 	{
 		$sessions = FWS_Props::get()->sessions();
-		
-		if($sessions instanceof FWS_Session_Manager)
-			$sessions->finalize();
+		$sessions->finalize();
 	}
 	
 	/**
