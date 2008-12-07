@@ -2,7 +2,7 @@
 /**
  * Contains the FWS_Array_1Dim test
  *
- * @version			$Id: PLIB_Array_1DimTest.php 25 2008-07-30 12:41:15Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

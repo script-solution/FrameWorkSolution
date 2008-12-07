@@ -2,7 +2,7 @@
 /**
  * Contains the FWS_HTML_LimitedString test
  *
- * @version			$Id: PLIB_HTML_LimitedStringTest.php 25 2008-07-30 12:41:15Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

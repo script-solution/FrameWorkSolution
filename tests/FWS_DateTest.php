@@ -2,7 +2,7 @@
 /**
  * Contains the FWS_DateTest test
  *
- * @version			$Id: PLIB_DateTest.php 25 2008-07-30 12:41:15Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>

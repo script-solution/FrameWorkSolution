@@ -2,7 +2,7 @@
 /**
  * Contains the URL-class
  *
- * @version			$Id: url.php 28 2008-07-30 19:24:34Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
