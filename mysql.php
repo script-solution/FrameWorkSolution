@@ -113,6 +113,14 @@ final class FWS_MySQL extends FWS_Singleton
 			);
 		}
 	}
+	
+	/**
+	 * @return boolean wether we are connected
+	 */
+	public function is_connected()
+	{
+		return $this->_con !== null;
+	}
 
 	/**
 	 * Closes the mysql-connection
