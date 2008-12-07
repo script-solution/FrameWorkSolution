@@ -403,6 +403,14 @@ class FWS_User_Current extends FWS_Object
 
 		$this->_session_data[$name] = $value;
 	}
+	
+	/**
+	 * Clears all session-data
+	 */
+	public final function clear_session_data()
+	{
+		$this->_session_data = array();
+	}
 
 	/**
 	 * deletes the session-data with given name
