@@ -434,7 +434,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		$tpl = FWS_Props::get()->tpl();
 		
 		// run the module
-		if($doc->get_module() !== null)
+		if($doc->get_module() !== null && !$doc->get_module()->error_occurred())
 		{
 			$template = $this->get_template();
 			if($template !== null)
