@@ -61,7 +61,7 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	 * @param array $properties an associative array with all properties
 	 * @param mixed $media an array with media-types or null
 	 */
-	public function __construct($selectors,$properties,$media = null)
+	public function __construct($selectors,$properties = array(),$media = null)
 	{
 		parent::__construct();
 		
@@ -78,16 +78,8 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	 */
 	public function get_name()
 	{
-		return $this->_name;
-	}
-	
-	/**
-	 * Sets the name of this ruleset
-	 */
-	private function _set_name()
-	{
-		$this->_name = $this->_media === null ? '' : implode(',',$this->_media).':';
-		$this->_name .= implode(',',$this->_selectors);
+		return ($this->_media === null ? '' : implode(',',$this->_media)).':'
+			.implode(',',$this->_selectors);
 	}
 	
 	/**
@@ -109,7 +101,6 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 			FWS_Helper::def_error('array','media',$media);
 		
 		$this->_media = $media;
-		$this->_set_name();
 	}
 	
 	/**
@@ -175,7 +166,6 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 			FWS_Helper::def_error('array>0','selectors',$selectors);
 		
 		$this->_selectors = $selectors;
-		$this->_set_name();
 	}
 	
 	/**
@@ -197,7 +187,7 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	 */
 	public function get_property($name)
 	{
-		if(isset($this->_properties[$name]))
+		if(!isset($this->_properties[$name]))
 			return false;
 		return $this->_properties[$name];
 	}

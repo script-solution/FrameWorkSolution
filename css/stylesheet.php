@@ -60,7 +60,14 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 *
 	 * @var string
 	 */
-	protected static $_ident_regex = '(?:[A-Za-z\-_][A-Za-z0-9\-_]*)';
+	const IDENT_REGEX = '(?:[A-Za-z\-_][A-Za-z0-9\-_]*)';
+	
+	/**
+	 * The regex for a string (without quotes)
+	 *
+	 * @var string
+	 */
+	const STR_REGEX = '(?:[^"\\\\]*(?:\\\\.[^"\\\\]*)*)';
 	
 	/**
 	 * All blocks in this stylesheet (comments and rulesets)
@@ -95,6 +102,49 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	}
 	
 	/**
+	 * Returns the block with given index
+	 *
+	 * @param int $index the index
+	 * @return FWS_CSS_Block the block or null if the index is invalid
+	 */
+	public function get_block($index)
+	{
+		if($index >= 0 && $index < count($this->_blocks))
+			return $this->_blocks[$index];
+		return null;
+	}
+	
+	/**
+	 * @return array all blocks found in the document (instances of FWS_CSS_Block)
+	 */
+	public function get_blocks()
+	{
+		return $this->_blocks;
+	}
+	
+	/**
+	 * Removes the blocks with given indices
+	 *
+	 * @param array $indices an array with indices
+	 * @return int the number of removed blocks
+	 */
+	public function remove_blocks($indices)
+	{
+		if(!is_array($indices))
+			FWS_Helper::def_error('array','indices',$indices);
+		
+		$n = count($this->_blocks);
+		foreach($indices as $i)
+		{
+			if($i >= 0 && $i < $n)
+				unset($this->_blocks[$i]);
+		}
+		// set new indices
+		sort($this->_blocks);
+		return $n - count($this->_blocks);
+	}
+	
+	/**
 	 * Searches through all blocks and returns all rulesets that are for the given-media-type
 	 * (maybe more).
 	 *
@@ -112,9 +162,9 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 * @param string $id the id
 	 * @return array the rulesets
 	 */
-	public function get_rulesets_with_id($id)
+	public function get_rulesets_for_id($id)
 	{
-		return $this->get_rulesets($this->get_rulesetsi_with_id($id));
+		return $this->get_rulesets($this->get_rulesetsi_for_id($id));
 	}
 	
 	/**
@@ -124,9 +174,21 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 * @param string $class the class-name
 	 * @return array the rulesets
 	 */
-	public function get_rulesets_with_class($class)
+	public function get_rulesets_for_class($class)
 	{
-		return $this->get_rulesets($this->get_rulesetsi_with_class($class));
+		return $this->get_rulesets($this->get_rulesetsi_for_class($class));
+	}
+	
+	/**
+	 * Searches through all blocks and returns an array with all rulesets that have any selector
+	 * with given tagname
+	 *
+	 * @param string $tagname the tag-name
+	 * @return array the rulesets
+	 */
+	public function get_rulesets_for_tagname($tagname)
+	{
+		return $this->get_rulesets($this->get_rulesetsi_for_tagname($tagname));
 	}
 	
 	/**
@@ -160,14 +222,6 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	}
 	
 	/**
-	 * @return array all blocks found in the document (instances of FWS_CSS_Block)
-	 */
-	public function get_blocks()
-	{
-		return $this->_blocks;
-	}
-	
-	/**
 	 * Returns all rulesets with given indices
 	 *
 	 * @param array $indices an array with indices
@@ -189,6 +243,61 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	}
 	
 	/**
+	 * Removes all rulesets that are for the given-media-type
+	 *
+	 * @param string $media the media-type, null = no media
+	 * @return int the number of removed blocks
+	 */
+	public function remove_rulesets_for_media($media)
+	{
+		return $this->remove_blocks($this->get_rulesetsi_for_media($media));
+	}
+	
+	/**
+	 * Removes all rulesets that have any id-selector with given id
+	 *
+	 * @param string $id the id
+	 * @return int the number of removed blocks
+	 */
+	public function remove_rulesets_for_id($id)
+	{
+		return $this->remove_blocks($this->get_rulesetsi_for_id($id));
+	}
+	
+	/**
+	 * Removes all rulesets that have any class-selector with given class
+	 *
+	 * @param string $class the class-name
+	 * @return int the number of removed blocks
+	 */
+	public function remove_rulesets_for_class($class)
+	{
+		return $this->remove_blocks($this->get_rulesetsi_for_class($class));
+	}
+	
+	/**
+	 * Remoevs all rulesets that have any selector with given tagname
+	 *
+	 * @param string $tagname the tag-name
+	 * @return int the number of removed blocks
+	 */
+	public function remove_rulesets_for_tagname($tagname)
+	{
+		return $this->remove_blocks($this->get_rulesetsi_for_tagname($tagname));
+	}
+	
+	/**
+	 * Removes all rulesets that have the given name
+	 *
+	 * @param string $name the name to search for
+	 * @return int the number of removed blocks
+	 */
+	public function remove_rulesets_by_name($name)
+	{
+		return $this->remove_blocks($this->get_rulesetsi_by_name($name));
+	}
+	
+	/**
 	 * Searches through all blocks and returns all ruleset-indices that are for the given-media-type
 	 * (maybe more).
 	 *
@@ -197,7 +306,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 */
 	protected function get_rulesetsi_for_media($media)
 	{
-		if(empty($media))
+		if($media !== null && empty($media))
 			FWS_Helper::def_error('notempty','media',$media);
 		
 		$indices = array();
@@ -222,7 +331,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 * @param string $id the id
 	 * @return array the ruleset-indices
 	 */
-	protected function get_rulesetsi_with_id($id)
+	protected function get_rulesetsi_for_id($id)
 	{
 		if(empty($id))
 			FWS_Helper::def_error('notempty','id',$id);
@@ -254,7 +363,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 * @param string $class the class-name
 	 * @return array the ruleset-indices
 	 */
-	protected function get_rulesetsi_with_class($class)
+	protected function get_rulesetsi_for_class($class)
 	{
 		if(empty($class))
 			FWS_Helper::def_error('notempty','class',$class);
@@ -268,6 +377,38 @@ class FWS_CSS_StyleSheet extends FWS_Object
 				foreach($block->get_all_selectors() as $sel)
 				{
 					if($sel instanceof FWS_CSS_Selector_Class && $sel->get_class() == $class)
+					{
+						$indices[] = $i;
+						break;
+					}
+				}
+			}
+			$i++;
+		}
+		return $indices;
+	}
+	
+	/**
+	 * Searches through all blocks and returns an array with all ruleset-indices that have any
+	 * selector for given tagname
+	 *
+	 * @param string $tagname the tag-name
+	 * @return array the ruleset-indices
+	 */
+	protected function get_rulesetsi_for_tagname($tagname)
+	{
+		if(empty($tagname))
+			FWS_Helper::def_error('notempty','tagname',$tagname);
+		
+		$indices = array();
+		$i = 0;
+		foreach($this->_blocks as $block)
+		{
+			if($block->get_type() == FWS_CSS_Block::RULESET)
+			{
+				foreach($block->get_all_selectors() as $sel)
+				{
+					if($sel instanceof FWS_CSS_Selector_Type && $sel->get_tagname() == $tagname)
 					{
 						$indices[] = $i;
 						break;
@@ -447,10 +588,10 @@ class FWS_CSS_StyleSheet extends FWS_Object
 		$this->_blocks = array();
 		foreach($blocks as $block)
 		{
-			// comment
+			// comment or at-rule
 			if(isset($block[0]))
 			{
-				if(FWS_String::starts_with($block[0],'@mediaend'))
+				if($block[0] == '@mediaend')
 					$media = null;
 				else if(FWS_String::strtolower(FWS_String::substr($block[0],0,6)) == '@media')
 				{
@@ -459,11 +600,12 @@ class FWS_CSS_StyleSheet extends FWS_Object
 					if(count($media) == 0)
 						$media = null;
 				}
-				else if(FWS_String::starts_with($block[0],'@import'))
+				else if(FWS_String::strtolower(FWS_String::substr($block[0],0,7)) == '@import')
 				{
 					$matches = array();
-					if(preg_match('/^@import\s+url\(\s*"?(.*?)"?\)\s*(.*?)\s*;/i',$block[0],$matches) ||
-						preg_match('/^@import\s+"(.*?)"\s*(.*?)\s*;/i',$block[0],$matches))
+					if(preg_match('/^@import\s+url\(\s*"?('.self::STR_REGEX.')"?\s*\)\s*(.*?)\s*;/i',
+							$block[0],$matches) ||
+						preg_match('/^@import\s+"('.self::STR_REGEX.')"\s*(.*?)\s*;/i',$block[0],$matches))
 					{
 						$mediatypes = preg_split('/\s*,\s*/',$matches[2],-1,PREG_SPLIT_NO_EMPTY);
 						$this->_blocks[] = new FWS_CSS_Block_Import($matches[1],$mediatypes);
@@ -471,7 +613,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 				}
 				else if(FWS_String::strtolower(FWS_String::substr($block[0],0,8)) == '@charset')
 				{
-					if(preg_match('/^@charset\s+"(.+?)"\s*;/i',$block[0],$matches))
+					if(preg_match('/^@charset\s+"('.self::STR_REGEX.')"\s*;/i',$block[0],$matches))
 						$this->_blocks[] = new FWS_CSS_Block_Charset($matches[1]);
 				}
 				else
@@ -519,7 +661,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	{
 		$props = array();
 		$matches = array();
-		preg_match_all('/('.self::$_ident_regex.')\s*:\s*([^;]+);?/i',$str,$matches);
+		preg_match_all('/('.self::IDENT_REGEX.')\s*:\s*([^;]+);?/i',$str,$matches);
 		foreach(array_keys($matches[0]) as $k)
 			$props[$matches[1][$k]] = $matches[2][$k];
 		return $props;
@@ -536,7 +678,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 		$sels = array();
 		
 		// remove whitespace to simplify parsing
-		$delims = array('#','\.','\+','\>','\[','\]','=','~=','\|=');
+		$delims = array('#',',','\.','\+','\>','\[','\]','=','~=','\|=');
 		$regexs = array();
 		foreach($delims as $delim)
 			$regexs[] = '/\s*('.$delim.')\s*/';
@@ -588,19 +730,19 @@ class FWS_CSS_StyleSheet extends FWS_Object
 		if(FWS_String::strpos($str,'.') !== false)
 		{
 			// class
-			if(preg_match('/^('.self::$_ident_regex.'|\*)?\.('.self::$_ident_regex.')$/i',$str,$matches))
+			if(preg_match('/^('.self::IDENT_REGEX.'|\*)?\.('.self::IDENT_REGEX.')$/i',$str,$matches))
 				$sel = new FWS_CSS_Selector_Class($matches[2],$matches[1]);
 		}
 		else if(FWS_String::strpos($str,'#') !== false)
 		{
 			// id
-			if(preg_match('/^('.self::$_ident_regex.'|\*)?#('.self::$_ident_regex.')$/i',$str,$matches))
+			if(preg_match('/^('.self::IDENT_REGEX.'|\*)?#('.self::IDENT_REGEX.')$/i',$str,$matches))
 				$sel = new FWS_CSS_Selector_ID($matches[2],$matches[1]);
 		}
 		else if(FWS_String::strpos($str,'[') !== false)
 		{
 			// attribute
-			$regex = '/^('.self::$_ident_regex.'|\*)?\[('.self::$_ident_regex.')(?:(=|~=|\|=)"(.*?)")?\]$/i';
+			$regex = '/^('.self::IDENT_REGEX.'|\*)?\[('.self::IDENT_REGEX.')(?:(=|~=|\|=)"(.*?)")?\]$/i';
 			if(preg_match($regex,$str,$matches))
 			{
 				if(isset($matches[3]))

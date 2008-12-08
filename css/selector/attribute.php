@@ -70,19 +70,9 @@ final class FWS_CSS_Selector_Attribute extends FWS_CSS_Selector_Type
 	{
 		parent::__construct($tagname == '' ? '*' : $tagname);
 		
-		if(!preg_match('/^[a-z\-_][a-z\-_0-9]*$/i',$attrname))
-			FWS_Helper::error('The id has to be an identifier! (got "'.$attrname.'")');
-		if(!in_array($attrop,array(self::OP_EXIST,self::OP_EQ,self::OP_IN_SET,self::OP_IN_HSET)))
-		{
-			FWS_Helper::def_error('inarray','attrop',
-				array(self::OP_EXIST,self::OP_EQ,self::OP_IN_SET,self::OP_IN_HSET),$attrop);
-		}
-		if($attrop != self::OP_EXIST && $attrval === null)
-			FWS_Helper::error('$attrval has to be non-null if you don\'t use OP_EXIST!');
-		
-		$this->_attrname = $attrname;
-		$this->_attrop = $attrop;
-		$this->_attrval = $attrop == self::OP_EXIST ? null : $attrval;
+		$this->set_attribute_name($attrname);
+		$this->set_attribute_op($attrop);
+		$this->set_attribute_value($attrop == self::OP_EXIST ? null : $attrval);
 	}
 	
 	/**
@@ -94,6 +84,19 @@ final class FWS_CSS_Selector_Attribute extends FWS_CSS_Selector_Type
 	}
 	
 	/**
+	 * Sets the attribute-name
+	 * 
+	 * @param string $name the new value
+	 */
+	public function set_attribute_name($name)
+	{
+		if(!preg_match('/^[a-z\-_][a-z\-_0-9]*$/i',$name))
+			FWS_Helper::error('The name has to be an identifier! (got "'.$name.'")');
+		
+		$this->_attrname = $name;
+	}
+	
+	/**
 	 * @return string the operator: OP_EXISTS, OP_EQ, OP_IN_SET or OP_IN_HSET
 	 */
 	public function get_attribute_op()
@@ -102,11 +105,37 @@ final class FWS_CSS_Selector_Attribute extends FWS_CSS_Selector_Type
 	}
 	
 	/**
+	 * Sets the attribute-operator
+	 * 
+	 * @param string $op the operator: OP_EXISTS, OP_EQ, OP_IN_SET or OP_IN_HSET
+	 */
+	public function set_attribute_op($op)
+	{
+		if(!in_array($op,array(self::OP_EXIST,self::OP_EQ,self::OP_IN_SET,self::OP_IN_HSET)))
+		{
+			FWS_Helper::def_error('inarray','op',
+				array(self::OP_EXIST,self::OP_EQ,self::OP_IN_SET,self::OP_IN_HSET),$op);
+		}
+		
+		$this->_attrop = $op;
+	}
+	
+	/**
 	 * @return string the attribute-value (null if op = OP_EXIST)
 	 */
 	public function get_attribute_value()
 	{
 		return $this->_attrval;
+	}
+	
+	/**
+	 * Sets the attribute-value
+	 * 
+	 * @param mixed $value the new value. Should be null for operator OP_EXIST!
+	 */
+	public function set_attribute_value($value)
+	{
+		$this->_attrval = $value;
 	}
 
 	/**

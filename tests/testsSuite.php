@@ -16,33 +16,6 @@ define('FWS_PATH',dirname(dirname(__FILE__)).'/');
 include_once(FWS_PATH.'init.php');
 
 /**
- * The document-implementation for the unit-test
- * 
- * @package			FrameWorkSolution
- * @subpackage	tests
- * @author			Nils Asmussen <nils@script-solution.de>
- */
-class FWS_UnitTest_Document extends FWS_Document
-{
-	protected function load_db()
-	{
-		return null;
-	}
-
-	protected function load_msgs()
-	{
-		return null;
-	}
-	
-	protected function get_dump_vars()
-	{
-		return get_object_vars($this);
-	}
-}
-
-$doc = new FWS_UnitTest_Document();
-
-/**
  * The autoloader for the test-cases
  * 
  * @param string $item the item to load
@@ -97,6 +70,7 @@ class testsSuite extends PHPUnit_Framework_TestSuite
 		$this->addTestSuite('FWS_Progress_ManagerTest');
 		$this->addTestSuite('FWS_AddField_FieldTest');
 		$this->addTestSuite('FWS_GD_LineTest');
+		$this->addTestSuite('FWS_CSS_StyleSheetTest');
 	}
 	
 	/**
