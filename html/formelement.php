@@ -43,9 +43,9 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	/**
 	 * The CSS-Attributes for the style-attribute
 	 *
-	 * @var FWS_CSS_Attributes
+	 * @var array
 	 */
-	private $_style;
+	private $_style = array();
 	
 	/**
 	 * The value of the element
@@ -91,7 +91,6 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 		$this->set_id($id !== null ? $id : $this->_generate_id($name));
 		$this->set_value($value);
 		$this->set_default($default);
-		$this->_style = new FWS_CSS_Attributes();
 	}
 
 	/**
@@ -159,7 +158,7 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	}
 	
 	/**
-	 * @return FWS_CSS_Attributes the CSS-attributes of this element
+	 * @return array the CSS-attributes of this element
 	 */
 	public final function get_style()
 	{
@@ -167,14 +166,14 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	}
 	
 	/**
-	 * A convenience method for get_style()->set_attribute().
+	 * Sets the given attribute to given value
 	 *
 	 * @param string $name the name of the attribute
 	 * @param mixed $value the value of the attribute
 	 */
 	public final function set_css_attribute($name,$value)
 	{
-		$this->_style->set_attribute($name,$value);
+		$this->_style[$name] = $value;
 	}
 
 	/**
@@ -296,8 +295,13 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 		$html = ' id="'.$this->_id.'" name="'.$this->_name.'"';
 		if($this->_class !== null)
 			$html .= ' class="'.$this->_class.'"';
-		if($this->_style->get_attr_count() > 0)
-			$html .= ' style="'.$this->_style->get_css().'"';
+		if(count($this->_style) > 0)
+		{
+			$html .= ' style="';
+			foreach($this->_style as $k => $v)
+				$html .= $k.': '.$v.';';
+			$html .= '"';
+		}
 		if($this->_disabled)
 			$html .= ' disabled="disabled"';
 		foreach($this->_custom as $k => $v)
