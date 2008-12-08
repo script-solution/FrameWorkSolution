@@ -33,13 +33,13 @@
  * 	<li>@import, @charset, @media</li>
  * 	<li>id-selector, class-selector, type-selector, universal-selector, attribute-selector,
  * 	pseudo-selector and "connected" selectors</li>
- * 	<li>All attributes and value since we don't care about them :)</li>
+ * 	<li>All attributes and values since we don't care about them :)</li>
  * </ul>
  * With a few limitations:
  * <ul>
  * 	<li>No unicode</li>
  * 	<li>No multiple classes in class-selector</li>
- * 	<li>And probably a lot of more advanced/special stuff I don't know about...</li>
+ * 	<li>And probably some other advanced/special stuff I don't know about...</li>
  * </ul>
  * 
  * An usage-example:
