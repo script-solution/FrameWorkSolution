@@ -68,7 +68,10 @@ final class FWS_Error_Handler extends FWS_Singleton
 	{
 		parent::__construct();
 		
-		$this->_output = new FWS_Error_Output_Default();
+		if(PHP_SAPI == 'cli')
+			$this->_output = new FWS_Error_Output_Plain();
+		else
+			$this->_output = new FWS_Error_Output_Default();
 	}
 	
 	/**
