@@ -84,7 +84,7 @@ abstract class FWS_Module extends FWS_Object
 		$tpl = FWS_Props::get()->tpl();
 
 		$form = new FWS_HTML_Formular(false,false);
-		$tpl->add_array('form',$form);
+		$tpl->add_variable_ref('form',$form);
 		$tpl->add_allowed_method('form','*');
 		return $form;
 	}

@@ -42,7 +42,7 @@
  * A usage example:
  * <code>
  * $tpl->set_template('mytemplate.htm');
- * $tpl->add_array('myarray',$myarray);
+ * $tpl->add_variable_ref('myarray',$myarray);
  * $tpl->add_variables(array(
  * 	'test1' => 'abc',
  * 	'test2' => 'def'
@@ -550,23 +550,23 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Adds the given array to the available template-vars. Note the name has to be an identifier,
+	 * Adds the given variable by reference to the template-vars. Note the name has to be an identifier,
 	 * that means it has match the regex '^[a-zA-Z0-9_]+$'. This will <b>not</b> be checked
 	 * for performance issues!
 	 *
 	 * @param string $name the name of the variable
-	 * @param mixed $array reference to the array
+	 * @param mixed $value the value
 	 * @param string $template the template to add the variables to (if not set the
 	 * 		current one will be used)
 	 * @param int $number the number of the template (if one template is used more than once)
 	 * 	(0 = the current one)
 	 */
-	public function add_array($name,&$array,$template = '',$number = 0)
+	public function add_variable_ref($name,&$value,$template = '',$number = 0)
 	{
 		if(empty($name))
 			FWS_Helper::def_error('empty','name',$name);
-		if($array === null)
-			FWS_Helper::def_error('notnull','array',$array);
+		if($value === null)
+			FWS_Helper::def_error('notnull','value',$value);
 		
 		$tpl = $template != '' ? $template : $this->_filename;
 		if(empty($tpl))
@@ -576,7 +576,7 @@ final class FWS_Template_Handler extends FWS_Object
 		if(!FWS_Helper::is_integer($number) || $number <= 0)
 			FWS_Helper::def_error('intgt0','number',$number);
 		
-		$this->_variables[$tpl.$number][$name] = &$array;
+		$this->_variables[$tpl.$number][$name] = &$value;
 	}
 
 	/**
