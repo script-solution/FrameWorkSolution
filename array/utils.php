@@ -218,7 +218,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 * Trims all strings in the given array. Assumes that the array has just one
 	 * dimension and contains strings only.
 	 *
-	 * @param array [reference] $array the input-array containing the strings
+	 * @param array $array the input-array containing the strings
 	 * @return array the result-array
 	 */
 	public static function trim(&$array)

@@ -22,22 +22,22 @@ final class FWS_GD_Dimension extends FWS_Object
 	/**
 	 * The height of the dimension
 	 *
-	 * @var int
+	 * @var float
 	 */
 	private $_width;
 	
 	/**
 	 * The width of the dimension
 	 *
-	 * @var int
+	 * @var float
 	 */
 	private $_height;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param int $width the width
-	 * @param int $height the height
+	 * @param int|float $width the width
+	 * @param int|float $height the height
 	 */
 	public function __construct($width = 0,$height = 0)
 	{
@@ -47,7 +47,7 @@ final class FWS_GD_Dimension extends FWS_Object
 	}
 	
 	/**
-	 * @return int the width of the dimension
+	 * @return float the width of the dimension
 	 */
 	public function get_width()
 	{
@@ -55,7 +55,7 @@ final class FWS_GD_Dimension extends FWS_Object
 	}
 	
 	/**
-	 * @return int the height of the dimension
+	 * @return float the height of the dimension
 	 */
 	public function get_height()
 	{
@@ -75,8 +75,8 @@ final class FWS_GD_Dimension extends FWS_Object
 	/**
 	 * Sets the size
 	 *
-	 * @param int $width the width
-	 * @param int $height the height
+	 * @param int|float $width the width
+	 * @param int|float $height the height
 	 */
 	public function set_size($width,$height)
 	{
@@ -92,8 +92,8 @@ final class FWS_GD_Dimension extends FWS_Object
 	/**
 	 * Derives a new dimension from the current one and adds the given values
 	 *
-	 * @param int $width the width to add
-	 * @param int $height the height to add
+	 * @param int|float $width the width to add
+	 * @param int|float $height the height to add
 	 * @return FWS_GD_Dimension the new dimension
 	 */
 	public function derive($width,$height)
@@ -109,8 +109,8 @@ final class FWS_GD_Dimension extends FWS_Object
 	/**
 	 * Increases the size by the give amount
 	 *
-	 * @param int $w the amount to add to the width
-	 * @param int $h the amount to add to the height
+	 * @param int|float $w the amount to add to the width
+	 * @param int|float $h the amount to add to the height
 	 */
 	public function increase($w,$h)
 	{
@@ -126,8 +126,8 @@ final class FWS_GD_Dimension extends FWS_Object
 	/**
 	 * Decreases the size by the give amount
 	 *
-	 * @param int $w the amount to substract from the width
-	 * @param int $h the amount to substract from the height
+	 * @param int|float $w the amount to substract from the width
+	 * @param int|float $h the amount to substract from the height
 	 */
 	public function decrease($w,$h)
 	{

@@ -138,7 +138,7 @@ class FWS_HTML_Formular extends FWS_Object
 	 * this will be returned if $default is true. In all other cases '' will be returned.
 	 *
 	 * @param string $name the name of the element
-	 * @param string the value of this radio-button
+	 * @param string $value the value of this radio-button
 	 * @param boolean $default the default-value
 	 * @return string the value for the radio-button
 	 */
@@ -579,13 +579,6 @@ EOF;
 
 		if($year === null || $month === null || $day === null || $min === null || $hour === null)
 			return 0;
-
-		// TODO is this correct?
-		/*if($hour == 0)
-		{
-			$hour = 24;
-			$day--;
-		}*/
 
 		return FWS_Date::get_timestamp(array($hour,$min,0,$month,$day,$year));
 	}

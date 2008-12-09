@@ -220,7 +220,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	 * perform_action()-method.
 	 *
 	 * @param mixed $id the id of the action
-	 * @param string $name the name of the action
+	 * @param string|array $name the name of the action
 	 */
 	public final function add_action($id,$name)
 	{

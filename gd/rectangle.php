@@ -42,6 +42,11 @@ class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 	 * 	<li><var>__construct($pos1,$pos2)</var>: with $pos1 and $pos2 as {@link FWS_GD_Point}</li>
 	 * 	<li><var>__construct($x,$y,$width,$height)</var></li>
 	 * </ul>
+	 * 
+	 * @param FWS_GD_Point|int|float $arg1
+	 * @param FWS_GD_Point|FWS_GD_Dimension|int|float $arg2
+	 * @param int|float $arg3
+	 * @param int|float $arg4
 	 */
 	public function __construct($arg1 = null,$arg2 = null,$arg3 = null,$arg4 = null)
 	{

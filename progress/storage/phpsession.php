@@ -13,6 +13,8 @@
 /**
  * The PHP-session-based implementation for the progress-storage
  * 
+ * TODO this is no longer necessary since our session supports php-session, too
+ * 
  * @package			FrameWorkSolution
  * @subpackage	progress.storage
  * @author			Nils Asmussen <nils@script-solution.de>

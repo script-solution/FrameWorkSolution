@@ -135,7 +135,7 @@ final class FWS_Input extends FWS_Object
 	 * checks if the given variable exists
 	 *
 	 * @param string $name the name of the variable
-	 * @param string $method the method from which you want to request the variable:
+	 * @param int|string $method the method from which you want to request the variable:
 													 (get,post,cookie,server); -1 if this doesn't matter
 	 * @return boolean true if a variable exists
 	 */
@@ -163,7 +163,7 @@ final class FWS_Input extends FWS_Object
 	 * This ensures that no other values are possible.
 	 * 
 	 * @param string $name the name of the value
-	 * @param string $method the method for which you want to define the value:
+	 * @param int|string $method the method for which you want to define the value:
 	 * 											 (get,post,cookie,server); -1 if this doesn't matter
 	 * @param int $type the type of the variable: INTEGER,STRING,INT_BOOL,BOOL,FLOAT,ID,...;
 	 * 									-1 if you want to disable a check of the value
@@ -189,7 +189,7 @@ final class FWS_Input extends FWS_Object
 	 * <var>$default</var>. Otherwise you will get <var>null</var> if the value is invalid!
 	 * 
 	 * @param string $name the name of the value
-	 * @param string $method the method for which you want to define the value:
+	 * @param int|string $method the method for which you want to define the value:
 	 * 											 (get,post,cookie,server); -1 if this doesn't matter
 	 * @param mixed $default if you grab a variable that has predefined values you
 	 * 											 can specify the default-value that you would like to get
@@ -216,7 +216,7 @@ final class FWS_Input extends FWS_Object
 	 * Returns an array with all values of the given input-variables
 	 *
 	 * @param array $names an array with all names
-	 * @param string $method the method for all variables:
+	 * @param int|string $method the method for all variables:
 	 * 											 (get,post,cookie,server); -1 if this doesn't matter
 	 * @param int $type the type of all variables: INTEGER,STRING,INT_BOOL,BOOL,FLOAT,ID,...;
 	 * 									-1 if this doesn't matter
@@ -238,7 +238,7 @@ final class FWS_Input extends FWS_Object
 	 * if the type is not correct, null will be returned.
 	 *
 	 * @param string $name the name of the variable
-	 * @param string $method the method from which you want to request the variable:
+	 * @param int|string $method the method from which you want to request the variable:
 	 * 											 (get,post,cookie,server); -1 if this doesn't matter
 	 * @param int $type the type of the variable: INTEGER,STRING,INT_BOOL,BOOL,FLOAT,ID,...;
 	 * 									-1 if this doesn't matter
@@ -355,7 +355,7 @@ final class FWS_Input extends FWS_Object
 	 * not in the super-global GPC-arrays)
 	 *
 	 * @param string $name the name of the variable
-	 * @param string $method the method from which you want to request the variable:
+	 * @param int|string $method the method from which you want to request the variable:
 	 * 											 (get,post,cookie,server); -1 if you want to set it in all methods
 	 * @param mixed $value the new value
 	 * @return mixed the value
@@ -379,7 +379,7 @@ final class FWS_Input extends FWS_Object
 	 * removes the given variable from the input-array
 	 *
 	 * @param string $name the name of the variable
-	 * @param string $method the method from which you want to request the variable:
+	 * @param int|string $method the method from which you want to request the variable:
 	 * 											 (get,post,cookie,server); -1 if you want to unset it in all methods
 	 */
 	public function unset_var($name,$method)
@@ -402,7 +402,7 @@ final class FWS_Input extends FWS_Object
 	 * <var>$default</var> is not null!
 	 *
 	 * @param string $name the name of the variable
-	 * @param string $method the method from which you want to request the variable:
+	 * @param int|string $method the method from which you want to request the variable:
 	 * 	(get,post,cookie,server)
 	 * @param int $type the type of the variable: INTEGER,STRING,INT_BOOL,BOOL,FLOAT,ID,...
 	 * @param array $values an array with the allowed values
@@ -419,7 +419,6 @@ final class FWS_Input extends FWS_Object
 		if(!is_array($values))
 			FWS_Helper::def_error('array','values',$values);
 
-		//echo $name.' '.FWS_PrintUtils::to_string($values);
 		$var = $this->get_var($name,$method,$type);
 		if($var === null)
 			return $set && $default !== null ? $this->set_var($name,$method,$default) : $default;

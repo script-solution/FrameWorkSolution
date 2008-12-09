@@ -89,8 +89,12 @@ final class FWS_Helper extends FWS_UtilBase
 	 * You have to specify additional arguments, depending on the type!
 	 *
 	 * @param string $type the type
+	 * @param mixed $arg2
+	 * @param mixed $arg3
+	 * @param mixed $arg4
+	 * @param mixed $arg5
 	 */
-	public static function def_error($type)
+	public static function def_error($type,$arg2 = null,$arg3 = null,$arg4 = null,$arg5 = null)
 	{
 		$msg = '';
 		switch($type)

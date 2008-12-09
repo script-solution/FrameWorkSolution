@@ -39,6 +39,11 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	 * 	<li><var>__construct($from,$to)</var>: with $from and $to as {@link FWS_GD_Point}</li>
 	 * 	<li><var>__construct($x1,$y1,$x2,$y2)</var></li>
 	 * </ul>
+	 * 
+	 * @param FWS_GD_Point|int|float $arg1
+	 * @param FWS_GD_Point|int|float $arg2
+	 * @param int|float $arg3
+	 * @param int|float $arg4
 	 */
 	public function __construct($arg1,$arg2,$arg3 = null,$arg4 = null)
 	{

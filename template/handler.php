@@ -521,7 +521,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * regex '^[a-zA-Z0-9_]+$'. This will <b>not</b> be checked for performance issues!
 	 * 
 	 * @param string $name the name of the variable
-	 * @param array $value the value to add
+	 * @param mixed $value the value to add
 	 */
 	public function add_global($name,$value)
 	{
@@ -537,7 +537,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * regex '^[a-zA-Z0-9_]+$'. This will <b>not</b> be checked for performance issues!
 	 * 
 	 * @param string $name the name of the variable
-	 * @param array $value the value to add
+	 * @param mixed $value the value to add
 	 */
 	public function add_global_ref($name,&$value)
 	{

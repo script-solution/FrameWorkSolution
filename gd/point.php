@@ -22,22 +22,22 @@ final class FWS_GD_Point extends FWS_Object
 	/**
 	 * The x-coordinate of the point
 	 *
-	 * @var int
+	 * @var float
 	 */
 	private $_x;
 	
 	/**
 	 * The y-coordinate of the point
 	 *
-	 * @var int
+	 * @var float
 	 */
 	private $_y;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param int $x the x-coordinate
-	 * @param int $y the y-coordinate
+	 * @param int|float $x the x-coordinate
+	 * @param int|float $y the y-coordinate
 	 */
 	public function __construct($x = 0,$y = 0)
 	{
@@ -47,7 +47,7 @@ final class FWS_GD_Point extends FWS_Object
 	}
 	
 	/**
-	 * @return int the x-coordinate
+	 * @return float the x-coordinate
 	 */
 	public function get_x()
 	{
@@ -55,7 +55,7 @@ final class FWS_GD_Point extends FWS_Object
 	}
 	
 	/**
-	 * @return int the y-coordinate
+	 * @return float the y-coordinate
 	 */
 	public function get_y()
 	{
@@ -75,8 +75,8 @@ final class FWS_GD_Point extends FWS_Object
 	/**
 	 * Sets the position to given value
 	 *
-	 * @param int $x the x-coordinate
-	 * @param int $y the y-coordinate
+	 * @param int|float $x the x-coordinate
+	 * @param int|float $y the y-coordinate
 	 */
 	public function set_position($x,$y)
 	{
@@ -92,8 +92,8 @@ final class FWS_GD_Point extends FWS_Object
 	/**
 	 * Derives a point from this one and translates the position by the given amounts.
 	 *
-	 * @param int $x the amount in x-direction
-	 * @param int $y the amount in y-direction
+	 * @param int|float $x the amount in x-direction
+	 * @param int|float $y the amount in y-direction
 	 * @return FWS_GD_Point the derived point
 	 */
 	public function derive($x,$y)
@@ -109,8 +109,8 @@ final class FWS_GD_Point extends FWS_Object
 	/**
 	 * Tramslates the point by the given amount
 	 *
-	 * @param int $x the amount in x-direction
-	 * @param int $y the amount in y-direction
+	 * @param int|float $x the amount in x-direction
+	 * @param int|float $y the amount in y-direction
 	 */
 	public function translate($x,$y)
 	{

@@ -118,10 +118,10 @@ final class FWS_GD_Graphics extends FWS_Object
 	/**
 	 * Draws a line from <var>($x1,$y1)</var> to <var>($x2,$y2)</var> in the given color
 	 *
-	 * @param int $x1 the source-x-coordinate
-	 * @param int $y1 the source-y-coordinate
-	 * @param int $x2 the target-x-coordinate
-	 * @param int $y2 the target-y-coordinate
+	 * @param int|float $x1 the source-x-coordinate
+	 * @param int|float $y1 the source-y-coordinate
+	 * @param int|float $x2 the target-x-coordinate
+	 * @param int|float $y2 the target-y-coordinate
 	 * @param FWS_GD_Color $color the color
 	 * @return boolean the result of imageline()
 	 */

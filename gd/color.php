@@ -179,6 +179,11 @@ final class FWS_GD_Color extends FWS_Object
 	 * 	<li>__construct($hex): where $hex is the hexadecimal representation
 	 * 	(with or without '#')</li>
 	 * </ul>
+	 * 
+	 * @param int|array|string $arg1
+	 * @param int $arg2
+	 * @param int $arg3
+	 * @param int $arg4
 	 */
 	public function __construct($arg1 = null,$arg2 = null,$arg3 = null,$arg4 = null)
 	{
