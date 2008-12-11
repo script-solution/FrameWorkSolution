@@ -436,7 +436,7 @@ class FWS_User_Current extends FWS_Object
 	 *
 	 * @param string $user the entered user-name
 	 * @param string $pw the entered password
-	 * @param string $hashpw do you want to calculate the hash of the pw before comparing it?
+	 * @param boolean $hashpw do you want to calculate the hash of the pw before comparing it?
 	 * @return int the error-code; see FWS_Session::LOGIN_ERROR_*
 	 */
 	public function login($user,$pw,$hashpw = true)
@@ -629,10 +629,13 @@ class FWS_User_Current extends FWS_Object
 		  $sessions->add_user($this->_user);
 	  }
 	  
-	  // refresh cookie
-		$cookies->set_cookie(
-			'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
-		);
+	  if($sessions->sessions_enabled())
+	  {
+		  // refresh cookie
+			$cookies->set_cookie(
+				'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
+			);
+	  }
 	}
 	
 	/**

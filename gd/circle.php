@@ -23,7 +23,7 @@ class FWS_GD_Circle extends FWS_GD_Ellipse implements FWS_GD_Shape2D
 	 * Constructor
 	 *
 	 * @param FWS_GD_Point $center the center-point
-	 * @param int $radius the radius
+	 * @param float|int $radius the radius
 	 */
 	public function __construct($center,$radius)
 	{
@@ -31,7 +31,7 @@ class FWS_GD_Circle extends FWS_GD_Ellipse implements FWS_GD_Shape2D
 	}
 	
 	/**
-	 * @return int the radius of the circle
+	 * @return float the radius of the circle
 	 */
 	public function get_radius()
 	{

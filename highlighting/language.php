@@ -172,7 +172,7 @@ interface FWS_Highlighting_Language
 	 * 	<li>SYMBOL</li>
 	 * </ul>
 	 * 
-	 * @param element the element
+	 * @param int $element the element
 	 * @return FWS_Highlighting_Attributes the attributes for that element
 	 */
 	public function get_attributes($element);

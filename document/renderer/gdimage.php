@@ -132,7 +132,7 @@ class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_R
 		$text = new FWS_GD_Text(html_entity_decode($locale->lang('error_occurred')),$attr);
 		$size = $text->get_size();
 		$size->increase(20,20);
-		$img = new FWS_GD_Image($size->get_width(),$size->get_height());
+		$img = new FWS_GD_Image((int)$size->get_width(),(int)$size->get_height());
 		$img->set_background(FWS_GD_Color::$WHITE);
 		$g = $img->get_graphics();
 		$g->get_text_view($text)->draw_in_rect(

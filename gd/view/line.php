@@ -76,7 +76,7 @@ class FWS_GD_View_Line extends FWS_GD_View
 			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_line->get_length();
-		$cf = new FWS_GD_ColorFade($distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade((int)$distance,$distance / $step,$colors);
 		$cfcolors = $cf->get_colors();
 		
 		$img = $this->get_image_res();

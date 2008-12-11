@@ -302,7 +302,7 @@ final class FWS_Template_Parser extends FWS_Object
 		$res .= $this->_parse_concat($filename);
 		$res .= ',false';
 		if($number)
-			$res .= ','.$this->_parse_value($number);
+			$res .= ','.$this->_parse_value((string)$number);
 		$res .= ')';
 		return $res;
 	}
@@ -440,10 +440,9 @@ final class FWS_Template_Parser extends FWS_Object
 	 */
 	private function _parse_math_op($op1,$operation,$op2)
 	{
-		$dummy = false;
-		$res = $this->_parse_value($op1,$dummy);
+		$res = $this->_parse_value($op1);
 		$res .= ' '.$operation.' ';
-		$res .= $this->_parse_value($op2,$dummy);
+		$res .= $this->_parse_value($op2);
 		return $res;
 	}
 	
@@ -537,10 +536,7 @@ final class FWS_Template_Parser extends FWS_Object
 			$res .= '):\'\')';
 		}
 		else
-		{
-			$dummy = false;
-			$res = $this->_parse_value($value,$dummy);
-		}
+			$res = $this->_parse_value($value);
 		
 		return $res;
 	}

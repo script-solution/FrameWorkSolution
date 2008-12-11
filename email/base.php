@@ -336,7 +336,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	/**
 	 * Builds the header
 	 *
-	 * @param string $method: mail or smtp
+	 * @param string $method mail or smtp
 	 * @return string the header
 	 */
 	protected function build_header($method = 'mail')

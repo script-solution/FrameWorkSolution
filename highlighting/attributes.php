@@ -111,6 +111,8 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	
 	/**
 	 * The allowed fonts
+	 * 
+	 * @var array
 	 */
 	private static $_allowedFonts = array(
 		"verdana","tahoma","courier new","times new roman","sans serif",
@@ -120,8 +122,8 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	/**
 	 * debugging-information
 	 * 
-	 * @param attribute the attribute you are looking for
-	 * @return the name of the given attribute
+	 * @param int $attribute the attribute you are looking for
+	 * @return string the name of the given attribute
 	 * @see get_attribute_from_name()
 	 */
 	public static function get_attribute_name($attribute)
@@ -160,8 +162,8 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	/**
 	 * Determines the attribute for the given name
 	 * 
-	 * @param name the attribute-name
-	 * @return the attribute or null
+	 * @param string $name the attribute-name
+	 * @return int the attribute or null
 	 * @see get_attribute_name()
 	 */
 	public static function get_attribute_from_name($name)
@@ -201,9 +203,9 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	 * Ensures that the value for the given attribute is valid. If it is not
 	 * the corresponding default value will be returned
 	 * 
-	 * @param attribute the attibute
-	 * @param val the value to check
-	 * @return the valid value for the attribute
+	 * @param int $attribute the attibute
+	 * @param mixed $val the value to check
+	 * @return mixed the valid value for the attribute
 	 */
 	public static function get_valid_value_for($attribute,$val)
 	{
@@ -247,8 +249,8 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	/**
 	 * checks wether the given attribute is a toggle-attribute
 	 * 
-	 * @param attribute the attribute to check
-	 * @return true if it is a toggle-attribute
+	 * @param int $attribute the attribute to check
+	 * @return boolean true if it is a toggle-attribute
 	 */
 	public static function is_toggle_attribute($attribute)
 	{

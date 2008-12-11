@@ -114,7 +114,7 @@ interface FWS_Locale
 	/**
 	 * Sets the timezone to given value
 	 * 
-	 * @param float $timezone the new value
+	 * @param string $timezone the new value
 	 */
 	public function set_timezone($timezone);
 }

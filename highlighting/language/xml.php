@@ -373,7 +373,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * Returns the elements for the given map
 	 *
-	 * @param array $attr the map
+	 * @param array $map the map
 	 * @return array the elements
 	 */
 	private function _get_elements_for($map)

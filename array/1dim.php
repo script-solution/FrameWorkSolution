@@ -302,7 +302,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	 * Adds the given element to the array. You may specify the key of the element.
 	 * <var>$key === false</var> means that the element will be inserted at the end of the array.
 	 *
-	 * @param array $data an associative array with the data of the row
+	 * @param mixed $element the element to add
 	 * @param mixed $key the key for the row
 	 */
 	public final function add_element($element,$key = false)

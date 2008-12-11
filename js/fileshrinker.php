@@ -43,7 +43,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 	/**
 	 * Constructor
 	 * 
-	 * @param string the input-file
+	 * @param string $input_file the input-file
 	 */
 	public function __construct($input_file)
 	{

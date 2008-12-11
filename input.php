@@ -342,7 +342,7 @@ final class FWS_Input extends FWS_Object
 	public function get_vars_from_method($method)
 	{
 		if($method == 'server' || $method == 'cookie')
-			$this->_load_all_lazy();
+			$this->_load_all_lazy($method);
 		
 		if(isset($this->_inputs[$method]))
 			return $this->_inputs[$method];

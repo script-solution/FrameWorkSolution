@@ -88,7 +88,7 @@ final class FWS_CSS_Selector_Connector extends FWS_Object implements FWS_CSS_Sel
 	public function set_left_selector($selector)
 	{
 		if(!($selector instanceof FWS_CSS_Selector))
-			FWS_Helper::def_error('instanceof','selector','FWS_CSS_Selector',$selector);
+			FWS_Helper::def_error('instance','selector','FWS_CSS_Selector',$selector);
 		
 		$this->_lsel = $selector;
 	}
@@ -133,7 +133,7 @@ final class FWS_CSS_Selector_Connector extends FWS_Object implements FWS_CSS_Sel
 	public function set_right_selector($selector)
 	{
 		if(!($selector instanceof FWS_CSS_Selector))
-			FWS_Helper::def_error('instanceof','selector','FWS_CSS_Selector',$selector);
+			FWS_Helper::def_error('instance','selector','FWS_CSS_Selector',$selector);
 		
 		$this->_rsel = $selector;
 	}

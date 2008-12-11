@@ -972,7 +972,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	 * 
 	 * @param int $img_width contains the used image-width after the call
 	 * @param int $img_height contains the used image-height after the call
-	 * @param int $char the character which the image contains
+	 * @param char $char the character which the image contains
 	 * @return FWS_GD_Image the created image
 	 */
 	private function create_char_image(&$img_width,&$img_height,&$char)

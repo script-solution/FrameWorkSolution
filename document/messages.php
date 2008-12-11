@@ -80,7 +80,7 @@ class FWS_Document_Messages extends FWS_Object
 	public function add_listener($listener)
 	{
 		if(!($listener instanceof FWS_Document_MsgListener))
-			FWS_Helper::def_error('instanceof','listener','FWS_Document_MsgListener',$listener);
+			FWS_Helper::def_error('instance','listener','FWS_Document_MsgListener',$listener);
 		
 		$this->_listener[] = $listener;
 	}
@@ -93,7 +93,7 @@ class FWS_Document_Messages extends FWS_Object
 	public function remove_listener($listener)
 	{
 		if(!($listener instanceof FWS_Document_MsgListener))
-			FWS_Helper::def_error('instanceof','listener','FWS_Document_MsgListener',$listener);
+			FWS_Helper::def_error('instance','listener','FWS_Document_MsgListener',$listener);
 		
 		$index = array_search($listener,$this->_listener,true);
 		if($index !== false)

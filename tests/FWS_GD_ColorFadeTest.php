@@ -58,35 +58,5 @@ class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 		$c = $this->_cf->get_color_at(2);
 		$c = $this->_cf->get_color_at(41);
 	}
-
-	/**
-	 * Tests FWS_GD_ColorFade->get_colors()
-	 */
-	public function testGet_colors()
-	{
-		// TODO Auto-generated FWS_GD_ColorFadeTest->testGet_colors()
-		$this->markTestIncomplete("get_colors test not implemented");
-		$this->_cf->get_colors(/* parameters */);
-	}
-
-	/**
-	 * Tests FWS_GD_ColorFade->__construct()
-	 */
-	public function test__construct()
-	{
-		// TODO Auto-generated FWS_GD_ColorFadeTest->test__construct()
-		$this->markTestIncomplete("__construct test not implemented");
-		$this->_cf->__construct(/* parameters */);
-	}
-
-	/**
-	 * Tests FWS_GD_ColorFade->__toString()
-	 */
-	public function test__toString()
-	{
-		// TODO Auto-generated FWS_GD_ColorFadeTest->test__toString()
-		$this->markTestIncomplete("__toString test not implemented");
-		$this->_cf->__toString(/* parameters */);
-	}
 }
 ?>

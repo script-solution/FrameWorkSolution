@@ -150,7 +150,8 @@ final class FWS_GD_Image extends FWS_Object
 	 */
 	public function set_antialiasing($antialiasing)
 	{
-		imageantialias($this->_image,$antialiasing);
+		if(function_exists('imageantialias'))
+			imageantialias($this->_image,$antialiasing);
 	}
 	
 	/**
@@ -237,13 +238,13 @@ final class FWS_GD_Image extends FWS_Object
 		}
     imagefill($nimg,0,0,$trans_colour);
 		
-		$dx_x = $this->_rot_x(-$angle, 1.0, 0.0);
-    $dx_y = $this->_rot_y(-$angle, 1.0, 0.0);
-    $dy_x = $this->_rot_x(-$angle, 0.0, 1.0);
-    $dy_y = $this->_rot_y(-$angle, 0.0, 1.0);
+		$dx_x = $this->_rot_x(-$angle, 1, 0);
+    $dx_y = $this->_rot_y(-$angle, 1, 0);
+    $dy_x = $this->_rot_x(-$angle, 0, 1);
+    $dy_y = $this->_rot_y(-$angle, 0, 1);
     
-    $x0 = $this->_rot_x(-$angle,-$width / 2.0,-$height / 2.0) + $width / 2.0;
-    $y0 = $this->_rot_y(-$angle,-$width / 2.0,-$height / 2.0) + $height / 2.0;
+    $x0 = $this->_rot_x(-$angle,-$width / 2,-$height / 2) + $width / 2;
+    $y0 = $this->_rot_y(-$angle,-$width / 2,-$height / 2) + $height / 2;
     
     $img = $this->_image;
     $x1 = $x0;
@@ -281,8 +282,8 @@ final class FWS_GD_Image extends FWS_Object
 	 */
 	private function _rot_x($angle,$x,$y)
 	{
-		$cos = cos($angle / 180.0 * pi());
-		$sin = sin($angle / 180.0 * pi());
+		$cos = cos($angle / 180 * pi());
+		$sin = sin($angle / 180 * pi());
 		return $x * $cos + $y * -$sin;
 	}
   
@@ -296,8 +297,8 @@ final class FWS_GD_Image extends FWS_Object
 	 */
 	private function _rot_y($angle,$x,$y)
 	{
-		$cos = cos($angle / 180.0 * pi());
-		$sin = sin($angle / 180.0 * pi());
+		$cos = cos($angle / 180 * pi());
+		$sin = sin($angle / 180 * pi());
 		return $x * $sin + $y * $cos;
 	}
 	

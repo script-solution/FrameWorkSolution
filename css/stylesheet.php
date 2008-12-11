@@ -96,7 +96,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	public function add_block($block)
 	{
 		if(!($block instanceof FWS_CSS_Block))
-			FWS_Helper::def_error('instanceof','block','FWS_CSS_Block',$block);
+			FWS_Helper::def_error('instance','block','FWS_CSS_Block',$block);
 		
 		$this->_blocks[] = $block;
 	}

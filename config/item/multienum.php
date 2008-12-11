@@ -47,7 +47,7 @@ class FWS_Config_Item_MultiEnum extends FWS_Config_Item_Default
 					continue;
 				
 				$str .= $form->get_checkbox(
-					$this->_data->get_name().'['.$key.']',in_array($key,$vals),1,$locale->lang($value)
+					$this->_data->get_name().'['.$key.']',in_array($key,$vals),'1',$locale->lang($value)
 				);
 				if($i < $len - 1)
 					$str .= '<br />';

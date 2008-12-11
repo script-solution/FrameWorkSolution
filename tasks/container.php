@@ -137,7 +137,7 @@ class FWS_Tasks_Container extends FWS_Object
 	/**
 	 * Loads the given task so that <var>$this->_task_objs[<id>]</var> is available.
 	 *
-	 * @param FWS_Tasks_data $task the task-data
+	 * @param FWS_Tasks_Data $task the task-data
 	 */
 	private function _load_task($task)
 	{

@@ -70,7 +70,7 @@ final class FWS_GD_Text extends FWS_Object
 	/**
 	 * Sets the text to draw
 	 * 
-	 * @param string $str the new value
+	 * @param string $text the new value
 	 */
 	public function set_text($text)
 	{

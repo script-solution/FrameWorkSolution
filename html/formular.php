@@ -60,7 +60,7 @@ class FWS_HTML_Formular extends FWS_Object
 	 * @param boolean $condition the condition which will be used to determine if the value
 	 * 	from $_POST should be displayed
 	 */
-	public function __construct($condition)
+	public function __construct($condition = false)
 	{
 		parent::__construct();
 		
@@ -654,7 +654,7 @@ EOF;
 	 *
 	 * @param string $name the name of the combobox
 	 * @param array $options an associative array with the options
-	 * @param string $default the default value; can also be an array for multiple selections
+	 * @param string|array $default the default value; can also be an array for multiple selections
 	 * @param boolean $multiple is the combobox a multiple-combo?
 	 * @param int $size the number of rows
 	 * @param boolean $disabled is the combobox disabled?
@@ -723,7 +723,7 @@ EOF;
 	 * @param string $name the name of the radio-boxes
 	 * @param array $options an associative array with the options
 	 * @param string $default the key of the default-selected radiobox
-	 * @param boolean $separator the separator between the options
+	 * @param string $separator the separator between the options
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the radioboxes
 	 */

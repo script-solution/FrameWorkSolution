@@ -164,8 +164,8 @@ class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 	/**
 	 * Moves the rectangle by the given amount
 	 *
-	 * @param int $x the amount in x-direction
-	 * @param int $y the amount in y-direction
+	 * @param int|float $x the amount in x-direction
+	 * @param int|float $y the amount in y-direction
 	 */
 	public function translate($x,$y)
 	{
@@ -175,8 +175,8 @@ class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 	/**
 	 * Increases the size of the rectangle by the given amounts
 	 *
-	 * @param int $w the amount to add to the width
-	 * @param int $h the amount to add to the height
+	 * @param int|float $w the amount to add to the width
+	 * @param int|float $h the amount to add to the height
 	 */
 	public function grow($w,$h)
 	{
@@ -186,8 +186,8 @@ class FWS_GD_Rectangle extends FWS_Object implements FWS_GD_Shape2D
 	/**
 	 * Decreases the size of the rectangle by the given amounts
 	 *
-	 * @param int $w the amount to substract from the width
-	 * @param int $h the amount to substract from the height
+	 * @param int|float $w the amount to substract from the width
+	 * @param int|float $h the amount to substract from the height
 	 */
 	public function shrink($w,$h)
 	{

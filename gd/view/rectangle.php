@@ -109,7 +109,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_rect->get_size()->get_width();
-		$cf = new FWS_GD_ColorFade($distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade((int)$distance,$distance / $step,$colors);
 		$cfcolors = $cf->get_colors();
 		$img = $this->get_image_res();
 		
