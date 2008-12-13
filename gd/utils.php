@@ -51,7 +51,7 @@ final class FWS_GD_Utils extends FWS_UtilBase
 	public static function add_padding_custom(&$bounds,$pt,$pr,$pb,$pl,$angle)
 	{
 		if(!is_array($bounds) || count($bounds) != 8)
-			FWS_Helper::error('Invalid bounds-array: '.FWS_PrintUtils::to_string($bounds,true,false));
+			FWS_Helper::error('Invalid bounds-array: '.FWS_Printer::to_string($bounds,true,false));
 		
 		// nothing to do?
 		if($pt == 0 && $pr == 0 && $pb == 0 && $pl == 0)

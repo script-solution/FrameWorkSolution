@@ -58,29 +58,32 @@ abstract class FWS_Object
 	/**
 	 * Prints the dump of this object. The method does the following:
 	 * <code>
-	 * echo '<pre>'.$this->get_dump().'</pre>';
+	 * echo $this->get_dump($use_html);
 	 * </code>
 	 * 
 	 * @param boolean $use_html print the object as HTML?
 	 */
 	public final function dump($use_html = true)
 	{
-		if($use_html)
-			echo $this->get_dump(true);
-		else
-			echo '<pre>'.$this->get_dump(false).'</pre>';
+		echo $this->get_dump($use_html);
 	}
 	
 	/**
 	 * Builds the dump of this object. It uses {@link get_dump_vars} and formats this via
-	 * {@link FWS_PrintUtils}.
+	 * {@link FWS_Printer}.
 	 *
 	 * @param boolean $use_html wether HTML should be used
 	 * @return string the dump
 	 */
 	public final function get_dump($use_html = true)
 	{
-		return FWS_PrintUtils::obj_to_string($this,$this->get_dump_vars(),$use_html,true);
+		$str = '';
+		if($use_html)
+			$str .= '<b>'.get_class($this).'</b>';
+		else
+			$str .= get_class($this);
+		$str .= '['.FWS_Printer::to_string($this->get_dump_vars(),$use_html).']';
+		return $str;
 	}
 	
 	/**

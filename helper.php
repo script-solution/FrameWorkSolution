@@ -205,7 +205,7 @@ final class FWS_Helper extends FWS_UtilBase
 			
 				list(,$name,$valid,$arg) = func_get_args();
 				$arg = self::_get_str_val($arg);
-				$valid_str = FWS_PrintUtils::to_string($valid,true,false);
+				$valid_str = FWS_Printer::to_string($valid,true,false);
 				$msg = sprintf(
 					'The argument $%s (value = "%s") is invalid. Allowed are: %s',$name,$arg,$valid_str
 				);
@@ -253,7 +253,7 @@ final class FWS_Helper extends FWS_UtilBase
 			return 'Instance of '.get_class($val);
 		if(is_array($val))
 		{
-			$res = FWS_PrintUtils::to_string($val,true,false);
+			$res = FWS_Printer::to_string($val,true,false);
 			$ls = new FWS_HTML_LimitedString($res,20);
 			return $ls->get();
 		}
