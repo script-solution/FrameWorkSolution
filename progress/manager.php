@@ -59,7 +59,7 @@ final class FWS_Progress_Manager extends FWS_Object
 	 *
 	 * @var int
 	 */
-	private $_total = 0;
+	private $_total = false;
 	
 	/**
 	 * Indicates wether the task has been finished
@@ -138,6 +138,8 @@ final class FWS_Progress_Manager extends FWS_Object
 	 */
 	public function get_position()
 	{
+		if($this->_position == -1)
+			return 0;
 		return $this->_position;
 	}
 	
@@ -170,10 +172,10 @@ final class FWS_Progress_Manager extends FWS_Object
 		if(!($task instanceof FWS_Progress_Task))
 			FWS_Helper::def_error('instance','task','FWS_Progress_Task',$task);
 		
-		$this->_total = $task->get_total_operations();
 		$position = $this->_storage->get_position();
 		if($position == -1)
 			$position = 0;
+		$this->_total = $task->get_total_operations();
 		
 		$task->run($position,$this->_ops_per_cycle);
 		
