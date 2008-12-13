@@ -166,8 +166,7 @@ class FWS_Session_Data extends FWS_Object
 				'Opera Mini/',
 				'ReqwirelessWeb/',
 				'PlayStation Portable',
-				'Elaine/',
-				//'Mozilla'
+				'Elaine/'
 			);
 		
 			// is it a mobile device?
