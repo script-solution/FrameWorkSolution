@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the action-performer for the {@link FWS_Actions_Base}-class
+ * Contains the action-performer for the {@link FWS_Action_Base}-class
  *
  * @version			$Id$
  * @package			FrameWorkSolution
@@ -18,7 +18,7 @@
  * @subpackage	actions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_Actions_Performer extends FWS_Object
+class FWS_Action_Performer extends FWS_Object
 {
 	/**
 	 * An associative array with all announced actions:
@@ -57,6 +57,26 @@ class FWS_Actions_Performer extends FWS_Object
 	 * @var string
 	 */
 	private $_mod_folder = 'modules/';
+	
+	/**
+	 * The action-listener
+	 *
+	 * @var FWS_Action_Listener
+	 */
+	private $_listener = null;
+	
+	/**
+	 * Sets the action-listener
+	 *
+	 * @param FWS_Action_Listener $listener the listener
+	 */
+	public final function set_listener($listener)
+	{
+		if(!($listener instanceof FWS_Action_Listener))
+			FWS_Helper::def_error('instance','listener','FWS_Action_Listener',$listener);
+		
+		$this->_listener = $listener;
+	}
 
 	/**
 	 * @return string the prefix of the action-classes
@@ -101,14 +121,14 @@ class FWS_Actions_Performer extends FWS_Object
 
 	/**
 	 * Adds the given action to the container. Note that the action has
-	 * to be an instance of an inherited class of {@link FWS_Actions_Base}!
+	 * to be an instance of an inherited class of {@link FWS_Action_Base}!
 	 *
-	 * @param FWS_Actions_Base $action an instance of an inherited class of {@link FWS_Actions_Base}
+	 * @param FWS_Action_Base $action an instance of an inherited class of {@link FWS_Action_Base}
 	 */
 	public final function add_action($action)
 	{
-		if(!($action instanceof FWS_Actions_Base))
-			FWS_Helper::def_error('instance','action','FWS_Actions_Base',$action);
+		if(!($action instanceof FWS_Action_Base))
+			FWS_Helper::def_error('instance','action','FWS_Action_Base',$action);
 
 		$this->_actions[$action->get_action_id()] = $action;
 	}
@@ -169,21 +189,21 @@ class FWS_Actions_Performer extends FWS_Object
 	}
 
 	/**
-	 * Determines the action-type to perform.
+	 * Determines the id of the action to perform.
 	 * You may overwrite this method to change the behaviour.
 	 *
-	 * By default the method looks for <var>$_POST['action_type']</var> and
-	 * <var>$_GET['at']</var>.
+	 * By default the method looks for <var>$_POST['aid']</var> and
+	 * <var>$_GET['aid']</var>.
 	 *
 	 * @return int the action-type or null if nothing is to do
 	 */
-	public function get_action_type()
+	protected function get_action_id()
 	{
 		$input = FWS_Props::get()->input();
 
-		$action_type = $input->get_var('action_type','post',FWS_Input::INTEGER);
+		$action_type = $input->get_var('aid','post',FWS_Input::INTEGER);
 		if($action_type === null)
-			$action_type = $input->get_var('at','get',FWS_Input::INTEGER);
+			$action_type = $input->get_var('aid','get',FWS_Input::INTEGER);
 
 		return $action_type;
 	}
@@ -201,7 +221,7 @@ class FWS_Actions_Performer extends FWS_Object
 	 */
 	public final function perform_action()
 	{
-		$action_type = $this->get_action_type();
+		$action_type = $this->get_action_id();
 		if($action_type === null)
 			return 0;
 
@@ -234,16 +254,18 @@ class FWS_Actions_Performer extends FWS_Object
 		
 		// perform the action
 		$c = $this->_actions[$id];
-		/* @var $c FWS_Actions_Base */
+		/* @var $c FWS_Action_Base */
 		
-		$this->before_action_performed($id,$c);
+		if($this->_listener !== null)
+			$this->_listener->before_action_performed($id,$c);
 		
 		if(isset($this->_add_params[$id]))
 			$message = call_user_func_array(array($c,'perform_action'),$this->_add_params[$id]);
 		else
 			$message = $c->perform_action();
 		
-		$this->after_action_performed($id,$c,$message);
+		if($this->_listener !== null)
+			$this->_listener->after_action_performed($id,$c,$message);
 
 		// has an error occurred?
 		if($message)
@@ -300,32 +322,6 @@ class FWS_Actions_Performer extends FWS_Object
 		}
 
 		return 0;
-	}
-	
-	/**
-	 * This method will be called before the action has been performed.
-	 * You may overwrite this to do something before the action will be performed
-	 * 
-	 * @param int $id the action-id
-	 * @param FWS_Actions_Base $action the action-instance
-	 */
-	protected function before_action_performed($id,$action)
-	{
-		// by default we do nothing
-	}
-	
-	/**
-	 * This method will be called after the action has been performed.
-	 * You may overwrite this to do something after the action will be performed.
-	 * You may also change the message that should be displayed
-	 *
-	 * @param int $id the action-id
-	 * @param FWS_Actions_Base $action the action-instance
-	 * @param string $message the message that has been returned from the action
-	 */
-	protected function after_action_performed($id,$action,&$message)
-	{
-		// be default we do nothing
 	}
 	
 	protected function get_dump_vars()
