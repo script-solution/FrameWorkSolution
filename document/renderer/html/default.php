@@ -77,7 +77,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	/**
 	 * The result of the action in this run.
 	 *
-	 * @see FWS_Actions_Performer::perform_action()
+	 * @see FWS_Action_Performer::perform_action()
 	 * @var integer
 	 */
 	private $_action_result = 0;
@@ -85,7 +85,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	/**
 	 * The action-performer-object
 	 *
-	 * @var FWS_Actions_Performer
+	 * @var FWS_Action_Performer
 	 */
 	protected $_action_perf;
 	
@@ -98,7 +98,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		{
 			parent::__construct();
 			
-			$this->_action_perf = $this->load_action_perf();
+			$this->_action_perf = new FWS_Action_Performer();
 		}
 		catch(FWS_Exceptions_Critical $e)
 		{
@@ -236,7 +236,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	 * @param string $module the module-name
 	 * @param string $name the name of the action
 	 * @param string $folder the folder of the modules (starting at FWS_Path::server_app())
-	 * @return FWS_Actions_Base the action or null if an error occurred
+	 * @return FWS_Action_Base the action or null if an error occurred
 	 * @see add_action()
 	 */
 	public final function add_module_action($id,$module,$name,$folder)
@@ -268,11 +268,24 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * @return FWS_Actions_Performer the action-performer-instance
+	 * @return FWS_Action_Performer the action-performer-instance
 	 */
 	public final function get_action_performer()
 	{
 		return $this->_action_perf;
+	}
+	
+	/**
+	 * Sets the action-performer-instance
+	 *
+	 * @param FWS_Action_Performer $performer the new value
+	 */
+	public final function set_action_performer($performer)
+	{
+		if(!($performer instanceof FWS_Action_Performer))
+			FWS_Helper::def_error('instance','performer','FWS_Action_Performer',$performer);
+		
+		$this->_action_perf = $performer;
 	}
 
 	/**
@@ -324,18 +337,6 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 		}
 		
 		return implode($sep,$links);
-	}
-
-	/**
-	 * Should include, instantiate and return the action-performer-object.
-	 * You may overwrite this method to change the behaviour
-	 *
-	 * @return FWS_Actions_Performer the action-performer
-	 */
-	protected function load_action_perf()
-	{
-		$c = new FWS_Actions_Performer();
-		return $c;
 	}
 	
 	/**
