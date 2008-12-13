@@ -17,7 +17,7 @@
  *
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
- * @see FWS_Helper::get_module_name()
+ * @see FWS_Document::load_module_def()
  */
 abstract class FWS_Module extends FWS_Object
 {

@@ -236,21 +236,21 @@ final class FWS_FileUtils extends FWS_UtilBase
 	
 	/**
 	 * Collects all items in the given directory and returns the item-list.
-	 * This may be recursivly or not.
+	 * This may be recursivly or not. Note that "." and ".." will be skipped!
 	 *
 	 * @param string $directory the directory
 	 * @param boolean $recursive collect recursivly?
 	 * @param boolean $abs use absolute paths that means beginning with <var>$directory</var>?
 	 * @return array an array with all items in the directory
 	 */
-	public static function get_dir_content($directory,$recursive = false,$abs = false)
+	public static function get_list($directory,$recursive = false,$abs = false)
 	{
 		if(!is_dir($directory))
 			FWS_Helper::error('"'.$directory.'" is no directory!');
 		
 		$directory = self::ensure_trailing_slash($directory);
 		$res = array();
-		self::_get_dir_content($res,$directory,$recursive,$abs);
+		self::_get_list($res,$directory,$recursive,$abs);
 		return $res;
 	}
 	
@@ -262,7 +262,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * @param boolean $recursive collect recursivly?
 	 * @param boolean $abs use absolute paths that means beginning with <var>$directory</var>?
 	 */
-	private static function _get_dir_content(&$res,$directory,$recursive,$abs)
+	private static function _get_list(&$res,$directory,$recursive,$abs)
 	{
 		$handle = opendir($directory);
 		while($item = readdir($handle))
@@ -273,7 +273,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 				{
 					$res[] = $abs ? $directory.$item : $item;
 					if($recursive)
-						self::_get_dir_content($res,$directory.$item.'/',$recursive,$abs);
+						self::_get_list($res,$directory.$item.'/',$recursive,$abs);
 				}
 				else
 					$res[] = $abs ? $directory.$item : $item;
@@ -347,7 +347,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 		
 		$source = self::ensure_trailing_slash($source);
 		$target = self::ensure_trailing_slash($target);
-		foreach(self::get_dir_content($source,true,true) as $item)
+		foreach(self::get_list($source,true,true) as $item)
 		{
 			$relitem = str_replace($source,'',$item);
 			if(is_dir($item) && !is_dir($target.$relitem))
@@ -408,7 +408,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 		$a = new ZipArchive();
 		if(!$a->open($target,ZIPARCHIVE::CREATE))
 			return false;
-		$paths = FWS_FileUtils::get_dir_content($folder,true,true);
+		$paths = FWS_FileUtils::get_list($folder,true,true);
 		foreach($paths as $path)
 		{
 			$relitem = str_replace($folder,'',$path);

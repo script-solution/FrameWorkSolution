@@ -287,54 +287,5 @@ final class FWS_Helper extends FWS_UtilBase
 		if($die)
 			die();
 	}
-	
-	/**
-	 * Includes the module given by the action-parameter and returns the name.
-	 * This is the default way to handle modules. The method assumes
-	 * that the modules are at:
-	 * <code>FWS_Path::server_app().$folder.$action.'/module.php'</code>
-	 * The classes have to have the name:
-	 * <code>$prefix.$action</code>
-	 *
-	 * @param string $prefix the prefix for the module-class-names
-	 * @param string $action_param the name of the action-get-parameter
-	 * @param string $default the default-module-name
-	 * @param string $folder the folder of the modules (starting at {@link FWS_Path::server_app()})
-	 * @return string the module-name
-	 */
-	public static function get_module_name($prefix = 'FWS_Module_',$action_param = 'action',
-		$default = 'index',$folder = 'modules/')
-	{
-		if(empty($action_param))
-			FWS_Helper::def_error('notempty','action_param',$action_param);
-		if(empty($default))
-			FWS_Helper::def_error('notempty','default',$default);
-		if(!is_dir(FWS_Path::server_app().$folder))
-			FWS_Helper::error('"'.FWS_Path::server_app().$folder.'" is no folder!');
-		
-		$folder = FWS_FileUtils::ensure_trailing_slash($folder);
-		$action = FWS_Input::get_instance()->get_var($action_param,'get',FWS_Input::IDENTIFIER);
-	
-		// try to load the module
-		$filename = FWS_Path::server_app().$folder.$action.'/module.php';
-		if(file_exists($filename))
-		{
-			include_once($filename);
-			if(class_exists($prefix.$action))
-				return $action;
-		}
-	
-		// use default module
-		include_once(FWS_Path::server_app().$folder.$default.'/module.php');
-		if(class_exists($prefix.$default))
-			return $default;
-	
-		FWS_Helper::error(
-			'Unable to load a module. The default module "'.$default.'" does not exist!',
-			E_USER_ERROR
-		);
-	
-		return '';
-	}
 }
 ?>

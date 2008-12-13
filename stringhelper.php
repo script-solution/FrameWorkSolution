@@ -399,12 +399,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 *
 	 * @param string $input the input-string
 	 * @param int $length the length you would like to have
-	 * @return array an array of the form: <code>
-	 * 	array(
-	 * 		'displayed' => <limitedString>,
-	 * 		'complete' => <completeString>
-	 * 	)
-	 * </code>
+	 * @return array an array of the form: <code>array(<limitedString>,<completeString>)</code>
 	 * @see FWS_HTML_LimitedString
 	 */
 	public static function get_limited_string($input,$length)
@@ -423,20 +418,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 		else
 			$complete = '';
 	
-		return array('displayed' => htmlspecialchars($input,ENT_QUOTES),'complete' => $complete);
-	}
-	
-	/**
-	 * Ensures that the result has at least 2 chars
-	 *
-	 * @param string|int $input the input-string (should be numeric)
-	 * @return string the result string
-	 */
-	public static function ensure_2_chars($input)
-	{
-		if(FWS_String::strlen($input) == 1)
-			return '0'.$input;
-		return $input;
+		return array(htmlspecialchars($input,ENT_QUOTES),$complete);
 	}
 }
 ?>

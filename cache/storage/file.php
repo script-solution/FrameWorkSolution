@@ -44,7 +44,7 @@ final class FWS_Cache_Storage_File extends FWS_Object implements FWS_Cache_Stora
 	public function load()
 	{
 		$res = array();
-		$items = FWS_FileUtils::get_dir_content($this->_folder);
+		$items = FWS_FileUtils::get_list($this->_folder);
 		foreach($items as $item)
 		{
 			if(FWS_String::ends_with($item,'.php') && is_file($this->_folder.$item))

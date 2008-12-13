@@ -80,7 +80,7 @@ abstract class FWS_Object
 	 */
 	public final function get_dump($use_html = true)
 	{
-		return FWS_PrintUtils::obj_to_string($this,$this->get_dump_vars(),$use_html);
+		return FWS_PrintUtils::obj_to_string($this,$this->get_dump_vars(),$use_html,true);
 	}
 	
 	/**

@@ -48,7 +48,7 @@ final class FWS_SQLParser extends FWS_UtilBase
 	 * @param string $filename the sql-file
 	 * @return array a numeric array with all SQL-statements in the file
 	 */
-	public static function get_statements_from_File($filename)
+	public static function get_statements_from_file($filename)
 	{
 		return self::get_statements(FWS_FileUtils::read($filename));
 	}

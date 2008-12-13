@@ -16,7 +16,7 @@
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_AutoLoader extends FWS_UtilBase
+final class FWS_AutoLoader extends FWS_UtilBase
 {
 	/**
 	 * All registered loaders
