@@ -67,13 +67,12 @@ final class FWS_Cache_Storage_DB extends FWS_Object implements FWS_Cache_Storage
 	{
 		$db = FWS_Props::get()->db();
 
-		$qry = $db->sql_qry(
+		$rows = $db->get_rows(
 			'SELECT '.$this->_name_column.','.$this->_content_column.' FROM '.$this->_table
 		);
 		$res = array();
-		while($row = $db->sql_fetch_assoc($qry))
+		foreach($rows as $row)
 			$res[$row[$this->_name_column]] = @unserialize($row[$this->_content_column]);
-		$db->sql_free($qry);
 		return $res;
 	}
 
@@ -87,14 +86,14 @@ final class FWS_Cache_Storage_DB extends FWS_Object implements FWS_Cache_Storage
 		);
 		
 		// At first we try an update. That should work most of the time
-		$db->sql_update(
+		$db->update(
 			$this->_table,' WHERE '.$this->_name_column.' = "'.$name.'"',$values
 		);
 		
 		// does it not exist? so create it
 		// TODO how to do that? affected rows is just > 0 if something has been changed :/
 		//if($db->get_affected_rows() == 0)
-		//	$db->sql_insert($this->_table,$values);
+		//	$db->insert($this->_table,$values);
 	}
 	
 	protected function get_dump_vars()

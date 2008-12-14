@@ -1,24 +1,24 @@
 <?php
 /**
- * Contains the DatabaseQuery-exception
+ * Contains the query-failed-exception
  *
- * @version			$Id$
+ * @version			$Id: databasequery.php 38 2008-12-06 10:09:29Z nasmussen $
  * @package			FrameWorkSolution
- * @subpackage	exceptions
+ * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
  */
 
 /**
- * The DatabaseQueryException indicates that an error has occurred while requesting something
+ * The query-failed-exception indicates that an error has occurred while requesting something
  * from the database
  * 
  * @package			FrameWorkSolution
- * @subpackage	exceptions
+ * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_Exceptions_DatabaseQuery extends FWS_Exceptions_Critical
+final class FWS_DB_Exception_QueryFailed extends FWS_Exceptions_Critical
 {
 	/**
 	 * The query which should be performed

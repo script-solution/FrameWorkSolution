@@ -83,11 +83,10 @@ final class FWS_Cache_Source_SimpleDB extends FWS_Object implements FWS_Cache_So
 		$sql = 'SELECT * FROM '.$this->_table;
 		if($this->_order !== null)
 			$sql .= ' ORDER BY '.$this->_order.' '.$this->_direction;
-		$res = $db->sql_qry($sql);
 		
 		// collect rows
 		$rows = array();
-		while($row = $db->sql_fetch_assoc($res))
+		foreach($db->get_rows($sql) as $row)
 		{
 			if($this->_key !== null)
 				$rows[$row[$this->_key]] = $row;
