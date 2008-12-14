@@ -14,11 +14,13 @@
  * With this class you can be sure that the variable you request is of the expected type and
  * contains no potentially dangerous data.
  * <br>
- * NOTE: all data will be already escaped, no matter what the value of magic_quotes_gpc is.
+ * NOTE: By default all data will be already escaped, no matter what the value of magic_quotes_gpc is.
  * Additionally all data will be modified via <code>htmlspecialchars(<var>,ENT_QUOTES).</code>
  * All get- and cookie-variables will not contain line-wraps and all line-wraps
  * in post-values will be replaced by \n.
- * All get-values will not contain the sequence "../", for security reasons.
+ * All get-values will not contain the sequence "..", for security reasons.
+ * You can change the behaviour via set-methods. But do this BEFORE you use any other method of
+ * this class!
  * <br>
  * Note that this class is a singleton. So you can access it from everywhere via
  * {@link FWS_Input::get_instance()}.
@@ -118,7 +120,28 @@ final class FWS_Input extends FWS_Object
 	 *
 	 * @var array
 	 */
-	private $_inputs;
+	private $_inputs = null;
+	
+	/**
+	 * Wether htmlspecialchars() should be used for all values
+	 *
+	 * @var boolean
+	 */
+	private $_use_htmlspecialchars = true;
+	
+	/**
+	 * Wether values should be escaped
+	 *
+	 * @var boolean
+	 */
+	private $_escape_values = true;
+	
+	/**
+	 * Wether ".." should be removed from GET-values
+	 *
+	 * @var boolean
+	 */
+	private $_remove_dotdot = true;
 
 	/**
 	 * Constructor
@@ -128,7 +151,60 @@ final class FWS_Input extends FWS_Object
 		parent::__construct();
 		
 		$this->_magic_quotes = get_magic_quotes_gpc();
-		$this->_collect_inputs();
+	}
+
+	/**
+	 * @return boolean wether values should be escaped
+	 */
+	public function get_escape_values()
+	{
+		return $this->_escape_values;
+	}
+
+	/**
+	 * Sets wether values should be escaped
+	 * 
+	 * @param boolean $escape the new value
+	 */
+	public function set_escape_values($escape)
+	{
+		$this->_escape_values = (bool)$escape;
+	}
+
+	/**
+	 * @return boolean wether ".." should be removed from GET-values
+	 */
+	public function get_remove_dotdot()
+	{
+		return $this->_remove_dotdot;
+	}
+
+	/**
+	 * Sets wether ".." should be removed from GET-values
+	 * 
+	 * @param boolean $remove the new value
+	 */
+	public function set_remove_dotdot($remove)
+	{
+		$this->_remove_dotdot = (bool)$remove;
+	}
+
+	/**
+	 * @return string wether htmlspecialchars() should be used for all values
+	 */
+	public function get_use_htmlspecialchars()
+	{
+		return $this->_use_htmlspecialchars;
+	}
+
+	/**
+	 * Sets wether htmlspecialchars() should be used for all values
+	 * 
+	 * @param string $use the new value
+	 */
+	public function set_use_htmlspecialchars($use)
+	{
+		$this->_use_htmlspecialchars = (bool)$use;
 	}
 
 	/**
@@ -144,6 +220,8 @@ final class FWS_Input extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
+		if($this->_inputs === null)
+			$this->_collect_inputs();
 		if($method == -1)
 			$method = $this->_get_method($name);
 
@@ -249,6 +327,8 @@ final class FWS_Input extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
+		if($this->_inputs === null)
+			$this->_collect_inputs();
 		if($method == -1)
 			$method = $this->_get_method($name);
 
@@ -341,6 +421,8 @@ final class FWS_Input extends FWS_Object
 	 */
 	public function get_vars_from_method($method)
 	{
+		if($this->_inputs === null)
+			$this->_collect_inputs();
 		if($method == 'server' || $method == 'cookie')
 			$this->_load_all_lazy($method);
 		
@@ -365,6 +447,8 @@ final class FWS_Input extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
+		if($this->_inputs === null)
+			$this->_collect_inputs();
 		if($method == -1)
 		{
 			foreach(array('server','cookie','get','post') as $m)
@@ -387,6 +471,8 @@ final class FWS_Input extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
+		if($this->_inputs === null)
+			$this->_collect_inputs();
 		if($method == -1)
 		{
 			foreach(array('server','cookie','get','post') as $m)
@@ -498,6 +584,7 @@ final class FWS_Input extends FWS_Object
 	 */
 	private function _collect_inputs()
 	{
+		$this->_inputs = array();
 		if(isset($_POST) && is_array($_POST))
 		{
 			foreach($_POST as $key => $value)
@@ -563,10 +650,12 @@ final class FWS_Input extends FWS_Object
 		else if(is_string($value))
 		{
 			$value = str_replace(array("\n","\r"),'',$value);
-			if(!$this->_magic_quotes)
+			if($this->_escape_values && !$this->_magic_quotes)
 				$value = addslashes($value);
-			$value = htmlspecialchars($value,ENT_QUOTES);
-			$value = str_replace('..','',$value);
+			if($this->_use_htmlspecialchars)
+				$value = htmlspecialchars($value,ENT_QUOTES);
+			if($this->_remove_dotdot)
+				$value = str_replace('..','',$value);
 		}
 		return $value;
 	}
@@ -587,9 +676,10 @@ final class FWS_Input extends FWS_Object
 		else if(is_string($input))
 		{
 			$input = str_replace(array("\r\n","\r"),"\n",$input);
-			if(!$this->_magic_quotes)
+			if($this->_escape_values && !$this->_magic_quotes)
 				$input = addslashes($input);
-			$input = htmlspecialchars($input,ENT_QUOTES);
+			if($this->_use_htmlspecialchars)
+				$input = htmlspecialchars($input,ENT_QUOTES);
 		}
 
 		return $input;
@@ -610,9 +700,10 @@ final class FWS_Input extends FWS_Object
 		}
 		else if(is_string($input))
 		{
-			if(!$this->_magic_quotes)
+			if($this->_escape_values && !$this->_magic_quotes)
 				$input = addslashes($input);
-			$input = htmlspecialchars($input,ENT_QUOTES);
+			if($this->_use_htmlspecialchars)
+				$input = htmlspecialchars($input,ENT_QUOTES);
 		}
 
 		return $input;
