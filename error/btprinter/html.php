@@ -34,8 +34,11 @@ final class FWS_Error_BTPrinter_HTML extends FWS_Object implements FWS_Error_BTP
 			if(isset($item['file']) && isset($item['path']))
 			{
 				$rand_str = FWS_StringHelper::generate_random_key(10);
-				$res .= '<a href="javascript:FWS_toggleElement(\'bt_details_'.$rand_str.'\');">';
-				$res .= $item['path'].'<b>'.$item['file'].'</b></a>';
+				if(isset($item['filepart']))
+					$res .= '<a href="javascript:FWS_toggleElement(\'bt_details_'.$rand_str.'\');">';
+				$res .= $item['path'].'<b>'.$item['file'].'</b>';
+				if(isset($item['filepart']))
+					$res .= '</a>';
 			}
 			else
 				$res .= '<i>Unknown</i>';

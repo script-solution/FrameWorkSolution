@@ -44,14 +44,6 @@ final class FWS_Error_BTPrinter_BBCode extends FWS_Object implements FWS_Error_B
 			else if(isset($item['function']))
 				$res .= ' [ Function: [b]'.$item['function'].'()[/b] ]';
 			
-			if(isset($item['filepart']))
-			{
-				$res .= '[code]';
-				foreach($item['filepart'] as $no => $line)
-					$res .= $no."\t".htmlspecialchars($line,ENT_QUOTES)."\n";
-				$res .= '[code]';
-			}
-			
 			$res .= "\n";
 		}
 		$res .= '[/list]';

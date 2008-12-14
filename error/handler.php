@@ -62,6 +62,13 @@ final class FWS_Error_Handler extends FWS_Singleton
 	private $_logger = null;
 	
 	/**
+	 * All FWS_Error_AllowedFiles implementations
+	 *
+	 * @var array
+	 */
+	private $_allowedfiles = array();
+	
+	/**
 	 * Constructor
 	 */
 	public function __construct()
@@ -119,6 +126,32 @@ final class FWS_Error_Handler extends FWS_Singleton
 			FWS_Helper::def_error('instance','logger','FWS_Error_Logger',$logger);
 		
 		$this->_logger = $logger;
+	}
+	
+	/**
+	 * Adds the given listener to the list. It will be asked as soon as a file-content is about
+	 * to be displayed so that the listener can prevent that.
+	 *
+	 * @param FWS_Error_AllowedFiles $listener the listener
+	 */
+	public function add_allowedfiles_listener($listener)
+	{
+		if(!($listener instanceof FWS_Error_AllowedFiles))
+			FWS_Helper::def_error('instance','listener','FWS_Error_AllowedFiles',$listener);
+		
+		$this->_allowedfiles[] = $listener;
+	}
+	
+	/**
+	 * Removes the listener from the list
+	 *
+	 * @param FWS_Error_AllowedFiles $listener the listener
+	 */
+	public function remove_allowedfiles_listener($listener)
+	{
+		$i = array_search($listener,$this->_allowedfiles,true);
+		if($i !== false)
+			unset($this->_allowedfiles[$i]);
 	}
 	
 	/**
@@ -223,7 +256,7 @@ final class FWS_Error_Handler extends FWS_Singleton
 			
 			if(isset($backtrace[$i]['file']) && isset($backtrace[$i]['line']))
 			{
-				if(is_file($backtrace[$i]['file']))
+				if(is_file($backtrace[$i]['file']) && $this->_can_display_file($backtrace[$i]['file']))
 				{
 					$item['filepart'] = array();
 					$content = file($backtrace[$i]['file']);
@@ -274,6 +307,22 @@ final class FWS_Error_Handler extends FWS_Singleton
 		}
 		
 		return $bt;
+	}
+	
+	/**
+	 * Checks wether the given file may be displayed
+	 *
+	 * @param string $file the file
+	 * @return boolean true if so
+	 */
+	private function _can_display_file($file)
+	{
+		foreach($this->_allowedfiles as $l)
+		{
+			if(!$l->can_display_file($file))
+				return false;
+		}
+		return true;
 	}
 	
 	/**
