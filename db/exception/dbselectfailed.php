@@ -2,7 +2,7 @@
 /**
  * Contains the db-select-failed-exception
  *
- * @version			$Id: databaseconnection.php 25 2008-07-30 12:41:15Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>

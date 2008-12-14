@@ -2,7 +2,7 @@
 /**
  * Contains the query-failed-exception
  *
- * @version			$Id: databasequery.php 38 2008-12-06 10:09:29Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>
