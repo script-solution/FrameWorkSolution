@@ -80,9 +80,13 @@ final class FWS_Cache_Storage_DB extends FWS_Object implements FWS_Cache_Storage
 	{
 		$db = FWS_Props::get()->db();
 
+		$c = serialize($content);
+		if(!$db->get_escape_values())
+			$c = addslashes($c);
+		
 		$values =	array(
 			$this->_name_column => $name,
-			$this->_content_column => addslashes(serialize($content))
+			$this->_content_column => $c
 		);
 		
 		// At first we try an update. That should work most of the time

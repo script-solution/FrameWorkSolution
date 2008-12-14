@@ -283,7 +283,7 @@ class FWS_Printer extends FWS_Object
 		$str = str_replace("\t",'&nbsp;&nbsp;&nbsp;&nbsp;',$str);
 		if(self::$_layer == 1)
 		{
-			$inline = $this->_multiline ? 'display: inline; ' : '';
+			$inline = !$this->_multiline ? 'display: inline; ' : '';
 			$str = '<div style="'.$inline.'font-family: monospace; font-size: 11px;">'.$str.'</div>';
 		}
 		return $str;

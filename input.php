@@ -28,7 +28,7 @@
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_Input extends FWS_Object
+final class FWS_Input extends FWS_Singleton
 {
 	/**
 	 * Represents an integer
@@ -82,23 +82,13 @@ final class FWS_Input extends FWS_Object
 	const HEX_32						= 9;
 	
 	/**
-	 * The instance of this class.
-	 *
-	 * @var FWS_Input
-	 */
-	private static $_instance = null;
-	
-	/**
 	 * Returns the instance of this object
 	 * 
 	 * @return FWS_Input the instance
 	 */
 	public static function get_instance()
 	{
-		if(self::$_instance == null)
-			self::$_instance = new FWS_Input();
-		
-		return FWS_Input::$_instance;
+		return parent::_get_instance(get_class());
 	}
 	
 	/**
@@ -656,6 +646,8 @@ final class FWS_Input extends FWS_Object
 			$value = str_replace(array("\n","\r"),'',$value);
 			if($this->_escape_values && !$this->_magic_quotes)
 				$value = addslashes($value);
+			else if(!$this->_escape_values && $this->_magic_quotes)
+				$value = stripslashes($value);
 			if($this->_use_htmlspecialchars)
 				$value = htmlspecialchars($value,ENT_QUOTES);
 			if($this->_remove_dotdot)
@@ -682,6 +674,8 @@ final class FWS_Input extends FWS_Object
 			$input = str_replace(array("\r\n","\r"),"\n",$input);
 			if($this->_escape_values && !$this->_magic_quotes)
 				$input = addslashes($input);
+			else if(!$this->_escape_values && $this->_magic_quotes)
+				$input = stripslashes($input);
 			if($this->_use_htmlspecialchars)
 				$input = htmlspecialchars($input,ENT_QUOTES);
 		}
@@ -706,6 +700,8 @@ final class FWS_Input extends FWS_Object
 		{
 			if($this->_escape_values && !$this->_magic_quotes)
 				$input = addslashes($input);
+			else if(!$this->_escape_values && $this->_magic_quotes)
+				$input = stripslashes($input);
 			if($this->_use_htmlspecialchars)
 				$input = htmlspecialchars($input,ENT_QUOTES);
 		}

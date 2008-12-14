@@ -72,13 +72,13 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 	/**
 	 * Binds the given value to given index
 	 *
-	 * @param int $index the index
+	 * @param int|string $index the index or a string to replace
 	 * @param mixed $value the value
 	 */
 	public final function bind($index,$value)
 	{
-		if(!FWS_Helper::is_integer($index) || $index < 0)
-			FWS_Helper::def_error('intge0','index',$index);
+		if(!is_string($index) && !FWS_Helper::is_integer($index) || $index < 0)
+			FWS_Helper::error('$index should be either a string or an integer >= 0');
 		
 		$this->_values[$index] = $value;
 	}
@@ -92,12 +92,17 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 	{
 		$sql = $this->_sql;
 		$len = FWS_String::strlen($sql);
-		foreach($this->_values as $val)
+		foreach($this->_values as $k => $val)
 		{
-			$p = strpos($sql,'?');
-			if($p === false)
-				break;
-			$sql = substr_replace($sql,$this->get_value($val),$p,1);
+			if(is_numeric($k))
+			{
+				$p = strpos($sql,'?');
+				if($p === false)
+					break;
+				$sql = substr_replace($sql,$this->get_value($val),$p,1);
+			}
+			else
+				$sql = str_replace($k,$this->get_value($val),$sql);
 		}
 		return $sql;
 	}

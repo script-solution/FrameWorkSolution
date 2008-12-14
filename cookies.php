@@ -157,7 +157,8 @@ final class FWS_Cookies extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
-		return FWS_Input::get_instance()->isset_var($this->_prefix.$name,'cookie');
+		$input = FWS_Props::get()->input();
+		return $input->isset_var($this->_prefix.$name,'cookie');
 	}
 
 	/**
@@ -174,7 +175,8 @@ final class FWS_Cookies extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
-		return FWS_Input::get_instance()->get_var($this->_prefix.$name,'cookie',$type);
+		$input = FWS_Props::get()->input();
+		return $input->get_var($this->_prefix.$name,'cookie',$type);
 	}
 
 	/**
@@ -193,7 +195,8 @@ final class FWS_Cookies extends FWS_Object
 		if(!FWS_Helper::is_integer($lifetime))
 			FWS_Helper::def_error('integer','lifetime',$lifetime);
 
-		FWS_Input::get_instance()->set_var($this->_prefix.$name,'cookie',$value);
+		$input = FWS_Props::get()->input();
+		$input->set_var($this->_prefix.$name,'cookie',$value);
 
 		$lf = $lifetime === -1 ? $this->_lifetime : $lifetime;
 		$end = $lf === 0 ? 0 : time() + $lf;
@@ -210,7 +213,8 @@ final class FWS_Cookies extends FWS_Object
 		if(empty($name))
 			FWS_Helper::def_error('notempty','name',$name);
 
-		FWS_Input::get_instance()->unset_var($this->_prefix.$name,'cookie');
+		$input = FWS_Props::get()->input();
+		$input->unset_var($this->_prefix.$name,'cookie');
 		setcookie($this->_prefix.$name,'',time() - 3600,$this->_path,$this->_domain);
 	}
 	

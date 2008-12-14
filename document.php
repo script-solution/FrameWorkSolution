@@ -58,8 +58,9 @@ class FWS_Document extends FWS_Object
 		if(!is_dir(FWS_Path::server_app().$folder))
 			FWS_Helper::error('"'.FWS_Path::server_app().$folder.'" is no folder!');
 		
+		$input = FWS_Props::get()->input();
 		$folder = FWS_FileUtils::ensure_trailing_slash($folder);
-		$action = FWS_Input::get_instance()->get_var($action_param,'get',FWS_Input::IDENTIFIER);
+		$action = $input->get_var($action_param,'get',FWS_Input::IDENTIFIER);
 	
 		// try to load the module
 		$filename = FWS_Path::server_app().$folder.$action.'/module.php';

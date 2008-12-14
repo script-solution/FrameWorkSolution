@@ -151,7 +151,7 @@ final class FWS_Path extends FWS_UtilBase
 	{
 		if(self::$_outer === null)
 		{
-			$input = FWS_Input::get_instance();
+			$input = FWS_Props::get()->input();
 			$https = $input->get_var('HTTPS','server',FWS_Input::STRING);
 			// protocol
 			if($https !== null && !empty($https) && strtolower($https) != 'off')

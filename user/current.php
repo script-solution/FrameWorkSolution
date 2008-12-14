@@ -448,6 +448,7 @@ class FWS_User_Current extends FWS_Object
 		
 		if($loggedin == self::LOGIN_ERROR_NO_ERROR)
 		{
+			// TODO this does not work since $user is not necessarily escaped
 	    // perform stripslashes here because addslashes() has been called on the value
 		  // and we want to compare it with as it is
 			$user = stripslashes($user);
