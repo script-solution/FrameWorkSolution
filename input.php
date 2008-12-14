@@ -409,7 +409,11 @@ final class FWS_Input extends FWS_Object
 	 */
 	public function unescape_value($value,$method)
 	{
-		return stripslashes(FWS_StringHelper::htmlspecialchars_back($value));
+		if($this->_use_htmlspecialchars)
+			$value = FWS_StringHelper::htmlspecialchars_back($value);
+		if($this->_escape_values)
+			$value = stripslashes($value);
+		return $value;
 	}
 
 	/**
