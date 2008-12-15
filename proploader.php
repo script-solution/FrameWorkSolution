@@ -46,19 +46,21 @@ class FWS_PropLoader extends FWS_Object
 	}
 	
 	/**
+	 * @return FWS_DB_Connection the db-connection
+	 */
+	protected function db()
+	{
+		// We don't want to provide a default here because we wouldn't know where to connect to
+		// anyway and therefore this makes no sense
+		throw new FWS_Exceptions_UnsupportedMethod('Please provide your own db-loader');
+	}
+	
+	/**
 	 * @return FWS_Document_Messages the messages-container
 	 */
 	protected function msgs()
 	{
 		return new FWS_Document_Messages();
-	}
-	
-	/**
-	 * @return FWS_Profiler the profiler-instance
-	 */
-	protected function profiler()
-	{
-		return new FWS_Profiler();
 	}
 	
 	/**

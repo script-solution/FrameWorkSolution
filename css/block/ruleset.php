@@ -26,6 +26,33 @@
 final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 {
 	/**
+   * Returns the default value for the given property
+   *
+   * @param string $propname the property-name
+   * @return string the default-value
+   */
+	public static function get_def_prop_value($propname)
+	{
+		switch($propname)
+		{
+			case 'font-size':
+				return '9pt';
+			case 'text-decoration':
+				return 'none';
+			case 'font-weight':
+				return 'normal';
+			case 'font-style':
+				return 'normal';
+			case 'color':
+				return '#FFFFFF';
+			case 'background-color':
+				return '#FFFFFF';
+			default:
+				return '';
+		}
+	}
+	
+	/**
 	 * The name of this block
 	 *
 	 * @var string
@@ -78,7 +105,7 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	 */
 	public function get_name()
 	{
-		return ($this->_media === null ? '' : implode(',',$this->_media)).':'
+		return ($this->_media === null ? '' : implode(',',$this->_media).':')
 			.implode(',',$this->_selectors);
 	}
 	
@@ -190,6 +217,14 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 		if(!isset($this->_properties[$name]))
 			return false;
 		return $this->_properties[$name];
+	}
+	
+	/**
+	 * @return array all properties of this ruleset
+	 */
+	public function get_properties()
+	{
+		return $this->_properties;
 	}
 	
 	/**

@@ -63,5 +63,10 @@ abstract class FWS_HTML_TextElement extends FWS_HTML_FormElement
 		
 		$this->_cols = $cols;
 	}
+	
+	protected function get_dump_vars()
+	{
+		return array_merge(parent::get_dump_vars(),get_object_vars($this));
+	}
 }
 ?>

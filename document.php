@@ -134,6 +134,13 @@ class FWS_Document extends FWS_Object
 	private $_use_gzip = false;
 	
 	/**
+	 * The profiler
+	 *
+	 * @var FWS_Profiler
+	 */
+	private $_prof;
+	
+	/**
 	 * The module
 	 *
 	 * @var FWS_Module
@@ -163,12 +170,21 @@ class FWS_Document extends FWS_Object
 		{
 			parent::__construct();
 			
+			$this->_prof = new FWS_Profiler();
 			$this->_module = $this->load_module();
 		}
 		catch(FWS_Exceptions_Critical $e)
 		{
 			echo $e;
 		}
+	}
+	
+	/**
+	 * @return FWS_Profiler the profiler that has been started at the document-creation
+	 */
+	public final function get_profiler()
+	{
+		return $this->_prof;
 	}
 	
 	/**

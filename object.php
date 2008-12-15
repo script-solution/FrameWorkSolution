@@ -82,7 +82,7 @@ abstract class FWS_Object
 			$str .= '<b>'.get_class($this).'</b>';
 		else
 			$str .= get_class($this);
-		$str .= '['.FWS_Printer::to_string($this->get_dump_vars(),$use_html).']';
+		$str .= FWS_Printer::to_string($this->get_dump_vars(),$use_html);
 		return $str;
 	}
 	

@@ -103,19 +103,19 @@ class FWS_PropAccessor extends FWS_Object
 	}
 	
 	/**
+	 * @return FWS_DB_Connection the db-connection
+	 */
+	public function db()
+	{
+		return $this->get('db');
+	}
+	
+	/**
 	 * @return FWS_Document_Messages the messages-container
 	 */
 	public function msgs()
 	{
 		return $this->get('msgs');
-	}
-	
-	/**
-	 * @return FWS_Profiler the profiler instance
-	 */
-	public function profiler()
-	{
-		return $this->get('profiler');
 	}
 	
 	/**

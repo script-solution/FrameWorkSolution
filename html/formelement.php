@@ -324,7 +324,14 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	 */
 	private function _generate_id($name)
 	{
-		return preg_replace('/[^a-z0-9_\-\.:]+/i','',$name);
+		if(FWS_String::starts_with($name,'.'))
+			$name = 'p'.$name;
+		return preg_replace('/[^a-z0-9_\-\.:]/i','_',$name);
+	}
+	
+	protected function get_dump_vars()
+	{
+		return get_object_vars($this);
 	}
 }
 ?>

@@ -153,7 +153,7 @@ class FWS_HTML_ComboBox extends FWS_HTML_List
 	
 	protected function get_dump_vars()
 	{
-		return get_object_vars($this);
+		return array_merge(parent::get_dump_vars(),get_object_vars($this));
 	}
 }
 ?>

@@ -626,7 +626,6 @@ EOF;
 		$tb->set_disabled($disabled);
 		if($this->_condition)
 			$tb->set_value($this->get_input_value($name));
-		
 		return $tb->to_html();
 	}
 
