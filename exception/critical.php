@@ -1,6 +1,6 @@
 <?php
 /**
- * Contains the FWS_Exceptions_Critical-class
+ * Contains the FWS_Exception_Critical-class
  *
  * @version			$Id$
  * @package			FrameWorkSolution
@@ -19,7 +19,7 @@
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-abstract class FWS_Exceptions_Critical extends Exception
+abstract class FWS_Exception_Critical extends Exception
 {
 	/**
 	 * Constructor

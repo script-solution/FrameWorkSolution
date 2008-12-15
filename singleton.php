@@ -61,23 +61,23 @@ abstract class FWS_Singleton extends FWS_Object
 	/**
 	 * Constructor
 	 * 
-	 * @throws FWS_Exceptions_UnsupportedMethod if _get_instance() is not used
+	 * @throws FWS_Exception_UnsupportedMethod if _get_instance() is not used
 	 */
 	public function __construct()
 	{
 		if(self::$_locked)
-			throw new FWS_Exceptions_UnsupportedMethod('Since '.get_class($this).' is a singleton'
+			throw new FWS_Exception_UnsupportedMethod('Since '.get_class($this).' is a singleton'
 				.' you can\'t instantiate it but have to use the static get-instance-method!');
 		
 		parent::__construct();
 	}
 	
 	/**
-	 * @throws FWS_Exceptions_UnsupportedMethod in all cases
+	 * @throws FWS_Exception_UnsupportedMethod in all cases
 	 */
 	public function __clone()
 	{
-		throw new FWS_Exceptions_UnsupportedMethod(
+		throw new FWS_Exception_UnsupportedMethod(
 			'Since '.get_class($this).' is a singleton you can\'t clone it!'
 		);
 	}

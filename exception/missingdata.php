@@ -17,7 +17,7 @@
  * @subpackage	exceptions
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_Exceptions_MissingData extends FWS_Exceptions_Critical
+final class FWS_Exception_MissingData extends FWS_Exception_Critical
 {
 	/**
 	 * Constructor

@@ -18,7 +18,7 @@
  * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_DB_Exception_NotConnected extends FWS_Exceptions_Critical
+final class FWS_DB_Exception_NotConnected extends FWS_Exception_Critical
 {
 	/**
 	 * Constructor

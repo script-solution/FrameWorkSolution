@@ -21,20 +21,20 @@ abstract class FWS_UtilBase
 	/**
 	 * Constructor
 	 * 
-	 * @throws FWS_Exceptions_UnsupportedMethod in all cases
+	 * @throws FWS_Exception_UnsupportedMethod in all cases
 	 */
 	public function __construct()
 	{
-		throw new FWS_Exceptions_UnsupportedMethod('Since '.get_class($this).' contains just static'
+		throw new FWS_Exception_UnsupportedMethod('Since '.get_class($this).' contains just static'
 			.' methods you can\'t instantiate the class!');
 	}
 	
 	/**
-	 * @throws FWS_Exceptions_UnsupportedMethod in all cases
+	 * @throws FWS_Exception_UnsupportedMethod in all cases
 	 */
 	public function __clone()
 	{
-		throw new FWS_Exceptions_UnsupportedMethod(
+		throw new FWS_Exception_UnsupportedMethod(
 			'Since '.get_class($this).' contains just static methods you can\'t clone the class!'
 		);
 	}

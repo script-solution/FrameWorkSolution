@@ -18,7 +18,7 @@
  * @subpackage	db.exception
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_DB_Exception_QueryFailed extends FWS_Exceptions_Critical
+final class FWS_DB_Exception_QueryFailed extends FWS_Exception_Critical
 {
 	/**
 	 * The query which should be performed

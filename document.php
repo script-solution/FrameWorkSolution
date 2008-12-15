@@ -171,9 +171,10 @@ class FWS_Document extends FWS_Object
 			parent::__construct();
 			
 			$this->_prof = new FWS_Profiler();
+			$this->_prof->start();
 			$this->_module = $this->load_module();
 		}
-		catch(FWS_Exceptions_Critical $e)
+		catch(FWS_Exception_Critical $e)
 		{
 			echo $e;
 		}
@@ -347,7 +348,7 @@ class FWS_Document extends FWS_Object
 	 */
 	public function use_default_renderer()
 	{
-		throw new FWS_Exceptions_UnsupportedMethod('This method is not implemented');
+		throw new FWS_Exception_UnsupportedMethod('This method is not implemented');
 	}
 	
 	/**

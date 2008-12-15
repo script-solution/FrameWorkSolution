@@ -100,7 +100,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 			
 			$this->_action_perf = new FWS_Action_Performer();
 		}
-		catch(FWS_Exceptions_Critical $e)
+		catch(FWS_Exception_Critical $e)
 		{
 			echo $e;
 		}
@@ -378,7 +378,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 			
 			$this->before_finish();
 		}
-		catch(FWS_Exceptions_Critical $e)
+		catch(FWS_Exception_Critical $e)
 		{
 			$res = $e->__toString();
 		}
