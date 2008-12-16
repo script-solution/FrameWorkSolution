@@ -92,7 +92,6 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 	{
 		$sql = $this->_sql;
 		$offset = 0;
-		$len = FWS_String::strlen($sql);
 		foreach($this->_values as $k => $val)
 		{
 			if(is_numeric($k))
