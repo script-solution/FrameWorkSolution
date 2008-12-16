@@ -532,8 +532,13 @@ class FWS_Document extends FWS_Object
 		// we need the zlib
 		if(!extension_loaded('zlib') || ini_get('zlib.output_compression'))
 			return $res;
-		
+
 		$this->set_header('Content-Encoding',$encoding);
+
+		ob_start('ob_gzhandler');
+		echo $res;
+		$res = ob_get_contents();
+		ob_end_clean();
 		
 		$level = 4;
 		$gzip_size = strlen($res);

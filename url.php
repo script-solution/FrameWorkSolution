@@ -34,13 +34,6 @@ class FWS_URL extends FWS_Object
 	const SID_OFF = 2;
 	
 	/**
-	 * Contains the path and file of $_SERVER['PHP_SELF']
-	 *
-	 * @var array
-	 */
-	private static $_phpself = null;
-	
-	/**
 	 * The session-id which will be appended
 	 *
 	 * @var mixed
@@ -52,7 +45,7 @@ class FWS_URL extends FWS_Object
 	 *
 	 * @var string
 	 */
-	private static $_extern_vars = '';
+	private static $_extern_vars = null;
 
 	/**
 	 * Do you want to append extern get-parameter?
@@ -160,7 +153,7 @@ class FWS_URL extends FWS_Object
 	{
 		parent::__construct();
 		
-		if(self::$_phpself === null)
+		if(self::$_extern_vars === null)
 			$this->init();
 	}
 
@@ -386,19 +379,12 @@ class FWS_URL extends FWS_Object
 		// append path
 		if($this->_path !== null)
 			$url .= $this->_path;
-		else
-		{
-			if($this->_absolute)
-				$url .= FWS_Path::outer();
-			else
-				$url .= self::$_phpself[0];
-		}
+		else if($this->_absolute)
+			$url .= FWS_Path::outer();
 		
 		// append file
 		if($this->_file !== null)
 			$url .= $this->_file;
-		else
-			$url .= self::$_phpself[1];
 		
 		// append extern and sid
 		$params = $this->_params;
@@ -445,9 +431,6 @@ class FWS_URL extends FWS_Object
 	protected function init()
 	{
 		$input = FWS_Props::get()->input();
-		
-		$phpself = $input->get_var('PHP_SELF','server',FWS_Input::STRING);
-		self::$_phpself = array(dirname($phpself).'/',basename($phpself));
 		
 		// init the extern-variables
 		self::$_extern_vars = array();

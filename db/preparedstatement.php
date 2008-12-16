@@ -107,7 +107,6 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 			{
 				$pval = $this->get_value($val);
 				$sql = str_replace($k,$pval,$sql);
-				$offset = $p + FWS_String::strlen($pval);
 			}
 		}
 		return $sql;
