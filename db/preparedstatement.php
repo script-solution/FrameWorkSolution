@@ -91,18 +91,25 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 	public function get_statement()
 	{
 		$sql = $this->_sql;
+		$offset = 0;
 		$len = FWS_String::strlen($sql);
 		foreach($this->_values as $k => $val)
 		{
 			if(is_numeric($k))
 			{
-				$p = strpos($sql,'?');
+				$p = FWS_String::strpos($sql,'?',$offset);
 				if($p === false)
 					break;
-				$sql = substr_replace($sql,$this->get_value($val),$p,1);
+				$pval = $this->get_value($val);
+				$sql = FWS_String::substr($sql,0,$p).$pval.FWS_String::substr($sql,$p + 1);
+				$offset = $p + FWS_String::strlen($pval);
 			}
 			else
-				$sql = str_replace($k,$this->get_value($val),$sql);
+			{
+				$pval = $this->get_value($val);
+				$sql = str_replace($k,$pval,$sql);
+				$offset = $p + FWS_String::strlen($pval);
+			}
 		}
 		return $sql;
 	}

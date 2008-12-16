@@ -221,11 +221,11 @@ class FWS_Action_Performer extends FWS_Object
 	 */
 	public final function perform_action()
 	{
-		$action_type = $this->get_action_id();
-		if($action_type === null)
+		$id = $this->get_action_id();
+		if($id === null)
 			return 0;
-
-		return $this->perform_action_by_id($action_type);
+		
+		return $this->perform_action_by_id($id);
 	}
 	
 	/**
@@ -245,8 +245,8 @@ class FWS_Action_Performer extends FWS_Object
 		$msgs = FWS_Props::get()->msgs();
 		$doc = FWS_Props::get()->doc();
 		
-		if(empty($id))
-			FWS_Helper::def_error('notempty','id',$id);
+		if($id === null)
+			FWS_Helper::def_error('notnull','id',$id);
 		
 		// action unknown?
 		if(!isset($this->_actions[$id]))

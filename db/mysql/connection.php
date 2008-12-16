@@ -301,10 +301,10 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 		foreach($values as $field => $val)
 		{
 			if(is_array($val))
-				$sql .= $field.' = '.$val[0].', ';
+				$sql .= '`'.$field.'` = '.$val[0].', ';
 			else
 			{
-				$sql .= $field.' = ?, ';
+				$sql .= '`'.$field.'` = ?, ';
 				$binds[] = $val;
 			}
 		}
