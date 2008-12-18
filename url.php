@@ -389,7 +389,14 @@ class FWS_URL extends FWS_Object
 		// append extern and sid
 		$params = $this->_params;
 		if(self::$_append_extern)
-			$params = array_merge($this->_params,self::$_extern_vars);
+		{
+			// don't overwrite already set vars
+			foreach(self::$_extern_vars as $ename => $eval)
+			{
+				if(!isset($params[$ename]))
+					$params[$ename] = $eval;
+			}
+		}
 		
 		if($this->_sid_policy == self::SID_FORCE)
 		{
