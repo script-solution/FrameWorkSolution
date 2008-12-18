@@ -250,7 +250,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	 */
 	public final function get_redirect_url()
 	{
-		if(empty($this->_redirect_url))
+		if($this->_redirect_url === null)
 		{
 			if(count($this->_links) == 0)
 			{
