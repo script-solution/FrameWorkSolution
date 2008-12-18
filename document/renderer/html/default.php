@@ -311,14 +311,22 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
+	 * @return array an array with all breadcrumbs: <code>array(array(<name>,<url>),...)</code>
+	 */
+	public function get_breadcrumbs()
+	{
+		return $this->_breadcrumbs;
+	}
+	
+	/**
 	 * Generates the location-string
 	 *
 	 * @param FWS_Document_Renderer_HTML_Default $renderer the current page
 	 * @param string $linkclass the linkclass to use. Use an empty string if you want to use a class.
 	 * @param string $sep the separator ( &raquo; by default)
-	 * @return array the position and document-title
+	 * @return string the links
 	 */
-	protected function get_breadcrumbs($linkclass = '',$sep = ' &raquo; ')
+	public function get_breadcrumb_links($linkclass = '',$sep = ' &raquo; ')
 	{
 		$links = array();
 		foreach($this->_breadcrumbs as $item)
