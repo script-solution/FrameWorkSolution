@@ -334,32 +334,32 @@ final class FWS_Input extends FWS_Singleton
 					return $var;
 
 				case FWS_Input::ID:
-					if(preg_match('/^[0-9]+$/',$var) && $var >= 1) /* $var = (int)$var; $var >= 1 */
+					if(is_scalar($var) && preg_match('/^[0-9]+$/',$var) && $var >= 1)
 						return (int)$var;
 					return null;
 
 				case FWS_Input::INTEGER:
-					if(preg_match('/^-?[0-9]+$/',$var)) /* is_numeric($var) */
+					if(is_scalar($var) && preg_match('/^-?[0-9]+$/',$var))
 						return (int)$var;
 					return null;
 
 				case FWS_Input::ALPHA:
-					if(preg_match('/^[a-z]+$/i',$var))
+					if(is_scalar($var) && preg_match('/^[a-z]+$/i',$var))
 						return $var;
 					return null;
 
 				case FWS_Input::ALPHA_NUM:
-					if(preg_match('/^[a-z0-9]+$/i',$var))
+					if(is_scalar($var) && preg_match('/^[a-z0-9]+$/i',$var))
 						return $var;
 					return null;
 
 				case FWS_Input::IDENTIFIER:
-					if(preg_match('/^[a-z0-9_]+$/i',$var))
+					if(is_scalar($var) && preg_match('/^[a-z0-9_]+$/i',$var))
 						return $var;
 					return null;
 
 				case FWS_Input::HEX_32:
-					if(preg_match('/^[a-f0-9]{32}$/i',$var))
+					if(is_scalar($var) && preg_match('/^[a-f0-9]{32}$/i',$var))
 						return $var;
 					return null;
 
