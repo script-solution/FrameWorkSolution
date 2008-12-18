@@ -28,11 +28,49 @@ function FWS_Ajax()
 	{
 		// do nothing by default
 	};
+
+	/**
+	 * Prepares an HTTP-request
+	 *
+	 * @param function onfinish the finish-callback
+	 */
+	this._prepare_request = function(onfinish)
+	{
+		// we have to do this for every request with IE
+		if(this.xmlHttp == null || Browser.isIE)
+			this.xmlHttp = FWS_getXmlHttpObject();
+		
+		// copy to local variables
+		var cxmlHttp = this.xmlHttp;
+		var conFinish = this.onFinish;
+		if(!cxmlHttp)
+			return;
+		
+		this.onStart();
+		
+		// does not work in IE
+		// TODO: the special chars will not be transferred correctly in IE. how to fix that?
+		if(Browser.isIE)
+			cxmlHttp.overrideMimeType(this.mimeType);
+		
+		// build callback
+		var callback = function()
+		{
+			if(cxmlHttp.readyState == 4 || cxmlHttp.readyState == 'complete')
+			{
+				onfinish(cxmlHttp.responseText);
+				conFinish();
+			}
+		};
+		
+		cxmlHttp.onreadystatechange = callback;
+	};
 	
 	// public methods
 	this.setMimeType = setMimeType;
 	this.setEventHandler = setEventHandler;
 	this.sendGetRequest = sendGetRequest;
+	this.sendPostRequest = sendPostRequest;
 }
 
 /**
@@ -82,38 +120,35 @@ function setEventHandler(event,handler)
  */
 function sendGetRequest(url,onfinish)
 {
-	// we have to do this for every request with IE
-	if(this.xmlHttp == null || Browser.isIE)
-		this.xmlHttp = FWS_getXmlHttpObject();
-	
-	// copy to local variables
-	var cxmlHttp = this.xmlHttp;
-	var conFinish = this.onFinish;
-	if(!cxmlHttp)
-		return;
-	
-	this.onStart();
-	
-	// does not work in IE
-	// TODO: the special chars will not be transferred correctly in IE. how to fix that?
-	if(Browser.isIE)
-		cxmlHttp.overrideMimeType(this.mimeType);
-	
-	// build callback
-	var callback = function()
-	{
-		if(cxmlHttp.readyState == 4 || cxmlHttp.readyState == 'complete')
-		{
-			onfinish(cxmlHttp.responseText);
-			conFinish();
-		}
-	};
-	
-	cxmlHttp.onreadystatechange = callback;
-	cxmlHttp.open('GET',url,true);
+	this._prepare_request(onfinish);
+	this.xmlHttp.open('GET',url,true);
 	
 	try {
-		cxmlHttp.send(null);
+		this.xmlHttp.send(null);
+	}
+	catch(e) {
+		// ignore
+	}
+}
+
+/**
+ * Sends a POST-request via AJAX
+ *
+ * @param string url the URL to call
+ * @param string parameters the parameter to send via POST
+ * @param function onfinish the function to call after THIS request. Note that
+ * 			the onfinish-event-function will be called, too!
+ */
+function sendPostRequest(url,parameters,onfinish)
+{
+	this._prepare_request(onfinish);
+	this.xmlHttp.open('POST',url,true);
+	this.xmlHttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	this.xmlHttp.setRequestHeader('Content-length',parameters.length);
+	this.xmlHttp.setRequestHeader('Connection','close');
+	
+	try {
+		this.xmlHttp.send(parameters);
 	}
 	catch(e) {
 		// ignore
