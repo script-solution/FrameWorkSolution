@@ -653,7 +653,7 @@ final class FWS_Template_Handler extends FWS_Object
 		$this->set_includes_enabled(false);
 		
 		$parser = new FWS_Template_Parser($this);
-		$result = $parser->compile_template('__string_'.$this->_string_counter,null,$string);
+		$result = $parser->compile_template('__string_'.$this->_string_counter,'',null,$string);
 		eval(FWS_String::substr($result,5,-2));
 		
 		$func_name = $this->get_function_name('__string_'.$this->_string_counter);
@@ -677,7 +677,7 @@ final class FWS_Template_Handler extends FWS_Object
 	public function parse_template($template = -1,$restore = true,$number = 1)
 	{
 		$user = FWS_Props::get()->user();
-
+		
 		if(!FWS_Helper::is_integer($number) || $number <= 0)
 			FWS_Helper::def_error('intgt0','number',$number);
 		
@@ -696,27 +696,21 @@ final class FWS_Template_Handler extends FWS_Object
 		$old_tpl = $this->_filename;
 		$this->_filename = $tpl;
 		
+		// set template-path if not already done
+		$template_path = $this->_template_path;
+		if($template_path == '')
+		{
+			$tp = str_replace(
+				FWS_Path::client_app(),'',$user->get_theme_item_path('templates/'.$tpl)
+			);
+			$template_path = dirname($tp).'/';
+		}
+		
 		// do we have already cached and included the template?
-		$func_name = $this->get_function_name($tpl);
+		$func_name = $this->get_function_name($template_path.$tpl);
 		if(!function_exists($func_name))
 		{
-			// set template-path if not already done
-			$template_path = $this->_template_path;
-			if($template_path == '')
-			{
-				$tp = str_replace(
-					FWS_Path::client_app(),'',$user->get_theme_item_path('templates/'.$tpl)
-				);
-				$template_path = dirname($tp).'/';
-			}
-			
-			// check if the file exists
-			if(!is_file(FWS_Path::server_app().$template_path.$tpl))
-				FWS_Helper::error('"'.FWS_Path::server_app().$template_path.$tpl.'" is no file!');
-			
-			$path = str_replace('/','_',$template_path);
-			$path = str_replace('\\','_',$path);
-			$cache_path = $this->_cache_folder.'/'.$path.$tpl.'.php';
+			$cache_path = $this->_get_cache_path($template_path,$tpl);
 			
 			// check if we have to recompile the template
 			if(!file_exists($cache_path))
@@ -730,41 +724,11 @@ final class FWS_Template_Handler extends FWS_Object
 				if($tpl_mtime > $cache_mtime)
 					$recompile_necessary = true;
 			}
-	
-			// retrieve the template-content if we have to recompile it
-			if($recompile_necessary)
-				$tpl_content = FWS_FileUtils::read(FWS_Path::server_app().$template_path.$tpl);
 		}
 		
 		// recompile?
 		if($recompile_necessary)
-		{
-			// if we could not save the template we eval the code directly
-			// this prevents problems if the cache-directory has not yet CHMOD 0777 (which may happen
-			// at the beginning of the installation)
-			$parser = new FWS_Template_Parser($this);
-			$tpl_content = $parser->compile_template($tpl,$cache_path,$tpl_content);
-			if($tpl_content !== '')
-			{
-				// show the warning just once
-				if(!$this->_showed_chmod_warning)
-				{
-					echo '<b><span style="color: red;">WARNUNG: Das Verzeichnis "'.dirname($cache_path)
-							.'" ist nicht beschreibbar oder Dateien in diesem Verzeichnis sind nicht beschreibbar.'
-							.' Bitte setzen Sie den CHMOD des Verzeichnisses auf 0777 bzw. l&ouml;schen Sie die'
-							.' Dateien in diesem Verzeichnis!'
-							.'</span></b><br />'."\n";
-					echo '<b><span style="color: red;">WARNING: The directory "'.dirname($cache_path)
-							.'" is not writable or files in this directory are not writable!'
-							.' Please set the CHMOD of this directory to 0777 or delete the files in it!'
-							.'</span></b><br />'."\n";
-					$this->_showed_chmod_warning = true;
-				}
-
-				// we don't want to eval the php start- and end-tags
-				eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
-			}
-		}
+			$this->_recompile($tpl,$template_path,$cache_path);
 		
 		// detect recursions
 		$tplc = count($this->_tpl_calls);
@@ -778,7 +742,16 @@ final class FWS_Template_Handler extends FWS_Object
 			include_once($cache_path);
 		
 		// call the function with corresponding part-argument
-		$func_name = $this->get_function_name($tpl);
+		$func_name = $this->get_function_name($template_path.$tpl);
+		
+		// if the function does not exist there is something wrong, so recompile
+		if(!function_exists($func_name))
+		{
+			$cache_path = $this->_get_cache_path($template_path,$tpl);
+			$this->_recompile($tpl,$template_path,$cache_path);
+			include($cache_path);
+		}
+		
 		$str = $func_name($this,$number);
 		
 		array_pop($this->_tpl_calls);
@@ -793,12 +766,67 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
+	 * Determines the template-path and cache-path for the given template
+	 *
+	 * @param string $template_path the path to the template
+	 * @param string $tpl the template-name
+	 * @return string the cache-path
+	 */
+	private function _get_cache_path($template_path,$tpl)
+	{
+		// check if the file exists
+		if(!is_file(FWS_Path::server_app().$template_path.$tpl))
+			FWS_Helper::error('"'.FWS_Path::server_app().$template_path.$tpl.'" is no file!');
+		
+		$path = str_replace('/','_',$template_path);
+		$path = str_replace('\\','_',$path);
+		return $this->_cache_folder.'/'.$path.$tpl.'.php';
+	}
+	
+	/**
+	 * Recompiles the given template
+	 *
+	 * @param string $tpl the template
+	 * @param string $tplpath the template-path
+	 * @param string $cache_path the path of the cache-file
+	 */
+	private function _recompile($tpl,$tplpath,$cache_path)
+	{
+		$tpl_content = FWS_FileUtils::read(FWS_Path::server_app().$tplpath.$tpl);
+		// if we could not save the template we eval the code directly
+		// this prevents problems if the cache-directory has not yet CHMOD 0777 (which may happen
+		// at the beginning of the installation)
+		$parser = new FWS_Template_Parser($this);
+		$tpl_content = $parser->compile_template($tplpath,$tpl,$cache_path,$tpl_content);
+		if($tpl_content !== '')
+		{
+			// show the warning just once
+			if(!$this->_showed_chmod_warning)
+			{
+				echo '<b><span style="color: red;">WARNUNG: Das Verzeichnis "'.dirname($cache_path)
+						.'" oder Dateien in diesem Verzeichnis sind nicht beschreibbar.'
+						.' Bitte setzen Sie den CHMOD des Verzeichnisses auf 0777 bzw. l&ouml;schen Sie die'
+						.' Dateien in diesem Verzeichnis!'
+						.'</span></b><br />'."\n";
+				echo '<b><span style="color: red;">WARNING: The directory "'.dirname($cache_path)
+						.'" or files in this directory are not writable!'
+						.' Please set the CHMOD of this directory to 0777 or delete the files in it!'
+						.'</span></b><br />'."\n";
+				$this->_showed_chmod_warning = true;
+			}
+
+			// we don't want to eval the php start- and end-tags
+			eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
+		}
+	}
+	
+	/**
 	 * @param string $template the template to use
 	 * @return string the function-name for the given template which will be used
 	 */
 	public function get_function_name($template)
 	{
-		return 'FWS_TPL_'.md5(FWS_Path::server_app()).'_'.str_replace('.','_',$template);
+		return 'FWS_TPL_'.preg_replace('/[^a-z0-9_]/i','_',$template);
 	}
 	
 	protected function get_dump_vars()

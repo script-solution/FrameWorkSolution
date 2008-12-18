@@ -152,12 +152,13 @@ final class FWS_Template_Parser extends FWS_Object
 	/**
 	 * Compiles the given template and stores the result to the given cache-file
 	 *
+	 * @param string $tplpath the template-path
 	 * @param string $template the template-file
 	 * @param string $cache_file the file where to store the result to (null = don't store)
 	 * @param string $content the content to parse
 	 * @return string the parsed result if an error occurred or an empty string
 	 */
-	public function compile_template($template,$cache_file,$content)
+	public function compile_template($tplpath,$template,$cache_file,$content)
 	{
 		// parse conditions
 		if($this->_tpl->get_conditions_enabled())
@@ -265,7 +266,7 @@ final class FWS_Template_Parser extends FWS_Object
 
 		// build php-file
 		$result = '<?php'."\n"
-		 .'function '.$this->_tpl->get_function_name($template).'($tpl,$number) {'."\n"
+		 .'function '.$this->_tpl->get_function_name($tplpath.$template).'($tpl,$number) {'."\n"
 		 .'$tplvars = $tpl->get_variables(\''.$template.'\',$number);'."\n";
 		if($this->_tpl->get_access_to_foreign_tpls())
 		{
