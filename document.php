@@ -285,12 +285,15 @@ class FWS_Document extends FWS_Object
 	{
 		if(!is_string($url) && !($url instanceof FWS_URL))
 			FWS_Helper::def_error('instance','url','FWS_URL',$url);
-		else if($url instanceof FWS_URL)
+		
+		if($url instanceof FWS_URL)
 		{
 			$url->set_absolute(true);
 			$url->set_separator('&');
 			$url = $url->to_url();
 		}
+		else
+			$url = str_replace('&amp;','&',$url);
 		
 		$this->_redirect = array(
 			'url' => $url,
@@ -309,12 +312,15 @@ class FWS_Document extends FWS_Object
 	{
 		if(!is_string($url) && !($url instanceof FWS_URL))
 			FWS_Helper::def_error('instance','url','FWS_URL',$url);
-		else if($url instanceof FWS_URL)
+		
+		if($url instanceof FWS_URL)
 		{
 			$url->set_absolute(true);
 			$url->set_separator('&');
 			$url = $url->to_url();
 		}
+		else
+			$url = str_replace('&amp;','&',$url);
 		
 		$this->finish();
 
