@@ -34,6 +34,12 @@ class FWS_AddField_Type_Enum extends FWS_AddField_Type_Default
 		$lines = $this->_data->get_values();
 		return isset($lines[$value]);
 	}
+
+	public function get_default_value()
+	{
+		$lines = $this->_data->get_values();
+		return current($lines);
+	}
 	
 	public function is_empty($value)
 	{

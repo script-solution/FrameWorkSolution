@@ -34,6 +34,11 @@ class FWS_AddField_Type_Int extends FWS_AddField_Type_Default
 	{
 		return FWS_Helper::is_integer($value);
 	}
+
+	public function get_default_value()
+	{
+		return 0;
+	}
 	
 	public function get_value_to_store($value)
 	{

@@ -58,6 +58,13 @@ interface FWS_AddField_Field
 	public function get_display($value,$link_class,$text_class,$limit = 0);
 	
 	/**
+	 * Should return a default value for this field
+	 *
+	 * @return mixed the default value
+	 */
+	public function get_default_value();
+	
+	/**
 	 * Should check if the given value is valid for this field. Returns the error-message
 	 * if it is not or an empty string. The possible return-types are:
 	 * <ul>

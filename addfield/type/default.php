@@ -40,6 +40,11 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 		
 		$this->_data = $data;
 	}
+
+	public function get_default_value()
+	{
+		return '';
+	}
 	
 	public function get_data()
 	{

@@ -54,6 +54,11 @@ class FWS_AddField_Type_Date extends FWS_AddField_Type_Default
 		$parts = explode('-',$value);
 		return checkdate($parts[1],$parts[2],$parts[0]);
 	}
+
+	public function get_default_value()
+	{
+		return FWS_Date::get_formated_date('Y-m-d');
+	}
 	
 	public function is_empty($value)
 	{
