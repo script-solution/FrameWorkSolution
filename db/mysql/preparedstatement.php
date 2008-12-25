@@ -27,8 +27,11 @@ final class FWS_DB_MySQL_PreparedStatement extends FWS_DB_PreparedStatement
 	 */
 	protected function get_value($val)
 	{
-		if(is_numeric($val))
-			return $val;
+		// ensure that we don't change something (e.g. '01' => 1)
+		if(is_int($val))
+			return (int)$val;
+		if(is_float($val))
+			return (float)$val;
 		
 		if($val === null)
 			return 'NULL';
