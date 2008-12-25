@@ -236,11 +236,32 @@ final class FWS_HTTP extends FWS_Object
 			if($dotpos === false)
 				continue;
 			
-			$this->_headers[FWS_String::substr($line,0,$dotpos)] = FWS_String::substr($line,$dotpos + 1);
+			$this->_headers[FWS_String::substr($line,0,$dotpos)] = trim(FWS_String::substr($line,$dotpos + 1));
 		}
 		
 		// return reply
-		return FWS_String::substr($reply,$cut + 4);
+		$reply = FWS_String::substr($reply,$cut + 4);
+		if(!isset($this->_headers['Transfer-Encoding']) ||
+				$this->_headers['Transfer-Encoding'] != 'chunked')
+			return $reply;
+			
+		// read chunks
+		$p = 0;
+		$res = '';
+		do {
+			$nl = FWS_String::strpos($reply,"\r\n",$p);
+			if($nl === false)
+				break;
+			$count = hexdec(FWS_String::substr($reply,$p,$nl - $p));
+			if($count > 0)
+			{
+				$res .= FWS_String::substr($reply,$nl + 2,$count);
+				$p = $nl + 4 + $count;
+			}
+		}
+		while($count > 0);
+		
+		return $res;
 	}
 	
 	protected function get_dump_vars()
