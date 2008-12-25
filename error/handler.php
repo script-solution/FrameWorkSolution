@@ -215,15 +215,29 @@ final class FWS_Error_Handler extends FWS_Singleton
 			$bt = $this->get_backtrace($backtrace);
 		
 		// log the error
-		if($this->_logger !== null)
-			$this->_logger->log($no,$msg,$file,$line,$bt);
+		try
+		{
+			if($this->_logger !== null)
+				$this->_logger->log($no,$msg,$file,$line,$bt);
+		}
+		catch(Exception $e)
+		{
+			// ignore
+		}
 		
 		// hide this error from the user?
 		if($no > 0 && (error_reporting() & $no) === 0)
 			return '';
 		
 		// return the output
-		return $this->_output->print_error($no,$msg,$file,$line,$bt);
+		try
+		{
+			return $this->_output->print_error($no,$msg,$file,$line,$bt);
+		}
+		catch(Exception $e)
+		{
+			return '';
+		}
 	}
 	
 	/**
