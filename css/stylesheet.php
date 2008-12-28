@@ -45,7 +45,7 @@
  * An usage-example:
  * <code>
  * $css = new FWS_CSS_StyleSheet(FWS_FileUtils::read('myfile.css'));
- * TODO add something usefull
+ * echo Printer::to_string($css->get_rulesets_for_class('myclass'));
  * FWS_FileUtils::write('myfile.css',$css->__toString());
  * </code>
  * 
