@@ -293,7 +293,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * You may use an array as element of <var>$values</var> and put the SQL-statement as first
 	 * element in the array. In this case it will be integrated directly into the SQL-statement.
 	 * That means you can use something like:
-	 * <code>array('myfield = myfield + 1');</code>
+	 * <code>$db->insert('mytable',array('myfield' => array('myfield + 1')));</code>
 	 *
 	 * @param string $table the table-name
 	 * @param array $values an associative array with the fields to update
@@ -319,7 +319,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * You may use an array as element of <var>$values</var> and put the SQL-statement as first
 	 * element in the array. In this case it will be integrated directly into the SQL-statement.
 	 * That means you can use something like:
-	 * <code>'myfield' => array('myfield + 1')</code>
+	 * <code>$db->update('mytable',' WHERE id = 1',array('myfield' => array('myfield + 1')));</code>
 	 *
 	 * @param string $table the table-name
 	 * @param string $where the where-clause

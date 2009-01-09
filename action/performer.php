@@ -4,7 +4,7 @@
  *
  * @version			$Id$
  * @package			FrameWorkSolution
- * @subpackage	actions
+ * @subpackage	action
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -15,7 +15,7 @@
  * And, of course, the action will also be started and finished from here.
  *
  * @package			FrameWorkSolution
- * @subpackage	actions
+ * @subpackage	action
  * @author			Nils Asmussen <nils@script-solution.de>
  */
 class FWS_Action_Performer extends FWS_Object

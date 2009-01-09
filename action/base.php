@@ -4,7 +4,7 @@
  *
  * @version			$Id$
  * @package			FrameWorkSolution
- * @subpackage	actions
+ * @subpackage	action
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
  * @link				http://www.script-solution.de
@@ -15,7 +15,7 @@
  * inherit from this class.
  *
  * @package			FrameWorkSolution
- * @subpackage	actions
+ * @subpackage	action
  * @author			Nils Asmussen <nils@script-solution.de>
  */
 abstract class FWS_Action_Base extends FWS_Object
