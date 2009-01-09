@@ -1,6 +1,21 @@
 <?php
 /**
+ * Contains the FWS_CSS_StyleSheet test
+ *
+ * @version			$Id$
+ * @package			FrameWorkSolution
+ * @subpackage	tests
+ * @author			Nils Asmussen <nils@script-solution.de>
+ * @copyright		2003-2008 Nils Asmussen
+ * @link				http://www.script-solution.de
+ */
+
+/**
  * FWS_CSS_StyleSheet test case.
+ * 
+ * @package			FrameWorkSolution
+ * @subpackage	tests
+ * @author			Nils Asmussen <nils@script-solution.de>
  */
 class FWS_CSS_StyleSheetTest extends PHPUnit_Framework_TestCase
 {
