@@ -244,15 +244,18 @@ final class FWS_HTTP extends FWS_Object
 		if(!isset($this->_headers['Transfer-Encoding']) ||
 				$this->_headers['Transfer-Encoding'] != 'chunked')
 			return $reply;
-			
+		
 		// read chunks
 		$p = 0;
+		$len = FWS_String::strlen($reply);
 		$res = '';
 		do {
+			if($p >= $len)
+				break;
 			$nl = FWS_String::strpos($reply,"\r\n",$p);
 			if($nl === false)
 				break;
-			$count = hexdec(FWS_String::substr($reply,$p,$nl - $p));
+			$count = hexdec(trim(FWS_String::substr($reply,$p,$nl - $p)));
 			if($count > 0)
 			{
 				$res .= FWS_String::substr($reply,$nl + 2,$count);
