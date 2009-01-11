@@ -425,7 +425,12 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_today()
 	{
-		return $this->_date->format('dmY') == FWS_Date::$_today;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
+		$res = $this->_date->format('dmY') == FWS_Date::$_today;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_user);
+		return $res;
 	}
 	
 	/**
@@ -433,7 +438,12 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_yesterday()
 	{
-		return $this->_date->format('dmY') == FWS_Date::$_yesterday;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
+		$res = $this->_date->format('dmY') == FWS_Date::$_yesterday;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_user);
+		return $res;
 	}
 	
 	/**
@@ -441,7 +451,12 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_tomorrow()
 	{
-		return $this->_date->format('dmY') == FWS_Date::$_tomorrow;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
+		$res = $this->_date->format('dmY') == FWS_Date::$_tomorrow;
+		if($this->_output_tz != self::TZ_GMT)
+			$this->_date->setTimezone(FWS_Date::$_timezone_user);
+		return $res;
 	}
 	
 	/**
@@ -672,7 +687,11 @@ final class FWS_Date extends FWS_Object
 
 		if($relative)
 		{
+			if($this->_output_tz != self::TZ_GMT)
+				$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
 			$date = $this->_date->format('dmY');
+			if($this->_output_tz != self::TZ_GMT)
+				$this->_date->setTimezone(FWS_Date::$_timezone_user);
 			if($date == FWS_Date::$_today)
 			{
 				if($show_time)
