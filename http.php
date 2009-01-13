@@ -247,18 +247,18 @@ final class FWS_HTTP extends FWS_Object
 		
 		// read chunks
 		$p = 0;
-		$len = FWS_String::strlen($reply);
+		$len = strlen($reply);
 		$res = '';
 		do {
 			if($p >= $len)
 				break;
-			$nl = FWS_String::strpos($reply,"\r\n",$p);
+			$nl = strpos($reply,"\r\n",$p);
 			if($nl === false)
 				break;
-			$count = hexdec(trim(FWS_String::substr($reply,$p,$nl - $p)));
+			$count = hexdec(trim(substr($reply,$p,$nl - $p)));
 			if($count > 0)
 			{
-				$res .= FWS_String::substr($reply,$nl + 2,$count);
+				$res .= substr($reply,$nl + 2,$count);
 				$p = $nl + 4 + $count;
 			}
 		}

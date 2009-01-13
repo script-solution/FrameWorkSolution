@@ -173,8 +173,7 @@ class FWS_User_Current extends FWS_Object
 	 */
 	public function finalize()
 	{
-		// store current date and the serialized session-data to write it to the session-storage
-		$this->_user->set_date(time());
+		// store the serialized session-data to write it to the session-storage
 		$this->_user->set_session_data(serialize($this->_session_data));
 	}
 	
@@ -619,9 +618,10 @@ class FWS_User_Current extends FWS_Object
 			$this->_user = $sessions->get_new_user();
 		}
 		
-		// store current ip and user-agent
+		// store current ip, user-agent and date
 	  $this->_user->set_user_agent($user_agent);
 	  $this->_user->set_user_ip($user_ip);
+		$this->_user->set_date(time());
 	  
 	  // create a new session?
 	  if($user === null)

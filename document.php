@@ -10,7 +10,7 @@
  */
 
 /**
- * This class can be used to build a the response that is send to the browser. You can set
+ * This class can be used to build the response that is send to the browser. You can set
  * the things such as MIME-type, charset, headers in general, wether GZip should be used,
  * wether a redirection should be done and so on.
  * <br>

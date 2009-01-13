@@ -15,6 +15,16 @@
 if(!defined('FWS_PATH'))
 	die('Please define "FWS_PATH" first!');
 
+/**
+ * The version of the framework
+ */
+define('FWS_VERSION','FrameWorkSolution v1.00 Beta2');
+
+/**
+ * The version-id of frameworksolution
+ */
+define('FWS_VERSION_ID','100b2');
+
 // include the path-object. we need this for the autoload-function
 include_once(FWS_PATH.'utilbase.php');
 include_once(FWS_PATH.'path.php');
