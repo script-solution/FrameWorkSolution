@@ -19,18 +19,6 @@
  */
 class FWS_AddField_Type_Enum extends FWS_AddField_Type_Default
 {
-	/**
-	 * @see FWS_AddField_Type_Default::get_display_value()
-	 *
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	protected function get_display_value($value)
-	{
-		$lines = $this->_data->get_values();
-		return isset($lines[$value]) ? $lines[$value] : $value;
-	}
-
 	protected function get_formular_field_impl($formular,$value)
 	{
 		$locale = FWS_Props::get()->locale();

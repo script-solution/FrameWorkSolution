@@ -134,7 +134,7 @@ class FWS_HTML_ComboBox extends FWS_HTML_List
 		foreach($this->get_options() as $k => $v)
 		{
 			$html .= '	<option value="'.$k.'"';
-			if($this->_multiple && is_array($selected) && in_array($k,$selected))
+			if($this->_multiple && in_array($k,$selected))
 				$html .= ' selected="selected"';
 			else if(!$this->_multiple && $k == $selected)
 				$html .= ' selected="selected"';

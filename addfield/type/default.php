@@ -130,10 +130,9 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 		$custom = $this->_data->get_custom_display();
 		if($custom)
 		{
-			$disval = $display;
 			$display = str_replace('{link_class}',$link_class,$custom);
 			$display = str_replace('{text_class}',$text_class,$display);
-			$display = str_replace('{value}',$disval,$display);
+			$display = str_replace('{value}',$value,$display);
 		}
 		
 		if($limit)
