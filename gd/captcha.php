@@ -689,7 +689,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	 * 
 	 * @param boolean $use_wave
 	 */
-	public function set_wave($use_wave,$amplitude = 16,$period = 6)
+	public function set_wave($use_wave,$amplitude = 6,$period = 16)
 	{
 		if(!FWS_Helper::is_integer($amplitude) || $amplitude <= 0)
 			FWS_Helper::def_error('intgt0','amplitude',$amplitude);
