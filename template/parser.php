@@ -605,7 +605,7 @@ final class FWS_Template_Parser extends FWS_Object
 		else if(preg_match('/^'.$this->_regex_var.'$/',$value))
 		{
 			$dotpos = strrpos($value,'.');
-			if($dotpos === false)
+			if($dotpos === false || FWS_String::strpos($value,'#') !== false)
 				$res .= $this->_parse_var($value);
 			else
 			{
