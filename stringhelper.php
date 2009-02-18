@@ -256,8 +256,8 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 * Builds the sql-command for a date-range
 	 * 
 	 * @param string $field the name of the field
-	 * @param int $from the from-value
-	 * @param int $to the to-value
+	 * @param string $from the from-value
+	 * @param string $to the to-value
 	 * @return string the sql-command
 	 */
 	public static function build_date_range_sql($field,$from,$to)
@@ -265,6 +265,8 @@ final class FWS_StringHelper extends FWS_UtilBase
 		if(empty($field))
 			FWS_Helper::def_error('notempty','field',$field);
 	
+		$from = trim($from);
+		$to = trim($to);
 		$where = '';
 		if($from != '' || $to != '')
 		{

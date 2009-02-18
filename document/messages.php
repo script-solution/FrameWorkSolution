@@ -113,6 +113,19 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
+	 * Clears all messages of given type
+	 *
+	 * @param int $type the type
+	 */
+	public function clear_type($type)
+	{
+		if(!$this->_is_valid_type($type))
+			FWS_Helper::error('Invalid type: '.$type.'!');
+		
+		$this->_messages[$type] = array();
+	}
+	
+	/**
 	 * @return array an array of links that may be displayed somewhere
 	 */
 	public final function get_links()

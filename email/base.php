@@ -81,7 +81,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	 *
 	 * @var string
 	 */
-	private $_error_message = '';
+	protected $_error_message = '';
 
 	/**
 	 * Constructor
@@ -149,6 +149,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	 */
 	public final function set_recipient($value)
 	{
+		$this->_recipient = '';
 		$recipients = explode(',',$value);
 		foreach($recipients as $recipient)
 		{
