@@ -38,6 +38,9 @@ error_reporting(E_ALL | E_STRICT);
 // we don't want to have magic-quotes-runtime enabled
 set_magic_quotes_runtime(0);
 
+// we don't want to escape ' by '' instead of \', either
+@ini_set('magic_quotes_sybase',false);
+
 // set default timezone for the case that FWS_Date is not used
 date_default_timezone_set('Europe/Berlin');
 
