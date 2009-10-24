@@ -406,6 +406,9 @@ final class FWS_Highlighting_Processor extends FWS_Object
 		// add the rest
 		if($p != $len)
 			$res .= $this->_decorator->get_text(FWS_String::substr($t,$p));
+		// no stuff for highlighting found?
+		else if($len == 0)
+			$res = $t;
 		
 		return $res;
 	}
