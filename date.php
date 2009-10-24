@@ -38,23 +38,23 @@ final class FWS_Date extends FWS_Object
 	const TZ_GMT		= 1;
 	
 	/**
-	 * The timestamp of today
+	 * The 'dmY' of today: array('<in User-TZ>','<in GMT>')
 	 *
-	 * @var integer
+	 * @var array
 	 */
 	private static $_today;
-
+	
 	/**
-	 * The timestamp of yesterday
+	 * The 'dmY' of yesterday: array('<in User-TZ>','<in GMT>')
 	 *
-	 * @var integer
+	 * @var array
 	 */
 	private static $_yesterday;
 	
 	/**
-	 * The timestamp of tomorrow
+	 * The 'dmY' of tomorrow: array('<in User-TZ>','<in GMT>')
 	 *
-	 * @var integer
+	 * @var array
 	 */
 	private static $_tomorrow;
 	
@@ -329,14 +329,27 @@ final class FWS_Date extends FWS_Object
 			FWS_Date::$_timezone_gmt = new DateTimeZone('GMT');
 			FWS_Date::$_timezone_user = new DateTimeZone($locale->get_timezone());
 			
-			// store today, yesterday and tomorrow
-			$d = new DateTime('@'.time());
+			// init 'dmY's
+			FWS_Date::$_today = array();
+			FWS_Date::$_yesterday = array();
+			FWS_Date::$_tomorrow = array();
 			
-			FWS_Date::$_today = $d->format('dmY');
+			// store today, yesterday and tomorrow for GMT
+			$d = new DateTime('@'.time());
+			FWS_Date::$_today[FWS_Date::TZ_GMT] = $d->format('dmY');
 			$d->modify('-1 day');
-			FWS_Date::$_yesterday = $d->format('dmY');
+			FWS_Date::$_yesterday[FWS_Date::TZ_GMT] = $d->format('dmY');
 			$d->modify('+2 days');
-			FWS_Date::$_tomorrow = $d->format('dmY');
+			FWS_Date::$_tomorrow[FWS_Date::TZ_GMT] = $d->format('dmY');
+			
+			// store today, yesterday and tomorrow for user-tz
+			$d = new DateTime('@'.time());
+			$d->setTimezone(FWS_Date::$_timezone_user);
+			FWS_Date::$_today[FWS_Date::TZ_USER] = $d->format('dmY');
+			$d->modify('-1 day');
+			FWS_Date::$_yesterday[FWS_Date::TZ_USER] = $d->format('dmY');
+			$d->modify('+2 days');
+			FWS_Date::$_tomorrow[FWS_Date::TZ_USER] = $d->format('dmY');
 		}
 		
 		// is it a timestamp?
@@ -425,12 +438,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_today()
 	{
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
-		$res = $this->_date->format('dmY') == FWS_Date::$_today;
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_user);
-		return $res;
+		return $this->_date->format('dmY') == FWS_Date::$_today[$this->_output_tz];
 	}
 	
 	/**
@@ -438,12 +446,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_yesterday()
 	{
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
-		$res = $this->_date->format('dmY') == FWS_Date::$_yesterday;
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_user);
-		return $res;
+		return $this->_date->format('dmY') == FWS_Date::$_yesterday[$this->_output_tz];
 	}
 	
 	/**
@@ -451,12 +454,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function is_tomorrow()
 	{
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
-		$res = $this->_date->format('dmY') == FWS_Date::$_tomorrow;
-		if($this->_output_tz != self::TZ_GMT)
-			$this->_date->setTimezone(FWS_Date::$_timezone_user);
-		return $res;
+		return $this->_date->format('dmY') == FWS_Date::$_tomorrow[$this->_output_tz];
 	}
 	
 	/**
@@ -687,12 +685,8 @@ final class FWS_Date extends FWS_Object
 
 		if($relative)
 		{
-			if($this->_output_tz != self::TZ_GMT)
-				$this->_date->setTimezone(FWS_Date::$_timezone_gmt);
 			$date = $this->_date->format('dmY');
-			if($this->_output_tz != self::TZ_GMT)
-				$this->_date->setTimezone(FWS_Date::$_timezone_user);
-			if($date == FWS_Date::$_today)
+			if($date == FWS_Date::$_today[$this->_output_tz])
 			{
 				if($show_time)
 				{
@@ -715,9 +709,9 @@ final class FWS_Date extends FWS_Object
 
 				$string = '<b>'.$locale->lang('today').'</b>';
 			}
-			else if($date == FWS_Date::$_yesterday)
+			else if($date == FWS_Date::$_yesterday[$this->_output_tz])
 				$string = $locale->lang('yesterday');
-			else if($date == FWS_Date::$_tomorrow)
+			else if($date == FWS_Date::$_tomorrow[$this->_output_tz])
 				$string = $locale->lang('tomorrow');
 			else
 				$string = $this->_date->format($locale->get_dateformat(FWS_Locale::FORMAT_DATE));
