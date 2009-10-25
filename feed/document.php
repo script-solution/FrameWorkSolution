@@ -80,6 +80,7 @@ final class FWS_Feed_Document extends FWS_Object
 	 *
 	 * @param string $title the title of the document
 	 * @param int $date the timestamp for the document
+	 * @param string $encoding the encoding to use (default = UTF-8)
 	 */
 	public function __construct($title,$date,$encoding = 'UTF-8')
 	{
