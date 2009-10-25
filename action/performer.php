@@ -142,7 +142,7 @@ class FWS_Action_Performer extends FWS_Object
 	 * 	)
 	 * </code>
 	 * The method assumes that the action-file will be:
-	 * <code>modules/<moduleName>/action_<actionName>.php</code>
+	 * <code><modfolder>/<moduleName>/action_<actionName>.php</code>
 	 * and the action-class:
 	 * <code><prefix><moduleName>_<actionName></code>
 	 *

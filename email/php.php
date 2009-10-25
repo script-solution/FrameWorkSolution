@@ -43,14 +43,14 @@ final class FWS_Email_PHP extends FWS_Email_Base
 			$message = $this->get_message();
 
 		// send the email...
+		// the additional_parameters-parameter is disabled in safe-mode
 		if(FWS_PHPConfig::is_safemode_enabled())
-		{
+			$res = @mail($this->get_recipient(),$this->get_subject(),$message,$headers);
+		else {
 			$res = @mail(
 				$this->get_recipient(),$this->get_subject(),$message,$headers,'-f '.$this->get_from()
 			);
 		}
-		else
-			$res = @mail($this->get_recipient(),$this->get_subject(),$message,$headers);
 
 		if(!$res)
 		{
