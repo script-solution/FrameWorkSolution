@@ -100,18 +100,26 @@ final class FWS_CSS_Block_Import extends FWS_Object implements FWS_CSS_Block
 	}
 	
 	/**
-	 * Builds the string-representation of this ruleset. This will be valid CSS
+	 * @see FWS_CSS_Block::to_css()
 	 *
-	 * @param string $indent the indent for the string
-	 * @return string the CSS-code
+	 * @param string $indent
+	 * @return string
 	 */
-	public function __toString($indent = '')
+	public function to_css($indent = '')
 	{
 		$str = $indent.'@import "'.$this->_uri.'"';
 		if(count($this->_media))
 			$str .= ' '.implode(', ',$this->_media);
 		$str .= ';';
 		return $str;
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 
 	/**

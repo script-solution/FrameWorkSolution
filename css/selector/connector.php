@@ -139,15 +139,23 @@ final class FWS_CSS_Selector_Connector extends FWS_Object implements FWS_CSS_Sel
 	}
 
 	/**
-	 * @see FWS_CSS_Selector::__toString()
+	 * @see FWS_CSS_Selector::to_css()
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function to_css()
 	{
 		if($this->_con == self::CON_ANY_CHILD)
 			return $this->_lsel.$this->_con.$this->_rsel;
 		return $this->_lsel.' '.$this->_con.' '.$this->_rsel;
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 
 	/**

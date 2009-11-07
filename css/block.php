@@ -40,5 +40,13 @@ interface FWS_CSS_Block
 	 * @return int the type of this block: self::COMMENT or self::RULESET
 	 */
 	public function get_type();
+	
+	/**
+	 * Builds the CSS-representation of this block
+	 *
+	 * @param string $indent the indent for the string
+	 * @return string the CSS-code
+	 */
+	public function to_css($indent = '');
 }
 ?>

@@ -51,17 +51,25 @@ final class FWS_CSS_Selector_ID extends FWS_CSS_Selector_Type
 	}
 
 	/**
-	 * @see FWS_CSS_Selector_Type::__toString()
+	 * @see FWS_CSS_Selector_Type::to_css()
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function to_css()
 	{
 		$res = '';
 		if($this->get_tagname() != '*')
 			$res .= $this->get_tagname();
 		$res .= '#'.$this->_id;
 		return $res;
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 
 	/**

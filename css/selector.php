@@ -24,6 +24,6 @@ interface FWS_CSS_Selector
 	 * 
 	 * @return string the CSS-code
 	 */
-	public function __toString();
+	public function to_css();
 }
 ?>

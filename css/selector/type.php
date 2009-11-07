@@ -60,13 +60,21 @@ class FWS_CSS_Selector_Type extends FWS_Object implements FWS_CSS_Selector
 	}
 	
 	/**
-	 * @see FWS_CSS_Selector::__toString()
+	 * @see FWS_CSS_Selector::to_css()
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function to_css()
 	{
 		return $this->_tagname;
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 	
 	/**

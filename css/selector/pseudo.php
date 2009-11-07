@@ -65,13 +65,21 @@ final class FWS_CSS_Selector_Pseudo extends FWS_Object implements FWS_CSS_Select
 	}
 
 	/**
-	 * @see FWS_CSS_Selector::__toString()
+	 * @see FWS_CSS_Selector::to_css()
 	 *
 	 * @return string
 	 */
-	public function __toString()
+	public function to_css()
 	{
 		return $this->_selector.':'.$this->_pseudo;
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 
 	/**

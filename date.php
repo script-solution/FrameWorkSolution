@@ -128,18 +128,21 @@ final class FWS_Date extends FWS_Object
 	/**
 	 * A convenience method for:
 	 * <code>
-	 * 	$d = new FWS_Date($date);
+	 * 	$d = new FWS_Date($date,$input_tz,$output_tz);
 	 * 	return $d->to_format($format);
 	 * </code>
 	 * 
 	 * @param string $format the date-format
 	 * @param string|array|int $date the date ('now' by default)
+	 * @param int $input_tz the input-timezone. That means the timezone of the date you specify
+	 * @param int $output_tz the output-timezone. That means the timezone in which you want to
 	 * @return string the formated date to print
 	 * @see to_format
 	 */
-	public static function get_formated_date($format,$date = 'now')
+	public static function get_formated_date($format,$date = 'now',$input_tz = self::TZ_GMT,
+		$output_tz = self::TZ_USER)
 	{
-		$d = new FWS_Date($date);
+		$d = new FWS_Date($date,$input_tz,$output_tz);
 		return $d->to_format($format);
 	}
 		
@@ -516,7 +519,11 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function to_timestamp()
 	{
-		$offset = $this->_output_tz != self::TZ_GMT ? $this->_date->getOffset() : 0;
+		// we have to substract the timezone-offset from GMT from the timestamp afterwards
+		if($this->_output_tz != self::TZ_GMT)
+			$offset = self::$_timezone_user->getOffset(new DateTime('now',FWS_Date::$_timezone_gmt));
+		else
+			$offset = 0;
 		
 		// do it this way because calling the methods of this class is too slow
 		list($h,$i,$s,$m,$d,$y) = explode(',',$this->_date->format('H,i,s,m,d,Y'));

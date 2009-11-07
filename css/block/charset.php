@@ -56,14 +56,22 @@ final class FWS_CSS_Block_Charset extends FWS_Object implements FWS_CSS_Block
 	}
 	
 	/**
-	 * Builds the string-representation of this ruleset. This will be valid CSS
+	 * @see FWS_CSS_Block::to_css()
 	 *
-	 * @param string $indent the indent for the string
-	 * @return string the CSS-code
+	 * @param string $indent
+	 * @return string
 	 */
-	public function __toString($indent = '')
+	public function to_css($indent = '')
 	{
 		return $indent.'@charset "'.$this->_charset.'";';
+	}
+	
+	/**
+	 * @return string the string-representation
+	 */
+	public function __toString()
+	{
+		return $this->to_css();
 	}
 
 	/**

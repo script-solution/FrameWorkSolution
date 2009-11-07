@@ -794,7 +794,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 					$indent = '';
 				$lastmedia = $media;
 			}
-			$css .= $block->__toString($indent)."\n\n";
+			$css .= $block->to_css($indent)."\n\n";
 		}
 		return $css;
 	}
