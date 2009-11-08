@@ -815,8 +815,13 @@ final class FWS_Template_Handler extends FWS_Object
 				$this->_showed_chmod_warning = true;
 			}
 
-			// we don't want to eval the php start- and end-tags
-			eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
+			// if the class is already defined, don't define it again
+			// (don't use the autoloader here because the generated classes don't follow the naming-rules)
+			if(class_exists($this->get_function_name($tplpath.$tpl),false))
+			{
+				// we don't want to eval the php start- and end-tags
+				eval(FWS_String::substr($tpl_content,5,FWS_String::strlen($tpl_content) - 2));
+			}
 		}
 	}
 	

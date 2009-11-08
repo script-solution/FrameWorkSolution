@@ -175,7 +175,7 @@ class FWS_Config_Manager extends FWS_Object
 				$data = $item->get_data();
 				$value = $item->get_value();
 				$this->_storage->store($data->get_id(),$value);
-				$data->set_value($value);
+				$data->set_value(stripslashes($value));
 				$i++;
 			}
 		}
