@@ -458,6 +458,11 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 				$this->_keywords[$id][] = (string)$kw;
 		}
 		
+		// we have to sort the words descending by length because we want to prefer longer words
+		// do this here once to improve performance
+		foreach($this->_keywords as $id => $kws)
+			usort($this->_keywords[$id],array($this,'_sort_words'));
+		
 		// attributes
 		$this->_symbol_attrs = $this->_build_attributes($xml->colors->symbols);
 		$this->_number_attrs = $this->_build_attributes($xml->colors->numbers);
@@ -491,6 +496,18 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * Sorts the words descending by length
+	 *
+	 * @param string $a the first word
+	 * @param string $b the second word
+	 * @return int the compare-result
+	 */
+	private function _sort_words($a,$b)
+	{
+		return FWS_String::strlen($b) - FWS_String::strlen($a);
 	}
 	
 	/**

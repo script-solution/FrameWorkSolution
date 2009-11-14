@@ -40,6 +40,7 @@ interface FWS_Highlighting_Language
 	 * Returns an array of arrays with all different keyword-types that
 	 * should be highlighted. It maps an id to an array with all keywords.
 	 * The id will be used for the attributes.
+	 * NOTE: The keywords have to be sorted by length descending!
 	 * 
 	 * @return array the map: <code>array(<id1> => array(<str1>,<str2>,...),...)</code>
 	 * @see get_keyword_attributes()
@@ -49,6 +50,7 @@ interface FWS_Highlighting_Language
 
 	/**
 	 * Returns all keywords of the given type
+	 * NOTE: The keywords have to be sorted by length descending!
 	 * 
 	 * @param mixed $key the key in the keywords-list
 	 * @return array the list

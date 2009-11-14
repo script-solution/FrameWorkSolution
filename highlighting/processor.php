@@ -458,8 +458,8 @@ final class FWS_Highlighting_Processor extends FWS_Object
 		if(count($words) == 0)
 			return;
 		
-		// we have to sort the words descending by length because we want to prefer longer words
-		usort($words,array($this,'_sort_words'));
+		// we assume here that the words are sorted descending by length
+		// because we want to prefer longer words
 		
 		// now we build the pattern for the regular expression. it seems to be slightly faster to
 		// use preg_match_all() just once for all words.
