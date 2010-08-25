@@ -53,8 +53,8 @@ class FWS_CSS_Selector_Type extends FWS_Object implements FWS_CSS_Selector
 	 */
 	public final function set_tagname($tagname)
 	{
-		if(!preg_match('/^\*|([a-z\-_][a-z\-_0-9]*)$/i',$tagname))
-			FWS_Helper::error('The tag-name has to be an identifier or "*"! (got "'.$tagname.'")');
+		if($tagname != '' && !preg_match('/^\*|([a-z\-_][a-z\-_0-9]*)$/i',$tagname))
+			FWS_Helper::error('The tag-name has to be an identifier or "*" or empty! (got "'.$tagname.'")');
 		
 		$this->_tagname = $tagname;
 	}
