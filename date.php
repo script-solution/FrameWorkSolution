@@ -157,7 +157,7 @@ final class FWS_Date extends FWS_Object
 		if(!FWS_Helper::is_integer($timestamp))
 			return false;
 		
-		return $timestamp >= 0 && $timestamp < ~(1 << 31);
+		return $timestamp >= 0 && $timestamp < PHP_INT_MAX;
 	}
 	
 	/**
