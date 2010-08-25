@@ -179,9 +179,9 @@ final class FWS_StringHelper extends FWS_UtilBase
 	{
 		// borrowed from php.net :)
 		$p = '/^[a-z0-9!#$%&*+-=?^_`{|}~]+(\.[a-z0-9!#$%&*+-=?^_`{|}~]+)*';
-	  $p.= '@([-a-z0-9]+\.)+([a-z]{2,3}';
-	  $p.= '|info|arpa|aero|coop|name|museum)$/ix';
-	  return preg_match($p,$mail);
+		$p.= '@([-a-z0-9]+\.)+([a-z]{2,3}';
+		$p.= '|info|arpa|aero|coop|name|museum)$/ix';
+		return preg_match($p,$mail);
 	}
 	
 	/**

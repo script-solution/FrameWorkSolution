@@ -411,6 +411,9 @@ final class FWS_GD_Image extends FWS_Object
 			case 'xbm':
 				imagexbm($this->_image,$file);
 				break;
+			default:
+				FWS_Helper::error('Unknown format "'.$format.'"');
+				break;
 		}
 	}
 	

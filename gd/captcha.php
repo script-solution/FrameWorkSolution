@@ -386,6 +386,13 @@ final class FWS_GD_Captcha extends FWS_Object
 	private $_used_chars = '';
 	
 	/**
+	 * Optionally, the specified chars to use
+	 *
+	 * @var string
+	 */
+	private $_desired_chars = '';
+	
+	/**
 	 * String for debugging
 	 *
 	 * @var string
@@ -579,6 +586,18 @@ final class FWS_GD_Captcha extends FWS_Object
 			FWS_Helper::def_error('intgt0','number',$number);
 		
 		$this->_number_of_chars = $number;
+		$this->_desired_chars = '';
+	}
+	
+	/**
+	 * Sets the chars to use (sets the number of chars implicitly)
+	 *
+	 * @param string $chars the chars to use
+	 */
+	public function set_chars($chars)
+	{
+		$this->_desired_chars = (string)$chars;
+		$this->_number_of_chars = strlen($chars);
 	}
 
 	/**
@@ -791,7 +810,7 @@ final class FWS_GD_Captcha extends FWS_Object
 		for($i = 0;$i < $this->_number_of_chars;$i++)
 		{
 			$width = 0;
-			$char = '';
+			$char = $this->_desired_chars != '' ? $this->_desired_chars[$i] : '';
 			
 			if(count($this->_ttf_fonts) > 0 &&
 				$this->_ttf_font_propability > 0 &&
@@ -938,13 +957,16 @@ final class FWS_GD_Captcha extends FWS_Object
 	 * 
 	 * @param int $x the x-position to use
 	 * @param int $width the width of the char
-	 * @param char $char the character that has been created
+	 * @param char $char the character that has been created ('' = random)
 	 */
 	private function add_ttf_char($x,&$width,&$char)
 	{
 		$border = 10;
-		$char_names = array_keys($this->_chars);
-		$char = $char_names[mt_rand(0,count($this->_chars) - 1)];
+		if($char == '')
+		{
+			$char_names = array_keys($this->_chars);
+			$char = $char_names[mt_rand(0,count($this->_chars) - 1)];
+		}
 		$color = $this->_bg->get_readable_random_foreground();
 		$angle = mt_rand(-$this->_angle_difference,$this->_angle_difference);
 		
@@ -972,7 +994,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	 * 
 	 * @param int $img_width contains the used image-width after the call
 	 * @param int $img_height contains the used image-height after the call
-	 * @param char $char the character which the image contains
+	 * @param char $char the character which the image contains ('' = random)
 	 * @return FWS_GD_Image the created image
 	 */
 	private function create_char_image(&$img_width,&$img_height,&$char)
@@ -995,8 +1017,11 @@ final class FWS_GD_Captcha extends FWS_Object
 			$trans_colour = $this->_bg;
 		$img->set_background($trans_colour);
 		
-		$char_names = array_keys($this->_chars);
-		$char = $char_names[mt_rand(0,count($this->_chars) - 1)];
+		if($char == '')
+		{
+			$char_names = array_keys($this->_chars);
+			$char = $char_names[mt_rand(0,count($this->_chars) - 1)];
+		}
 		$color = $this->_bg->get_readable_random_foreground();
 		
 		// draw the character
