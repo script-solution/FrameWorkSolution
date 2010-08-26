@@ -262,11 +262,11 @@ final class FWS_GD_Color extends FWS_Object
 	public function get_hex($with_alpha = true,$with_hash = true)
 	{
 		$c = $with_hash ? '#' : '';
-		$c .= sprintf('%02d',dechex($this->_r));
-		$c .= sprintf('%02d',dechex($this->_g));
-		$c .= sprintf('%02d',dechex($this->_b));
+		$c .= sprintf('%02x',$this->_r);
+		$c .= sprintf('%02x',$this->_g);
+		$c .= sprintf('%02x',$this->_b);
 		if($with_alpha)
-			$c .= sprintf('%02d',dechex($this->_alpha));
+			$c .= sprintf('%02x',$this->_alpha);
 		return FWS_String::strtoupper($c);
 	}
 	

@@ -189,6 +189,52 @@ class FWS_DateTest extends PHPUnit_Framework_TestCase
 		self::assertEquals($d->to_format($df),date($df,$ts));
 		
 		
+		// now use a date in daylight-saving-time
+		$date = array(10,15,12,8,25,2008);
+		list($h,$i,$s,$m,$d,$y) = $date;
+		$ts = mktime($h,$i,$s,$m,$d,$y);
+		$gts = gmmktime($h,$i,$s,$m,$d,$y);
+		
+		$d = new FWS_Date($ts,FWS_Date::TZ_GMT,FWS_Date::TZ_GMT);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),gmdate($df,$ts));
+		
+		$d = new FWS_Date($ts,FWS_Date::TZ_GMT,FWS_Date::TZ_USER);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),date($df,$ts));
+		
+		// ts = seconds from '2008-08-25 09:15:12 +0000' to '1970-01-01 00:00:00 +0000'
+		// now we assume that the timestamp is already in user-time. therefore:
+		// ts = <2008-01-25 09:15:12 +0200> or <2008-01-25 07:15:12 +0000>
+		// that means we will get 2 hour less compared to assuming an GMT timestamp
+		$d = new FWS_Date($ts,FWS_Date::TZ_USER,FWS_Date::TZ_GMT);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),gmdate($df,strtotime('@'.$ts.' -2hour')));
+		
+		// the same as above, but now interpreted in user-time, therefore 2 hour less
+		// compared to assuming an GMT-timestamp, but using date instead of gmdate.
+		$d = new FWS_Date($ts,FWS_Date::TZ_USER,FWS_Date::TZ_USER);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),date($df,strtotime('@'.$ts.' -2hour')));
+		
+		// now the same, but using the date-array instead of the timestamp
+		$d = new FWS_Date($date,FWS_Date::TZ_GMT,FWS_Date::TZ_GMT);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),gmdate($df,$gts));
+		
+		$d = new FWS_Date($date,FWS_Date::TZ_GMT,FWS_Date::TZ_USER);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),date($df,$gts));
+		
+		$d = new FWS_Date($date,FWS_Date::TZ_USER,FWS_Date::TZ_GMT);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),gmdate($df,$ts));
+		
+		$d = new FWS_Date($date,FWS_Date::TZ_USER,FWS_Date::TZ_USER);
+		echo $d->to_format($df)."<br>";
+		self::assertEquals($d->to_format($df),date($df,$ts));
+		
+		
 		// some tests to an array as first argument
 		$current = time();
 		$c = explode(',',gmdate('Y,m,d,H,i,s',$current));

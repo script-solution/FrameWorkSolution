@@ -519,16 +519,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function to_timestamp()
 	{
-		// we have to substract the timezone-offset from GMT from the timestamp afterwards
-		if($this->_output_tz != self::TZ_GMT)
-			$offset = self::$_timezone_user->getOffset(new DateTime('now',FWS_Date::$_timezone_gmt));
-		else
-			$offset = 0;
-		
-		// do it this way because calling the methods of this class is too slow
-		list($h,$i,$s,$m,$d,$y) = explode(',',$this->_date->format('H,i,s,m,d,Y'));
-		$ts = gmmktime($h,$i,$s,$m,$d,$y);
-		return $ts - $offset;
+		return $this->_date->format('U');
 	}
 	
 	/**
