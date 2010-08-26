@@ -32,7 +32,10 @@ class FWS_AddField_Type_Int extends FWS_AddField_Type_Default
 	
 	protected function is_valid_value_impl($value)
 	{
-		return FWS_Helper::is_integer($value);
+		if(!FWS_Helper::is_integer($value))
+			return false;
+		$regex = $this->_data->get_validation();
+		return $regex == '' || preg_match($regex,$value);
 	}
 
 	public function get_default_value()
