@@ -50,7 +50,7 @@ function FWS_Ajax()
 		
 		// does not work in IE
 		// TODO: the special chars will not be transferred correctly in IE. how to fix that?
-		if(Browser.isIE)
+		if(Browser.isIE && cxmlHttp.overrideMimeType)
 			cxmlHttp.overrideMimeType(this.mimeType);
 		
 		// build callback
