@@ -159,9 +159,16 @@ class FWS_Printer extends FWS_Object
 	 */
 	public function __toString()
 	{
-		$str = $this->_build_string($this->_var);
-		if($this->_use_html)
-			$str = $this->_to_html($str);
+		try
+		{
+			$str = $this->_build_string($this->_var);
+			if($this->_use_html)
+				$str = $this->_to_html($str);
+		}
+		catch(Exception $e)
+		{
+			$str = $e->__toString();
+		}
 		return $str;
 	}
 	
