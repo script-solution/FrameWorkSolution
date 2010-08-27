@@ -97,7 +97,7 @@ class FWS_Progress_ManagerTestTask implements FWS_Progress_Task
 	public function run($pos,$ops)
 	{
 		for($i = 0;$i < $ops;$i++)
-			$this->_x++;
+			++$this->_x;
 	}
 }
 ?>

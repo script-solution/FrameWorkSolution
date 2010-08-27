@@ -644,9 +644,6 @@ class FWS_User_Current extends FWS_Object
 	 */
 	private function _assign_new_session()
 	{
-		$cookies = FWS_Props::get()->cookies();
-		$sessions = FWS_Props::get()->sessions();
-
 		// generate new session id and store it via cookie
 	  $this->_user->set_session_id($this->_generate_session_id());
 	}
