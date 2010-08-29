@@ -100,7 +100,7 @@ final class FWS_String extends FWS_UtilBase
 	 * @param string $haystack the string to search in
 	 * @param string $needle the string to search
 	 * @param int $offset optional you can specify the start-position
-	 * @return the last position of <var>$needle</var> in <var>$haystack</var> or false if
+	 * @return int the last position of <var>$needle</var> in <var>$haystack</var> or false if
 	 * 	not found
 	 */
 	public static function strrpos($haystack,$needle,$offset = 0)
@@ -117,7 +117,7 @@ final class FWS_String extends FWS_UtilBase
 	 * @param string $haystack the string to search in
 	 * @param string $needle the string to search
 	 * @param int $offset optional you can specify the start-position
-	 * @return the first position of <var>$needle</var> in <var>$haystack</var> or false if
+	 * @return int the first position of <var>$needle</var> in <var>$haystack</var> or false if
 	 * 	not found
 	 */
 	public static function strpos($haystack,$needle,$offset = 0)
@@ -134,7 +134,7 @@ final class FWS_String extends FWS_UtilBase
 	 * @param string $haystack the string to search in
 	 * @param string $needle the string to search
 	 * @param int $offset optional you can specify the start-position
-	 * @return the first position of <var>$needle</var> in <var>$haystack</var> or false if
+	 * @return int the first position of <var>$needle</var> in <var>$haystack</var> or false if
 	 * 	not found
 	 */
 	public static function stripos($haystack,$needle,$offset = 0)
@@ -188,7 +188,7 @@ final class FWS_String extends FWS_UtilBase
 	 * @param string $str the string
 	 * @param int $start the start-position
 	 * @param int $len the length (optional)
-	 * @return the substring
+	 * @return string the substring
 	 */
 	public static function substr($str,$start,$len = null)
 	{
