@@ -44,15 +44,18 @@ class FWS_Printer extends FWS_Object
 	 * </code>
 	 *
 	 * @param mixed $var the value
-	 * @param boolean $use_html do you want to use HTML?
+	 * @param boolean $use_html do you want to use HTML? (-1 decide by SAPI)
 	 * @param boolean $ml build a multiline string?
 	 * @param boolean $dump_only wether only dump() should be used and not __toString()
 	 * @return string the string representation
 	 */
-	public static function to_string($var,$use_html = true,$ml = true,$dump_only = false)
+	public static function to_string($var,$use_html = -1,$ml = true,$dump_only = false)
 	{
 		$p = new FWS_Printer($var);
-		$p->set_use_html($use_html);
+		if($use_html === -1)
+			$p->set_use_html(php_sapi_name() != 'cli');
+		else
+			$p->set_use_html($use_html);
 		$p->set_multiline($ml);
 		$p->set_dump_only($dump_only);
 		return (string)$p;
