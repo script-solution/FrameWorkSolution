@@ -302,6 +302,35 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * @throws FWS_DB_Exception_QueryFailed if the query fails
 	 */
 	public abstract function insert($table,$values);
+	
+	/**
+	 * Inserts multiple new rows in the given table.
+	 * You have to specify the values to insert:
+	 * <code>
+	 *  array(
+	 * 	  array(
+	 *   		<field1> => <value1>,
+	 * 	  	<field2> => <value2>,
+	 * 	  	...
+	 * 	  	<fieldN> => <valueN>
+	 * 	  ),
+	 * 	  array(
+	 *   		<field1> => <value1>,
+	 * 	  	<field2> => <value2>,
+	 * 	  	...
+	 * 	  	<fieldN> => <valueN>
+	 * 	  ),
+	 *    ...
+	 *  )
+	 * </code>
+	 * It expects that each inner array as the same size!
+	 * 
+	 * @param string $table the table-name
+	 * @param array $rows the rows to insert
+	 * @throws FWS_DB_Exception_NotConnected if not connected
+	 * @throws FWS_DB_Exception_QueryFailed if the query fails
+	 */
+	public abstract function insert_bulk($table,$rows);
 
 	/**
 	 * Updates rows in the given table. You have to specify the where-clause like

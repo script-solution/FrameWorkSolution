@@ -192,6 +192,44 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 		$this->execute($sql);
 		return $this->get_inserted_id();
 	}
+	
+	/**
+	 * @see db/FWS_DB_Connection::insert_bulk()
+	 * 
+	 * @param string $table
+	 * @param array $rows
+	 */
+	public function insert_bulk($table,$rows)
+	{
+		if(empty($table))
+			FWS_Helper::def_error('notempty','table',$table);
+		if(!is_array($rows) || count($rows) == 0)
+			FWS_Helper::def_error('array>0','rows',$rows);
+		
+		$fields = array_keys($rows[0]);
+		$sql = 'INSERT INTO '.$table.' (`'.implode('`,`',$fields).'`) VALUES ';
+		$fieldnum = count($fields);
+		$values = array();
+		foreach($rows as $i => $row)
+		{
+			if(count($row) != $fieldnum)
+				FWS_Helper::error('Invalid rows-array');
+			$line = '(';
+			foreach($row as $field => $value)
+				$line .= ':'.$field.'_'.$i.':, ';
+			$line = substr($line,0,-2).')';
+			$values[] = $line;
+		}
+		$sql .= implode(', ',$values).';';
+		
+		$stmt = $this->get_prepared_statement($sql);
+		foreach($rows as $i => $row)
+		{
+			foreach($row as $field => $value)
+				$stmt->bind(':'.$field.'_'.$i.':',$value);
+		}
+		$this->execute($stmt->get_statement());
+	}
 
 	/**
 	 * @see FWS_DB_Connection::update()
