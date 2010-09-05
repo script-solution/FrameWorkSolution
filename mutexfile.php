@@ -2,7 +2,7 @@
 /**
  * Contains the mutexfile-class
  *
- * @version			$Id: http.php 99 2009-01-13 20:03:10Z nasmussen $
+ * @version			$Id$
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>
  * @copyright		2003-2008 Nils Asmussen
