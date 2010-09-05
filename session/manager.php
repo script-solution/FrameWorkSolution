@@ -86,8 +86,10 @@ class FWS_Session_Manager extends FWS_Object
 	
 	/**
 	 * Will update all changed user
+	 * 
+	 * @param bool $force if enabled, it will be done even if we've done that before
 	 */
-	public final function finalize()
+	public final function finalize($force = false)
 	{
 		$user = FWS_Props::get()->user();
 		
@@ -96,7 +98,7 @@ class FWS_Session_Manager extends FWS_Object
 			return;
 		
 		// don't finalize twice
-		if($this->_finalized)
+		if(!$force && $this->_finalized)
 			return;
 		
 		// at first we have to finalize the current user so that it can update

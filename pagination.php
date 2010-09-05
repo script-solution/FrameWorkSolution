@@ -121,7 +121,7 @@ class FWS_Pagination extends FWS_Object
 	}
 	
 	/**
-	 * @return the number of pages
+	 * @return integer the number of pages
 	 */
 	public final function get_page_count()
 	{
@@ -129,7 +129,7 @@ class FWS_Pagination extends FWS_Object
 	}
 	
 	/**
-	 * @return the start-position of the current page (for the database-query)
+	 * @return integer the start-position of the current page (for the database-query)
 	 */
 	public final function get_start()
 	{
