@@ -221,7 +221,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	 * Sets wether the user should be redirected
 	 * 
 	 * @param boolean $redirect the new value
-	 * @param FWS_URL $url the URL to redirect to (may be null to use the first link). May also be
+	 * @param FWS_URL|string $url the URL to redirect to (may be null to use the first link). May also be
 	 * 	a string, if you want to specify the URL manually.
 	 * @see add_link($name,$url)
 	 */

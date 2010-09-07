@@ -51,7 +51,7 @@ interface FWS_User_Storage
 	 * This method gives you the opportunity to perform additional checks. For example if
 	 * the user is activated.
 	 * 
-	 * @param FWS_User_Data the data of the user
+	 * @param FWS_User_Data $userdata the data of the user
 	 * @return int the error-code or {@link FWS_User_Current::LOGIN_ERROR_NO_ERROR}
 	 */
 	public function check_user($userdata);

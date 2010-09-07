@@ -437,7 +437,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * Reads the content of the given file
 	 * 
 	 * @param string $source the source-file
-	 * @return string the content of the file or false if it failed
+	 * @return string|false the content of the file or false if it failed
 	 */
 	public static function read($source)
 	{
@@ -449,7 +449,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * 
 	 * @param string $target the target-file
 	 * @param string $content the content to store
-	 * @return int the number of written bytes or false if it failed
+	 * @return int|bool the number of written bytes or false if it failed
 	 */
 	public static function write($target,$content)
 	{
@@ -461,7 +461,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 *
 	 * @param string $target the target-file
 	 * @param string $content the content to store
-	 * @return int the number of written bytes or false if it failed
+	 * @return int|bool the number of written bytes or false if it failed
 	 */
 	public static function append($target,$content)
 	{

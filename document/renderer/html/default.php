@@ -321,7 +321,6 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	/**
 	 * Generates the location-string
 	 *
-	 * @param FWS_Document_Renderer_HTML_Default $renderer the current page
 	 * @param string $linkclass the linkclass to use. Use an empty string if you want to use a class.
 	 * @param string $sep the separator ( &raquo; by default)
 	 * @return string the links

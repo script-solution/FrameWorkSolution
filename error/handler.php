@@ -176,10 +176,10 @@ final class FWS_Error_Handler extends FWS_Singleton
 	/**
 	 * The error-handler
 	 *
-	 * @param int $errno the error-level
-	 * @param string $msg_text the message
-	 * @param string $errfile the file in which the error occurred
-	 * @param int $errline the line in the file
+	 * @param int $no the error-level
+	 * @param string $msg the message
+	 * @param string $file the file in which the error occurred
+	 * @param int $line the line in the file
 	 */
 	public function handle_error($no,$msg,$file,$line)
 	{

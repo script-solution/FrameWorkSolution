@@ -349,7 +349,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * This prevents that all methods of the specified objects may be used. So you can control
 	 * which methods may be called and which not.
 	 *
-	 * @param boolean $enabled wether method-calls should be limited.
+	 * @param boolean $limit wether method-calls should be limited.
 	 */
 	public function set_limit_method_calls($limit)
 	{
@@ -672,7 +672,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * @param string $template the template-filename
 	 * @param boolean $restore restore the last template?
 	 * @param int $number the number of the template (if one template is used more than once)
-	 * @return the html-code
+	 * @return string the html-code
 	 */
 	public function parse_template($template = -1,$restore = true,$number = 1)
 	{

@@ -305,7 +305,7 @@ class FWS_Document extends FWS_Object
 	 * Redirects the user to the given URL. Takes care of IIS and other stuff.
 	 * Will immediately quit the current script!
 	 * 
-	 * @param FWS_URL $url the URL where you want to redirect to. It has to be either an instance
+	 * @param FWS_URL|string $url the URL where you want to redirect to. It has to be either an instance
 	 * 	of {@link FWS_URL} or an absolute URL in form of a string
 	 */
 	public final function redirect($url)

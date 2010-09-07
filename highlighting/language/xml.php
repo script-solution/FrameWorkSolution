@@ -221,7 +221,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * @see FWS_Highlighting_Language::get_keyword_settings()
 	 *
-	 * @param id $id
+	 * @param string $id
 	 * @return array
 	 */
 	public function get_keyword_settings($id)
@@ -269,7 +269,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * @see FWS_Highlighting_Language::get_ml_comment_attributes()
 	 *
-	 * @param id $id
+	 * @param string $id
 	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_ml_comment_attributes($id)
@@ -290,7 +290,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * @see FWS_Highlighting_Language::get_regexp_attributes()
 	 *
-	 * @param id $id
+	 * @param string $id
 	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_regexp_attributes($id)
@@ -321,7 +321,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * @see FWS_Highlighting_Language::get_sl_comment_attributes()
 	 *
-	 * @param id $id
+	 * @param string $id
 	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_sl_comment_attributes($id)
@@ -332,7 +332,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 	/**
 	 * @see FWS_Highlighting_Language::get_string_attributes()
 	 *
-	 * @param id $id
+	 * @param string $id
 	 * @return FWS_Highlighting_Attributes
 	 */
 	public function get_string_attributes($id)

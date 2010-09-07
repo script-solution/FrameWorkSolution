@@ -366,7 +366,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	public abstract function get_inserted_id();
 
 	/**
-	 * @return the number of affected rows in the last query
+	 * @return int the number of affected rows in the last query
 	 * @throws FWS_DB_Exception_NotConnected if not connected
 	 */
 	public abstract function get_affected_rows();

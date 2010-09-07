@@ -230,7 +230,7 @@ final class FWS_GD_Color extends FWS_Object
 	 * Makes the color brighter by the given amount
 	 * Note that this method does not use the alpha-value!
 	 *
-	 * @param int $scale the amount to add
+	 * @param int $amount the amount to add
 	 */
 	public function brighter($amount = 5)
 	{
@@ -243,7 +243,7 @@ final class FWS_GD_Color extends FWS_Object
 	 * Makes the color darker by the given amount
 	 * Note that this method does not use the alpha-value!
 	 *
-	 * @param int $scale the amount to substract
+	 * @param int $amount the amount to substract
 	 */
 	public function darker($amount = 5)
 	{

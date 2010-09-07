@@ -218,7 +218,6 @@ final class FWS_GD_Image extends FWS_Object
 	 *
 	 * @param int $angle the angle
 	 * @param FWS_GD_Color $bgcolor the background-color for the rotation
-	 * @param boolean $ignore_transparence if enabled transparent colors are ignored (otherwise kept)
 	 */
 	private function _rotate_self($angle,$bgcolor)
 	{

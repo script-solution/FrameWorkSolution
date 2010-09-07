@@ -148,6 +148,7 @@ class FWS_Session_Manager extends FWS_Object
 	 *
 	 * @param FWS_Session_Data $user the user to check
 	 * @param string $currentsid the session-id of the current user
+	 * @return bool true if its over
 	 */
 	protected function check_online_timeout($user,$currentsid)
 	{

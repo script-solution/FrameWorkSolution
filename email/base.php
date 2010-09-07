@@ -379,7 +379,6 @@ abstract class FWS_Email_Base extends FWS_Object
 	 * Wraps the html-body around the text
 	 *
 	 * @param string $text your text
-	 * @param string $charset the charset to use
 	 * @return string the text to send
 	 */
 	protected function prepare_html_message($text)

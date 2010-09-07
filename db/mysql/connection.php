@@ -253,7 +253,6 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	
 	/**
 	 * @see FWS_DB_Connection::start_transaction()
-	 *
 	 */
 	public function start_transaction()
 	{
@@ -270,7 +269,6 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	
 	/**
 	 * @see FWS_DB_Connection::commit_transaction()
-	 *
 	 */
 	public function commit_transaction()
 	{
@@ -303,7 +301,7 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	/**
 	 * @see FWS_DB_Connection::get_affected_rows()
 	 *
-	 * @return the
+	 * @return int
 	 */
 	public function get_affected_rows()
 	{

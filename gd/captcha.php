@@ -508,7 +508,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	/**
 	 * Sets the propability for a movement of a char-element.
 	 * 
-	 * @param float $_char_trans_propability (0.0 .. 1.0)
+	 * @param float $propability (0.0 .. 1.0)
 	 * @see set_char_trans_diff()
 	 */
 	public function set_char_trans_propability($propability)
@@ -654,7 +654,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	/**
 	 * Sets the propability to use a TTF-font instead of the self-build-one
 	 * 
-	 * @param float $_char_trans_propability (0.0 .. 1.0)
+	 * @param float $propability (0.0 .. 1.0)
 	 */
 	public function set_ttf_font_propability($propability)
 	{

@@ -184,7 +184,7 @@ function FWS_displayWaitBar(id,message)
 	
 	// determine width
 	var pageSize = FWS_getPageSize();
-	var width = pageSize[0] - 23;
+	var width = pageSize[0];
 	
 	// display
 	bar.style.display = 'block';

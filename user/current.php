@@ -491,7 +491,7 @@ class FWS_User_Current extends FWS_Object
 	 * Sets the userdata for the given user-id or username
 	 * 
 	 * @param int $id the user-id
-	 * @param string $user the user-name
+	 * @param string|bool $user the user-name (or false, if the id should be used)
 	 * @return int the error-code or self::LOGIN_ERROR_NO_ERROR
 	 */
 	protected function set_userdata($id,$user = false)

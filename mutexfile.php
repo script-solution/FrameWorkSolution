@@ -137,7 +137,7 @@ final class FWS_MutexFile extends FWS_Object
 	/**
 	 * Reads the file-content and returns it. It is required to lock the file before!
 	 * 
-	 * @return bool|string the file-content or false if it failed
+	 * @return string the file-content or false if it failed
 	 */
 	public function read()
 	{

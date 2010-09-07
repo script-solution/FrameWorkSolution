@@ -285,7 +285,7 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	 * </ul>
 	 *
 	 * @param int $attribute the attribute-id
-	 * @param mixed $value the value of the given attribute or null if not set
+	 * @return mixed the value of the given attribute or null if not set
 	 */
 	public function get($attribute)
 	{

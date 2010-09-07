@@ -171,10 +171,8 @@ final class FWS_HTML_LimitedString extends FWS_Object
 	}
 	
 	/**
-	 * Cuts the given HTML-string to the given length. Only the visible chars will be counted.
+	 * Cuts the given HTML-string to the specified length. Only the visible chars will be counted.
 	 * 
-	 * @param string $input the input-string
-	 * @param int $limit the maximum length you want to allow
 	 * @return string the result-string
 	 */
 	public function get()

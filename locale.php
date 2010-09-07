@@ -107,7 +107,7 @@ interface FWS_Locale
 	public function get_dateformat($type);
 	
 	/**
-	 * @return float the specified timezone
+	 * @return string the specified timezone
 	 */
 	public function get_timezone();
 	

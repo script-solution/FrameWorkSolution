@@ -40,7 +40,7 @@ interface FWS_AddField_Field
 	/**
 	 * Should build the control for the formular which allows the user to edit this field.
 	 *
-	 * @param FWS_HTML_Formular the formular that should be used
+	 * @param FWS_HTML_Formular $formular the formular that should be used
 	 * @param mixed $value the default value
 	 * @return string the HTML-code for the formular-control
 	 */

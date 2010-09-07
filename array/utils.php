@@ -35,7 +35,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 *
 	 * @param array $array the 1-dimensional input-array
 	 * @param int $perline the number of items per line
-	 * @return unknown
+	 * @return array the result-array
 	 */
 	public static function convert_to_2d($array,$perline)
 	{

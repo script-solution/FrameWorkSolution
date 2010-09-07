@@ -77,7 +77,7 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 	/**
 	 * Should generate just the formular field, without edit-suffix
 	 *
-	 * @param FWS_HTML_Formular the formular that should be used
+	 * @param FWS_HTML_Formular $formular the formular that should be used
 	 * @param mixed $value the default value
 	 * @return string the HTML-code for the formular-control
 	 */

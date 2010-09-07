@@ -383,9 +383,7 @@ final class FWS_Template_Parser extends FWS_Object
 	 * {IF var &lt; 2.0 || 1 || 2 && 4}
 	 * ..
 	 * 
-	 * @param string $op1 the first operand
-	 * @param string $cmp the optional operator
-	 * @param string $op2 the optional second operand
+	 * @param string $condition the condition
 	 * @return string the PHP-code
 	 */
 	private function _parse_if($condition)
