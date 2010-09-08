@@ -53,7 +53,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * Draws the text simply at the given position
 	 *
 	 * @param FWS_GD_Point $pos the upper-left corner of the text
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_at_pos($pos)
 	{
@@ -74,7 +74,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * @param FWS_GD_Line $line the line
 	 * @param int $padding the padding to the line
 	 * @param int $pos the position ({@link FWS_GD_BoxPosition::FIRST} by default)
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_at_line($line,$padding = 0,$pos = FWS_GD_BoxPosition::FIRST)
 	{
@@ -184,7 +184,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * @param FWS_GD_Circle $circle the circle
 	 * @param int $start the start-angle (in degree)
 	 * @param int $end the end-angle (in degree)
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_in_circle_part($circle,$start,$end)
 	{
@@ -211,7 +211,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * @param FWS_GD_Point $p1 the first point
 	 * @param FWS_GD_Point $p2 the second point
 	 * @param FWS_GD_Point $p3 the third point
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_in_triangle($p1,$p2,$p3)
 	{
@@ -236,7 +236,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * @param FWS_GD_Rectangle $rect the rectangle
 	 * @param int $pad the padding to the rectangle
 	 * @param FWS_GD_BoxPosition $pos the position in the rectangle
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_in_rect_vertically($rect,$pad = 0,$pos = null)
 	{
@@ -311,7 +311,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 * @param FWS_GD_Padding $padding the padding to the rectangle
 	 * @param FWS_GD_BoxPosition $pos the position in the rectangle
 	 * @param int $angle the angle of the text
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	public final function draw_in_rect($rect,$padding = null,$pos = null,$angle = 0)
 	{
@@ -337,7 +337,7 @@ class FWS_GD_View_Text extends FWS_GD_View
 	 *
 	 * @param FWS_GD_Point $tpos the position of the text
 	 * @param int $angle the angle
-	 * @return int the result of imagettftext()
+	 * @return bool the result of imagettftext()
 	 */
 	protected final function draw_text($tpos,$angle)
 	{

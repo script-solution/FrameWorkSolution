@@ -188,7 +188,7 @@ final class FWS_HTTP extends FWS_Object
 	 * Sends the given request
 	 * 
 	 * @param string $request the request to send
-	 * @return string the reply or false if failed
+	 * @return string|bool the reply or false if failed
 	 */
 	private function _send_request($request)
 	{

@@ -41,6 +41,7 @@ interface FWS_Error_Output
 	 * 	)
 	 * 	</code>
 	 * 	Note that all elements are optional! (may also be completely null)
+	 * @return string the error-message
 	 */
 	public function print_error($no,$msg,$file,$line,$backtrace);
 }

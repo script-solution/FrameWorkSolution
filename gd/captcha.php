@@ -814,7 +814,7 @@ final class FWS_GD_Captcha extends FWS_Object
 			
 			if(count($this->_ttf_fonts) > 0 &&
 				$this->_ttf_font_propability > 0 &&
-				mt_rand(1,1 / $this->_ttf_font_propability) == 1)
+				mt_rand(1,(int)(1 / $this->_ttf_font_propability)) == 1)
 			{
 				$this->add_ttf_char($x,$width,$char);
 			}
@@ -885,7 +885,7 @@ final class FWS_GD_Captcha extends FWS_Object
 		{
 			$ex = mt_rand(-$this->_width / 8,$this->_width + $this->_width / 8);
 			$ey = mt_rand(-$this->_height / 8,$this->_height + $this->_height / 8);
-			$ew = mt_rand($this->_width * 1.5,$this->_width * 2);
+			$ew = mt_rand((int)($this->_width * 1.5),$this->_width * 2);
 			$eh = mt_rand($this->_height / 2,$this->_height + $this->_height / 2);
 			$color = $this->_bg->get_readable_random_foreground();
 			$ellipse = new FWS_GD_Ellipse(new FWS_GD_Point($ex,$ey),new FWS_GD_Dimension($ew,$eh));
@@ -1041,7 +1041,7 @@ final class FWS_GD_Captcha extends FWS_Object
 					
 					// move this part?
 					if($this->_char_trans_propability > 0 &&
-						mt_rand(1,1 / $this->_char_trans_propability) == 1)
+						mt_rand(1,(int)(1 / $this->_char_trans_propability)) == 1)
 					{
 						// move the character by a random number of pixel in a random direction
 						$dir = mt_rand(0,3);

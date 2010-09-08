@@ -75,7 +75,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	}
 	
 	/**
-	 * @return int the first x-position
+	 * @return float the first x-position
 	 */
 	public function get_x1()
 	{
@@ -83,7 +83,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	}
 	
 	/**
-	 * @return int the first y-position
+	 * @return float the first y-position
 	 */
 	public function get_y1()
 	{
@@ -91,7 +91,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	}
 	
 	/**
-	 * @return int the second x-position
+	 * @return float the second x-position
 	 */
 	public function get_x2()
 	{
@@ -99,7 +99,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	}
 	
 	/**
-	 * @return int the second y-position
+	 * @return float the second y-position
 	 */
 	public function get_y2()
 	{
@@ -123,7 +123,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	}
 	
 	/**
-	 * @return double the length of this line
+	 * @return float the length of this line
 	 */
 	public function get_length()
 	{
@@ -136,8 +136,8 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 			FWS_Helper::def_error('instance','line','FWS_GD_Line',$line);
 		
 		return $this->_lines_intersect(
-			$line->get_x1(),$line->get_y1(),$line->get_x2(),$line->get_y2(),
-			$this->get_x1(),$this->get_y1(),$this->get_x2(),$this->get_y2()
+			(int)$line->get_x1(),(int)$line->get_y1(),(int)$line->get_x2(),(int)$line->get_y2(),
+			(int)$this->get_x1(),(int)$this->get_y1(),(int)$this->get_x2(),(int)$this->get_y2()
 		);
 	}
 
@@ -202,10 +202,10 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 		if($w <= 0 || $h <= 0)
  			return false;
  		
- 		$x1 = $this->get_x1();
- 		$y1 = $this->get_y1();
- 		$x2 = $this->get_x2();
- 		$y2 = $this->get_y2();
+ 		$x1 = (int)$this->get_x1();
+ 		$y1 = (int)$this->get_y1();
+ 		$x2 = (int)$this->get_x2();
+ 		$y2 = (int)$this->get_y2();
 
  		// start point in the rectangle?
  		if($x1 >= $x && $x1 <= $x + $w && $y1 >= $y && $y1 <= $y + $h)
@@ -294,7 +294,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 	 * @param int $y3 the first y coordinate of the second segment
 	 * @param int $x4 the second x coordinate of the second segment
 	 * @param int $y4 the second y coordinate of the second segment
-	 * @return true if the segments intersect
+	 * @return bool true if the segments intersect
 	 */
 	private function _lines_intersect($x1,$y1,$x2,$y2,$x3,$y3,$x4,$y4)
 	{

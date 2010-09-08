@@ -180,7 +180,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * @return string wether htmlspecialchars() should be used for all values
+	 * @return bool wether htmlspecialchars() should be used for all values
 	 */
 	public function get_use_htmlspecialchars()
 	{
@@ -190,7 +190,7 @@ final class FWS_Input extends FWS_Singleton
 	/**
 	 * Sets wether htmlspecialchars() should be used for all values
 	 * 
-	 * @param string $use the new value
+	 * @param bool $use the new value
 	 */
 	public function set_use_htmlspecialchars($use)
 	{
@@ -396,6 +396,7 @@ final class FWS_Input extends FWS_Singleton
 	 *
 	 * @param mixed $value the value
 	 * @param string $method the method (get,post,cookie,server)
+	 * @return mixed the unescaped value
 	 */
 	public function unescape_value($value,$method)
 	{
@@ -596,7 +597,7 @@ final class FWS_Input extends FWS_Singleton
 
 	/**
 	 * @param string $name the name of the variable
-	 * @return string the method of a variable, if unknown -1
+	 * @return string|int the method of a variable, if unknown -1
 	 */
 	private function _get_method($name)
 	{

@@ -56,7 +56,7 @@ interface FWS_GD_Font
 	 * @param FWS_GD_TextAttributes $attr the attributes
 	 * @param FWS_GD_Point $pos the position (bottom left at the base-line)
 	 * @param int $angle the angle of the text
-	 * @return int the result
+	 * @return bool true if successfull
 	 */
 	public function draw($img,$text,$attr,$pos,$angle = 0);
 	

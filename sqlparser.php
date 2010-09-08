@@ -219,7 +219,7 @@ final class FWS_SQLParser extends FWS_UtilBase
 	 * 
 	 * @param string $string the string
 	 * @param int $pos the position of the character
-	 * @return true if the character is escaped
+	 * @return bool true if the character is escaped
 	 */
 	private static function _is_escaped($string,$pos)
 	{

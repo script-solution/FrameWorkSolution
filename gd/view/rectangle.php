@@ -74,7 +74,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 	 * @param FWS_GD_Color $color
 	 * @param int $angle the angle to use (in degree)
 	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
-	 * @return the result of imagerectangle()
+	 * @return bool the result of imagerectangle()
 	 */
 	public final function draw($color,$angle = 0,$pos = null)
 	{
@@ -87,7 +87,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 	 * @param FWS_GD_Color $color
 	 * @param int $angle the angle to use (in degree)
 	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
-	 * @return the result of imagefilledrectangle()
+	 * @return bool the result of imagefilledrectangle()
 	 */
 	public final function fill($color,$angle = 0,$pos = null)
 	{
@@ -109,7 +109,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_rect->get_size()->get_width();
-		$cf = new FWS_GD_ColorFade((int)$distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade((int)$distance,(int)($distance / $step),$colors);
 		$cfcolors = $cf->get_colors();
 		$img = $this->get_image_res();
 		
@@ -199,7 +199,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 	 * @param int $angle the angle to use (in degree)
 	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
 	 * @param string $func an empty string for draw() and 'filled' for fill()
-	 * @return the result of image*rectangle()
+	 * @return bool the result of image*rectangle()
 	 */
 	private function _paint($color,$angle,$pos,$func)
 	{
@@ -252,7 +252,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			array($radius,$h - $radius),
 			array($radius,$radius),
 		);
-		$this->rotate_points($centers,$angle,$pos);
+		$centers = $this->rotate_points($centers,$angle,$pos);
 		
 		// draw the ellipse-parts
 		$i = 0;
@@ -298,7 +298,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			array(0,$h - $radius),
 			array(0,$radius)
 		);
-		$this->rotate_points($points,$angle,$pos);
+		$points = $this->rotate_points($points,$angle,$pos);
 		
 		// draw the lines
 		if($func == 'filled')
@@ -322,6 +322,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 	 * 
 	 * @param int $angle the angle to use (in degree)
 	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @return array the rotated points
 	 */
 	protected final function get_paint_points($angle,$pos)
 	{
@@ -332,18 +333,18 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			array($size->get_width(),$size->get_height()),
 			array($size->get_width(),0)
 		);
-		$this->rotate_points($points,$angle,$pos);
-		return $points;
+		return $this->rotate_points($points,$angle,$pos);
 	}
 	
 	/**
 	 * Determines the paint-points for the rotation of the rectangle
 	 * 
-	 * @param array $points rotates all points by the specified angle around the specified position
+	 * @param array $points the points to rotate
 	 * @param int $angle the angle to use (in degree)
 	 * @param FWS_GD_BoxPosition $pos the point to use for the rotation (null = middle,middle)
+	 * @return array the rotated points
 	 */
-	protected final function rotate_points(&$points,$angle,$pos)
+	protected final function rotate_points($points,$angle,$pos)
 	{
 		if(!FWS_Helper::is_integer($angle))
 			FWS_Helper::def_error('integer','angle',$angle);
@@ -406,7 +407,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			$paint_points[] = $ty + ($p[0] * $sa + $p[1] * $ca) + $pty;
 		}
 		
-		$points = $paint_points;
+		return $paint_points;
 	}
 	
 	protected function get_dump_vars()

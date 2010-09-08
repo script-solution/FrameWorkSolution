@@ -55,7 +55,7 @@ class FWS_Printer extends FWS_Object
 		if($use_html === -1)
 			$p->set_use_html(php_sapi_name() != 'cli');
 		else
-			$p->set_use_html($use_html);
+			$p->set_use_html((bool)$use_html);
 		$p->set_multiline($ml);
 		$p->set_dump_only($dump_only);
 		return (string)$p;

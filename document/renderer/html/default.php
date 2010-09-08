@@ -298,7 +298,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 
 	/**
-	 * @return the result of the action in this run. This is:
+	 * @return int the result of the action in this run. This is:
 	 * <pre>
 	 * 	-1 = error
 	 * 	 0 = success / nothing done

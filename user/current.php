@@ -499,7 +499,7 @@ class FWS_User_Current extends FWS_Object
 		if($user === false)
 			$userdata = $this->_storage->get_userdata_by_id($id);
 		else
-			$userdata = $this->_storage->get_userdata_by_name($user);
+			$userdata = $this->_storage->get_userdata_by_name((string)$user);
 		
 		if(!$userdata)
 			return self::LOGIN_ERROR_USER_NOT_FOUND;
@@ -551,6 +551,7 @@ class FWS_User_Current extends FWS_Object
 	 *
 	 * @param string|boolean $user the username
 	 * @param string|boolean $pw the password
+	 * @return int the error-code or self::LOGIN_ERROR_NO_ERROR
 	 */
 	protected function check_user($user = false,$pw = false)
 	{

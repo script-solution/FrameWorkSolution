@@ -109,21 +109,21 @@ final class FWS_GD_Font_TTF extends FWS_Object implements FWS_GD_Font
 		return imagettftext(
 			$img,
 			$attr->get_size(),$angle,
-			$pos->get_x(),$pos->get_y(),
+			(int)$pos->get_x(),(int)$pos->get_y(),
 			$attr->get_foreground()->get_color($img),
 			$this->_font,
 			$text
-		);
+		) !== false;
 	}
 	
 	public function get_line_size($attr)
 	{
-		return round($attr->get_size() / 10);
+		return (int)round($attr->get_size() / 10);
 	}
 	
 	public function get_line_pad($attr)
 	{
-		return 1 + round($attr->get_size() / 10);
+		return 1 + (int)round($attr->get_size() / 10);
 	}
 	
 	/**

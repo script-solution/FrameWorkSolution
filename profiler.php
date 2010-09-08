@@ -53,7 +53,7 @@ final class FWS_Profiler extends FWS_Object
 
 		$stop_time = explode(' ',microtime());
 		$time = $stop_time[0] - $this->_start_time[0] + $stop_time[1] - $this->_start_time[1];
-		return round($time,$accuracy);
+		return (int)round($time,$accuracy);
 	}
 	
 	/**

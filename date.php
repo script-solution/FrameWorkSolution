@@ -465,7 +465,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_year()
 	{
-		return $this->_date->format('Y');
+		return (int)$this->_date->format('Y');
 	}
 	
 	/**
@@ -474,7 +474,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_month($leading_zeros = true)
 	{
-		return $this->_date->format($leading_zeros ? 'm' : 'n');
+		return (int)$this->_date->format($leading_zeros ? 'm' : 'n');
 	}
 	
 	/**
@@ -483,7 +483,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_day($leading_zeros = true)
 	{
-		return $this->_date->format($leading_zeros ? 'd' : 'j');
+		return (int)$this->_date->format($leading_zeros ? 'd' : 'j');
 	}
 	
 	/**
@@ -492,7 +492,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_hour($leading_zeros = true)
 	{
-		return $this->_date->format($leading_zeros ? 'H' : 'G');
+		return (int)$this->_date->format($leading_zeros ? 'H' : 'G');
 	}
 	
 	/**
@@ -500,7 +500,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_min()
 	{
-		return $this->_date->format('i');
+		return (int)$this->_date->format('i');
 	}
 	
 	/**
@@ -508,7 +508,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function get_sec()
 	{
-		return $this->_date->format('s');
+		return (int)$this->_date->format('s');
 	}
 	
 	/**
@@ -519,7 +519,7 @@ final class FWS_Date extends FWS_Object
 	 */
 	public function to_timestamp()
 	{
-		return $this->_date->format('U');
+		return (int)$this->_date->format('U');
 	}
 	
 	/**

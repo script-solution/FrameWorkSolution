@@ -295,6 +295,7 @@ final class FWS_Email_SMTP extends FWS_Email_Base
 	 * Sends the given command to the SMTP-server
 	 *
 	 * @param string $cmd the command
+	 * @return string the reply
 	 */
 	private function _send_command($cmd)
 	{

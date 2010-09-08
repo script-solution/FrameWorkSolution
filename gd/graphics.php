@@ -107,7 +107,7 @@ final class FWS_GD_Graphics extends FWS_Object
 	 * @param FWS_GD_Point $pos the position
 	 * @param int $radius the radius of the point
 	 * @param FWS_GD_Color $color the color
-	 * @return int the result of imagefilledellipse()
+	 * @return bool the result of imagefilledellipse()
 	 */
 	public function draw_point($pos,$radius,$color)
 	{
@@ -163,8 +163,8 @@ final class FWS_GD_Graphics extends FWS_Object
 		$img = $this->_img->get_image();
 		return imagerectangle(
 			$img,
-			$from->get_x(),$from->get_y(),
-			$to->get_x(),$to->get_y(),
+			(int)$from->get_x(),(int)$from->get_y(),
+			(int)$to->get_x(),(int)$to->get_y(),
 			$color->get_color($img)
 		);
 	}
@@ -189,8 +189,8 @@ final class FWS_GD_Graphics extends FWS_Object
 		$img = $this->_img->get_image();
 		return imagefilledrectangle(
 			$img,
-			$from->get_x(),$from->get_y(),
-			$to->get_x(),$to->get_y(),
+			(int)$from->get_x(),(int)$from->get_y(),
+			(int)$to->get_x(),(int)$to->get_y(),
 			$color->get_color($img)
 		);
 	}

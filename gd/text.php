@@ -198,7 +198,7 @@ final class FWS_GD_Text extends FWS_Object
 		$tsize = $this->get_size(false);
 		$dsize = $this->_attr->get_font()->get_size('d',$this->_attr);
 		
-		$d = $tsize->get_height() - $dsize->get_height();
+		$d = (int)$tsize->get_height() - (int)$dsize->get_height();
 		if($note_attr)
 		{
 			if($this->_attr->get_border() !== null)
@@ -241,7 +241,7 @@ final class FWS_GD_Text extends FWS_Object
 	 */
 	public function get_width($note_attr = true)
 	{
-		return $this->get_size($note_attr)->get_width();
+		return (int)$this->get_size($note_attr)->get_width();
 	}
 	
 	/**
@@ -253,7 +253,7 @@ final class FWS_GD_Text extends FWS_Object
 	 */
 	public function get_height($note_attr = true)
 	{
-		return $this->get_size($note_attr)->get_height();
+		return (int)$this->get_size($note_attr)->get_height();
 	}
 	
 	/**

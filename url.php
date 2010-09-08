@@ -74,7 +74,7 @@ class FWS_URL extends FWS_Object
 	}
 
 	/**
-	 * @return array an array of the form <code>array(<param_name>,<session_id>)</code> or false
+	 * @return array|bool an array of the form <code>array(<param_name>,<session_id>)</code> or false
 	 */
 	public static function get_session_id()
 	{

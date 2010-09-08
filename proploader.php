@@ -46,7 +46,7 @@ class FWS_PropLoader extends FWS_Object
 	}
 	
 	/**
-	 * @return FWS_DB_Connection the db-connection
+	 * @throws FWS_Exception_UnsupportedMethod always, since we can't establish a connection here
 	 */
 	protected function db()
 	{

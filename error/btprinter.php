@@ -37,6 +37,7 @@ interface FWS_Error_BTPrinter
 	 * 	)
 	 * 	</code>
 	 * 	Note that all elements are optional!
+	 * @return string the backtrace
 	 */
 	public function print_backtrace($backtrace);
 }

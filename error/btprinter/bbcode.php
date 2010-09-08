@@ -23,6 +23,7 @@ final class FWS_Error_BTPrinter_BBCode extends FWS_Object implements FWS_Error_B
 	 * @see FWS_Error_BTPrinter::print_backtrace()
 	 *
 	 * @param array $backtrace
+	 * @return string
 	 */
 	public function print_backtrace($backtrace)
 	{

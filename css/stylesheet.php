@@ -149,6 +149,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	 * (maybe more).
 	 *
 	 * @param string $media the media-type, null = no media
+	 * @return array the rulesets
 	 */
 	public function get_rulesets_for_media($media)
 	{
@@ -445,7 +446,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	/**
 	 * Parses the given CSS-code and builds the block-array
 	 *
-	 * @param unknown_type $str
+	 * @param string $str the code to parse
 	 */
 	protected function parse($str)
 	{
@@ -453,6 +454,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 		$blocks = array();
 		
 		// match all tokens in which we are interested
+		$matches = array();
 		preg_match_all('/\/\*|\*\/|"|{|}|@|;/',$str,$matches,PREG_OFFSET_CAPTURE);
 	
 		$m = array();
@@ -727,6 +729,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 		}
 		
 		// determine type of selector and create the appropriate object
+		$matches = array();
 		if(FWS_String::strpos($str,'.') !== false)
 		{
 			// class

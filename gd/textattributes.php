@@ -210,7 +210,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 		if(!FWS_Helper::is_integer($size) || $size <= 0)
 			FWS_Helper::def_error('intgt0','size',$size);
 		
-		return $this->_bordersize = $size;
+		$this->_bordersize = $size;
 	}
 
 	/**

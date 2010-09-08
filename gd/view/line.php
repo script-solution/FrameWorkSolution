@@ -46,7 +46,7 @@ class FWS_GD_View_Line extends FWS_GD_View
 	 * Draws the line with the given color
 	 *
 	 * @param FWS_GD_Color $color
-	 * @return the result of imageline()
+	 * @return bool the result of imageline()
 	 */
 	public final function draw($color)
 	{
@@ -58,8 +58,8 @@ class FWS_GD_View_Line extends FWS_GD_View
 		$img = $this->get_image_res();
 		return imageline(
 			$img,
-			$from->get_x(),$from->get_y(),
-			$to->get_x(),$to->get_y(),
+			(int)$from->get_x(),(int)$from->get_y(),
+			(int)$to->get_x(),(int)$to->get_y(),
 			$color->get_color($img)
 		);
 	}
@@ -76,7 +76,7 @@ class FWS_GD_View_Line extends FWS_GD_View
 			FWS_Helper::def_error('intgt0','step',$step);
 		
 		$distance = $this->_line->get_length();
-		$cf = new FWS_GD_ColorFade((int)$distance,$distance / $step,$colors);
+		$cf = new FWS_GD_ColorFade((int)$distance,(int)($distance / $step),$colors);
 		$cfcolors = $cf->get_colors();
 		
 		$img = $this->get_image_res();

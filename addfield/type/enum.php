@@ -55,13 +55,13 @@ class FWS_AddField_Type_Enum extends FWS_AddField_Type_Default
 	
 	public function is_empty($value)
 	{
-		return $value == -1;//!$this->is_valid_value_impl($value);
+		return $value == '-1';//!$this->is_valid_value_impl($value);
 	}
 	
 	public function get_value_to_store($value)
 	{
 		if(!$this->is_valid_value_impl($value))
-			return -1;
+			return '-1';
 		
 		return $value;
 	}

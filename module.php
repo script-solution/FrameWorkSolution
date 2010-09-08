@@ -13,7 +13,7 @@
  * The module-class which is the base-class for all modules. Modules are used by the class
  * {@link FWS_Document} and are intended to provide a modular and more independend architecture.
  * A module can control the complete result that will be sent to the browser by switching and
- * manipulating the renderer of the document and the changing properties of the document itself.
+ * manipulating the renderer of the document and by changing properties of the document itself.
  *
  * @package			FrameWorkSolution
  * @author			Nils Asmussen <nils@script-solution.de>

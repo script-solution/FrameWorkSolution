@@ -347,10 +347,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * Returns the default renderer. If it is already set the instance will be returned. Otherwise
-	 * it will be created, set and returned.
-	 *
-	 * @return FWS_Document_Renderer_HTML_Default the default renderer
+	 * @throws FWS_Exception_UnsupportedMethod since a subclass has to overwrite this method
 	 */
 	public function use_default_renderer()
 	{

@@ -45,7 +45,7 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 	 * Draws the ellipse with the given color
 	 *
 	 * @param FWS_GD_Color $color the color
-	 * @return the result of imageellipse()
+	 * @return bool the result of imageellipse()
 	 */
 	public final function draw($color)
 	{
@@ -58,18 +58,18 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 	 * @param FWS_GD_Color $color the color
 	 * @param int $start the start-degree
 	 * @param int $end the end-degree
-	 * @return the result of imagearc()
+	 * @return bool the result of imagearc()
 	 */
 	public final function draw_part($color,$start,$end)
 	{
-		$this->_paint_part($color,$start,$end,'');
+		return $this->_paint_part($color,$start,$end,'');
 	}
 	
 	/**
 	 * Fills the ellipse with the given color
 	 *
 	 * @param FWS_GD_Color $color the color
-	 * @return the result of imagefilledellipse()
+	 * @return bool the result of imagefilledellipse()
 	 */
 	public final function fill($color)
 	{
@@ -83,11 +83,11 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 	 * @param int $start the start-degree
 	 * @param int $end the end-degree
 	 * @param int $type the type: IMG_ARC_PIE, IMG_ARC_CHORD, IMG_ARC_NOFILL, IMG_ARC_EDGED
-	 * @return the result of imagefilledarc()
+	 * @return bool the result of imagefilledarc()
 	 */
 	public final function fill_part($color,$start,$end,$type = IMG_ARC_PIE)
 	{
-		$this->_paint_part($color,$start,$end,'filled',$type);
+		return $this->_paint_part($color,$start,$end,'filled',$type);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 	 *
 	 * @param FWS_GD_Color $color the color
 	 * @param string $func an empty string for draw() and 'filled' for fill()
-	 * @return the result of image*ellipse()
+	 * @return bool the result of image*ellipse()
 	 */
 	private function _paint($color,$func)
 	{
@@ -146,7 +146,7 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 	 * @param string $func an empty string for draw() and 'filled' for fill()
 	 * @param int $type the type: IMG_ARC_PIE, IMG_ARC_CHORD, IMG_ARC_NOFILL, IMG_ARC_EDGED
 	 * 	(for filled)
-	 * @return the result of image*arc()
+	 * @return bool the result of image*arc()
 	 */
 	private function _paint_part($color,$start,$end,$func,$type = -1)
 	{

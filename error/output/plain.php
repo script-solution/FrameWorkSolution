@@ -27,6 +27,7 @@ final class FWS_Error_Output_Plain extends FWS_Object implements FWS_Error_Outpu
 	 * @param string $file
 	 * @param int $line
 	 * @param array $backtrace
+	 * @return string
 	 */
 	public function print_error($no,$msg,$file,$line,$backtrace)
 	{

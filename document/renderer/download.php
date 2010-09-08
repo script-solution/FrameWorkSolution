@@ -129,7 +129,7 @@ class FWS_Document_Renderer_Download extends FWS_Object implements FWS_Document_
 			if($fileinfo = @getimagesize($this->_file))
 				$filetype = 'application/'.$fileinfo['mime'];
 			if($this->_set_header && $filesize = @filesize($this->_file))
-				$doc->set_header('Content-Length',$filesize);
+				$doc->set_header('Content-Length',(string)$filesize);
 			
 			// set default name
 			if($this->_name === null)

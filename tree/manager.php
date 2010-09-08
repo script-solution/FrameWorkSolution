@@ -324,7 +324,7 @@ class FWS_Tree_Manager extends FWS_Object
 	 * Determines the id of the parent-node of the node with given id
 	 * 
 	 * @param int $id the id of the node
-	 * @return int the id of the parent node or false if not found
+	 * @return int|bool the id of the parent node or false if not found
 	 */
 	public final function get_parent_id($id)
 	{

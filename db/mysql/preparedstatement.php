@@ -29,9 +29,9 @@ final class FWS_DB_MySQL_PreparedStatement extends FWS_DB_PreparedStatement
 	{
 		// ensure that we don't change something (e.g. '01' => 1)
 		if(is_int($val))
-			return (int)$val;
+			return $val;
 		if(is_float($val))
-			return (float)$val;
+			return $val;
 		
 		if($val === null)
 			return 'NULL';

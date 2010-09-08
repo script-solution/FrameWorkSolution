@@ -286,7 +286,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * Deletes the folder recursively
 	 *
 	 * @param string $folder the path to the folder
-	 * @return true if the folder has been deleted successfully
+	 * @return boolean true if the folder has been deleted successfully
 	 */
 	public static function delete_folder($folder)
 	{
@@ -295,14 +295,14 @@ final class FWS_FileUtils extends FWS_UtilBase
 		if(!is_dir($folder))
 			FWS_Helper::error('"'.$folder.'" is no folder!');
 		
-		self::_delete_folder($folder);
+		return self::_delete_folder($folder);
 	}
 	
 	/**
 	 * The recursive implementation for {@link delete_folder}.
 	 *
 	 * @param string $folder the path to the folder
-	 * @return true if the folder has been deleted successfully
+	 * @return boolean true if the folder has been deleted successfully
 	 */
 	private static function _delete_folder($folder)
 	{

@@ -27,7 +27,7 @@ final class FWS_GD_Font_GD extends FWS_Object implements FWS_GD_Font
 	 * @param FWS_GD_TextAttributes $attr
 	 * @param FWS_GD_Point $pos
 	 * @param int $angle
-	 * @return int
+	 * @return bool
 	 */
 	public function draw($img,$text,$attr,$pos,$angle = 0)
 	{
@@ -35,13 +35,13 @@ final class FWS_GD_Font_GD extends FWS_Object implements FWS_GD_Font
 		if($angle % 180 != 0 && $angle % 90 == 0)
 		{
 			return imagestringup(
-				$img,$attr->get_size(),$pos->get_x() - $h,$pos->get_y(),
+				$img,$attr->get_size(),(int)$pos->get_x() - $h,(int)$pos->get_y(),
 				$text,$attr->get_foreground()->get_color($img)
 			);
 		}
 		
 		return imagestring(
-			$img,$attr->get_size(),$pos->get_x(),$pos->get_y() - $h,
+			$img,$attr->get_size(),(int)$pos->get_x(),(int)$pos->get_y() - $h,
 			$text,$attr->get_foreground()->get_color($img)
 		);
 	}

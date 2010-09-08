@@ -36,14 +36,14 @@ FWS_Path::set_server_fw(FWS_PATH);
 FWS_Path::set_client_fw(FWS_PATH);
 
 // set error-display-mode
-@ini_set('display_errors',1);
+@ini_set('display_errors','1');
 error_reporting(E_ALL | E_STRICT);
 
 // we don't want to have magic-quotes-runtime enabled; it's deprecated in PHP 5.3 (=> @)
-@set_magic_quotes_runtime(0);
+@set_magic_quotes_runtime(false);
 
 // we don't want to escape ' by '' instead of \', either
-@ini_set('magic_quotes_sybase',false);
+@ini_set('magic_quotes_sybase','0');
 
 // set default timezone for the case that FWS_Date is not used
 date_default_timezone_set('Europe/Berlin');

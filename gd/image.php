@@ -208,7 +208,7 @@ final class FWS_GD_Image extends FWS_Object
 		
 		// just available if PHP was compiled with bundled version of GD
 		if(function_exists('imagerotate'))
-			imagerotate($this->_image,$angle,$bgcolor->get_color($this->_image),(bool)$ignore_transparence);
+			imagerotate($this->_image,$angle,$bgcolor->get_color($this->_image),$ignore_transparence ? 1 : 0);
 		else
 			$this->_rotate_self($angle,$bgcolor);
 	}
@@ -277,13 +277,13 @@ final class FWS_GD_Image extends FWS_Object
 	 * @param int $angle the angle to rotate by
 	 * @param int $x the x-position
 	 * @param int $y the y-position
-	 * @return the new x-position
+	 * @return int the new x-position
 	 */
 	private function _rot_x($angle,$x,$y)
 	{
 		$cos = cos($angle / 180 * pi());
 		$sin = sin($angle / 180 * pi());
-		return $x * $cos + $y * -$sin;
+		return (int)($x * $cos + $y * -$sin);
 	}
   
 	/**
@@ -292,13 +292,13 @@ final class FWS_GD_Image extends FWS_Object
 	 * @param int $angle the angle to rotate by
 	 * @param int $x the x-position
 	 * @param int $y the y-position
-	 * @return the new y-position
+	 * @return int the new y-position
 	 */
 	private function _rot_y($angle,$x,$y)
 	{
 		$cos = cos($angle / 180 * pi());
 		$sin = sin($angle / 180 * pi());
-		return $x * $sin + $y * $cos;
+		return (int)($x * $sin + $y * $cos);
 	}
 	
 	/**
@@ -435,7 +435,7 @@ final class FWS_GD_Image extends FWS_Object
 				imagewbmp($this->_image);
 				break;
 			case 'xbm':
-				imagexbm($this->_image);
+				imagexbm($this->_image,null);
 				break;
 			default:
 				imagepng($this->_image);

@@ -588,8 +588,8 @@ EOF;
 	 *
 	 * @param string $name the name of the textarea
 	 * @param string $default the default value of the textarea
-	 * @param string $width the width of the textarea (CSS-attribute "width"!)
-	 * @param string $height the height of the textarea (CSS-attribute "height"!)
+	 * @param string|int $width the width of the textarea (CSS-attribute "width"!)
+	 * @param string|int $height the height of the textarea (CSS-attribute "height"!)
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the textarea
 	 */
@@ -612,7 +612,7 @@ EOF;
 	 *
 	 * @param string $name the name of the input-box
 	 * @param string $default the default value of the box
-	 * @param int $size the size
+	 * @param string|int $size the size
 	 * @param int $maxlength the maximum length
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the text-box
@@ -701,7 +701,7 @@ EOF;
 	 * Generates yes-no radioboxes
 	 *
 	 * @param string $name the name of the radioboxes
-	 * @param int $default 1 or 0 for the default selected value
+	 * @param bool $default true or false for the default selected value
 	 * @param boolean $disabled is the element disabled?
 	 * @return string the radio-boxes
 	 */
@@ -713,7 +713,7 @@ EOF;
 			'1' => $locale->lang('yes'),
 			'0' => $locale->lang('no')
 		);
-		return $this->get_radio_boxes($name,$options,$default,' ',$disabled);
+		return $this->get_radio_boxes($name,$options,$default ? '1' : '0',' ',$disabled);
 	}
 
 	/**

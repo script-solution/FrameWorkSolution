@@ -318,8 +318,8 @@ final class FWS_Template_Parser extends FWS_Object
 	 * ...
 	 *
 	 * @param string $name the name of the loop-variable
-	 * @param int $start the start-value
-	 * @param int $end the end-value
+	 * @param string $start the start-value
+	 * @param string $end the end-value
 	 * @return unknown
 	 */
 	private function _parse_custom_loop($name,$start,$end)

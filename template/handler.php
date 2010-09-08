@@ -380,7 +380,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * 	array(<object1>.<method1>,<object1>.<method2>,...,<object2>.<method1>,...)
 	 * </code>
 	 * 
-	 * @return the callable methods
+	 * @return array the callable methods
 	 */
 	public function get_allowed_methods()
 	{

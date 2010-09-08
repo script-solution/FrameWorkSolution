@@ -150,6 +150,7 @@ final class FWS_Tree_Node extends FWS_Object
 	 *
 	 * @param int $id the id of the node you're looking for
 	 * @param boolean $recursive search recursivly?
+	 * @return bool true if so
 	 */
 	public function has_child_node($id,$recursive = false)
 	{
@@ -277,7 +278,7 @@ final class FWS_Tree_Node extends FWS_Object
 	}
 	
 	/**
-	 * @return array an associative array with all fields to use for the XML-representation
+	 * @return string the XML-representation
 	 */
 	public function to_xml($layer)
 	{
