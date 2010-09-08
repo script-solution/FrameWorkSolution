@@ -407,7 +407,6 @@ final class FWS_GD_Captcha extends FWS_Object
 		parent::__construct();
 		
 		$this->_use_transparency = function_exists('imagecreatetruecolor');
-		$this->_size = new FWS_GD_Dimension(350,80);
 	}
 	
 	/**
