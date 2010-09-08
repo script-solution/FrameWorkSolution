@@ -44,7 +44,7 @@ final class FWS_Profiler extends FWS_Object
 	 * Determines the time from the call of {@link start} until now
 	 * 
 	 * @param int $accuracy the accuracy for the time (default = 6)
-	 * @return int the taken time
+	 * @return float the taken time
 	 */
 	public function get_time($accuracy = 6)
 	{
@@ -53,7 +53,7 @@ final class FWS_Profiler extends FWS_Object
 
 		$stop_time = explode(' ',microtime());
 		$time = $stop_time[0] - $this->_start_time[0] + $stop_time[1] - $this->_start_time[1];
-		return (int)round($time,$accuracy);
+		return round($time,$accuracy);
 	}
 	
 	/**
