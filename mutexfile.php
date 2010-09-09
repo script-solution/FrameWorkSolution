@@ -18,11 +18,14 @@
  * 
  * Example:
  * <code>
- * try {
+ * try
+ * {
  *   $mutex = new FWS_MutexFile('yourfile');
+ *   $mutex->aquire();
  *   $content = $mutex->read();
  *   // do stuff
  *   $mutex->write($content);
+ *   $mutex->close();
  * }
  * catch(Exception $e)
  * {
