@@ -124,8 +124,8 @@ function FWS_showImage(imgURL)
 	el.style.display = 'block';
 	el.style.width = initialSize;
 	el.style.height = initialSize;
-	el.style.top = (size[1] / 2 - iinitialSize / 2 + offset[1]) + 'px';
-	el.style.left = (size[0] / 2 - iinitialSize / 2 + offset[0]) + 'px';
+	el.style.top = Math.max(0,size[1] / 2 - iinitialSize / 2 + offset[1]) + 'px';
+	el.style.left = Math.max(0,size[0] / 2 - iinitialSize / 2 + offset[0]) + 'px';
 	
 	// set content
 	var html = '<img id="fws_image_viewer_img" src="" />';
@@ -176,8 +176,8 @@ function FWS_showImage(imgURL)
 		el.innerHTML = "<p align=\"center\">" + ivConfig.errorMsg + "</p>";
 		el.style.width = 'auto';
 		el.style.height = 'auto';
-		el.style.top = (size[1] / 2 - el.offsetHeight / 2 + offset[1]) + 'px';
-		el.style.left = (size[0] / 2 - el.offsetWidth / 2 + offset[0]) + 'px';
+		el.style.top = Math.max(0,size[1] / 2 - el.offsetHeight / 2 + offset[1]) + 'px';
+		el.style.left = Math.max(0,size[0] / 2 - el.offsetWidth / 2 + offset[0]) + 'px';
 	};
 	preImg.src = imgURL;
 }
@@ -239,8 +239,8 @@ function _smoothResize(elId,imgId,width,height,steps,i)
 		el.style.width = (csize[0] + realwidth) + 'px';
 		el.style.height = (csize[1] + realheight) + 'px';
 		
-		el.style.left = (parseInt(el.style.left) - realwidth / 2) + 'px';
-		el.style.top = (parseInt(el.style.top) - realheight / 2) + 'px';
+		el.style.left = Math.max(0,parseInt(el.style.left) - realwidth / 2) + 'px';
+		el.style.top = Math.max(0,parseInt(el.style.top) - realheight / 2) + 'px';
 		window.setTimeout(
 			'_smoothResize("' + elId + '","' + imgId + '",' + width + ',' + height + ',' + steps + ',' + (i + 1) + ')',
 			ivConfig.timeout
