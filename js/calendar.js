@@ -91,6 +91,74 @@ function FWS_Calendar(path,inputId,onSelected)
 	};
 	
 	/**
+	 * Builds a string from the given date, using the given date-components and separator.
+	 * 
+	 * @param Date date the date
+	 * @param array comps optionally, the date-components in the corresponding order ('m','d' and 'Y')
+	 * @param string sep optionally, the date-component-separator
+	 * @return string the date as string
+	 */
+	this.dateToString = function(date,comps,sep)
+	{
+		if(typeof comps == 'undefined')
+			comps = new Array('m','d','Y');
+		if(typeof sep == 'undefined')
+			sep = '/';
+		var str = '';
+		for(var i = 0; i < comps.length; i++)
+		{
+			switch(comps[i])
+			{
+				case 'm':
+					str += this.get2Digits(date.getMonth() + 1);
+					break;
+				case 'd':
+					str += this.get2Digits(date.getDate());
+					break;
+				case 'Y':
+					str += this.get2Digits(date.getFullYear());
+					break;
+			}
+			str += sep;
+		}
+		return str.substr(0,str.length - 1);
+	};
+
+	/**
+	 * Builds a date from the given string, using the given date-components and separator.
+	 * 
+	 * @param string str the string
+	 * @param array comps optionally, the date-components in the corresponding order ('m','d' and 'Y')
+	 * @param string sep optionally, the date-component-separator
+	 * @return Date the date
+	 */
+	this.stringToDate = function(str,comps,sep)
+	{
+		if(typeof comps == 'undefined')
+			comps = new Array('m','d','Y');
+		if(typeof sep == 'undefined')
+			sep = '/';
+		var day,month,year;
+		var parts = str.split(sep);
+		for(var i = 0; i < comps.length; i++)
+		{
+			switch(comps[i])
+			{
+				case 'm':
+					month = parts[i] - 1;
+					break;
+				case 'd':
+					day = parts[i];
+					break;
+				case 'Y':
+					year = parts[i];
+					break;
+			}
+		}
+		return new Date(year,month,day,0,0,0);
+	};
+	
+	/**
 	 * Builds the html-code for the calendar
 	 *
 	 * @return string the html-code
@@ -358,18 +426,23 @@ function setStartUpFunction(func)
 /**
  * Sets the selected date to the given one
  *
- * @param int year the year
+ * @param int|Date year the year or the date
  * @param int month the month (starting with 1)
  * @param int day the day (starting with 1)
  */
 function setSelectedDate(year,month,day)
 {
-	year = year < this.minYear ? this.minYear : year;
-	year = year > this.maxYear ? this.maxYear : year;
+	if(typeof year == 'object')
+		this.selectedDate = year;
+	else
+	{
+		year = year < this.minYear ? this.minYear : year;
+		year = year > this.maxYear ? this.maxYear : year;
 
-	this.date = new Date(year,month - 1,day,0,0,0);
-	this.selectedDate = new Date();
-	this.selectedDate.setTime(this.date.getTime());
+		this.date = new Date(year,month - 1,day,0,0,0);
+		this.selectedDate = new Date();
+		this.selectedDate.setTime(this.date.getTime());
+	}
 	
 	this.adjustButtons();
 }

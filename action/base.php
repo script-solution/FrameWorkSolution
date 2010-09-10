@@ -173,7 +173,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	 * Adds the given link to the action
 	 * 
 	 * @param string $name the name of the link
-	 * @param FWS_URL $url the URL of the link (may also be a string, if you want to specify the URL
+	 * @param FWS_URL|string $url the URL of the link (may also be a string, if you want to specify the URL
 	 * 	manually)
 	 */
 	protected final function add_link($name,$url)

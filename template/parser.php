@@ -140,7 +140,7 @@ final class FWS_Template_Parser extends FWS_Object
 		$this->_regex_numvar = '(?:'.$this->_regex_var.'|'.$regex_num.')';
 		$this->_regex_math = '(?:'.$this->_regex_numvar.'\s*(?:[\*+\/\-%]\s*'.$this->_regex_numvar.')?)';
 		$this->_regex_value = '(?:'.$this->_regex_var.'|'.$this->_regex_math.'|'.$regex_str.')';
-		$regex_inc = '(?:'.$this->_regex_var.'|'.$regex_str.')';
+		$regex_inc = '(?:'.$this->_regex_var.'|'.$regex_str.'|#.+?#)';
 		$this->_regex_concat = '(?:'.$regex_num.'|(?:'.$regex_inc
 			.'(?:\s*~\s*'.$regex_inc.')*))';
 		$this->_regex_objcall = $this->_regex_ident.'\.'.$this->_regex_ident
@@ -229,6 +229,14 @@ final class FWS_Template_Parser extends FWS_Object
 			$content
 		);
 		
+		// {#language-entry#}
+		$content = preg_replace(
+			'/{#(.+?)#}/e',
+			'"\nEOF;\n".\'$html .= \'.($this->_parse_lang(stripslashes(\'\\1\'))).";\n"'
+				.'.\'$html .= <<<EOF\'."\n"',
+			$content
+		);
+		
 		// {set var=value}
 		$content = preg_replace(
 			'/{SET\s+('.$this->_regex_ident.')\s*=\s*('.$this->_regex_concat.')}/ie',
@@ -267,6 +275,7 @@ final class FWS_Template_Parser extends FWS_Object
 		// build php-file
 		$result = '<?php'."\n"
 		 .'function '.$this->_tpl->get_function_name($tplpath.$template).'($tpl,$number) {'."\n"
+		 .'$locale = FWS_Props::get()->locale();'."\n"
 		 .'$tplvars = $tpl->get_variables(\''.$template.'\',$number);'."\n";
 		if($this->_tpl->get_access_to_foreign_tpls())
 		{
@@ -288,6 +297,16 @@ final class FWS_Template_Parser extends FWS_Object
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Parses the language-entry-construct
+	 * 
+	 * @param string $name the language-entry-name
+	 */
+	private function _parse_lang($name)
+	{
+		return '$locale->lang(\''.$name.'\',false)';
 	}
 	
 	/**
@@ -557,11 +576,14 @@ final class FWS_Template_Parser extends FWS_Object
 		$res = '';
 		$i = 0;
 		$len = count($parts);
+		$match = array();
 		foreach($parts as $p)
 		{
 			$p = trim($p);
 			if(preg_match('/^'.$this->_regex_value.'$/',$p))
 				$res .= $this->_parse_value($p);
+			else if(preg_match('/^#(.+?)#$/',$p,$match))
+				$res .= $this->_parse_lang($match[1]);
 			else
 				$res .= $p;
 			
