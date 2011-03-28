@@ -218,6 +218,8 @@ final class FWS_HTML_LimitedString extends FWS_Object
 					if($vc == '&')
 					{
 						$a = FWS_String::strpos($this->_input,';',$a);
+						if($a === false)
+							break;
 						$visible_chars++;
 						$last_was_space = false;
 						continue;
@@ -390,6 +392,9 @@ final class FWS_HTML_LimitedString extends FWS_Object
 			if($c == '&')
 			{
 				$aend = FWS_String::strpos($this->_input,';',$i);
+				// if there is no ';', treat '&' as a normal char
+				if($aend === false)
+					$aend = $i + 1;
 				$str .= FWS_String::substr($this->_input,$i,$aend - $i + 1);
 				$count++;
 				$i = $aend;
