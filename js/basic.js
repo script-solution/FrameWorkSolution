@@ -504,12 +504,16 @@ function FWS_includeJS(file)
  * Hides or shows the element with given id
  *
  * @param mixed elId the id of the element
+ * @param string display the value of style.display (default 'block')
  */
-function FWS_toggleElement(elId)
+function FWS_toggleElement(elId,display)
 {
+	if(typeof display == 'undefined')
+		display = 'block';
+	
 	var element = FWS_getElement(elId);
 	if(element.style.display == 'none')
-		element.style.display = 'block';
+		element.style.display = display;
 	else
 		element.style.display = 'none';
 }

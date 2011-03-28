@@ -167,7 +167,8 @@ class FWS_Session_Data extends FWS_Object
 				'ReqwirelessWeb/',
 				'PlayStation Portable',
 				'Elaine/',
-				'iPhone;'
+				'iPhone;',
+				'Android',
 			);
 		
 			// is it a mobile device?
