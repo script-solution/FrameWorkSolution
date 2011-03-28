@@ -786,12 +786,12 @@ final class FWS_GD_Captcha extends FWS_Object
 			{
 				if($this->_background_random)
 				{
-					$cr = max(0,min(255,$bgr + mt_rand(20,-20)));
-					$cg = max(0,min(255,$bgg + mt_rand(20,-20)));
-					$cb = max(0,min(255,$bgb + mt_rand(20,-20)));
+					$cr = max(0,min(255,$bgr + mt_rand(-20,20)));
+					$cg = max(0,min(255,$bgg + mt_rand(-20,20)));
+					$cb = max(0,min(255,$bgb + mt_rand(-20,20)));
 				}
 				else
-					$cr = $cg = $cb = max(0,min(255,$bgr + mt_rand(20,-20)));
+					$cr = $cg = $cb = max(0,min(255,$bgr + mt_rand(-20,20)));
 				
 				$colors[] = array($cr,$cg,$cb);
 			}
@@ -896,7 +896,10 @@ final class FWS_GD_Captcha extends FWS_Object
 		{
 			$factor = mt_rand($this->_shape_min_size,$this->_shape_max_size);
 			$x = mt_rand($this->_width / 3,2 * $this->_width / 3);
-			$y = mt_rand($this->_width / 3,2 * $this->_height / 3);
+			if($this->_width <= 2 * $this->_height)
+				$y = mt_rand($this->_width / 3,2 * $this->_height / 3);
+			else
+				$y = mt_rand(2 * $this->_height / 3,$this->_width / 3);
 			$color = $this->_bg->get_readable_random_foreground();
 			$down = mt_rand(0,1) == 0;
 			$right = mt_rand(0,1) == 0;
