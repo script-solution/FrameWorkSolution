@@ -247,26 +247,26 @@ final class FWS_GD_Image extends FWS_Object
 				$nimg,$bgcolor->get_red(),$bgcolor->get_green(),$bgcolor->get_blue()
 			);
 		}
-    imagefill($nimg,0,0,$trans_colour);
+		imagefill($nimg,0,0,$trans_colour);
 		
 		$dx_x = $this->_rot_x(-$angle, 1, 0);
-    $dx_y = $this->_rot_y(-$angle, 1, 0);
-    $dy_x = $this->_rot_x(-$angle, 0, 1);
-    $dy_y = $this->_rot_y(-$angle, 0, 1);
-    
-    $x0 = $this->_rot_x(-$angle,-$width / 2,-$height / 2) + $width / 2;
-    $y0 = $this->_rot_y(-$angle,-$width / 2,-$height / 2) + $height / 2;
-    
-    $img = $this->_image;
-    $x1 = $x0;
-    $y1 = $y0;
-    for($y = 0;$y < $height;$y++)
-    {
-      $x2 = $x1;
-      $y2 = $y1;
-      for($x = 0;$x < $width;$x++)
-      {
-      	if($x2 >= 0 && $x2 < $width && $y2 >= 0 && $y2 < $height)
+		$dx_y = $this->_rot_y(-$angle, 1, 0);
+		$dy_x = $this->_rot_x(-$angle, 0, 1);
+		$dy_y = $this->_rot_y(-$angle, 0, 1);
+		
+		$x0 = $this->_rot_x(-$angle,-$width / 2,-$height / 2) + $width / 2;
+		$y0 = $this->_rot_y(-$angle,-$width / 2,-$height / 2) + $height / 2;
+		
+		$img = $this->_image;
+		$x1 = $x0;
+		$y1 = $y0;
+		for($y = 0;$y < $height;$y++)
+		{
+			$x2 = $x1;
+			$y2 = $y1;
+			for($x = 0;$x < $width;$x++)
+			{
+				if($x2 >= 0 && $x2 < $width && $y2 >= 0 && $y2 < $height)
 					$pixel = imagecolorat($img,$x2,$y2);
 				else
 					$pixel = $trans_colour;
@@ -274,10 +274,10 @@ final class FWS_GD_Image extends FWS_Object
 				imagesetpixel($nimg,$x,$y,$pixel);
 				$x2 += $dx_x;
 				$y2 += $dx_y;
-      }
-      $x1 += $dy_x;
-      $y1 += $dy_y;
-    }
+			}
+			$x1 += $dy_x;
+			$y1 += $dy_y;
+		}
 		
 		imagedestroy($img);
 		$this->_image = $nimg;
@@ -297,7 +297,7 @@ final class FWS_GD_Image extends FWS_Object
 		$sin = sin($angle / 180 * pi());
 		return (int)($x * $cos + $y * -$sin);
 	}
-  
+	
 	/**
 	 * Rotates the y position of a point.
 	 * 
@@ -356,13 +356,13 @@ final class FWS_GD_Image extends FWS_Object
 				2,
 				$h * $mult
 			);
-	  }
-	  
-	  // wave vertical
+		}
+		
+		// wave vertical
 		$rperiod = mt_rand($period - 5,$period + 5);
-	  for($i = 0,$end = ($h * $mult);$i < $end;$i += 2)
-	  {
-	  	imagecopy(
+		for($i = 0,$end = ($h * $mult);$i < $end;$i += 2)
+		{
+			imagecopy(
 				$img2,
 				$img2,
 				$x + sin($i / $rperiod) * $amplitude,
@@ -372,9 +372,9 @@ final class FWS_GD_Image extends FWS_Object
 				$w * $mult,
 				2
 			);
-	  }
-	  
-	  // Resample it down again
+		}
+		
+		// Resample it down again
 		imagecopyresampled($this->_image,$img2,$x,$y,0,0,$w,$h,$w * $mult,$h * $mult);
 		imagedestroy($img2);
 	}

@@ -582,9 +582,9 @@ function FWS_getPageOffsetLeft(el)
 {
 	var x = el.offsetLeft;
 	if(el.offsetParent != null)
-    x += FWS_getPageOffsetLeft(el.offsetParent);
+		x += FWS_getPageOffsetLeft(el.offsetParent);
 	
-  return x;
+	return x;
 }
 
 /**
@@ -595,11 +595,11 @@ function FWS_getPageOffsetLeft(el)
  */
 function FWS_getPageOffsetTop(el)
 {
-  var y = el.offsetTop;
-  if(el.offsetParent != null)
-    y += FWS_getPageOffsetTop(el.offsetParent);
+	var y = el.offsetTop;
+	if(el.offsetParent != null)
+		y += FWS_getPageOffsetTop(el.offsetParent);
 
-  return y;
+	return y;
 }
 
 /**

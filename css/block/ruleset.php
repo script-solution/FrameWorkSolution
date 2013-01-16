@@ -38,11 +38,11 @@
 final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 {
 	/**
-   * Returns the default value for the given property
-   *
-   * @param string $propname the property-name
-   * @return string the default-value
-   */
+	 * Returns the default value for the given property
+	 *
+	 * @param string $propname the property-name
+	 * @return string the default-value
+	 */
 	public static function get_def_prop_value($propname)
 	{
 		switch($propname)
