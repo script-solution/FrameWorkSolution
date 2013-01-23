@@ -82,7 +82,10 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	 */
 	public function get_server_version()
 	{
-		return @mysql_get_server_info($this->_con);
+		if($this->_con !== NULL)
+			return @mysql_get_server_info($this->_con);
+		else
+			return @mysql_get_server_info();
 	}
 	
 	/**
