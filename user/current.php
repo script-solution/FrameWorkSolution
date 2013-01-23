@@ -155,26 +155,26 @@ class FWS_User_Current extends FWS_Object
 		if($sessions->sessions_enabled())
 		{
 			// login by cookie?
-	    if($this->_use_cookies && !$this->is_loggedin())
-	    {
-	    	$user = $cookies->get_cookie('user');
-	  		$pw = $cookies->get_cookie('pw');
-	  		if($user != null && $pw != null)
-		 			$this->login($user,$pw,false);
-	    }
-	
-	    // fill userdata if not already done
-	    if($this->is_loggedin() && $this->_userdata === null)
+			if($this->_use_cookies && !$this->is_loggedin())
+			{
+				$user = $cookies->get_cookie('user');
+				$pw = $cookies->get_cookie('pw');
+				if($user != null && $pw != null)
+					$this->login($user,$pw,false);
+			}
+			
+			// fill userdata if not already done
+			if($this->is_loggedin() && $this->_userdata === null)
 			{
 				$this->set_userdata($this->get_user_id());
-	
+				
 				// check the user
 				// Note that we do this at the point because if login() has been called
 				// $this->_userdata is already set and has been checked, of course.
 				if($this->check_user() != self::LOGIN_ERROR_NO_ERROR)
 				{
-	        $this->_assign_new_session();
-	    		$this->setup_guest();
+					$this->_assign_new_session();
+					$this->setup_guest();
 				}
 			}
 		}
@@ -460,14 +460,14 @@ class FWS_User_Current extends FWS_Object
 		if($loggedin == self::LOGIN_ERROR_NO_ERROR)
 		{
 			// TODO this does not work since $user is not necessarily escaped
-	    // perform stripslashes here because addslashes() has been called on the value
-		  // and we want to compare it with as it is
+			// perform stripslashes here because addslashes() has been called on the value
+			// and we want to compare it with as it is
 			$user = stripslashes($user);
 	
 			if(empty($pw))
-		    $loggedin = self::LOGIN_ERROR_PW_INCORRECT;
-		  else
-		  	$loggedin = $this->check_user($user,$pw);
+				$loggedin = self::LOGIN_ERROR_PW_INCORRECT;
+			else
+				$loggedin = $this->check_user($user,$pw);
 		}
 		
 		// setup user or guest
@@ -491,8 +491,8 @@ class FWS_User_Current extends FWS_Object
 		
 		if($this->_use_cookies)
 		{
-	    $cookies->delete_cookie('user');
-	    $cookies->delete_cookie('pw');
+			$cookies->delete_cookie('user');
+			$cookies->delete_cookie('pw');
 		}
 		
 		$this->_userdata = null;
@@ -535,8 +535,8 @@ class FWS_User_Current extends FWS_Object
 
 		if($this->_use_cookies)
 		{
-	    $cookies->set_cookie('user',$user);
-	    $cookies->set_cookie('pw',$pw);
+			$cookies->set_cookie('user',$user);
+			$cookies->set_cookie('pw',$pw);
 		}
 	}
 
@@ -610,11 +610,11 @@ class FWS_User_Current extends FWS_Object
 		// check the data of the user
 		if($user !== null)
 		{
-		  // force a new session if ip or useragent has changed
+			// force a new session if ip or useragent has changed
 			if(!$this->_check_user_ip($user->get_user_ip(),$user_ip))
-			  $user = null;
+				$user = null;
 			else if(!$this->_check_user_agent($user->get_user_agent(),$user_agent))
-			  $user = null;
+				$user = null;
 		}
 		
 		// load user
@@ -632,24 +632,24 @@ class FWS_User_Current extends FWS_Object
 		}
 		
 		// store current ip, user-agent and date
-	  $this->_user->set_user_agent($user_agent);
-	  $this->_user->set_user_ip($user_ip);
+		$this->_user->set_user_agent($user_agent);
+		$this->_user->set_user_ip($user_ip);
 		$this->_user->set_date(time());
-	  
-	  // create a new session?
-	  if($user === null)
-	  {
-		  $this->_assign_new_session();
-		  $sessions->add_user($this->_user);
-	  }
-	  
-	  if($sessions->sessions_enabled())
-	  {
-		  // refresh cookie
+
+		// create a new session?
+		if($user === null)
+		{
+			$this->_assign_new_session();
+			$sessions->add_user($this->_user);
+		}
+
+		if($sessions->sessions_enabled())
+		{
+			// refresh cookie
 			$cookies->set_cookie(
 				'sid',$this->_user->get_session_id(),$sessions->get_online_timeout()
 			);
-	  }
+		}
 	}
 	
 	/**
@@ -658,7 +658,7 @@ class FWS_User_Current extends FWS_Object
 	private function _assign_new_session()
 	{
 		// generate new session id and store it via cookie
-	  $this->_user->set_session_id($this->_generate_session_id());
+		$this->_user->set_session_id($this->_generate_session_id());
 	}
 
 	/**

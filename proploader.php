@@ -81,7 +81,7 @@ class FWS_PropLoader extends FWS_Object
 	protected function sessions()
 	{
 		$storage = new FWS_Session_Storage_Empty();
-	  return new FWS_Session_Manager($storage,false);
+		return new FWS_Session_Manager($storage,false);
 	}
 	
 	/**
@@ -90,7 +90,7 @@ class FWS_PropLoader extends FWS_Object
 	protected function user()
 	{
 		$storage = new FWS_User_Storage_Empty();
-	  return new FWS_User_Current($storage);
+		return new FWS_User_Current($storage);
 	}
 
 	/**

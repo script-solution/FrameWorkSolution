@@ -135,7 +135,7 @@ class FWS_PropAccessor extends FWS_Object
 	 */
 	public function sessions()
 	{
-	  return $this->get('sessions');
+		return $this->get('sessions');
 	}
 	
 	/**
@@ -143,7 +143,7 @@ class FWS_PropAccessor extends FWS_Object
 	 */
 	public function user()
 	{
-	  return $this->get('user');
+		return $this->get('user');
 	}
 
 	/**

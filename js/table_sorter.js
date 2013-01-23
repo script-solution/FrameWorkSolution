@@ -45,7 +45,7 @@ function FWS_TableSorter(tableID)
 	 */
 	this._compare = function _compare(a,b)
 	{
-	  // compare numeric value?
+		// compare numeric value?
 		if(Number(a) && Number(b))
 		{
 			var ia = parseInt(a);
@@ -57,9 +57,9 @@ function FWS_TableSorter(tableID)
 		a = a.toLowerCase();
 		b = b.toLowerCase();
 		if(a > b)
-		  return 1;
+			return 1;
 		if(b > a)
-		  return -1;
+			return -1;
 
 	 	return 0;
 	};
@@ -74,14 +74,14 @@ function FWS_TableSorter(tableID)
 	this._swapRows = function _swapRows(trs,i,j)
 	{
 		if(i == j + 1)
-		  this.table.tBodies[0].insertBefore(trs[i],trs[j]);
+			this.table.tBodies[0].insertBefore(trs[i],trs[j]);
 	 	else if(j == i + 1)
 			this.table.tBodies[0].insertBefore(trs[j],trs[i]);
 	 	else
 	 	{
 			var tmpNode = this.table.tBodies[0].replaceChild(trs[i],trs[j]);
-		  if(typeof(trs[i]) != 'undefined')
-		  	this.table.tBodies[0].insertBefore(tmpNode,trs[i]);
+			if(typeof(trs[i]) != 'undefined')
+				this.table.tBodies[0].insertBefore(tmpNode,trs[i]);
 			else
 				this.table.appendChild(tmpNode);
 	 	}
@@ -98,42 +98,42 @@ function FWS_TableSorter(tableID)
 	 */
 	this._qSort = function _qSort(A,low,high,columnIndex,cmpDir)
 	{
-	  var lo = low;
-	  var hi = high;
-	  var mid = A[Math.round((lo + hi) / 2)].cells[columnIndex].innerHTML;
-	  do
-	  {
-	  	var cmpContent = A[lo].cells[columnIndex].innerHTML;
-	  	var cmp = this._compare(mid,cmpContent);
-	  	while((cmpDir == 0 && cmp > 0) || (cmpDir == 1 && cmp < 0))
-	  	{
-	  		lo++;
-	  		cmpContent = A[lo].cells[columnIndex].innerHTML;
-	  		cmp = this._compare(mid,cmpContent);
-	  	}
-	  	
-	  	var cmpContent = A[hi].cells[columnIndex].innerHTML;
-	  	var cmp = this._compare(mid,cmpContent);
-	  	while((cmpDir == 0 && cmp < 0) || (cmpDir == 1 && cmp > 0))
-	  	{
-	  		hi--;
-	  		cmpContent = A[hi].cells[columnIndex].innerHTML;
-	  		cmp = this._compare(mid,cmpContent);
-	  	}
-	    
-	    if(lo <= hi)
-	    {
-	    	this._swapRows(A,lo,hi); 
-	      lo++;
-	      hi--; 
-	    }
-	  }
-	  while(lo <= hi);
-	  
-	  if(hi > low)
-	  	this._qSort(A,low,hi,columnIndex,cmpDir);    
-	  if(lo < high)
-	  	this._qSort(A,lo,high,columnIndex,cmpDir);
+		var lo = low;
+		var hi = high;
+		var mid = A[Math.round((lo + hi) / 2)].cells[columnIndex].innerHTML;
+		do
+		{
+			var cmpContent = A[lo].cells[columnIndex].innerHTML;
+			var cmp = this._compare(mid,cmpContent);
+			while((cmpDir == 0 && cmp > 0) || (cmpDir == 1 && cmp < 0))
+			{
+				lo++;
+				cmpContent = A[lo].cells[columnIndex].innerHTML;
+				cmp = this._compare(mid,cmpContent);
+			}
+
+			var cmpContent = A[hi].cells[columnIndex].innerHTML;
+			var cmp = this._compare(mid,cmpContent);
+			while((cmpDir == 0 && cmp < 0) || (cmpDir == 1 && cmp > 0))
+			{
+				hi--;
+				cmpContent = A[hi].cells[columnIndex].innerHTML;
+				cmp = this._compare(mid,cmpContent);
+			}
+
+			if(lo <= hi)
+			{
+				this._swapRows(A,lo,hi); 
+				lo++;
+				hi--; 
+			}
+		}
+		while(lo <= hi);
+
+		if(hi > low)
+			this._qSort(A,low,hi,columnIndex,cmpDir);    
+		if(lo < high)
+			this._qSort(A,lo,high,columnIndex,cmpDir);
 	};
 }
 
@@ -150,9 +150,9 @@ function sortTable(columnIndex)
 	// determine direction
 	var cmpDir;
 	if(this.lastColumn == columnIndex)
-	  cmpDir = this.lastDir == 0 ? 1 : 0;
+		cmpDir = this.lastDir == 0 ? 1 : 0;
 	else
-	  cmpDir = 0;
+		cmpDir = 0;
 
 	// sort the rows via quicksort
 	this._qSort(trs,0,trs.length - 1,columnIndex,cmpDir);

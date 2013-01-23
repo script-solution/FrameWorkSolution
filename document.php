@@ -580,7 +580,7 @@ class FWS_Document extends FWS_Object
 
 		$encoding = $input->get_var('HTTP_ACCEPT_ENCODING','server',FWS_Input::STRING);
 		if($encoding === null)
-	    return false;
+			return false;
 
 		if(FWS_String::strpos($encoding,'x-gzip') !== false)
 			return 'x-gzip';
