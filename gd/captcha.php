@@ -987,7 +987,7 @@ final class FWS_GD_Captcha extends FWS_Object
 		// determine ttf-parameters
 		list($ttf,$size) = $this->_ttf_fonts[mt_rand(0,count($this->_ttf_fonts) - 1)];
 		$fontsize = mt_rand(
-			$size - $this->_ttf_font_size_difference,
+			max(1,$size - $this->_ttf_font_size_difference),
 			$size + $this->_ttf_font_size_difference
 		);
 	
