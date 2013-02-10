@@ -238,7 +238,7 @@ final class FWS_Error_Handler extends FWS_Singleton
 		}
 		
 		// hide this error from the user?
-		if($no > 0 && (error_reporting() & $no) === 0)
+		if(ini_get('display_errors') == 0 || ($no > 0 && (error_reporting() & $no) === 0))
 			return '';
 		
 		// return the output
