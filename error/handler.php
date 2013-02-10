@@ -177,7 +177,7 @@ final class FWS_Error_Handler extends FWS_Singleton
 		// if somebody has used '@' to suppress errors, we will ignore them here
 		// note that this means that nobody should set error-reporting to 0 because otherwise
 		// we would log no error
-		if((error_reporting() & $no) == 0 || $this->_max_errors())
+		if($no > 0 && (error_reporting() & $no) == 0 || $this->_max_errors())
 			return;
 		
 		echo $this->get_error_message($no,$exception->getMessage(),$exception->getFile(),
@@ -198,7 +198,7 @@ final class FWS_Error_Handler extends FWS_Singleton
 		// if somebody has used '@' to suppress errors, we will ignore them here
 		// note that this means that nobody should set error-reporting to 0 because otherwise
 		// we would log no error
-		if((error_reporting() & $no) == 0 || $this->_max_errors())
+		if($no > 0 && (error_reporting() & $no) == 0 || $this->_max_errors())
 			return;
 
 		echo $this->get_error_message($no,$msg,$file,$line);
