@@ -699,6 +699,7 @@ final class FWS_Template_Handler extends FWS_Object
 		// or unset it will be the default value if we use '' and the original template
 		// gets parsed again which ends in recursion.
 		$tpl = $template !== -1 ? $template : $this->_filename;
+		$tpl_file = basename($tpl);
 		
 		// the template must not be empty!
 		if(empty($tpl))
@@ -706,7 +707,7 @@ final class FWS_Template_Handler extends FWS_Object
 		
 		// store template-name for error-message
 		$old_tpl = $this->_filename;
-		$this->_filename = $tpl;
+		$this->_filename = $tpl_file;
 		
 		// set template-path if not already done
 		$template_path = $this->_template_path;
@@ -719,10 +720,10 @@ final class FWS_Template_Handler extends FWS_Object
 		}
 		
 		// do we have already cached and included the template?
-		$func_name = $this->get_function_name($template_path.$tpl);
+		$func_name = $this->get_function_name($template_path.$tpl_file);
 		if(!function_exists($func_name))
 		{
-			$cache_path = $this->_get_cache_path($template_path,$tpl);
+			$cache_path = $this->_get_cache_path($template_path,$tpl_file);
 			
 			// check if we have to recompile the template
 			if(!file_exists($cache_path))
@@ -730,7 +731,7 @@ final class FWS_Template_Handler extends FWS_Object
 			else
 			{
 				$cache_mtime = filemtime($cache_path);
-				$tpl_mtime = filemtime(FWS_Path::server_app().$template_path.$tpl);
+				$tpl_mtime = filemtime(FWS_Path::server_app().$template_path.$tpl_file);
 				
 				// compare the last-modified-times
 				if($tpl_mtime > $cache_mtime)
@@ -740,7 +741,7 @@ final class FWS_Template_Handler extends FWS_Object
 		
 		// recompile?
 		if($recompile_necessary)
-			$this->_recompile($tpl,$template_path,$cache_path);
+			$this->_recompile($tpl_file,$template_path,$cache_path);
 		
 		// detect recursions
 		$tplc = count($this->_tpl_calls);
@@ -754,13 +755,13 @@ final class FWS_Template_Handler extends FWS_Object
 			include_once($cache_path);
 		
 		// call the function with corresponding part-argument
-		$func_name = $this->get_function_name($template_path.$tpl);
+		$func_name = $this->get_function_name($template_path.$tpl_file);
 		
 		// if the function does not exist there is something wrong, so recompile
 		if(!function_exists($func_name))
 		{
-			$cache_path = $this->_get_cache_path($template_path,$tpl);
-			$this->_recompile($tpl,$template_path,$cache_path);
+			$cache_path = $this->_get_cache_path($template_path,$tpl_file);
+			$this->_recompile($tpl_file,$template_path,$cache_path);
 			include($cache_path);
 		}
 		
