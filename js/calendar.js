@@ -326,7 +326,7 @@ function FWS_Calendar(path,inputId,onSelected)
 			// determine week-number
 			if(day > monthDays + 1)
 				this.setNextMonth();
-			this.date.setDate(day > monthDays + 1 ? realDay : day);
+			this.date.setDate(day > monthDays + 1 ? realDay + 1 : day);
 			
 			var week = this.date.getWeekOfYear();
 			
