@@ -150,7 +150,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	
 	/**
 	 * Checks wether the given directory / file is writable
-	 * Will try to set the CHMOD! Uses 0666 for files and 0777 for folders.
+	 * Will try to set the permissions! Uses 0666 for files and 0777 for folders.
 	 * 
 	 * @param string $path the file or directory to check
 	 * @return boolean true if the path is writable

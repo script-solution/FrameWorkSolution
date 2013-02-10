@@ -807,8 +807,8 @@ final class FWS_Template_Handler extends FWS_Object
 	{
 		$tpl_content = FWS_FileUtils::read(FWS_Path::server_app().$tplpath.$tpl);
 		// if we could not save the template we eval the code directly
-		// this prevents problems if the cache-directory has not yet CHMOD 0777 (which may happen
-		// at the beginning of the installation)
+		// this prevents problems if the cache-directory has not yet write permissions
+		// (which may happen at the beginning of the installation)
 		$parser = new FWS_Template_Parser($this);
 		$tpl_content = $parser->compile_template($tplpath,$tpl,$cache_path,$tpl_content);
 		if($tpl_content !== '')
@@ -818,13 +818,13 @@ final class FWS_Template_Handler extends FWS_Object
 			{
 				echo '<b><span style="color: red;">WARNUNG: Das Verzeichnis "'.dirname($cache_path)
 						.'" oder Dateien in diesem Verzeichnis sind nicht beschreibbar.'
-						.' Bitte setzen Sie den CHMOD des Verzeichnisses auf 0777 bzw. l&ouml;schen Sie die'
-						.' Dateien in diesem Verzeichnis!'
+						.' Bitte setzen Sie die Zugriffsrechte des Verzeichnisses auf 0777 bzw.'
+						.' l&ouml;schen Sie die Dateien in diesem Verzeichnis!'
 						.'</span></b><br />'."\n";
 				echo '<b><span style="color: red;">WARNING: The directory "'.dirname($cache_path)
 						.'" or files in this directory are not writable!'
-						.' Please set the CHMOD of this directory to 0777 or delete the files in it!'
-						.'</span></b><br />'."\n";
+						.' Please set the permissions of this directory to 0777 or delete the files'
+						.' in it!</span></b><br />'."\n";
 				$this->_showed_chmod_warning = true;
 			}
 
