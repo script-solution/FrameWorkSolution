@@ -93,6 +93,17 @@ class FWS_PropAccessor extends FWS_Object
 	}
 	
 	/**
+	 * Checks whether the property $name does already exist (is loaded).
+	 * 
+	 * @param string $name the property name
+	 * @return boolean true if so
+	 */
+	public final function exists($name)
+	{
+		return isset($this->_instances[$name]);
+	}
+	
+	/**
 	 * Returns the property with given name. If it does not exists the property will be loaded
 	 * by the specified loader.
 	 *
