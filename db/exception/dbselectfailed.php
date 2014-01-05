@@ -33,6 +33,13 @@
 final class FWS_DB_Exception_DBSelectFailed extends FWS_Exception_Critical
 {
 	/**
+	 * The error-message
+	 *
+	 * @var string
+	 */
+	private $_message;
+	
+	/**
 	 * Constructor
 	 * 
 	 * @param string $database the database that should be selected
@@ -49,6 +56,16 @@ final class FWS_DB_Exception_DBSelectFailed extends FWS_Exception_Critical
 			$msg .= $message;
 		}
 		parent::__construct($msg,$number);
+		
+		$this->_message = $message;
+	}
+	
+	/**
+	 * @return string the mysql-error-message
+	 */
+	public function get_mysql_error()
+	{
+		return $this->_message;
 	}
 }
 ?>

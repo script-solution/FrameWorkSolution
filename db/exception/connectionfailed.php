@@ -33,6 +33,13 @@
 final class FWS_DB_Exception_ConnectionFailed extends FWS_Exception_Critical
 {
 	/**
+	 * The error-message
+	 *
+	 * @var string
+	 */
+	private $_message;
+	
+	/**
 	 * Constructor
 	 * 
 	 * @param string $message the error-message
@@ -49,6 +56,16 @@ final class FWS_DB_Exception_ConnectionFailed extends FWS_Exception_Critical
 		}
 		$msg .= "\n".'Please verify the following MySQL-connection-settings!';
 		parent::__construct($msg,$number);
+		
+		$this->_message = $message;
+	}
+
+	/**
+	 * @return string the mysql-error-message
+	 */
+	public function get_mysql_error()
+	{
+		return $this->_message;
 	}
 }
 ?>

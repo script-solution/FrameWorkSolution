@@ -65,6 +65,8 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 		if($this->_con !== null)
 			return;
 		
+		echo $this->get_dump(true);
+		
 		if(!$this->_con = @mysql_connect($host,$login,$password,true))
 			throw new FWS_DB_Exception_ConnectionFailed(mysql_error(),mysql_errno());
 	}
