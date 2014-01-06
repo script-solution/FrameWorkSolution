@@ -1,7 +1,7 @@
 <?php
 /**
  * This file initializes everything which is necessary to use the framework. You should include
- * 
+ *
  * @package			FrameWorkSolution
  *
  * Copyright (C) 2003 - 2012 Nils Asmussen
@@ -32,12 +32,12 @@ if(version_compare(PHP_VERSION,'5.2.0','<'))
 /**
  * The version of the framework
  */
-define('FWS_VERSION','FrameWorkSolution v1.43');
+define('FWS_VERSION','FrameWorkSolution v1.45');
 
 /**
  * The version-id of frameworksolution
  */
-define('FWS_VERSION_ID','143');
+define('FWS_VERSION_ID','145');
 
 // include the path-object. we need this for the autoload-function
 include_once(FWS_PATH.'utilbase.php');
