@@ -313,8 +313,18 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * @throws FWS_DB_Exception_NotConnected if not connected
 	 * @throws FWS_DB_Exception_QueryFailed if the query fails
 	 */
-	public abstract function insert($table,$values);
-	
+	public function insert($table,$values)
+	{
+		if(empty($table))
+			FWS_Helper::def_error('notempty','table',$table);
+		if(!is_array($values) || count($values) == 0)
+			FWS_Helper::def_error('array>0','values',$values);
+
+		$sql = $this->_build_statement('INSERT INTO '.$table.' SET ',$values);
+		$this->execute($sql);
+		return $this->get_inserted_id();
+	}
+
 	/**
 	 * Inserts multiple new rows in the given table.
 	 * You have to specify the values to insert:
@@ -342,7 +352,37 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * @throws FWS_DB_Exception_NotConnected if not connected
 	 * @throws FWS_DB_Exception_QueryFailed if the query fails
 	 */
-	public abstract function insert_bulk($table,$rows);
+	public function insert_bulk($table,$rows)
+	{
+		if(empty($table))
+			FWS_Helper::def_error('notempty','table',$table);
+		if(!is_array($rows) || count($rows) == 0)
+			FWS_Helper::def_error('array>0','rows',$rows);
+
+		$fields = array_keys($rows[0]);
+		$sql = 'INSERT INTO '.$table.' (`'.implode('`,`',$fields).'`) VALUES ';
+		$fieldnum = count($fields);
+		$values = array();
+		foreach($rows as $i => $row)
+		{
+			if(count($row) != $fieldnum)
+				FWS_Helper::error('Invalid rows-array');
+			$line = '(';
+			foreach($row as $field => $value)
+				$line .= ':'.$field.'_'.$i.':, ';
+			$line = substr($line,0,-2).')';
+			$values[] = $line;
+		}
+		$sql .= implode(', ',$values).';';
+
+		$stmt = $this->get_prepared_statement($sql);
+		foreach($rows as $i => $row)
+		{
+			foreach($row as $field => $value)
+				$stmt->bind(':'.$field.'_'.$i.':',$value);
+		}
+		$this->execute($stmt->get_statement());
+	}
 
 	/**
 	 * Updates rows in the given table. You have to specify the where-clause like
@@ -369,7 +409,17 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * @throws FWS_DB_Exception_NotConnected if not connected
 	 * @throws FWS_DB_Exception_QueryFailed if the query fails
 	 */
-	public abstract function update($table,$where,$values);
+	public function update($table,$where,$values)
+	{
+		if(empty($table))
+			FWS_Helper::def_error('notempty','table',$table);
+		if(!is_array($values) || count($values) == 0)
+			FWS_Helper::def_error('array>0','values',$values);
+
+		$sql = $this->_build_statement('UPDATE '.$table.' SET ',$values).' '.$where;
+		$this->execute($sql);
+		return $this->get_affected_rows();
+	}
 
 	/**
 	 * @return int the last inserted id
@@ -382,6 +432,34 @@ abstract class FWS_DB_Connection extends FWS_Object
 	 * @throws FWS_DB_Exception_NotConnected if not connected
 	 */
 	public abstract function get_affected_rows();
+
+	/**
+	 * Builds an INSERT or UPDATE statement
+	 *
+	 * @param string $sql the beginning of the statement
+	 * @param array $values the values
+	 * @return string the SQL-statement
+	 */
+	protected function _build_statement($sql,$values)
+	{
+		$binds = array();
+		foreach($values as $field => $val)
+		{
+			if(is_array($val))
+				$sql .= '`'.$field.'` = '.$val[0].', ';
+			else
+			{
+				$sql .= '`'.$field.'` = ?, ';
+				$binds[] = $val;
+			}
+		}
+		$sql = FWS_String::substr($sql,0,-2);
+
+		$stmt = $this->get_prepared_statement($sql);
+		foreach($binds as $k => $bind)
+			$stmt->bind($k,$bind);
+		return $stmt->get_statement();
+	}
 
 	/**
 	 * @see FWS_Object::get_dump_vars()

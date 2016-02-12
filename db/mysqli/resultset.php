@@ -1,11 +1,11 @@
 <?php
 /**
- * Contains the mysql-result-set-class
- * 
- * @package			FrameWorkSolution
- * @subpackage	db.mysql
+ * Contains the mysqli-result-set-class
  *
- * Copyright (C) 2003 - 2012 Nils Asmussen
+ * @package			FrameWorkSolution
+ * @subpackage	db.mysqli
+ *
+ * Copyright (C) 2003 - 2016 Nils Asmussen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,14 +23,14 @@
  */
 
 /**
- * The result-set for MySQL. Note that a change of the fetch-mode has no effect as soon as
+ * The result-set for MySQLi. Note that a change of the fetch-mode has no effect as soon as
  * you have accessed the rows the first time (by get_rows(), next(), current() or __toString()).
  *
  * @package			FrameWorkSolution
- * @subpackage	db.mysql
+ * @subpackage	db.mysqli
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
+final class FWS_DB_MySQLi_ResultSet extends FWS_DB_ResultSet
 {
 	/**
 	 * The query-result
@@ -38,28 +38,21 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 * @var resource
 	 */
 	private $_res;
-	
+
 	/**
 	 * The current index
 	 *
 	 * @var int
 	 */
 	private $_index = 0;
-	
+
 	/**
 	 * All rows from the result
 	 *
 	 * @var array
 	 */
 	private $_rows = null;
-	
-	/**
-	 * The total number of rows
-	 *
-	 * @var int
-	 */
-	private $_rowcount;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -68,19 +61,19 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	public function __construct($result)
 	{
 		parent::__construct();
-		
+
 		$this->_res = $result;
-		$this->_rowcount = @mysql_num_rows($this->_res);
 	}
-	
+
 	/**
 	 * Destructor: free's the result
 	 */
 	public function __destruct()
 	{
-		@mysql_free_result($this->_res);
+		if(is_object($this->_res))
+			$this->_res->close();
 	}
-	
+
 	/**
 	 * @see FWS_DB_ResultIterator::get_rows()
 	 *
@@ -92,7 +85,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 			$this->_load_rows();
 		return $this->_rows;
 	}
-	
+
 	/**
 	 * @see FWS_DB_ResultIterator::get_row_count()
 	 *
@@ -100,9 +93,9 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 */
 	public function get_row_count()
 	{
-		return $this->_rowcount;
+		return $this->_res->num_rows;
 	}
-	
+
 	/**
 	 * @see FWS_DB_ResultIterator::get_field_count()
 	 *
@@ -110,7 +103,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 */
 	public function get_field_count()
 	{
-		return @mysql_num_fields($this->_res);
+		return $this->_res->field_count;
 	}
 
 	/**
@@ -121,7 +114,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 */
 	public function get_field_name($col)
 	{
-		return @mysql_field_name($this->_res,$col);
+		return $this->_res->fetch_fields()[$col]->name;
 	}
 
 	/**
@@ -132,7 +125,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 */
 	public function get_field_type($col)
 	{
-		return @mysql_field_type($this->_res,$col);
+		return $this->_res->fetch_fields()[$col]->type;
 	}
 
 	/**
@@ -143,46 +136,46 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	 */
 	public function get_field_len($col)
 	{
-		return @mysql_field_len($this->_res,$col);
+		return $this->_res->fetch_fields()[$col]->length;
 	}
 
 	public function current()
 	{
 		// already finished?
-		if($this->_index >= $this->_rowcount)
+		if($this->_index >= $this->get_row_count())
 			return false;
-		
+
 		if($this->_rows === null)
 			$this->_load_rows();
 		return $this->_rows[$this->_index];
 	}
-	
+
 	public function key()
 	{
 		return $this->_index;
 	}
-	
+
 	public function next()
 	{
 		// already finished?
-		if($this->_index >= $this->_rowcount)
+		if($this->_index >= $this->get_row_count())
 			return false;
-		
+
 		if($this->_rows === null)
 			$this->_load_rows();
 		return $this->_rows[$this->_index++];
 	}
-	
+
 	public function rewind()
 	{
 		$this->_index = 0;
 	}
-	
+
 	public function valid()
 	{
-		return $this->_index < $this->_rowcount;
+		return $this->_index < $this->get_row_count();
 	}
-	
+
 	/**
 	 * Loads all rows
 	 */
@@ -191,12 +184,12 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 		$this->_rows = array();
 		if($this->get_fetch_mode() == self::ASSOC)
 		{
-			while($row = @mysql_fetch_assoc($this->_res))
+			while($row = $this->_res->fetch_assoc())
 				$this->_rows[] = $row;
 		}
 		else
 		{
-			while($row = @mysql_fetch_array($this->_res))
+			while($row = $this->_res->fetch_array())
 				$this->_rows[] = $row;
 		}
 	}

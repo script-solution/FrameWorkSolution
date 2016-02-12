@@ -108,6 +108,31 @@ abstract class FWS_DB_ResultSet extends FWS_Object implements Iterator
 	public abstract function get_field_len($col);
 
 	/**
+	 * Builds a HTML-table that shows the complete result-set
+	 *
+	 * @return string the HTML-table
+	 */
+	public function __toString()
+	{
+		$rows = $this->get_rows();
+		$res = '<table border="1">'."\n";
+		$field_num = $this->get_field_count();
+		$res .= '	<tr>'."\n";
+		for($a = 0;$a < $field_num;$a++)
+			$res .= '		<th>'.$this->get_field_name($a).'</th>'."\n";
+		$res .= '	</tr>'."\n";
+		foreach($rows as $row)
+		{
+			$res .= '	<tr>'."\n";
+			foreach($row as $v)
+				$res .= '		<td>'.$v.'</td>'."\n";
+			$res .= '	</tr>'."\n";
+		}
+		$res .= '</table>'."\n";
+		return $res;
+	}
+
+	/**
 	 * @see FWS_Object::get_dump_vars()
 	 *
 	 * @return array

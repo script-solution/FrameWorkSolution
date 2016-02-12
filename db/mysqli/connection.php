@@ -1,11 +1,11 @@
 <?php
 /**
- * Contains the mysql-connection-class
- * 
- * @package			FrameWorkSolution
- * @subpackage	db.mysql
+ * Contains the mysqli-connection-class
  *
- * Copyright (C) 2003 - 2012 Nils Asmussen
+ * @package			FrameWorkSolution
+ * @subpackage	db.mysqli
+ *
+ * Copyright (C) 2003 - 2016 Nils Asmussen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,13 +23,13 @@
  */
 
 /**
- * The implementation of the db-connection for MySQL
+ * The implementation of the db-connection for MySQLi
  *
  * @package			FrameWorkSolution
- * @subpackage	db.mysql
+ * @subpackage	db.mysqli
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
+final class FWS_DB_MySQLi_Connection extends FWS_DB_Connection
 {
 	/**
 	 * The connection
@@ -37,14 +37,14 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	 * @var resource
 	 */
 	private $_con = null;
-	
+
 	/**
 	 * The selected database
 	 *
 	 * @var string
 	 */
 	private $_database = null;
-	
+
 	/**
 	 * The current number of "open" transactions
 	 *
@@ -61,33 +61,33 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	 */
 	public function connect($host,$login,$password)
 	{
-		// already connected?
-		if($this->_con !== null)
-			return;
-		
-		if(!$this->_con = @mysql_connect($host,$login,$password,true))
-			throw new FWS_DB_Exception_ConnectionFailed(mysql_error(),mysql_errno());
+		$this->_con = new mysqli($host,$login,$password);
+		if($this->_con->connect_error)
+		{
+			throw new FWS_DB_Exception_ConnectionFailed(
+				$this->_con->connect_error,$this->_con->connect_errno);
+		}
 	}
-	
+
 	/**
 	 * @return string the client-version
 	 */
 	public function get_client_version()
 	{
-		return @mysql_get_client_info();
+		return @mysqli_get_client_version();
 	}
-	
+
 	/**
 	 * @return string the server-version
 	 */
 	public function get_server_version()
 	{
 		if($this->_con !== NULL)
-			return @mysql_get_server_info($this->_con);
+			return $this->_con->server_info;
 		else
-			return @mysql_get_server_info();
+			return @mysqli_get_server_info();
 	}
-	
+
 	/**
 	 * @return resource the connection-resource
 	 */
@@ -115,16 +115,16 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
-		if(!@mysql_select_db($database,$this->_con))
+
+		if(!@$this->_con->select_db($database))
 		{
 			throw new FWS_DB_Exception_DBSelectFailed(
-				$database,mysql_error($this->_con),mysql_errno($this->_con)
+				$database,$this->_con->error,$this->_con->errno
 			);
 		}
 		$this->_database = $database;
 	}
-	
+
 	/**
 	 * @see FWS_DB_Connection::get_selected_db()
 	 *
@@ -141,10 +141,10 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	public function disconnect()
 	{
 		if($this->_con !== null)
-			@mysql_close($this->_con);
+			$this->_con->close();
 		$this->_con = null;
 	}
-	
+
 	/**
 	 * @see FWS_DB_Connection::get_prepared_statement()
 	 *
@@ -153,7 +153,7 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	 */
 	public function get_prepared_statement($sql)
 	{
-		return new FWS_DB_MySQL_PreparedStatement($this,$sql);
+		return new FWS_DB_MySQLi_PreparedStatement($this,$sql);
 	}
 
 	/**
@@ -166,15 +166,15 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
+
 		if($this->get_save_queries())
 			$this->_profiler->start();
 
-		$res = @mysql_query($sql,$this->_con);
-		if(!$res)
+		$res = @$this->_con->query($sql);
+		if($res === false)
 		{
-			$err = mysql_error($this->_con);
-			$errno = mysql_errno($this->_con);
+			$err = $this->_con->error;
+			$errno = $this->_con->errno;
 			$this->rollback_transaction();
 			throw new FWS_DB_Exception_QueryFailed($err,$sql,$errno);
 		}
@@ -185,8 +185,8 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 			$time = $this->_profiler->get_time();
 			$this->_queries[] = array($sql,$time);
 		}
-		
-		return new FWS_DB_MySQL_ResultSet($res);
+
+		return new FWS_DB_MySQLi_ResultSet($res);
 	}
 
 	/**
@@ -196,15 +196,15 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
+
 		if($this->use_transactions())
 		{
 			if($this->_transcount == 0)
-				@mysql_query('START TRANSACTION',$this->_con);
+				$this->_con->begin_transaction();
 			$this->_transcount++;
 		}
 	}
-	
+
 	/**
 	 * @see FWS_DB_Connection::commit_transaction()
 	 */
@@ -212,11 +212,11 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
+
 		if($this->use_transactions())
 		{
 			if($this->_transcount == 1)
-				@mysql_query('COMMIT',$this->_con);
+				$this->_con->commit();
 			$this->_transcount--;
 		}
 	}
@@ -228,10 +228,10 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
+
 		if($this->use_transactions())
 		{
-			@mysql_query('ROLLBACK',$this->_con);
+			$this->_con->rollback();
 			$this->_transcount = 0;
 		}
 	}
@@ -245,8 +245,8 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
-		return @mysql_affected_rows($this->_con);
+
+		return @$this->_con->affected_rows;
 	}
 
 	/**
@@ -258,10 +258,10 @@ final class FWS_DB_MySQL_Connection extends FWS_DB_Connection
 	{
 		if($this->_con === null)
 			throw new FWS_DB_Exception_NotConnected();
-		
-		return @mysql_insert_id($this->_con);
+
+		return @$this->_con->insert_id;
 	}
-	
+
 	/**
 	 * @see FWS_DB_Connection::get_dump_vars()
 	 *
