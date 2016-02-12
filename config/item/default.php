@@ -69,7 +69,16 @@ abstract class FWS_Config_Item_Default extends FWS_Object implements FWS_Config_
 	protected function get_suffix()
 	{
 		if(($suffix = $this->_data->get_suffix()))
-			return ' '.preg_replace('/%([a-z0-9_]+)/ei','FWS_Props::get()->locale()->lang("\\1")',$suffix);
+		{
+			return ' '.preg_replace_callback(
+				'/%([a-z0-9_]+)/i',
+				function($match)
+				{
+					return FWS_Props::get()->locale()->lang($match[1]);
+				},
+				$suffix
+			);
+		}
 		return '';
 	}
 	

@@ -176,9 +176,12 @@ final class FWS_Template_Parser extends FWS_Object
 		if($this->_tpl->get_conditions_enabled())
 		{
 			// {if (<operand> <operator> <operand> (&& | ||)?)* }
-			$content = preg_replace(
-				'/{IF\s+(.*?)}/ie',
-				'"\nEOF;\n".$this->_parse_if(stripslashes(\'\\1\'))." {\n\\\$html .= <<<EOF\n"',
+			$content = preg_replace_callback(
+				'/{IF\s+(.*?)}/i',
+				function($match)
+				{
+					return "\nEOF;\n".$this->_parse_if(stripslashes($match[1]))." {\n\$html .= <<<EOF\n";
+				},
 				$content
 			);
 
@@ -200,29 +203,58 @@ final class FWS_Template_Parser extends FWS_Object
 		if($this->_tpl->get_loops_enabled())
 		{
 			// {loop <item> as <key> => <value>}
-			$content = preg_replace(
+			$content = preg_replace_callback(
 				'/{LOOP\s+('.$this->_regex_var.')\s+as\s+(?:('.$this->_regex_ident.')\s*=>\s*)?'
-					.'('.$this->_regex_ident.')}/ie',
-				'"\nEOF;\n".$this->_parse_loop(true,stripslashes(\'\\1\'),stripslashes(\'\\2\'),'
-					.'stripslashes(\'\\3\'))."\n\\\$html .= <<<EOF\n"',
+					.'('.$this->_regex_ident.')}/i',
+				function($match)
+				{
+					$str = "\nEOF;\n";
+					$str .= $this->_parse_loop(
+						true,
+						stripslashes($match[1]),
+						stripslashes($match[2]),
+						stripslashes($match[3])
+					);
+					$str .= "\n\$html .= <<<EOF\n";
+					return $str;
+				},
 				$content
 			);
 			
 			// {loopbw <item> as <key> => <value>}
-			$content = preg_replace(
+			$content = preg_replace_callback(
 				'/{LOOPBW\s+('.$this->_regex_var.')\s*as\s*(?:('.$this->_regex_ident.')\s*=>\s*)?'
-					.'('.$this->_regex_ident.')}/ie',
-				'"\nEOF;\n".$this->_parse_loop(false,stripslashes(\'\\1\'),stripslashes(\'\\2\'),'
-					.'stripslashes(\'\\3\'))."\n\\\$html .= <<<EOF\n"',
+					.'('.$this->_regex_ident.')}/i',
+				function($match)
+				{
+					$str = "\nEOF;\n";
+					$str .= $this->_parse_loop(
+						false,
+						stripslashes($match[1]),
+						stripslashes($match[2]),
+						stripslashes($match[3])
+					);
+					$str .= "\n\$html .= <<<EOF\n";
+					return $str;
+				},
 				$content
 			);
 			
 			// {loop x in 1..limit} / {loop x in start..end} / ...
-			$content = preg_replace(
+			$content = preg_replace_callback(
 				'/{LOOP\s+('.$this->_regex_ident.')\s+in\s+('.$this->_regex_numvar.')\s*\.\.\s*'
-					.'('.$this->_regex_numvar.')\s*}/ie',
-				'"\nEOF;\n".$this->_parse_custom_loop(stripslashes(\'\\1\'),stripslashes(\'\\2\'),'
-					.'stripslashes(\'\\3\'))."\n\\\$html .= <<<EOF\n"',
+					.'('.$this->_regex_numvar.')\s*}/i',
+				function($match)
+				{
+					$str = "\nEOF;\n";
+					$str .= $this->_parse_custom_loop(
+						stripslashes($match[1]),
+						stripslashes($match[2]),
+						stripslashes($match[3])
+					);
+					$str .= "\n\$html .= <<<EOF\n";
+					return $str;
+				},
 				$content
 			);
 
@@ -242,32 +274,47 @@ final class FWS_Template_Parser extends FWS_Object
 		);
 		
 		// {#language-entry#}
-		$content = preg_replace(
-			'/{#(.+?)#}/e',
-			'"\nEOF;\n".\'$html .= \'.($this->_parse_lang(stripslashes(\'\\1\'))).";\n"'
-				.'.\'$html .= <<<EOF\'."\n"',
+		$content = preg_replace_callback(
+			'/{#(.+?)#}/',
+			function($match)
+			{
+				$str = "\nEOF;\n";
+				$str .= "\$html .= ".($this->_parse_lang(stripslashes($match[1]))).";\n";
+				$str .= "\$html .= <<<EOF\n";
+				return $str;
+			},
 			$content
 		);
 		
 		// {set var=value}
-		$content = preg_replace(
-			'/{SET\s+('.$this->_regex_ident.')\s*=\s*('.$this->_regex_concat.')}/ie',
-			'"\nEOF;\n".$this->_parse_var(stripslashes(\'\\1\')).\' = \''
-				.'.$this->_parse_concat(stripslashes(\'\\2\')).";\n"'
-				.'.\'$html .= <<<EOF\'."\n"',
+		$content = preg_replace_callback(
+			'/{SET\s+('.$this->_regex_ident.')\s*=\s*('.$this->_regex_concat.')}/i',
+			function($match)
+			{
+				$str = "\nEOF;\n";
+				$str .= $this->_parse_var(stripslashes($match[1]));
+				$str .= " = ".$this->_parse_concat(stripslashes($match[2])).";\n";
+				$str .= "\$html .= <<<EOF\n";
+				return $str;
+			},
 			$content
 		);
 		
 		// {arrayName(:entry)*}
 		// {object.func(<param1>[,<param2>,...])}
 		if($this->_tpl->get_method_calls_enabled())
-			$var_regex = '/{('.$this->_regex_math.'|'.$this->_regex_objcall.')}/ie';
+			$var_regex = '/{('.$this->_regex_math.'|'.$this->_regex_objcall.')}/i';
 		else
-			$var_regex = '/{'.$this->_regex_math.'}/ie';
-		$content = preg_replace(
+			$var_regex = '/{'.$this->_regex_math.'}/i';
+		$content = preg_replace_callback(
 			$var_regex,
-			'"\nEOF;\n".\'$html .= \'.$this->_parse_objvar(stripslashes(\'\\1\')).";\n"'
-				.'.\'$html .= <<<EOF\'."\n"',
+			function($match)
+			{
+				$str = "\nEOF;\n";
+				$str .= "\$html .= ".$this->_parse_objvar(stripslashes($match[1])).";\n";
+				$str .= "\$html .= <<<EOF\n";
+				return $str;
+			},
 			$content
 		);
 		
@@ -276,10 +323,16 @@ final class FWS_Template_Parser extends FWS_Object
 			// {include "file.htm"}
 			// {include "folder"~var~"file.htm"}
 			// ...
-			$content = preg_replace(
-				'/{INCLUDE\s+('.$this->_regex_concat.')\s*#?('.$this->_regex_numvar.')?}/ie',
-				'"\nEOF;\n".\'$html .= \'.$this->_parse_include(stripslashes(\'\\1\'),\'\\2\').";\n".'
-				.'\'$html .= <<<EOF\'."\n"',
+			$content = preg_replace_callback(
+				'/{INCLUDE\s+('.$this->_regex_concat.')\s*#?('.$this->_regex_numvar.')?}/i',
+				function($match)
+				{
+					$str = "\nEOF;\n";
+					$str .= "\$html .= ".$this->_parse_include(
+						stripslashes($match[1]),isset($match[2]) ? $match[2] : '').";\n";
+					$str .= "\$html .= <<<EOF\n";
+					return $str;
+				},
 				$content
 			);
 		}
