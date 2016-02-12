@@ -49,8 +49,9 @@ FWS_Path::set_client_fw(FWS_PATH);
 @ini_set('display_errors','1');
 error_reporting(E_ALL | E_STRICT);
 
-// we don't want to have magic-quotes-runtime enabled; it's deprecated in PHP 5.3 (=> @)
-@set_magic_quotes_runtime(false);
+// we don't want to have magic-quotes-runtime enabled; it's deprecated in PHP 5.3
+if(version_compare(PHP_VERSION,'5.3.0','<'))
+	set_magic_quotes_runtime(false);
 
 // we don't want to escape ' by '' instead of \', either
 @ini_set('magic_quotes_sybase','0');
