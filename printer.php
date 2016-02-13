@@ -257,6 +257,8 @@ class FWS_Printer extends FWS_Object
 					$str .= $var;
 				$str .= '</span>';
 			}
+			else if($var === null)
+				$str .= 'NULL';
 			else
 				$str .= @strval($var);
 		}
