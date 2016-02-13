@@ -91,8 +91,10 @@ final class FWS_MutexFile extends FWS_Object
 		
 		// take care of not-existing files; "r+" does not create it, but we need it because we want
 		// to read and write and start at the beginning.
-		if(!is_file($file))
+		if(!is_file($file)) {
 			$this->_fp = fopen($file,'w+');
+			chmod($file,0666);
+		}
 		else
 			$this->_fp = fopen($file,'r+');	
 		if($this->_fp === false)
