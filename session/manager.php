@@ -37,7 +37,7 @@ class FWS_Session_Manager extends FWS_Object
 	/**
 	 * The storage-class
 	 *
-	 * @var FWS_User_Storage
+	 * @var FWS_Session_Storage
 	 */
 	private $_storage;
 	

@@ -133,7 +133,7 @@ final class FWS_Progress_Manager extends FWS_Object
 	 * Returns the percentage of completion. This method should be called <b>after</b>
 	 * #run_task()!
 	 * 
-	 * @return float the percentage of completion
+	 * @return int the percentage of completion
 	 */
 	public function get_percentage()
 	{
@@ -142,7 +142,7 @@ final class FWS_Progress_Manager extends FWS_Object
 		if($this->_position == -1)
 			return 0;
 		
-		return min(100,$this->_total > 0 ? (100 / ($this->_total / $this->_position)) : 100);
+		return min(100,$this->_total > 0 ? (int)(100 / ($this->_total / $this->_position)) : 100);
 	}
 	
 	/**

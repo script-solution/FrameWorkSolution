@@ -368,6 +368,7 @@ final class FWS_Template_Parser extends FWS_Object
 	 * Parses the language-entry-construct
 	 * 
 	 * @param string $name the language-entry-name
+	 * @return string the code
 	 */
 	private function _parse_lang($name)
 	{

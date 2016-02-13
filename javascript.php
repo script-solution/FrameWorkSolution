@@ -104,6 +104,7 @@ final class FWS_Javascript extends FWS_Singleton
 	 * 
 	 * @param string $file the js-file
 	 * @param string $source if $source = 'fws' the FrameWorkSolution will be used as root
+	 * @return string the path to the file to use
 	 */
 	public function get_file($file,$source = 'def')
 	{
