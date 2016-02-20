@@ -220,7 +220,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 	 * in front of this position is odd.
 	 * 
 	 * @param int $i the current position
-	 * @return true if the position is escaped
+	 * @return bool true if the position is escaped
 	 */
 	private function _is_escaped($i)
 	{

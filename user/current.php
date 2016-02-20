@@ -116,7 +116,7 @@ class FWS_User_Current extends FWS_Object
 	 * If enabled a user will be logged out if the current user-agent is
 	 * not equal to the one stored in the db
 	 *
-	 * @var string
+	 * @var boolean
 	 */
 	private $_user_agent_validation = false;
 	
