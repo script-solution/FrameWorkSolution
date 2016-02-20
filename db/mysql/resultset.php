@@ -176,6 +176,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	public function rewind()
 	{
 		$this->_index = 0;
+		return true;
 	}
 	
 	public function valid()

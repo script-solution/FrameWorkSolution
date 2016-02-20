@@ -414,10 +414,13 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	
 	/**
 	 * Rewinds the internal position so that you are at the first element
+	 *
+	 * @return bool true on success
 	 */
 	public final function rewind()
 	{
 		$this->_pos = 0;
+		return true;
 	}
 
 	/**
