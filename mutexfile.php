@@ -83,6 +83,7 @@ final class FWS_MutexFile extends FWS_Object
 	 *
 	 * @param string $file the file to use as mutex
 	 * @param int $sleeptime the time to sleep between checks (in microseconds); 0 = don't sleep
+	 * @throws Exception if the file couldn't be opened
 	 */
 	public function __construct($file,$sleeptime = 10000)
 	{
