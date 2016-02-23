@@ -29,7 +29,7 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_InputTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_Input extends FWS_Test_Case
 {
 	/**
 	 * @var FWS_Input
@@ -47,10 +47,8 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
+	public function set_up()
 	{
-		parent::setUp();
-		
 		$_GET = array(
 			'int' => 1123,
 			'float' => 0.4,
@@ -75,25 +73,17 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-
-	/**
 	 * Tests FWS_Input->correct_var()
 	 */
 	public function testCorrect_var()
 	{
 		$res = $this->_input->correct_var('#abc','get',FWS_Input::STRING,array('a','b'),'c');
-		self::assertEquals($res,'a');
+		self::assert_equals($res,'a');
 		
 		$res = $this->_input->correct_var('#abc','get',FWS_Input::STRING,array('x','y'),'c');
 		$res2 = $this->_input->get_var('#abc','get',FWS_Input::STRING);
-		self::assertEquals($res,'c');
-		self::assertEquals($res2,'c');
+		self::assert_equals($res,'c');
+		self::assert_equals($res2,'c');
 	}
 
 	/**
@@ -103,15 +93,15 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	{
 		$this->_input->set_predef('int','get',FWS_Input::INTEGER);
 		$res = $this->_input->get_predef('int','get');
-		self::assertEquals($res,1123);
+		self::assert_equals($res,1123);
 		
 		$this->_input->set_predef('float','get',FWS_Input::FLOAT,array(1.0,0.4,0.2));
 		$res = $this->_input->get_predef('float','get',1.0);
-		self::assertEquals($res,0.4);
+		self::assert_equals($res,0.4);
 		
 		$this->_input->set_predef('float','get',FWS_Input::FLOAT,array(1.0,0.3,0.2));
 		$res = $this->_input->get_predef('float','get',1.0);
-		self::assertEquals($res,1.0);
+		self::assert_equals($res,1.0);
 	}
 
 	/**
@@ -120,64 +110,64 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	public function testGet_var()
 	{
 		$res = $this->_input->get_var('int','get',FWS_Input::INTEGER);
-		self::assertEquals($res,1123);
+		self::assert_equals($res,1123);
 		
 		$res = $this->_input->get_var('int','get',FWS_Input::HEX_32);
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('float','get',FWS_Input::FLOAT);
-		self::assertEquals($res,0.4);
+		self::assert_equals($res,0.4);
 		
 		$res = $this->_input->get_var('float','get',FWS_Input::INTEGER);
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('hex32','get',FWS_Input::HEX_32);
-		self::assertEquals($res,md5('120'));
+		self::assert_equals($res,md5('120'));
 		
 		$res = $this->_input->get_var('hex32','get',FWS_Input::INTEGER);
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('bool','get',FWS_Input::BOOL);
-		self::assertEquals($res,true);
+		self::assert_equals($res,true);
 		
 		$res = $this->_input->get_var('intbool','get',FWS_Input::INT_BOOL);
-		self::assertEquals($res,1);
+		self::assert_equals($res,1);
 		
 		$res = $this->_input->get_var('intbool','get',FWS_Input::BOOL);
-		self::assertEquals($res,true);
+		self::assert_equals($res,true);
 		
 		$res = $this->_input->get_var('alpha','get',FWS_Input::BOOL);
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('alpha','get',FWS_Input::ALPHA);
-		self::assertEquals($res,'abc');
+		self::assert_equals($res,'abc');
 		
 		$res = $this->_input->get_var('alphanum','get',FWS_Input::ALPHA_NUM);
-		self::assertEquals($res,'abc123');
+		self::assert_equals($res,'abc123');
 		
 		$res = $this->_input->get_var('identifier','get',FWS_Input::IDENTIFIER);
-		self::assertEquals($res,'AbCd123_');
+		self::assert_equals($res,'AbCd123_');
 		
 		$res = $this->_input->get_var('notexisting','get',FWS_Input::STRING);
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('123#456','post',FWS_Input::STRING);
-		self::assertEquals($res,"\n\n\n\n");
+		self::assert_equals($res,"\n\n\n\n");
 		
 		$res = $this->_input->get_var("a\n\rb",'get');
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$res = $this->_input->get_var('ab','get',FWS_Input::STRING);
-		self::assertEquals($res,"cd");
+		self::assert_equals($res,"cd");
 		
 		$res = $this->_input->get_var('123#456','post',FWS_Input::STRING);
-		self::assertEquals($res,"\n\n\n\n");
+		self::assert_equals($res,"\n\n\n\n");
 		
 		$res = $this->_input->get_var('test','post',FWS_Input::STRING);
-		self::assertEquals($res,"abc &amp; def &#039; &quot;");
+		self::assert_equals($res,"abc &amp; def &#039; &quot;");
 		
 		$res = $this->_input->get_var('HTTP_USER_AGENT','server',FWS_Input::STRING);
-		self::assertEquals(
+		self::assert_equals(
 			$res,'Mein Useragent &amp; mehr &lt;script&gt;alert(&quot;huhu&quot;);&lt;/script&gt;'
 		);
 	}
@@ -188,10 +178,10 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	public function testIsset_var()
 	{
 		$res = $this->_input->isset_var('alpha','get');
-		self::assertTrue($res);
+		self::assert_true($res);
 		
 		$res = $this->_input->isset_var('notexisting','get');
-		self::assertFalse($res);
+		self::assert_false($res);
 	}
 
 	/**
@@ -200,11 +190,11 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	public function testSet_var()
 	{
 		$res = $this->_input->get_var('notexisting','get');
-		self::assertNull($res);
+		self::assert_null($res);
 		
 		$this->_input->set_var('notexisting','get','123');
 		$res = $this->_input->get_var('notexisting','get');
-		self::assertEquals($res,'123');
+		self::assert_equals($res,'123');
 	}
 
 	/**
@@ -213,11 +203,10 @@ class FWS_InputTest extends PHPUnit_Framework_TestCase
 	public function testUnset_var()
 	{
 		$res = $this->_input->isset_var('alpha','get');
-		self::assertTrue($res);
+		self::assert_true($res);
 		
 		$this->_input->unset_var('alpha','get');
 		$res = $this->_input->isset_var('alpha','get');
-		self::assertFalse($res);
+		self::assert_false($res);
 	}
 }
-?>

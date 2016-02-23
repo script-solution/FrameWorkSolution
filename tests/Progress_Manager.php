@@ -29,24 +29,8 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_Progress_ManagerTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_Progress_Manager extends FWS_Test_Case
 {
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-
 	/**
 	 * Tests FWS_Progress_Manager->__construct()
 	 */
@@ -62,13 +46,13 @@ class FWS_Progress_ManagerTest extends PHPUnit_Framework_TestCase
 		{
 			$pm->run_task($task);
 			$x++;
-			self::assertEquals($task->get_x(),$x * 2);
-			self::assertEquals($storage->get_position(),$pm->is_finished() ? -1 : $x * 2);
+			self::assert_equals($task->get_x(),$x * 2);
+			self::assert_equals($storage->get_position(),$pm->is_finished() ? -1 : $x * 2);
 		}
 		
-		self::assertEquals($x,10);
-		self::assertEquals($task->get_x(),20);
-		self::assertEquals($storage->get_position(),-1);
+		self::assert_equals($x,10);
+		self::assert_equals($task->get_x(),20);
+		self::assert_equals($storage->get_position(),-1);
 	}
 }
 
@@ -112,4 +96,3 @@ class FWS_Progress_ManagerTestTask implements FWS_Progress_Task
 			++$this->_x;
 	}
 }
-?>

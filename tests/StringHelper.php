@@ -29,46 +29,30 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_StringHelperTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_StringHelper extends FWS_Test_Case
 {
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-
 	/**
 	 * Tests FWS_StringHelper::Correct_homepage()
 	 */
 	public function testCorrect_homepage()
 	{
 		$res = FWS_StringHelper::correct_homepage('http://mypage.de');
-		self::assertEquals($res,'http://mypage.de');
+		self::assert_equals($res,'http://mypage.de');
 		
 		$res = FWS_StringHelper::correct_homepage('http://www.mypage.de');
-		self::assertEquals($res,'http://www.mypage.de');
+		self::assert_equals($res,'http://www.mypage.de');
 		
 		$res = FWS_StringHelper::correct_homepage('www.mypage.de');
-		self::assertEquals($res,'http://www.mypage.de');
+		self::assert_equals($res,'http://www.mypage.de');
 		
 		$res = FWS_StringHelper::correct_homepage('mypage.de');
-		self::assertEquals($res,'http://mypage.de');
+		self::assert_equals($res,'http://mypage.de');
 		
 		$res = FWS_StringHelper::correct_homepage('http://');
-		self::assertFalse($res);
+		self::assert_false($res);
 		
 		$res = FWS_StringHelper::correct_homepage('abc');
-		self::assertFalse($res);
+		self::assert_false($res);
 	}
 
 	/**
@@ -77,10 +61,10 @@ class FWS_StringHelperTest extends PHPUnit_Framework_TestCase
 	public function testGenerate_random_key()
 	{
 		$res = FWS_StringHelper::generate_random_key(10);
-		self::assertTrue(preg_match('/^[a-z0-9]{10}$/i',$res) ? true : false);
+		self::assert_true(preg_match('/^[a-z0-9]{10}$/i',$res) ? true : false);
 		
 		$res = FWS_StringHelper::generate_random_key(1);
-		self::assertTrue(preg_match('/^[a-z0-9]{1}$/i',$res) ? true : false);
+		self::assert_true(preg_match('/^[a-z0-9]{1}$/i',$res) ? true : false);
 	}
 
 	/**
@@ -89,16 +73,16 @@ class FWS_StringHelperTest extends PHPUnit_Framework_TestCase
 	public function testGet_formated_data_size()
 	{
 		$res = FWS_StringHelper::get_formated_data_size(1024);
-		self::assertEquals($res,'1.000 KiB');
+		self::assert_equals($res,'1.000 KiB');
 		
 		$res = FWS_StringHelper::get_formated_data_size(1024,'.',',');
-		self::assertEquals($res,'1,000 KiB');
+		self::assert_equals($res,'1,000 KiB');
 		
 		$res = FWS_StringHelper::get_formated_data_size(10);
-		self::assertEquals($res,'10.000 Byte');
+		self::assert_equals($res,'10.000 Byte');
 		
 		$res = FWS_StringHelper::get_formated_data_size(1024 * 1024 * 4);
-		self::assertEquals($res,'4.000 MiB');
+		self::assert_equals($res,'4.000 MiB');
 	}
 
 	/**
@@ -107,16 +91,16 @@ class FWS_StringHelperTest extends PHPUnit_Framework_TestCase
 	public function testGet_words()
 	{
 		$res = FWS_StringHelper::get_words('abc foo bar');
-		self::assertEquals($res,array('abc' => true,'foo' => true,'bar' => true));
+		self::assert_equals($res,array('abc' => true,'foo' => true,'bar' => true));
 		
 		$res = FWS_StringHelper::get_words('!abc, foo; bar??');
-		self::assertEquals($res,array('abc' => true,'foo' => true,'bar' => true));
+		self::assert_equals($res,array('abc' => true,'foo' => true,'bar' => true));
 		
 		$res = FWS_StringHelper::get_words('a,b,c');
-		self::assertEquals($res,array('a' => true,'b' => true,'c' => true));
+		self::assert_equals($res,array('a' => true,'b' => true,'c' => true));
 		
 		$res = FWS_StringHelper::get_words("a\n\rb\t;;c");
-		self::assertEquals($res,array('a' => true,'b' => true,'c' => true));
+		self::assert_equals($res,array('a' => true,'b' => true,'c' => true));
 	}
 
 	/**
@@ -125,19 +109,18 @@ class FWS_StringHelperTest extends PHPUnit_Framework_TestCase
 	public function testIs_valid_email()
 	{
 		$res = FWS_StringHelper::is_valid_email('nils@script-solution.de');
-		self::assertTrue($res ? true : false);
+		self::assert_true($res ? true : false);
 		
 		$res = FWS_StringHelper::is_valid_email('nils@script-solution.de.com');
-		self::assertTrue($res ? true : false);
+		self::assert_true($res ? true : false);
 		
 		$res = FWS_StringHelper::is_valid_email('');
-		self::assertFalse($res ? true : false);
+		self::assert_false($res ? true : false);
 		
 		$res = FWS_StringHelper::is_valid_email('a@b.de');
-		self::assertTrue($res ? true : false);
+		self::assert_true($res ? true : false);
 		
 		$res = FWS_StringHelper::is_valid_email('a@b@c.de');
-		self::assertFalse($res ? true : false);
+		self::assert_false($res ? true : false);
 	}
 }
-?>

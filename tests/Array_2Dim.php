@@ -29,7 +29,7 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_Array_2Dim extends FWS_Test_Case
 {
 	/**
 	 * @var FWS_Array_2Dim
@@ -50,10 +50,8 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
+	public function set_up()
 	{
-		parent::setUp();
-		
 		$this->_cache = new FWS_Array_2Dim();
 		foreach($this->_content as $k => $v)
 			$this->_cache->add_element($v,$k);
@@ -62,10 +60,9 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
+	public function tear_down()
 	{
 		$this->_cache = null;
-		parent::tearDown();
 	}
 
 	/**
@@ -75,29 +72,29 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	{
 		// simple, ex
 		$ex = $this->_cache->element_exists_with(array('f1' => 1),FWS_Array_2Dim::LINK_AND);
-		self::assertTrue($ex);
+		self::assert_true($ex);
 		
 		// simple, not ex
 		$ex = $this->_cache->element_exists_with(array('f2' => 1),FWS_Array_2Dim::LINK_AND);
-		self::assertFalse($ex);
+		self::assert_false($ex);
 		
 		// multiple and, ex
 		$ex = $this->_cache->element_exists_with(
 			array('f1' => 1,'f2' => 2),FWS_Array_2Dim::LINK_AND
 		);
-		self::assertTrue($ex);
+		self::assert_true($ex);
 		
 		// multiple or, ex
 		$ex = $this->_cache->element_exists_with(
 			array('f1' => 1,'f3' => 4),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertTrue($ex);
+		self::assert_true($ex);
 		
 		// multiple or, not ex
 		$ex = $this->_cache->element_exists_with(
 			array('f5' => 1,'f3' => 4),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertFalse($ex);
+		self::assert_false($ex);
 	}
 
 	/**
@@ -106,12 +103,12 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	public function testGet_element_with()
 	{
 		$e = $this->_cache->get_element_with(array('f1' => 1),FWS_Array_2Dim::LINK_AND);
-		self::assertEquals($e,array('f1' => 1,'f2' => 2,'f3' => 3));
+		self::assert_equals($e,array('f1' => 1,'f2' => 2,'f3' => 3));
 		
 		$e = $this->_cache->get_element_with(
 			array('f3' => 3,12 => 'test'),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertEquals($e,array('f1' => 1,'f2' => 2,'f3' => 3));
+		self::assert_equals($e,array('f1' => 1,'f2' => 2,'f3' => 3));
 	}
 
 	/**
@@ -123,19 +120,19 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 		$e = $this->_cache->get_elements_with(
 			array('f3' => 3,12 => 'test'),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertEquals(array_keys($e),array(0,3));
+		self::assert_equals(array_keys($e),array(0,3));
 		
 		// multiple and
 		$e = $this->_cache->get_elements_with(
 			array('f3' => 3,12 => 'test'),FWS_Array_2Dim::LINK_AND
 		);
-		self::assertEquals(array_keys($e),array());
+		self::assert_equals(array_keys($e),array());
 		
 		// single
 		$e = $this->_cache->get_elements_with(
 			array('f1' => 1),FWS_Array_2Dim::LINK_AND
 		);
-		self::assertEquals(array_keys($e),array(0,1));
+		self::assert_equals(array_keys($e),array(0,1));
 	}
 
 	/**
@@ -145,29 +142,29 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	{
 		// simple, ex
 		$ex = $this->_cache->get_key_with(array('f1' => 1),FWS_Array_2Dim::LINK_AND);
-		self::assertEquals($ex,0);
+		self::assert_equals($ex,0);
 		
 		// simple, not ex
 		$ex = $this->_cache->get_key_with(array('f2' => 1),FWS_Array_2Dim::LINK_AND);
-		self::assertNull($ex);
+		self::assert_null($ex);
 		
 		// multiple and, ex
 		$ex = $this->_cache->get_key_with(
 			array('f1' => 1,'f2' => 2),FWS_Array_2Dim::LINK_AND
 		);
-		self::assertEquals($ex,0);
+		self::assert_equals($ex,0);
 		
 		// multiple or, ex
 		$ex = $this->_cache->get_key_with(
 			array('f1' => 1,'f3' => 4),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertEquals($ex,0);
+		self::assert_equals($ex,0);
 		
 		// multiple or, not ex
 		$ex = $this->_cache->get_key_with(
 			array('f5' => 1,'f3' => 4),FWS_Array_2Dim::LINK_OR
 		);
-		self::assertNull($ex);
+		self::assert_null($ex);
 	}
 
 	/**
@@ -177,10 +174,9 @@ class FWS_Array_2DimTest extends PHPUnit_Framework_TestCase
 	{
 		$this->_cache->set_element_field(2,'abc','def');
 		$this->_content[2]['abc'] = 'def';
-		self::assertEquals($this->_cache->get_elements(),$this->_content);
+		self::assert_equals($this->_cache->get_elements(),$this->_content);
 		
 		$this->_cache->set_element_field(5,'test','test');
-		self::assertEquals($this->_cache->get_elements(),$this->_content);
+		self::assert_equals($this->_cache->get_elements(),$this->_content);
 	}
 }
-?>

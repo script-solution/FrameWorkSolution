@@ -35,9 +35,9 @@ include_once(FWS_PATH.'init.php');
  */
 function FWS_UnitTest_autoloader($item)
 {
-	if(FWS_String::ends_with($item,'Test'))
+	if(FWS_String::starts_with($item,'FWS_Tests_'))
 	{
-		$path = FWS_Path::server_fw().'tests/'.$item.'.php';
+		$path = FWS_Path::server_fw().'tests/'.substr($item,10).'.php';
 		if(is_file($path))
 		{
 			include($path);
@@ -50,57 +50,29 @@ function FWS_UnitTest_autoloader($item)
 
 FWS_AutoLoader::register_loader('FWS_UnitTest_autoloader');
 
-/**
- * Static test suite.
- * 
- * @package			FrameWorkSolution
- * @subpackage	tests
- * @author			Nils Asmussen <nils@script-solution.de>
- */
-class testsSuite extends PHPUnit_Framework_TestSuite
-{
-	/**
-	 * Constructs the test suite handler.
-	 */
-	public function __construct()
-	{
-		$this->setName('testsSuite');
-		$this->addTestSuite('FWS_Array_1DimTest');
-		$this->addTestSuite('FWS_Array_2DimTest');
-		$this->addTestSuite('FWS_StringHelperTest');
-		$this->addTestSuite('FWS_StringTest');
-		$this->addTestSuite('FWS_HTML_LimitedStringTest');
-		$this->addTestSuite('FWS_KeywordHighlighterTest');
-		$this->addTestSuite('FWS_InputTest');
-		$this->addTestSuite('FWS_FileUtilsTest');
-		$this->addTestSuite('FWS_GD_ColorTest');
-		$this->addTestSuite('FWS_GD_RectangleTest');
-		$this->addTestSuite('FWS_GD_CircleTest');
-		$this->addTestSuite('FWS_GD_ColorFadeTest');
-		$this->addTestSuite('FWS_DateTest');
-		$this->addTestSuite('FWS_Array_UtilsTest');
-		$this->addTestSuite('FWS_Progress_ManagerTest');
-		$this->addTestSuite('FWS_AddField_FieldTest');
-		$this->addTestSuite('FWS_GD_LineTest');
-		$this->addTestSuite('FWS_CSS_StyleSheetTest');
-	}
-	
-	/**
-	 * We overwrite this method to autoload the class
-	 */
-	public function addTestSuite($name)
-	{
-		new $name();
-		parent::addTestSuite($name);
-	}
+$tests = array(
+	'FWS_Tests_Array_1Dim',
+	'FWS_Tests_Array_2Dim',
+	'FWS_Tests_StringHelper',
+	'FWS_Tests_String',
+	'FWS_Tests_HTML_LimitedString',
+	'FWS_Tests_KeywordHighlighter',
+	'FWS_Tests_Input',
+	'FWS_Tests_FileUtils',
+	'FWS_Tests_GD_Color',
+	'FWS_Tests_GD_Rectangle',
+	'FWS_Tests_GD_Circle',
+	'FWS_Tests_GD_ColorFade',
+	'FWS_Tests_Date',
+	'FWS_Tests_Array_Utils',
+	'FWS_Tests_Progress_Manager',
+	'FWS_Tests_AddField',
+	'FWS_Tests_GD_Line',
+	'FWS_Tests_CSS_StyleSheet',
+);
 
-	/**
-	 * Creates the suite.
-	 */
-	public static function suite()
-	{
-		$suite = new self();
-		return $suite;
-	}
-}
+$suite = new FWS_Test_Suite();
+foreach($tests as $test)
+	$suite->add($test);
+$suite->run();
 ?>

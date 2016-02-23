@@ -29,24 +29,8 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_HTML_LimitedString extends FWS_Test_Case
 {
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-
 	/**
 	 * Tests FWS_HTML_LimitedString->Get()
 	 */
@@ -54,33 +38,33 @@ class FWS_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
 	{
 		$lstr = new FWS_HTML_LimitedString('test1',3);
 		$res = $lstr->get();
-		self::assertEquals($res,'...');
-		self::assertTrue($lstr->has_cut());
+		self::assert_equals($res,'...');
+		self::assert_true($lstr->has_cut());
 		
 		$lstr = new FWS_HTML_LimitedString('test1',4);
 		$res = $lstr->get();
-		self::assertEquals($res,'t...');
-		self::assertTrue($lstr->has_cut());
+		self::assert_equals($res,'t...');
+		self::assert_true($lstr->has_cut());
 		
 		$lstr = new FWS_HTML_LimitedString('test1',5);
 		$res = $lstr->get();
-		self::assertEquals($res,'test1');
-		self::assertFalse($lstr->has_cut());
+		self::assert_equals($res,'test1');
+		self::assert_false($lstr->has_cut());
 		
 		$lstr = new FWS_HTML_LimitedString('<b>abc</b> test',5);
 		$res = $lstr->get();
-		self::assertEquals($res,'<b>ab...</b>');
-		self::assertTrue($lstr->has_cut());
+		self::assert_equals($res,'<b>ab...</b>');
+		self::assert_true($lstr->has_cut());
 		
 		$lstr = new FWS_HTML_LimitedString('<b>abc</b> test',6);
 		$res = $lstr->get();
-		self::assertEquals($res,'<b>abc</b>...');
-		self::assertTrue($lstr->has_cut());
+		self::assert_equals($res,'<b>abc</b>...');
+		self::assert_true($lstr->has_cut());
 		
 		$lstr = new FWS_HTML_LimitedString('<b>abc</b><ul><li>123</li><li>4567</li></ul>',7);
 		$res = $lstr->get();
-		self::assertEquals($res,'<b>abc</b><ul><li>1...</li></ul>');
-		self::assertTrue($lstr->has_cut());
+		self::assert_equals($res,'<b>abc</b><ul><li>1...</li></ul>');
+		self::assert_true($lstr->has_cut());
 		
 		$html = <<<EOF
 <TABLE border="1">
@@ -101,10 +85,9 @@ class FWS_HTML_LimitedStringTest extends PHPUnit_Framework_TestCase
 EOF;
 		$lstr = new FWS_HTML_LimitedString($html,18);
 		$res = $lstr->get();
-		echo $html;
-		echo $res;
-		//self::assertEquals($res,$html);
-		//self::assertTrue($lstr->has_cut());
+		// echo $html;
+		// echo $res;
+		// self::assert_equals($res,$html);
+		// self::assert_true($lstr->has_cut());
 	}
 }
-?>

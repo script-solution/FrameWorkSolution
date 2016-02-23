@@ -29,7 +29,7 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_GD_ColorFade extends FWS_Test_Case
 {
 	/**
 	 * @var FWS_GD_ColorFade
@@ -39,9 +39,8 @@ class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Prepares the environment before running a test.
 	 */
-	protected function setUp()
+	public function set_up()
 	{
-		parent::setUp();
 		$colors = array(
 			array(255,0,0),
 			array(0,0,255),
@@ -54,10 +53,9 @@ class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 	/**
 	 * Cleans up the environment after running a test.
 	 */
-	protected function tearDown()
+	public function tear_down()
 	{
 		$this->_cf = null;
-		parent::tearDown();
 	}
 
 	/**
@@ -71,4 +69,3 @@ class FWS_GD_ColorFadeTest extends PHPUnit_Framework_TestCase
 		$c = $this->_cf->get_color_at(41);
 	}
 }
-?>

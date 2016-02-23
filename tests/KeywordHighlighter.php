@@ -29,25 +29,8 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_KeywordHighlighterTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_KeywordHighlighter extends FWS_Test_Case
 {
-
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-
 	/**
 	 * Tests FWS_KeywordHighlighter->highlight()
 	 */
@@ -57,16 +40,15 @@ class FWS_KeywordHighlighterTest extends PHPUnit_Framework_TestCase
 			'abc','test','bla','amp'
 		),'<b>','</b>');
 		$res = $hl->highlight('das ist mein text');
-		self::assertEquals($res,'das ist mein text');
+		self::assert_equals($res,'das ist mein text');
 		
 		$res = $hl->highlight('abc;def;ghi');
-		self::assertEquals($res,'<b>abc</b>;def;ghi');
+		self::assert_equals($res,'<b>abc</b>;def;ghi');
 		
 		$res = $hl->highlight('abctestbla');
-		self::assertEquals($res,'<b>abc</b><b>test</b><b>bla</b>');
+		self::assert_equals($res,'<b>abc</b><b>test</b><b>bla</b>');
 		
 		$res = $hl->highlight('&amp;abc, das geht aber nicht ;)');
-		self::assertEquals($res,'&amp;<b>abc</b>, das geht aber nicht ;)');
+		self::assert_equals($res,'&amp;<b>abc</b>, das geht aber nicht ;)');
 	}
 }
-?>

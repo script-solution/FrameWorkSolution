@@ -29,24 +29,8 @@
  * @subpackage	tests
  * @author			Nils Asmussen <nils@script-solution.de>
  */
-class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
+class FWS_Tests_Array_Utils extends FWS_Test_Case
 {
-	/**
-	 * Prepares the environment before running a test.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-	}
-
-	/**
-	 * Cleans up the environment after running a test.
-	 */
-	protected function tearDown()
-	{
-		parent::tearDown();
-	}
-	
 	/**
 	 * Tests FWS_Array_Utils::convert_to_2d()
 	 */
@@ -56,25 +40,25 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 		$input = array(1,2,3,4,5,6);
 		$perline = 4;
 		$res = FWS_Array_Utils::convert_to_2d($input,$perline);
-		self::assertEquals($res,array(array(1,2,3,4),array(5,6)));
+		self::assert_equals($res,array(array(1,2,3,4),array(5,6)));
 		
 		// perline = 1
 		$input = array(1,2,3,4,5,6);
 		$perline = 1;
 		$res = FWS_Array_Utils::convert_to_2d($input,$perline);
-		self::assertEquals($res,array(array(1),array(2),array(3),array(4),array(5),array(6)));
+		self::assert_equals($res,array(array(1),array(2),array(3),array(4),array(5),array(6)));
 		
 		// empty
 		$input = array();
 		$perline = 4;
 		$res = FWS_Array_Utils::convert_to_2d($input,$perline);
-		self::assertEquals($res,array());
+		self::assert_equals($res,array());
 		
 		// just one row
 		$input = array(1,2,3,4,5,6);
 		$perline = 6;
 		$res = FWS_Array_Utils::convert_to_2d($input,$perline);
-		self::assertEquals($res,array(array(1,2,3,4,5,6)));
+		self::assert_equals($res,array(array(1,2,3,4,5,6)));
 	}
 
 	/**
@@ -83,25 +67,25 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 	public function testAdvanced_explode()
 	{
 		$res = FWS_Array_Utils::advanced_explode(',','a,b,c');
-		self::assertEquals($res,array('a','b','c'));
+		self::assert_equals($res,array('a','b','c'));
 		
 		$res = FWS_Array_Utils::advanced_explode(',','a,b,c,');
-		self::assertEquals($res,array('a','b','c'));
+		self::assert_equals($res,array('a','b','c'));
 		
 		$res = FWS_Array_Utils::advanced_explode(',',',a,b,c,');
-		self::assertEquals($res,array('a','b','c'));
+		self::assert_equals($res,array('a','b','c'));
 		
 		$res = FWS_Array_Utils::advanced_explode('@','@@a');
-		self::assertEquals($res,array('','a'));
+		self::assert_equals($res,array('','a'));
 		
 		$res = FWS_Array_Utils::advanced_explode('@','@@a@');
-		self::assertEquals($res,array('','a'));
+		self::assert_equals($res,array('','a'));
 		
 		$res = FWS_Array_Utils::advanced_explode('abc','abcabc');
-		self::assertEquals($res,array(''));
+		self::assert_equals($res,array(''));
 		
 		$res = FWS_Array_Utils::advanced_explode('abcabc','abc');
-		self::assertEquals($res,array('abc'));
+		self::assert_equals($res,array('abc'));
 	}
 
 	/**
@@ -110,22 +94,22 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 	public function testAdvanced_implode()
 	{
 		$res = FWS_Array_Utils::advanced_implode(',',array('a','b','c'));
-		self::assertEquals($res,'a,b,c');
+		self::assert_equals($res,'a,b,c');
 		
 		$res = FWS_Array_Utils::advanced_implode(',',array('a','b','c',''));
-		self::assertEquals($res,'a,b,c');
+		self::assert_equals($res,'a,b,c');
 		
 		$res = FWS_Array_Utils::advanced_implode(',',array('','a','b','c'));
-		self::assertEquals($res,'a,b,c');
+		self::assert_equals($res,'a,b,c');
 		
 		$res = FWS_Array_Utils::advanced_implode(',',array('','a','','b','','c',''));
-		self::assertEquals($res,'a,b,c');
+		self::assert_equals($res,'a,b,c');
 		
 		$res = FWS_Array_Utils::advanced_implode('aa',array('abc','def'));
-		self::assertEquals($res,'abcaadef');
+		self::assert_equals($res,'abcaadef');
 		
 		$res = FWS_Array_Utils::advanced_implode('aa',array());
-		self::assertEquals($res,'');
+		self::assert_equals($res,'');
 	}
 
 	/**
@@ -146,19 +130,19 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 		);
 		
 		$res = FWS_Array_Utils::filter_2dim($test1,array('a','b'));
-		self::assertEquals($res,array(array('a' => 1,'b' => 2),array('a' => 1,'b' => 2)));
+		self::assert_equals($res,array(array('a' => 1,'b' => 2),array('a' => 1,'b' => 2)));
 		
 		$res = FWS_Array_Utils::filter_2dim($test2,array('a'));
-		self::assertEquals($res,array(array('a' => 1)));
+		self::assert_equals($res,array(array('a' => 1)));
 		
 		$res = FWS_Array_Utils::filter_2dim($test3,array(0,'c'));
-		self::assertEquals($res,array(array(1),array('c' => 3)));
+		self::assert_equals($res,array(array(1),array('c' => 3)));
 		
 		$res = FWS_Array_Utils::filter_2dim($test3,array());
-		self::assertEquals($res,array(array(),array()));
+		self::assert_equals($res,array(array(),array()));
 		
 		$res = FWS_Array_Utils::filter_2dim(array(),array(1,2,3));
-		self::assertEquals($res,array());
+		self::assert_equals($res,array());
 	}
 
 	/**
@@ -172,19 +156,19 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 		$test4 = array('a','b','a');
 		
 		$res = FWS_Array_Utils::get_fast_access($test1);
-		self::assertEquals($res,array(1 => true,2 => true,3 => true));
+		self::assert_equals($res,array(1 => true,2 => true,3 => true));
 		
 		$res = FWS_Array_Utils::get_fast_access($test2);
-		self::assertEquals($res,array('a' => true,'b' => true,'c' => true));
+		self::assert_equals($res,array('a' => true,'b' => true,'c' => true));
 		
 		$res = FWS_Array_Utils::get_fast_access($test3);
-		self::assertEquals($res,array(0.5 => true,1.2 => true,'b' => true));
+		self::assert_equals($res,array(0.5 => true,1.2 => true,'b' => true));
 		
 		$res = FWS_Array_Utils::get_fast_access(array());
-		self::assertEquals($res,array());
+		self::assert_equals($res,array());
 		
 		$res = FWS_Array_Utils::get_fast_access($test4);
-		self::assertEquals($res,array('a' => true,'b' => true));
+		self::assert_equals($res,array('a' => true,'b' => true));
 	}
 
 	/**
@@ -198,15 +182,15 @@ class FWS_Array_UtilsTest extends PHPUnit_Framework_TestCase
 		$test4 = array(1,2,'a',4);
 		
 		$res = FWS_Array_Utils::is_numeric($test1);
-		self::assertTrue($res);
+		self::assert_true($res);
 		
 		$res = FWS_Array_Utils::is_numeric($test2);
-		self::assertTrue($res);
+		self::assert_true($res);
 		
 		$res = FWS_Array_Utils::is_numeric($test3);
-		self::assertFalse($res);
+		self::assert_false($res);
 		
 		$res = FWS_Array_Utils::is_numeric($test4);
-		self::assertFalse($res);
+		self::assert_false($res);
 	}
 }
