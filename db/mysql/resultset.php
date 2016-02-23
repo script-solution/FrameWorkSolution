@@ -164,19 +164,13 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	
 	public function next()
 	{
-		// already finished?
-		if($this->_index >= $this->_rowcount)
-			return false;
-		
-		if($this->_rows === null)
-			$this->_load_rows();
-		return $this->_rows[$this->_index++];
+		if($this->_index + 1 < $this->_rowcount)
+			$this->_index++;
 	}
 	
 	public function rewind()
 	{
 		$this->_index = 0;
-		return true;
 	}
 	
 	public function valid()

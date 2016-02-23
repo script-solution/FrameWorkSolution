@@ -248,7 +248,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 			$sql .= "\n".'LIMIT 1';
 		
 		$set = $this->execute($sql);
-		return $set->next();
+		return $set->current();
 	}
 	
 	/**
@@ -287,7 +287,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 			FWS_Helper::def_error('notempty','row',$row);
 
 		$set = $this->execute('SELECT COUNT('.$row.') as num FROM '.$table.' '.$where.' LIMIT 1');
-		$row = $set->next();
+		$row = $set->current();
 		return $row['num'];
 	}
 

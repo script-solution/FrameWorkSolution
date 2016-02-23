@@ -414,13 +414,10 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	
 	/**
 	 * Rewinds the internal position so that you are at the first element
-	 *
-	 * @return bool true on success
 	 */
 	public final function rewind()
 	{
 		$this->_pos = 0;
-		return true;
 	}
 
 	/**
@@ -439,7 +436,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 		if($this->_length == 0)
 			return false;
 
-		if($this->_pos >= $this->_length)
+		if($this->_pos < 0 || $this->_pos >= $this->_length)
 			return false;
 		
 		return $this->_cache_content[$this->_cache_content_keys[$this->_pos]];
@@ -453,32 +450,28 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 		if($this->_length == 0)
 			return false;
 		
-		if($this->_pos >= $this->_length)
+		if($this->_pos < 0 || $this->_pos >= $this->_length)
 			return false;
 		
 		return $this->_cache_content_keys[$this->_pos];
 	}
 	
 	/**
-	 * @return mixed the next element in the array or false
+	 * Moves to the next element in the array
 	 */
 	public final function next()
 	{
 		if($this->_pos < $this->_length)
-			return $this->_cache_content[$this->_cache_content_keys[$this->_pos++]];
-
-		return false;
+			$this->_pos++;
 	}
 
 	/**
-	 * @return mixed the previous element in the array or false
+	 * Moves to the previous element in the array
 	 */
 	public final function previous()
 	{
 		if($this->_pos >= 0)
-			return $this->_cache_content[$this->_cache_content_keys[$this->_pos--]];
-
-		return false;
+			$this->_pos--;
 	}
 	
 	/**
