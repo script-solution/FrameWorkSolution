@@ -34,7 +34,7 @@ final class FWS_DB_MySQLi_Connection extends FWS_DB_Connection
 	/**
 	 * The connection
 	 *
-	 * @var resource
+	 * @var mysqli
 	 */
 	private $_con = null;
 
@@ -74,7 +74,7 @@ final class FWS_DB_MySQLi_Connection extends FWS_DB_Connection
 	 */
 	public function get_client_version()
 	{
-		return @mysqli_get_client_version();
+		return @mysqli_get_client_version($this->_con);
 	}
 
 	/**
@@ -82,14 +82,11 @@ final class FWS_DB_MySQLi_Connection extends FWS_DB_Connection
 	 */
 	public function get_server_version()
 	{
-		if($this->_con !== NULL)
-			return $this->_con->server_info;
-		else
-			return @mysqli_get_server_info();
+		return @mysqli_get_server_info($this->_con);
 	}
 
 	/**
-	 * @return resource the connection-resource
+	 * @return mysqli the connection-resource
 	 */
 	public function get_connection()
 	{
