@@ -66,7 +66,7 @@ if(@ini_get('register_globals'))
 	{
 		if(is_array($array))
 		{
-			foreach($array as $k => $v)
+			foreach(array_keys($array) as $k)
 				unset(${$k});
 		}
 	}

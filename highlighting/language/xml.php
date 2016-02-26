@@ -472,7 +472,7 @@ final class FWS_Highlighting_Language_XML extends FWS_Object
 		
 		// we have to sort the words descending by length because we want to prefer longer words
 		// do this here once to improve performance
-		foreach($this->_keywords as $id => $kws)
+		foreach(array_keys($this->_keywords) as $id)
 			usort($this->_keywords[$id],array($this,'_sort_words'));
 		
 		// attributes

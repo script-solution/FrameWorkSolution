@@ -113,7 +113,7 @@ class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_R
 		
 		// any msgs?
 		if($msgs->contains_msg())
-			$this->handle_msgs($msgs);
+			$this->handle_msgs();
 		
 		if($this->_image === null)
 			FWS_Helper::error('Please set the image first!');
@@ -132,10 +132,8 @@ class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_R
 
 	/**
 	 * Handles the collected messages
-	 *
-	 * @param FWS_Document_Messages $msgs
 	 */
-	protected function handle_msgs($msgs)
+	protected function handle_msgs()
 	{
 		$locale = FWS_Props::get()->locale();
 		

@@ -121,7 +121,7 @@ final class FWS_Helper extends FWS_UtilBase
 				if(func_num_args() != 4)
 					FWS_Helper::error('Invalid number of arguments. 4 required');
 				
-				list(,$name,$reqtype,$arg) = func_get_args();
+				list($name,$reqtype,$arg) = array($arg2,$arg3,$arg4);
 				if(is_object($arg))
 					$argtype = get_class($arg);
 				else
@@ -154,7 +154,7 @@ final class FWS_Helper extends FWS_UtilBase
 				if(func_num_args() != 3)
 					FWS_Helper::error('Invalid number of arguments. 3 required');
 			
-				list(,$name,$arg) = func_get_args();
+				list($name,$arg) = array($arg2,$arg3);
 				$arg = self::_get_str_val($arg);
 				switch($type)
 				{
@@ -220,7 +220,7 @@ final class FWS_Helper extends FWS_UtilBase
 				if(func_num_args() != 4)
 					FWS_Helper::error('Invalid number of arguments. 4 required');
 			
-				list(,$name,$valid,$arg) = func_get_args();
+				list($name,$valid,$arg) = array($arg2,$arg3,$arg4);
 				$arg = self::_get_str_val($arg);
 				$valid_str = FWS_Printer::to_string($valid,true,false);
 				$msg = sprintf(
@@ -233,7 +233,7 @@ final class FWS_Helper extends FWS_UtilBase
 				if(func_num_args() != 4)
 					FWS_Helper::error('Invalid number of arguments. 4 required');
 				
-				list(,$name,$min,$arg) = func_get_args();
+				list($name,$min,$arg) = array($arg2,$arg3,$arg4);
 				$arg = self::_get_str_val($arg);
 				$msg = sprintf('The argument $%s (value = "%s") is no number >= %d!',$name,$arg,$min);
 				break;
@@ -243,7 +243,7 @@ final class FWS_Helper extends FWS_UtilBase
 				if(func_num_args() != 5)
 					FWS_Helper::error('Invalid number of arguments. 5 required');
 				
-				list(,$name,$min,$max,$arg) = func_get_args();
+				list($name,$min,$max,$arg) = array($arg2,$arg3,$arg4,$arg5);
 				$arg = self::_get_str_val($arg);
 				$msg = sprintf(
 					'The argument $%s (value = "%s") has to be between %d and %d!',$name,$arg,$min,$max
