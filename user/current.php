@@ -307,7 +307,7 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether the user-agent will be validated
+	 * @return boolean whether the user-agent will be validated
 	 */
 	public final function validate_user_agent()
 	{
@@ -315,7 +315,7 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * Sets wether the user-agent should be validated.
+	 * Sets whether the user-agent should be validated.
 	 * If enabled a user will be logged out if the current user-agent is
 	 * not equal to the one stored in the db
 	 *
@@ -327,7 +327,7 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether cookies are used to login
+	 * @return boolean whether cookies are used to login
 	 */
 	public final function use_cookies()
 	{
@@ -335,7 +335,7 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * Sets wether to use cookies to login
+	 * Sets whether to use cookies to login
 	 *
 	 * @param boolean $use_cookies the new value
 	 */
@@ -706,8 +706,8 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * Checks wether <var>$old_ip</var> is equal to <var>$current_ip</var>.
-	 * Wether it is "equal" depends on the ip-validation-type.
+	 * Checks whether <var>$old_ip</var> is equal to <var>$current_ip</var>.
+	 * Whether it is "equal" depends on the ip-validation-type.
 	 *
 	 * @param string $old_ip the old ip
 	 * @param string $current_ip the current ip
@@ -736,7 +736,7 @@ class FWS_User_Current extends FWS_Object
 	}
 
 	/**
-	 * Checks wether the given user-agents are equal.
+	 * Checks whether the given user-agents are equal.
 	 *
 	 * @param string $old_ua the old user-agent
 	 * @param string $current_ua the current user-agent

@@ -36,14 +36,14 @@ FWS_String::set_use_mb_functions(function_exists('mb_strlen'));
 final class FWS_String extends FWS_UtilBase
 {
 	/**
-	 * Indicates wether multibyte-functions should be used
+	 * Indicates whether multibyte-functions should be used
 	 * 
 	 * @var boolean
 	 */
 	private static $_use_mb;
 	
 	/**
-	 * @return boolean wether mb-functions are used
+	 * @return boolean whether mb-functions are used
 	 */
 	public static function get_use_mb_functions()
 	{
@@ -51,7 +51,7 @@ final class FWS_String extends FWS_UtilBase
 	}
 	
 	/**
-	 * Sets wether multibyte functions should be used
+	 * Sets whether multibyte functions should be used
 	 * 
 	 * @param boolean $use_mb the new value
 	 * @param string $encoding the encoding to use
@@ -267,7 +267,7 @@ final class FWS_String extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given character is whitespace
+	 * Checks whether the given character is whitespace
 	 *
 	 * @param char $c
 	 * @return boolean true if it is whitespace
@@ -278,7 +278,7 @@ final class FWS_String extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given character is an alpha-char
+	 * Checks whether the given character is an alpha-char
 	 *
 	 * @param char $c the character
 	 * @return boolean true if it is an alpha-char

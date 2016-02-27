@@ -25,7 +25,7 @@
 /**
  * The download-renderer sends a file to the browser. You can specify the file or send an
  * arbitrary string as file. Additionally you can specify the filename that should be displayed
- * and wether the default headers should be set.
+ * and whether the default headers should be set.
  * <br>
  * By default the download-renderer displays messages in plain-text instead of sending the file
  * if any messages have been set.
@@ -58,7 +58,7 @@ class FWS_Document_Renderer_Download extends FWS_Object implements FWS_Document_
 	private $_name = null;
 	
 	/**
-	 * Wether the default headers should be set
+	 * Whether the default headers should be set
 	 *
 	 * @var boolean
 	 */
@@ -105,7 +105,7 @@ class FWS_Document_Renderer_Download extends FWS_Object implements FWS_Document_
 	}
 	
 	/**
-	 * Controls wether the default download-headers should be set
+	 * Controls whether the default download-headers should be set
 	 *
 	 * @param boolean $set the new value
 	 */

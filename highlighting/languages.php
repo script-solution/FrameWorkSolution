@@ -71,7 +71,7 @@ final class FWS_Highlighting_Languages extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given language exists.
+	 * Checks whether the given language exists.
 	 * Please call self::ensure_inited() first!
 	 *
 	 * @param string $id the language-id

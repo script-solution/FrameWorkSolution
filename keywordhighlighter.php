@@ -141,7 +141,7 @@ final class FWS_KeywordHighlighter extends FWS_Object
 			if($match[1] > $p)
 				$result .= FWS_String::substr($text,$p,$match[1] - $p);
 			
-			// check wether it is a valid match
+			// check whether it is a valid match
 			// note that can we use the byte-position here because we search just for ASCII chars
 			// and don't need the position for other things
 			$end = $match[1] + $mbchars;

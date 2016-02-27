@@ -67,7 +67,7 @@ class FWS_Array_2Dim extends FWS_Array_1Dim
 	}
 	
 	/**
-	 * Checks wether an element exists with the specified content.
+	 * Checks whether an element exists with the specified content.
 	 * The condition is an associative array with the keys and values that the
 	 * element should have and the link with which the elements in the condition-array
 	 * should be connected. You can choose between self::LINK_AND and self::LINK_OR.
@@ -186,7 +186,7 @@ class FWS_Array_2Dim extends FWS_Array_1Dim
 	}
 	
 	/**
-	 * Determines wether the given element matches the condition
+	 * Determines whether the given element matches the condition
 	 *
 	 * @param array $values the conditions
 	 * @param int $link the link of the conditions

@@ -124,7 +124,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * returns the file-extension of the given filename
 	 *
 	 * @param string $filename the name of the file
-	 * @param boolean $lower wether you want to get it in lowercase
+	 * @param boolean $lower whether you want to get it in lowercase
 	 * @return string the extension of the given file without the dot
 	 */
 	public static function get_extension($filename,$lower = true)
@@ -149,7 +149,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given directory / file is writable
+	 * Checks whether the given directory / file is writable
 	 * Will try to set the permissions! Uses 0666 for files and 0777 for folders.
 	 * 
 	 * @param string $path the file or directory to check

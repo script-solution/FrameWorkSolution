@@ -679,7 +679,7 @@ function FWS_getElement(id)
 }
 
 /**
- * Checks wether an array contains the given entry
+ * Checks whether an array contains the given entry
  *
  * @param mixed entry the entry to search for
  * @return boolean true if the array contains the entry
@@ -722,7 +722,7 @@ Array.prototype.removeEntry = function(entry)
 };
 
 /**
- * Checks wether the string ends with the given substring.
+ * Checks whether the string ends with the given substring.
  *
  * @param string str the substring with which is may end
  * @return boolean true if the string ends with the given one

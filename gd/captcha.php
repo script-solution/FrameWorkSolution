@@ -443,7 +443,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	}
 
 	/**
-	 * Sets wether a random background should be used (at least nearly random; only
+	 * Sets whether a random background should be used (at least nearly random; only
 	 * bg-colors which have a min. brightness will be used)
 	 * 
 	 * @param boolean $random the new value
@@ -705,7 +705,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	}
 
 	/**
-	 * Sets wether transparency should be used
+	 * Sets whether transparency should be used
 	 * 
 	 * @param boolean $use_trans the new value
 	 */
@@ -715,7 +715,7 @@ final class FWS_GD_Captcha extends FWS_Object
 	}
 
 	/**
-	 * Sets wether the image should be manipulated via a wave
+	 * Sets whether the image should be manipulated via a wave
 	 * 
 	 * @param boolean $use_wave
 	 */

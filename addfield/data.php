@@ -74,7 +74,7 @@ class FWS_AddField_Data extends FWS_Object
 	private $_sort;
 	
 	/**
-	 * Wether the field is required. That means the user has to enter a value.
+	 * Whether the field is required. That means the user has to enter a value.
 	 *
 	 * @var boolean
 	 */
@@ -95,7 +95,7 @@ class FWS_AddField_Data extends FWS_Object
 	private $_value_suffix;
 	
 	/**
-	 * Wether the field should be displayed if it is empty
+	 * Whether the field should be displayed if it is empty
 	 *
 	 * @var boolean
 	 */
@@ -138,10 +138,10 @@ class FWS_AddField_Data extends FWS_Object
 	 * @param string $name the name (to identify)
 	 * @param string $title the title (to display)
 	 * @param int $sort the sort-key
-	 * @param boolean $is_required wether the field is required
+	 * @param boolean $is_required whether the field is required
 	 * @param string $edit_suffix the suffix for editing
 	 * @param string $value_suffix the suffix for the value
-	 * @param boolean $display_empty wether the field should be displayed if it is empty
+	 * @param boolean $display_empty whether the field should be displayed if it is empty
 	 * @param int $length the length of the field
 	 * @param array $values all possible values of the field
 	 * @param string $validation a regular expression to validate the value
@@ -264,7 +264,7 @@ class FWS_AddField_Data extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the field should be displayed if the value is empty
+	 * @return boolean whether the field should be displayed if the value is empty
 	 */
 	public final function display_empty()
 	{

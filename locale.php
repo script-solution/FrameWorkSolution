@@ -61,7 +61,7 @@ interface FWS_Locale
 	const FORMAT_DATE_TIME_SEP	= 'sep';
 	
 	/**
-	 * Checks wether the given language-entry exists.
+	 * Checks whether the given language-entry exists.
 	 *
 	 * @param string $name the name of the entry
 	 * @return boolean true if it exists

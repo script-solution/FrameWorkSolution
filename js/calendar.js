@@ -260,7 +260,7 @@ function FWS_Calendar(path,inputId,onSelected)
 	/**
 	 * Sets the date-object to the next month
 	 *
-	 * @param boolean adjustButtons wether the buttons should be enabled / disabled
+	 * @param boolean adjustButtons whether the buttons should be enabled / disabled
 	 */
 	this.setNextMonth = function(adjustButtons)
 	{

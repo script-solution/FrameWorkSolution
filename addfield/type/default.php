@@ -114,7 +114,7 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 	}
 	
 	/**
-	 * Checks wether the given value is correct. You can assume that the value is not empty.
+	 * Checks whether the given value is correct. You can assume that the value is not empty.
 	 *
 	 * @param mixed $value the entered value
 	 * @return boolean true if the value is valid

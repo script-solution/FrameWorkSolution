@@ -74,7 +74,7 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	private $_default;
 	
 	/**
-	 * Indicates wether the form-element is disabled
+	 * Indicates whether the form-element is disabled
 	 *
 	 * @var boolean
 	 */
@@ -245,7 +245,7 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the form-element is disabled
+	 * @return boolean whether the form-element is disabled
 	 */
 	public final function is_disabled()
 	{
@@ -253,7 +253,7 @@ abstract class FWS_HTML_FormElement extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the form-element is disabled
+	 * Sets whether the form-element is disabled
 	 *
 	 * @param boolean $disabled the new value
 	 */

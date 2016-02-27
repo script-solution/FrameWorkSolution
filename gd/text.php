@@ -142,7 +142,7 @@ final class FWS_GD_Text extends FWS_Object
 	 * </code>
 	 * 
 	 * @param int $angle the angle with which the text should be drawn
-	 * @param boolean $note_attr wether the attributes (underline, overline, shadow) should be
+	 * @param boolean $note_attr whether the attributes (underline, overline, shadow) should be
 	 * 	noticed for calculating the bounds
 	 * @return array an array with all coordinates. see imagettfbbox()
 	 */
@@ -175,9 +175,9 @@ final class FWS_GD_Text extends FWS_Object
 	}
 	
 	/**
-	 * Calculates the ascent of the text (depends on the text-size, border and wether its overlined)
+	 * Calculates the ascent of the text (depends on the text-size, border and whether its overlined)
 	 *
-	 * @param boolean $note_attr wether the attributes should be noticed
+	 * @param boolean $note_attr whether the attributes should be noticed
 	 * @return int the ascent
 	 */
 	public function get_ascent($note_attr = true)
@@ -200,9 +200,9 @@ final class FWS_GD_Text extends FWS_Object
 	}
 	
 	/**
-	 * Calculates the descent of the text (depends on the border and wether its underlined)
+	 * Calculates the descent of the text (depends on the border and whether its underlined)
 	 *
-	 * @param boolean $note_attr wether the attributes should be noticed
+	 * @param boolean $note_attr whether the attributes should be noticed
 	 * @return int the descent
 	 */
 	public function get_descent($note_attr = true)
@@ -247,7 +247,7 @@ final class FWS_GD_Text extends FWS_Object
 	/**
 	 * Determines the width of the text
 	 *
-	 * @param boolean $note_attr wether the attributes (underline, overline, shadow) should be
+	 * @param boolean $note_attr whether the attributes (underline, overline, shadow) should be
 	 * 	noticed for calculating the bounds
 	 * @return int the width
 	 */
@@ -259,7 +259,7 @@ final class FWS_GD_Text extends FWS_Object
 	/**
 	 * Determines the height of the text
 	 *
-	 * @param boolean $note_attr wether the attributes (underline, overline, shadow) should be
+	 * @param boolean $note_attr whether the attributes (underline, overline, shadow) should be
 	 * 	noticed for calculating the bounds
 	 * @return int the height
 	 */
@@ -271,7 +271,7 @@ final class FWS_GD_Text extends FWS_Object
 	/**
 	 * Determines the size of the text
 	 *
-	 * @param boolean $note_attr wether the attributes (underline, overline, shadow) should be
+	 * @param boolean $note_attr whether the attributes (underline, overline, shadow) should be
 	 * 	noticed for calculating the bounds
 	 * @return FWS_GD_Dimension the size of the text
 	 */

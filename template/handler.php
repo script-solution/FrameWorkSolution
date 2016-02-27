@@ -97,7 +97,7 @@ final class FWS_Template_Handler extends FWS_Object
 	private $_enable_method_calls = true;
 	
 	/**
-	 * Stores wether we want to limit the methods that are callable from templates.
+	 * Stores whether we want to limit the methods that are callable from templates.
 	 *
 	 * @var boolean
 	 */
@@ -277,7 +277,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether conditions are enabled
+	 * @return boolean whether conditions are enabled
 	 */
 	public function get_conditions_enabled()
 	{
@@ -285,9 +285,9 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Sets wether conditions are enabled
+	 * Sets whether conditions are enabled
 	 *
-	 * @param boolean $enabled wether conditions are enabled
+	 * @param boolean $enabled whether conditions are enabled
 	 */
 	public function set_conditions_enabled($enabled)
 	{
@@ -295,7 +295,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether loops are enabled
+	 * @return boolean whether loops are enabled
 	 */
 	public function get_loops_enabled()
 	{
@@ -303,9 +303,9 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Sets wether loops are enabled
+	 * Sets whether loops are enabled
 	 *
-	 * @param boolean $enabled wether loops are enabled
+	 * @param boolean $enabled whether loops are enabled
 	 */
 	public function set_loops_enabled($enabled)
 	{
@@ -313,7 +313,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether includes are enabled
+	 * @return boolean whether includes are enabled
 	 */
 	public function get_includes_enabled()
 	{
@@ -321,9 +321,9 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Sets wether includes are enabled
+	 * Sets whether includes are enabled
 	 *
-	 * @param boolean $enabled wether includes are enabled
+	 * @param boolean $enabled whether includes are enabled
 	 */
 	public function set_includes_enabled($enabled)
 	{
@@ -331,7 +331,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether method-calls are enabled
+	 * @return boolean whether method-calls are enabled
 	 */
 	public function get_method_calls_enabled()
 	{
@@ -339,9 +339,9 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Sets wether method-calls are enabled
+	 * Sets whether method-calls are enabled
 	 *
-	 * @param boolean $enabled wether method-calls are enabled
+	 * @param boolean $enabled whether method-calls are enabled
 	 */
 	public function set_method_calls_enabled($enabled)
 	{
@@ -349,7 +349,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether method-calls are limited
+	 * @return boolean whether method-calls are limited
 	 */
 	public function get_limit_method_calls()
 	{
@@ -357,11 +357,11 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 
 	/**
-	 * Sets wether method-calls should be limited.
+	 * Sets whether method-calls should be limited.
 	 * This prevents that all methods of the specified objects may be used. So you can control
 	 * which methods may be called and which not.
 	 *
-	 * @param boolean $limit wether method-calls should be limited.
+	 * @param boolean $limit whether method-calls should be limited.
 	 */
 	public function set_limit_method_calls($limit)
 	{
@@ -369,7 +369,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether it is possible to access variables of foreign templates
+	 * @return boolean whether it is possible to access variables of foreign templates
 	 */
 	public function get_access_to_foreign_tpls()
 	{
@@ -377,7 +377,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether it is possible to access variables of foreign templates
+	 * Sets whether it is possible to access variables of foreign templates
 	 *
 	 * @param boolean $access the new value
 	 */
@@ -400,7 +400,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given method of the given object may be called. If not
+	 * Checks whether the given method of the given object may be called. If not
 	 * {@link FWS_Helper::error()} will be called (-> end of the script).
 	 * This method is intended for the generated templates and should not be called
 	 * from anybody else.
@@ -426,7 +426,7 @@ final class FWS_Template_Handler extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given method of the given object may be called
+	 * Checks whether the given method of the given object may be called
 	 *
 	 * @param string $object the object-name
 	 * @param string $method the method-name

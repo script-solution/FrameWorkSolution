@@ -24,7 +24,7 @@
 
 /**
  * A utility class to build formulars. You can specify a condition which controls
- * wether the values of the formular-elements should be retrieved from $_POST or
+ * whether the values of the formular-elements should be retrieved from $_POST or
  * if the default values should be displayed.
  * <br>
  * The class contains many helper-functions which can build the formular-elements
@@ -124,7 +124,7 @@ class FWS_HTML_Formular extends FWS_Object
 	
 	/**
 	 * Returns ' checked="checked"' or '' depending on the given default value
-	 * and wether the condition is true. If the condition is true and the checkbox
+	 * and whether the condition is true. If the condition is true and the checkbox
 	 * has been selected ' checked="checked"' will be returned. Otherwise
 	 * this will be returned if $default is true. In all other cases '' will be returned.
 	 *
@@ -145,7 +145,7 @@ class FWS_HTML_Formular extends FWS_Object
 	
 	/**
 	 * Returns ' checked="checked"' or '' depending on the given default value
-	 * and wether the condition is true. If the condition is true and the radiobutton
+	 * and whether the condition is true. If the condition is true and the radiobutton
 	 * with given value has been selected ' checked="checked"' will be returned. Otherwise
 	 * this will be returned if $default is true. In all other cases '' will be returned.
 	 *
@@ -483,7 +483,7 @@ EOF;
 	 *
 	 * @param string $prefix the date-prefix
 	 * @param int $start_year the start-year of the year-combo
-	 * @param boolean $add_no_value wether a "no-value"-entry should be added
+	 * @param boolean $add_no_value whether a "no-value"-entry should be added
 	 * @return string the js-calendar
 	 */
 	protected function get_js_calendar($prefix,$start_year,$add_no_value)

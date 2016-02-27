@@ -159,7 +159,7 @@ final class FWS_Date extends FWS_Object
 	}
 		
 	/**
-	 * Checks wether the given timestamp is valid
+	 * Checks whether the given timestamp is valid
 	 * 
 	 * @param mixed $timestamp the timestamp to check
 	 * @return boolean true if valid
@@ -173,7 +173,7 @@ final class FWS_Date extends FWS_Object
 	}
 	
 	/**
-	 * checks wether the given date is valid
+	 * checks whether the given date is valid
 	 *
 	 * @param int $day the day of the date
 	 * @param int $month the month of the date
@@ -449,7 +449,7 @@ final class FWS_Date extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the specified date is today
+	 * @return boolean whether the specified date is today
 	 */
 	public function is_today()
 	{
@@ -457,7 +457,7 @@ final class FWS_Date extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the specified date is yesterday
+	 * @return boolean whether the specified date is yesterday
 	 */
 	public function is_yesterday()
 	{
@@ -465,7 +465,7 @@ final class FWS_Date extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the specified date is tomorrow
+	 * @return boolean whether the specified date is tomorrow
 	 */
 	public function is_tomorrow()
 	{

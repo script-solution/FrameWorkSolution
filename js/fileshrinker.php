@@ -169,7 +169,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 							$keep_next_whitespace = false;
 					}
 					// or in front of specific keywords
-					// by default we have to check wether "in" follows at $i + 1. But thats too slow
+					// by default we have to check whether "in" follows at $i + 1. But thats too slow
 					else if($next == 'i')
 						$output .= $c;
 					break;
@@ -188,7 +188,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 						$keep_next_whitespace = false;
 					}
 					// or does a specific keyword follow?
-					// by default we have to check wether "in" follows at $i + 1. But thats too slow
+					// by default we have to check whether "in" follows at $i + 1. But thats too slow
 					else if($next == 'i')
 						$output .= $c;
 					break;
@@ -199,7 +199,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 					if(!$in_line_comment && !$in_multi_comment)
 					{
 						// we have to leave a space after specific keywords
-						// by default we have to check wether one of the following keywords follows:
+						// by default we have to check whether one of the following keywords follows:
 						// 'in','var','else','new','function','return','typeof'
 						// but thats too slow. So we check just for the first character
 						if(!$keep_next_whitespace && !$in_single_string && !$in_double_string &&
@@ -216,7 +216,7 @@ final class FWS_JS_FileShrinker extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given position is escaped. Or in other words: if the number of "\"
+	 * Checks whether the given position is escaped. Or in other words: if the number of "\"
 	 * in front of this position is odd.
 	 * 
 	 * @param int $i the current position

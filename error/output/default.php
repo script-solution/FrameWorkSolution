@@ -32,14 +32,14 @@
 final class FWS_Error_Output_Default extends FWS_Object implements FWS_Error_Output
 {
 	/**
-	 * Wether the calltrace is displayed
+	 * Whether the calltrace is displayed
 	 *
 	 * @var boolean
 	 */
 	private $_trace;
 	
 	/**
-	 * Wether bbcode is displayed
+	 * Whether bbcode is displayed
 	 *
 	 * @var boolean
 	 */
@@ -48,8 +48,8 @@ final class FWS_Error_Output_Default extends FWS_Object implements FWS_Error_Out
 	/**
 	 * Constructor
 	 *
-	 * @param boolean $trace wether the calltrace should be displayed
-	 * @param boolean $bbcode wether bbcode should be displayed
+	 * @param boolean $trace whether the calltrace should be displayed
+	 * @param boolean $bbcode whether bbcode should be displayed
 	 */
 	public function __construct($trace = true,$bbcode = true)
 	{

@@ -58,7 +58,7 @@ final class FWS_MutexFile extends FWS_Object
 	private $_fp;
 	
 	/**
-	 * Wether its currently locked
+	 * Whether its currently locked
 	 * 
 	 * @var bool
 	 */

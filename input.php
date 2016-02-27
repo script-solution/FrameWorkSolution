@@ -125,21 +125,21 @@ final class FWS_Input extends FWS_Singleton
 	private $_inputs = null;
 	
 	/**
-	 * Wether htmlspecialchars() should be used for all values
+	 * Whether htmlspecialchars() should be used for all values
 	 *
 	 * @var boolean
 	 */
 	private $_use_htmlspecialchars = true;
 	
 	/**
-	 * Wether values should be escaped
+	 * Whether values should be escaped
 	 *
 	 * @var boolean
 	 */
 	private $_escape_values = true;
 	
 	/**
-	 * Wether ".." should be removed from GET-values
+	 * Whether ".." should be removed from GET-values
 	 *
 	 * @var boolean
 	 */
@@ -156,7 +156,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * @return boolean wether values should be escaped
+	 * @return boolean whether values should be escaped
 	 */
 	public function get_escape_values()
 	{
@@ -164,7 +164,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * Sets wether values should be escaped
+	 * Sets whether values should be escaped
 	 * 
 	 * @param boolean $escape the new value
 	 */
@@ -174,7 +174,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * @return boolean wether ".." should be removed from GET-values
+	 * @return boolean whether ".." should be removed from GET-values
 	 */
 	public function get_remove_dotdot()
 	{
@@ -182,7 +182,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * Sets wether ".." should be removed from GET-values
+	 * Sets whether ".." should be removed from GET-values
 	 * 
 	 * @param boolean $remove the new value
 	 */
@@ -192,7 +192,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * @return bool wether htmlspecialchars() should be used for all values
+	 * @return bool whether htmlspecialchars() should be used for all values
 	 */
 	public function get_use_htmlspecialchars()
 	{
@@ -200,7 +200,7 @@ final class FWS_Input extends FWS_Singleton
 	}
 
 	/**
-	 * Sets wether htmlspecialchars() should be used for all values
+	 * Sets whether htmlspecialchars() should be used for all values
 	 * 
 	 * @param bool $use the new value
 	 */

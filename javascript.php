@@ -52,7 +52,7 @@ final class FWS_Javascript extends FWS_Singleton
 	private $_cache = null;
 	
 	/**
-	 * Wether the files should be shrinked
+	 * Whether the files should be shrinked
 	 *
 	 * @var boolean
 	 */
@@ -84,7 +84,7 @@ final class FWS_Javascript extends FWS_Singleton
 	}
 	
 	/**
-	 * Sets wether the files should be shrinked. By default this is enabled.
+	 * Sets whether the files should be shrinked. By default this is enabled.
 	 * For example you may disable this for debugging javascript.
 	 *
 	 * @param boolean $shrink the new value

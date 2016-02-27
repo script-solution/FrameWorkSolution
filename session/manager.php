@@ -70,7 +70,7 @@ class FWS_Session_Manager extends FWS_Object
 	private $_enable_session = true;
 	
 	/**
-	 * Stores wether this object has already been finalized
+	 * Stores whether this object has already been finalized
 	 *
 	 * @var boolean
 	 */
@@ -156,7 +156,7 @@ class FWS_Session_Manager extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given user should be logged out because the timeout is over or not
+	 * Checks whether the given user should be logged out because the timeout is over or not
 	 *
 	 * @param FWS_Session_Data $user the user to check
 	 * @param string $currentsid the session-id of the current user
@@ -169,7 +169,7 @@ class FWS_Session_Manager extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether sessions are enabled
+	 * @return boolean whether sessions are enabled
 	 */
 	public final function sessions_enabled()
 	{

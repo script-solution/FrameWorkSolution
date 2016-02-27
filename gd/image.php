@@ -139,7 +139,7 @@ final class FWS_GD_Image extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether this image is a truecolor-image
+	 * @return boolean whether this image is a truecolor-image
 	 */
 	public function is_truecolor()
 	{
@@ -147,7 +147,7 @@ final class FWS_GD_Image extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether antialiasing should be used.
+	 * Sets whether antialiasing should be used.
 	 * <br>
 	 * Activate the fast drawing antialiased methods for lines and wired polygons. It does not
 	 * support alpha components. It works using a direct blend operation. It works only with
@@ -167,7 +167,7 @@ final class FWS_GD_Image extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether alpha-blending should be used.
+	 * Sets whether alpha-blending should be used.
 	 * <br>
 	 * In blending mode, the alpha channel component of the color supplied to all drawing function,
 	 * such as imagesetpixel() determines how much of the underlying color should be allowed to

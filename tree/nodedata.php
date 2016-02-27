@@ -26,7 +26,7 @@
  * The data of a node. Contains all that should be stored to a database, file or other
  * locations. You may extend this class to add more attributes.
  * <br>
- * The class recognizes changes to the attributes and stores wether something has changed.
+ * The class recognizes changes to the attributes and stores whether something has changed.
  * This makes it possible to update just the nodes that have really changed.
  *
  * @package			FrameWorkSolution
@@ -36,7 +36,7 @@
 class FWS_Tree_NodeData extends FWS_Object
 {
 	/**
-	 * Stores wether something has changed
+	 * Stores whether something has changed
 	 *
 	 * @var boolean
 	 */
@@ -93,7 +93,7 @@ class FWS_Tree_NodeData extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether any attribute of this object has changed
+	 * @return boolean whether any attribute of this object has changed
 	 */
 	public final function has_changed()
 	{

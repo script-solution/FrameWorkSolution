@@ -47,7 +47,7 @@ interface FWS_Config_Item
 	public function get_control($form);
 	
 	/**
-	 * Should return wether the value has changed. That means if the stored value is different
+	 * Should return whether the value has changed. That means if the stored value is different
 	 * from the value read from POST.
 	 *
 	 * @return boolean true if it has changed

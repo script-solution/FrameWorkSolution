@@ -279,7 +279,7 @@ final class FWS_Helper extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given argument is an integer or for example a string that contains
+	 * Checks whether the given argument is an integer or for example a string that contains
 	 * an integer.
 	 *
 	 * @param mixed $val the value to check

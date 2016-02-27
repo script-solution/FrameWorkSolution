@@ -95,7 +95,7 @@ class FWS_HTML_ComboBox extends FWS_HTML_List
 	}
 
 	/**
-	 * @return boolean wether multi-selections are possible
+	 * @return boolean whether multi-selections are possible
 	 */
 	public final function is_multiple()
 	{
@@ -103,7 +103,7 @@ class FWS_HTML_ComboBox extends FWS_HTML_List
 	}
 
 	/**
-	 * Sets wether multi-selections are possible
+	 * Sets whether multi-selections are possible
 	 * 
 	 * @param boolean $multiple the new value
 	 */

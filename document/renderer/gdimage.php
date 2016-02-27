@@ -51,7 +51,7 @@ class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_R
 	private $_format = 'png';
 	
 	/**
-	 * Wether the image may be cached
+	 * Whether the image may be cached
 	 *
 	 * @var boolean
 	 */
@@ -89,7 +89,7 @@ class FWS_Document_Renderer_GDImage extends FWS_Object implements FWS_Document_R
 	}
 	
 	/**
-	 * Sets wether caching is allowed
+	 * Sets whether caching is allowed
 	 *
 	 * @param boolean $allow the new value
 	 */

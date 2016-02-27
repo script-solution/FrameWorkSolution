@@ -74,7 +74,7 @@ final class FWS_Progress_Manager extends FWS_Object
 	private $_total = false;
 	
 	/**
-	 * Indicates wether the task has been finished
+	 * Indicates whether the task has been finished
 	 *
 	 * @var boolean
 	 */
@@ -156,7 +156,7 @@ final class FWS_Progress_Manager extends FWS_Object
 	}
 	
 	/**
-	 * Tests wether the progress is currently running, that means it has been started but is
+	 * Tests whether the progress is currently running, that means it has been started but is
 	 * not finished.
 	 *
 	 * @return boolean true if it is running
@@ -167,7 +167,7 @@ final class FWS_Progress_Manager extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the task is finished
+	 * @return boolean whether the task is finished
 	 */
 	public function is_finished()
 	{

@@ -561,7 +561,7 @@ final class FWS_GD_Color extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given color-component is valid (in the range of 0..$limit)
+	 * Checks whether the given color-component is valid (in the range of 0..$limit)
 	 *
 	 * @param mixed $comp the component
 	 * @param int $limit the max-value

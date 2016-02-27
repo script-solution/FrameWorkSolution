@@ -79,7 +79,7 @@ final class FWS_SQLParser extends FWS_UtilBase
 		preg_match_all(
 			// a little trick to get this quicker...
 			// we match all quotes, that are not preceded by exactly 1 backslash.
-			// if we have 0 backslashes we can determine this quickly by checking wether the
+			// if we have 0 backslashes we can determine this quickly by checking whether the
 			// last character is not a backslash. if we have 2 or more we will use the is_escaped()
 			// method. but this should happen nearly never...
 			"/(?:(?<![^\\\\]\\\\)\"|'|`)|(?:\n|\r|#|--|\\/\\*|\\*\\/|;)/s",

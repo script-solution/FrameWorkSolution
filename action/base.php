@@ -40,7 +40,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	private $_action_id;
 	
 	/**
-	 * Indicates wether something has been done
+	 * Indicates whether something has been done
 	 *
 	 * @var boolean
 	 */
@@ -76,7 +76,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	private $_error_return_val = -1;
 	
 	/**
-	 * Wether the user should be redirected.
+	 * Whether the user should be redirected.
 	 * If <var>$this->get_redirect_url()</var> has not been specified the first
 	 * URL in <var>$this->get_links()</var> will be used.
 	 *
@@ -100,7 +100,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	private $_redirect_time = 3;
 	
 	/**
-	 * Wether we want to display a 'status-page'
+	 * Whether we want to display a 'status-page'
 	 *
 	 * @var boolean
 	 */
@@ -130,7 +130,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether something has been done
+	 * @return boolean whether something has been done
 	 */
 	public final function get_action_performed()
 	{
@@ -138,7 +138,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 
 	/**
-	 * Sets wether something has been done
+	 * Sets whether something has been done
 	 * 
 	 * @param boolean $performed has something been done?
 	 */
@@ -222,7 +222,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether we should redirect the user
+	 * @return boolean whether we should redirect the user
 	 */
 	public final function get_redirect()
 	{
@@ -230,7 +230,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 
 	/**
-	 * Sets wether the user should be redirected
+	 * Sets whether the user should be redirected
 	 * 
 	 * @param boolean $redirect the new value
 	 * @param FWS_URL|string $url the URL to redirect to (may be null to use the first link). May also be
@@ -281,7 +281,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether a 'status-page' should be displayed
+	 * @return boolean whether a 'status-page' should be displayed
 	 */
 	public final function show_status_page()
 	{
@@ -289,7 +289,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether a 'status-page' should be displayed
+	 * Sets whether a 'status-page' should be displayed
 	 *
 	 * @param boolean $show the new value
 	 */

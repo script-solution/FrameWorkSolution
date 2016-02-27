@@ -33,7 +33,7 @@
 interface FWS_Error_AllowedFiles
 {
 	/**
-	 * Should return wether the given file can be display (contains no sensitive information)
+	 * Should return whether the given file can be display (contains no sensitive information)
 	 *
 	 * @param string $file the file to display
 	 * @return boolean true if it can be displayed

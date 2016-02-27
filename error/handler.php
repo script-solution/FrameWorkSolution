@@ -336,7 +336,7 @@ final class FWS_Error_Handler extends FWS_Singleton
 	}
 	
 	/**
-	 * Checks wether the given file may be displayed
+	 * Checks whether the given file may be displayed
 	 *
 	 * @param string $file the file
 	 * @return boolean true if so

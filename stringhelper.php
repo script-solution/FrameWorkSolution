@@ -31,7 +31,7 @@
 final class FWS_StringHelper extends FWS_UtilBase
 {
 	/**
-	 * Checks wether the given string is a valid "id-string". That means that the array that we get
+	 * Checks whether the given string is a valid "id-string". That means that the array that we get
 	 * from <code>FWS_Array_Utils::advanced_explode($sep,$ids)</code> just contains positive integers
 	 * and the number of ids is greater than 0.
 	 * If it is valid the id-array will be returned. Otherwise false
@@ -182,7 +182,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given email-address is valid
+	 * Checks whether the given email-address is valid
 	 *
 	 * @param string $mail the email-address to check
 	 * @return boolean true if valid

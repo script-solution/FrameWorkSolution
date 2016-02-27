@@ -175,7 +175,7 @@ final class FWS_HTML_LimitedString extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the string has been cut
+	 * @return boolean whether the string has been cut
 	 */
 	public function has_cut()
 	{

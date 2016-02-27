@@ -74,28 +74,28 @@ class FWS_GD_TextAttributes extends FWS_Object
 	private $_bordersize = 1;
 	
 	/**
-	 * Wether the text should be underlined
+	 * Whether the text should be underlined
 	 *
 	 * @var boolean
 	 */
 	private $_underline = false;
 	
 	/**
-	 * Wether the text should be overlined
+	 * Whether the text should be overlined
 	 *
 	 * @var boolean
 	 */
 	private $_overline = false;
 	
 	/**
-	 * Wether the text should be striked through
+	 * Whether the text should be striked through
 	 *
 	 * @var boolean
 	 */
 	private $_strike = false;
 	
 	/**
-	 * Wether the text should have a shadow
+	 * Whether the text should have a shadow
 	 *
 	 * @var boolean
 	 */
@@ -255,7 +255,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the text should be underlined
+	 * Sets whether the text should be underlined
 	 *
 	 * @param boolean $val the new value
 	 */
@@ -273,7 +273,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the text should be overlined
+	 * Sets whether the text should be overlined
 	 *
 	 * @param boolean $val the new value
 	 */
@@ -291,7 +291,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the text should be striked through
+	 * Sets whether the text should be striked through
 	 *
 	 * @param boolean $val the new value
 	 */
@@ -309,7 +309,7 @@ class FWS_GD_TextAttributes extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the text should have shadow
+	 * Sets whether the text should have shadow
 	 *
 	 * @param boolean $val the new value
 	 */

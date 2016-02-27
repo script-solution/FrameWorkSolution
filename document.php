@@ -23,8 +23,8 @@
 
 /**
  * This class can be used to build the response that is send to the browser. You can set
- * the things such as MIME-type, charset, headers in general, wether GZip should be used,
- * wether a redirection should be done and so on.
+ * the things such as MIME-type, charset, headers in general, whether GZip should be used,
+ * whether a redirection should be done and so on.
  * <br>
  * The document contains an instance of {@link FWS_Document_Renderer} which should build the
  * result that should be sent to the browser. This may be an HTML-page, an image, a download
@@ -132,14 +132,14 @@ class FWS_Document extends FWS_Object
 	private $_header = array();
 	
 	/**
-	 * Wether the browser may cache the result
+	 * Whether the browser may cache the result
 	 *
 	 * @var boolean
 	 */
 	private $_allow_cache = false;
 	
 	/**
-	 * Wether GZip should be used to compress the output
+	 * Whether GZip should be used to compress the output
 	 *
 	 * @var boolean
 	 */
@@ -237,7 +237,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the browser may cache the result
+	 * @return boolean whether the browser may cache the result
 	 */
 	public final function is_caching_allowed()
 	{
@@ -245,7 +245,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the browser may cache the result
+	 * Sets whether the browser may cache the result
 	 *
 	 * @param boolean $caching the new value
 	 */
@@ -255,7 +255,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the page is compressed with GZip
+	 * @return boolean whether the page is compressed with GZip
 	 */
 	public final function is_gzip()
 	{
@@ -263,7 +263,7 @@ class FWS_Document extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the page is compressed with GZip
+	 * Sets whether the page is compressed with GZip
 	 *
 	 * @param boolean $gzip the new value
 	 */
@@ -434,7 +434,7 @@ class FWS_Document extends FWS_Object
 	 *
 	 * @param string $name the header-name
 	 * @param string $value the header-value
-	 * @param boolean $overwrite wether the header-value should be overwritten, if existing
+	 * @param boolean $overwrite whether the header-value should be overwritten, if existing
 	 */
 	public final function set_header($name,$value,$overwrite = true)
 	{
@@ -570,7 +570,7 @@ class FWS_Document extends FWS_Object
 	}
 
 	/**
-	 * Checks wether the client accepts gzip
+	 * Checks whether the client accepts gzip
 	 *
 	 * @return string|boolean the encoding if the client supports it or false
 	 */

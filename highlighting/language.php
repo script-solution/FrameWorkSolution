@@ -131,7 +131,7 @@ interface FWS_Highlighting_Language
 	public function get_keyword_settings($id);
 	
 	/**
-	 * @return wether numbers should be highlighted
+	 * @return whether numbers should be highlighted
 	 */
 	public function highlight_numbers();
 	

@@ -208,7 +208,7 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	}
 	
 	/**
-	 * Checks wether the given property exists
+	 * Checks whether the given property exists
 	 *
 	 * @param string $name the name
 	 * @return boolean true if so

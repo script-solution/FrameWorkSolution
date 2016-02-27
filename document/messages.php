@@ -233,7 +233,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether an error has been added
+	 * @return boolean whether an error has been added
 	 * @see contains($type)
 	 */
 	public final function contains_error()
@@ -242,7 +242,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether a warning has been added
+	 * @return boolean whether a warning has been added
 	 * @see contains($type)
 	 */
 	public final function contains_warning()
@@ -251,7 +251,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether a notice has been added
+	 * @return boolean whether a notice has been added
 	 * @see contains($type)
 	 */
 	public final function contains_notice()
@@ -260,7 +260,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether a no-access message has been added
+	 * @return boolean whether a no-access message has been added
 	 * @see contains($type)
 	 */
 	public final function contains_no_access()
@@ -269,7 +269,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether a message of given type exists
+	 * Checks whether a message of given type exists
 	 *
 	 * @param int $type the message-type; see FWS_Messages::*
 	 * @return boolean true if there has been added a message of given type
@@ -338,7 +338,7 @@ class FWS_Document_Messages extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given type is valid
+	 * Checks whether the given type is valid
 	 *
 	 * @param int $type the type
 	 * @return boolean true if the type is valid

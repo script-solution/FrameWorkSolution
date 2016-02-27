@@ -259,7 +259,7 @@ final class FWS_Highlighting_Attributes extends FWS_Object
 	}
 	
 	/**
-	 * checks wether the given attribute is a toggle-attribute
+	 * checks whether the given attribute is a toggle-attribute
 	 * 
 	 * @param int $attribute the attribute to check
 	 * @return boolean true if it is a toggle-attribute

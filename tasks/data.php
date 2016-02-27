@@ -69,7 +69,7 @@ class FWS_Tasks_Data extends FWS_Object
 	private $_last_execution;
 	
 	/**
-	 * Indicates wether the task is enabled (so that it may be executed)
+	 * Indicates whether the task is enabled (so that it may be executed)
 	 *
 	 * @var boolean
 	 */
@@ -110,7 +110,7 @@ class FWS_Tasks_Data extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether the task is enabled (so that it may be executed)
+	 * @return boolean whether the task is enabled (so that it may be executed)
 	 */
 	public final function is_enabled()
 	{
@@ -118,7 +118,7 @@ class FWS_Tasks_Data extends FWS_Object
 	}
 
 	/**
-	 * Sets wether the task should be enabled.
+	 * Sets whether the task should be enabled.
 	 * 
 	 * @param boolean $enabled the new value
 	 */

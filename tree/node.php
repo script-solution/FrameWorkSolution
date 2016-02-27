@@ -93,10 +93,10 @@ final class FWS_Tree_Node extends FWS_Object
 	}
 	
 	/**
-	 * Note that this indicates wether this is the "real" root-node not wether it is
+	 * Note that this indicates whether this is the "real" root-node not whether it is
 	 * one root-node from the perspective of the user!
 	 * 
-	 * @return boolean wether this node is a root-node
+	 * @return boolean whether this node is a root-node
 	 */
 	public function is_root()
 	{
@@ -157,7 +157,7 @@ final class FWS_Tree_Node extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether this node has a child-node with given id. If required
+	 * Checks whether this node has a child-node with given id. If required
 	 * the method checks this recursivly.
 	 *
 	 * @param int $id the id of the node you're looking for
@@ -232,7 +232,7 @@ final class FWS_Tree_Node extends FWS_Object
 	 */
 	public function add_node_at($node,$index)
 	{
-		// check wether this data does already exist
+		// check whether this data does already exist
 		$nid = $node->get_id();
 		if(isset($this->_child_ids[$nid]))
 			return null;

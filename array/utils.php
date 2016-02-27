@@ -115,7 +115,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 * Transforms the given array to a "fast-access-array". That means that all values
 	 * of the given array will be taken as key and the value will be just <var>true</var>.
 	 * This gives you the opportunity to use <var>isset($array[$key])</var> instead of
-	 * <var>in_array($key,$array)</var> to determine wether an element exists.
+	 * <var>in_array($key,$array)</var> to determine whether an element exists.
 	 * <br>
 	 * Note that this means that duplicate elements will be merged into one and that the
 	 * elements have to be scalar!
@@ -245,7 +245,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given array contains numeric values only
+	 * Checks whether the given array contains numeric values only
 	 *
 	 * @param array $array the array you want to check
 	 * @return boolean true if the array contains numberic values only
@@ -267,7 +267,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the given array contains integers only
+	 * Checks whether the given array contains integers only
 	 *
 	 * @param array $array the array you want to check
 	 * @return boolean true if the array contains integers only

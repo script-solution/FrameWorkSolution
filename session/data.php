@@ -24,7 +24,7 @@
 
 /**
  * This class represents a user who is currently online. It provides method
- * to read and write the properties of the user and stores wether something
+ * to read and write the properties of the user and stores whether something
  * has changed in this object.
  *
  * @package			FrameWorkSolution
@@ -34,7 +34,7 @@
 class FWS_Session_Data extends FWS_Object
 {
 	/**
-	 * Stores wether this entry has changed
+	 * Stores whether this entry has changed
 	 *
 	 * @var boolean
 	 */
@@ -83,7 +83,7 @@ class FWS_Session_Data extends FWS_Object
 	private $_user_agent = '';
 	
 	/**
-	 * Wether the user uses a mobile device
+	 * Whether the user uses a mobile device
 	 *
 	 * @var boolean
 	 */
@@ -122,7 +122,7 @@ class FWS_Session_Data extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether this user is logged in
+	 * @return boolean whether this user is logged in
 	 */
 	public final function is_loggedin()
 	{
@@ -130,7 +130,7 @@ class FWS_Session_Data extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether this user is a guest
+	 * @return boolean whether this user is a guest
 	 */
 	public final function is_guest()
 	{
@@ -138,7 +138,7 @@ class FWS_Session_Data extends FWS_Object
 	}
 	
 	/**
-	 * Indicates wether the user uses a mobile device
+	 * Indicates whether the user uses a mobile device
 	 *
 	 * @return boolean true if so
 	 */
@@ -200,7 +200,7 @@ class FWS_Session_Data extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether something has changed in this object
+	 * @return boolean whether something has changed in this object
 	 */
 	public final function has_changed()
 	{

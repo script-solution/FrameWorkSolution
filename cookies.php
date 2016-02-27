@@ -158,7 +158,7 @@ final class FWS_Cookies extends FWS_Object
 	}
 
 	/**
-	 * Checks wether a cookie with given name exists
+	 * Checks whether a cookie with given name exists
 	 *
 	 * @param string $name the cookie-name (without prefix)
 	 * @see FWS_Input::isset_var()

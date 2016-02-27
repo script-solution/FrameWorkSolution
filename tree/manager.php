@@ -135,7 +135,7 @@ class FWS_Tree_Manager extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether a node with given id exists
+	 * Checks whether a node with given id exists
 	 *
 	 * @param int $id the id of the node
 	 * @return boolean true if the node exists
@@ -351,7 +351,7 @@ class FWS_Tree_Manager extends FWS_Object
 	}
 
 	/**
-	 * Determines wether the given node has children
+	 * Determines whether the given node has children
 	 * 
 	 * @param int $id the id of the node
 	 * @return boolean true if the node with given id contains sub-nodes

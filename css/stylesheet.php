@@ -645,7 +645,7 @@ class FWS_CSS_StyleSheet extends FWS_Object
 	}
 	
 	/**
-	 * Checks wether the given position is escaped (by backslashes)
+	 * Checks whether the given position is escaped (by backslashes)
 	 *
 	 * @param string $str the string
 	 * @param int $pos the position

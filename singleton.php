@@ -46,7 +46,7 @@ abstract class FWS_Singleton extends FWS_Object
 	private static $_instances = array();
 	
 	/**
-	 * Indicates wether the constructor is locked
+	 * Indicates whether the constructor is locked
 	 *
 	 * @var boolean
 	 */

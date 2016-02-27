@@ -428,7 +428,7 @@ final class FWS_Template_Parser extends FWS_Object
 	 * {loop array:sub:subsub as k => v}
 	 * ...
 	 * 
-	 * @param boolean $forward wether we loop forward
+	 * @param boolean $forward whether we loop forward
 	 * @param string $item the item of the foreach-loop
 	 * @param string $key the optional key for the loop
 	 * @param string $value the value for the loop

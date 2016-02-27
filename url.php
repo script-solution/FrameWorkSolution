@@ -67,7 +67,7 @@ class FWS_URL extends FWS_Object
 	private static $_append_extern = true;
 
 	/**
-	 * @return boolean wether extern parameters will be appended
+	 * @return boolean whether extern parameters will be appended
 	 */
 	public static function append_extern_vars()
 	{
@@ -75,7 +75,7 @@ class FWS_URL extends FWS_Object
 	}
 
 	/**
-	 * Sets wether to append the extern parameters (of other projects)
+	 * Sets whether to append the extern parameters (of other projects)
 	 * Please note that you have to overwrite the is_intern() method!
 	 *
 	 * @param boolean $append the new value
@@ -124,7 +124,7 @@ class FWS_URL extends FWS_Object
 	private $_separator = '&amp;';
 	
 	/**
-	 * Wether the URL should be absolute
+	 * Whether the URL should be absolute
 	 *
 	 * @var boolean
 	 */
@@ -170,7 +170,7 @@ class FWS_URL extends FWS_Object
 	}
 
 	/**
-	 * Checks wether the given parameter is intern (belongs to the project).
+	 * Checks whether the given parameter is intern (belongs to the project).
 	 * By default the method returns true so that no parameter will be
 	 * appended automatically.
 	 * This may be usefull if you want to support including your project into
@@ -301,7 +301,7 @@ class FWS_URL extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether an absolute URL should be generated
+	 * Sets whether an absolute URL should be generated
 	 *
 	 * @param boolean $abs the new value
 	 */
@@ -468,7 +468,7 @@ class FWS_URL extends FWS_Object
 	/**
 	 * Returns the session-parameter-data
 	 *
-	 * @param boolean $force wether you want to force a session-id
+	 * @param boolean $force whether you want to force a session-id
 	 * @return mixed an array with the key and value or false if no sid should be used
 	 */
 	protected function get_session_param($force = false)

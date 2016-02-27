@@ -52,28 +52,28 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	private $_template = null;
 	
 	/**
-	 * Wether the current user has access to this page
+	 * Whether the current user has access to this page
 	 *
 	 * @var boolean
 	 */
 	private $_has_access = true;
 	
 	/**
-	 * Indicates wether the header should be shown
+	 * Indicates whether the header should be shown
 	 *
 	 * @var boolean
 	 */
 	private $_show_header = true;
 	
 	/**
-	 * Indicates wether the content should be shown
+	 * Indicates whether the content should be shown
 	 *
 	 * @var boolean
 	 */
 	private $_show_content = true;
 	
 	/**
-	 * Indicates wether the footer should be shown
+	 * Indicates whether the footer should be shown
 	 *
 	 * @var boolean
 	 */
@@ -127,7 +127,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * Sets wether the current user has access to this page
+	 * Sets whether the current user has access to this page
 	 *
 	 * @param boolean $has_access the new value
 	 */
@@ -137,7 +137,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * @return boolean wether the header will be shown
+	 * @return boolean whether the header will be shown
 	 */
 	public final function is_header_shown()
 	{
@@ -145,7 +145,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * Sets wether the header will be shown
+	 * Sets whether the header will be shown
 	 *
 	 * @param boolean $header the new value
 	 */
@@ -155,7 +155,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * @return boolean wether the content will be shown
+	 * @return boolean whether the content will be shown
 	 */
 	public final function is_content_shown()
 	{
@@ -163,7 +163,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * Sets wether the content will be shown
+	 * Sets whether the content will be shown
 	 *
 	 * @param boolean $content the new value
 	 */
@@ -173,7 +173,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * @return boolean wether the footer will be shown
+	 * @return boolean whether the footer will be shown
 	 */
 	public final function is_footer_shown()
 	{
@@ -181,7 +181,7 @@ abstract class FWS_Document_Renderer_HTML_Default extends FWS_Document_Renderer_
 	}
 	
 	/**
-	 * Sets wether the footer will be shown
+	 * Sets whether the footer will be shown
 	 *
 	 * @param boolean $footer the new value
 	 */

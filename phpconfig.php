@@ -41,7 +41,7 @@ final class FWS_PHPConfig extends FWS_UtilBase
 	}
 	
 	/**
-	 * Determines wether the php.ini-setting is activated
+	 * Determines whether the php.ini-setting is activated
 	 *
 	 * @param string $flag the php-flag
 	 * @return boolean true if the flag is enabled
@@ -53,7 +53,7 @@ final class FWS_PHPConfig extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether the gd-library is installed
+	 * Checks whether the gd-library is installed
 	 *
 	 * @return boolean true if the gd-lib is installed
 	 */
@@ -63,7 +63,7 @@ final class FWS_PHPConfig extends FWS_UtilBase
 	}
 	
 	/**
-	 * Checks wether at least the gd-library version 2 is installed
+	 * Checks whether at least the gd-library version 2 is installed
 	 *
 	 * @return boolean true if gd2 is installed
 	 */

@@ -63,14 +63,14 @@ abstract class FWS_DB_Connection extends FWS_Object
 	private $_save_queries = false;
 	
 	/**
-	 * Wether transaction should be used
+	 * Whether transaction should be used
 	 *
 	 * @var boolean
 	 */
 	private $_transactions = false;
 	
 	/**
-	 * Wether all values should be escaped when building a query
+	 * Whether all values should be escaped when building a query
 	 *
 	 * @var boolean
 	 */
@@ -87,7 +87,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether the queries will be saved
+	 * @return boolean whether the queries will be saved
 	 */
 	public final function get_save_queries()
 	{
@@ -95,7 +95,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether the queries should be saved
+	 * Sets whether the queries should be saved
 	 *
 	 * @param boolean $save the new value
 	 */
@@ -105,7 +105,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether transactions are used
+	 * @return boolean whether transactions are used
 	 */
 	public final function use_transactions()
 	{
@@ -113,7 +113,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether transactions should be used
+	 * Sets whether transactions should be used
 	 *
 	 * @param boolean $use the new value
 	 */
@@ -123,7 +123,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * @return boolean wether all values should be escaped when building a query
+	 * @return boolean whether all values should be escaped when building a query
 	 */
 	public final function get_escape_values()
 	{
@@ -131,7 +131,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	}
 	
 	/**
-	 * Sets wether all values should be escaped when building a query
+	 * Sets whether all values should be escaped when building a query
 	 *
 	 * @param boolean $escape the new value
 	 */
@@ -181,7 +181,7 @@ abstract class FWS_DB_Connection extends FWS_Object
 	public abstract function get_selected_db();
 	
 	/**
-	 * @return boolean wether we are connected
+	 * @return boolean whether we are connected
 	 */
 	public abstract function is_connected();
 

@@ -371,7 +371,7 @@ final class FWS_GD_Line extends FWS_Object implements FWS_GD_Shape
 			$crossy = $a * $crossx + $b;
 		}
 		
-		// create the 4 points and check wether the cross-point is in the first and the second line
+		// create the 4 points and check whether the cross-point is in the first and the second line
 		// or in other words: if the distance of p1 <-> cross and p2 <-> cross is less than the length
 		// of the line. The same with p3 and p4
 		$p1 = new FWS_GD_Point($x1,$y1);

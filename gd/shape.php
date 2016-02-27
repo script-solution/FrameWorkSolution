@@ -32,7 +32,7 @@
 interface FWS_GD_Shape
 {
 	/**
-	 * Checks wether this shape intersects the given line
+	 * Checks whether this shape intersects the given line
 	 *
 	 * @param FWS_GD_Line $line the line
 	 * @return boolean true if so
@@ -40,7 +40,7 @@ interface FWS_GD_Shape
 	public function intersects_line($line);
 	
 	/**
-	 * Checks wether this shape intersects the given circle
+	 * Checks whether this shape intersects the given circle
 	 *
 	 * @param FWS_GD_Circle $circle the circle
 	 * @return boolean true if so
@@ -48,7 +48,7 @@ interface FWS_GD_Shape
 	public function intersects_circle($circle);
 	
 	/**
-	 * Checks wether this shape intersects the given rectangle
+	 * Checks whether this shape intersects the given rectangle
 	 *
 	 * @param FWS_GD_Rectangle $rect the rectangle
 	 * @return boolean true if so

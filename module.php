@@ -34,7 +34,7 @@
 abstract class FWS_Module extends FWS_Object
 {
 	/**
-	 * Stores wether the module has been shown successfully or something unexpected
+	 * Stores whether the module has been shown successfully or something unexpected
 	 * has happened (missing parameter, no access, ...).
 	 *
 	 * @var boolean
@@ -52,10 +52,10 @@ abstract class FWS_Module extends FWS_Object
 	}
 
 	/**
-	 * Returns wether the module has been shown successfully or something unexpected
+	 * Returns whether the module has been shown successfully or something unexpected
 	 * has happened (missing parameter, no access, ...).
 	 *
-	 * @return boolean wether an error has been occurred
+	 * @return boolean whether an error has been occurred
 	 * @see set_error()
 	 */
 	public function error_occurred()

@@ -84,7 +84,7 @@ abstract class FWS_Object
 	 * Builds the dump of this object. It uses {@link get_dump_vars} and formats this via
 	 * {@link FWS_Printer}.
 	 *
-	 * @param boolean $use_html wether HTML should be used
+	 * @param boolean $use_html whether HTML should be used
 	 * @return string the dump
 	 */
 	public final function get_dump($use_html = true)

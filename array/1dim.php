@@ -289,7 +289,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	}
 
 	/**
-	 * Checks wether the given element exists
+	 * Checks whether the given element exists
 	 *
 	 * @param mixed $element the element to search for
 	 * @return boolean true if the element has been found
@@ -300,7 +300,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	}
 
 	/**
-	 * Checks wether a row with given key exists
+	 * Checks whether a row with given key exists
 	 *
 	 * @param mixed $key the key you're looking for
 	 * @return boolean true if the key exists
@@ -475,7 +475,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	}
 	
 	/**
-	 * @return boolean wether there is an element at the current position
+	 * @return boolean whether there is an element at the current position
 	 */
 	public final function valid()
 	{

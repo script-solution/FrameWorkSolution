@@ -58,7 +58,7 @@ class FWS_Printer extends FWS_Object
 	 * @param mixed $var the value
 	 * @param boolean $use_html do you want to use HTML? (-1 decide by SAPI)
 	 * @param boolean $ml build a multiline string?
-	 * @param boolean $dump_only wether only dump() should be used and not __toString()
+	 * @param boolean $dump_only whether only dump() should be used and not __toString()
 	 * @return string the string representation
 	 */
 	public static function to_string($var,$use_html = -1,$ml = true,$dump_only = false)
@@ -74,21 +74,21 @@ class FWS_Printer extends FWS_Object
 	}
 	
 	/**
-	 * Wether HTML is used
+	 * Whether HTML is used
 	 *
 	 * @var boolean
 	 */
 	private $_use_html = true;
 	
 	/**
-	 * Wether multiple lines are created
+	 * Whether multiple lines are created
 	 *
 	 * @var boolean
 	 */
 	private $_multiline = true;
 	
 	/**
-	 * Wether just dump() instead of __toString() will be used
+	 * Whether just dump() instead of __toString() will be used
 	 *
 	 * @var boolean
 	 */
@@ -114,7 +114,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether just dump() instead of __toString() will be used
+	 * @return boolean whether just dump() instead of __toString() will be used
 	 */
 	public final function get_dump_only()
 	{
@@ -122,7 +122,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets wether just dump() instead of __toString() will be used
+	 * Sets whether just dump() instead of __toString() will be used
 	 * 
 	 * @param boolean $val the new value
 	 */
@@ -132,7 +132,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether multiple lines are created
+	 * @return boolean whether multiple lines are created
 	 */
 	public final function get_multiline()
 	{
@@ -140,7 +140,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets wether multiple lines are created
+	 * Sets whether multiple lines are created
 	 * 
 	 * @param boolean $val the new value
 	 */
@@ -150,7 +150,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean wether HTML is used
+	 * @return boolean whether HTML is used
 	 */
 	public final function get_use_html()
 	{
@@ -158,7 +158,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets wether HTML is used
+	 * Sets whether HTML is used
 	 * 
 	 * @param boolean $val the new value
 	 */
