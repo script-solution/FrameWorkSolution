@@ -34,7 +34,7 @@ final class FWS_GD_Utils extends FWS_UtilBase
 	/**
 	 * Adds the given padding to the bounds
 	 *
-	 * @param array $bounds the bounds
+	 * @param array &$bounds the bounds
 	 * @param FWS_GD_Padding $padding the padding to add
 	 * @param int $angle the rotation-angle
 	 */
@@ -53,7 +53,7 @@ final class FWS_GD_Utils extends FWS_UtilBase
 	/**
 	 * Adds the given padding to the bounds
 	 *
-	 * @param array $bounds the bounds
+	 * @param array &$bounds the bounds
 	 * @param int $pt the top-padding
 	 * @param int $pr the right-padding
 	 * @param int $pb the bottom-padding

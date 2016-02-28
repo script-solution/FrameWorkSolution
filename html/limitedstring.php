@@ -348,7 +348,7 @@ final class FWS_HTML_LimitedString extends FWS_Object
 	/**
 	 * Closes all remaining elements and adds the given text at the appropriate position
 	 * 
-	 * @param string $output a reference to the output-string
+	 * @param string &$output a reference to the output-string
 	 * @param string $text the text to add
 	 */
 	private function _close_remaining(&$output,$text)
@@ -384,7 +384,7 @@ final class FWS_HTML_LimitedString extends FWS_Object
 	 * Returns a part of the given html-string, counts the number of visible chars and takes
 	 * care of &...;
 	 * 
-	 * @param int $count a reference to a counter that will be increased by the number of
+	 * @param int &$count a reference to a counter that will be increased by the number of
 	 * 	visible chars
 	 * @param int $start the start-position in the string
 	 * @param int $end the end-position in the string

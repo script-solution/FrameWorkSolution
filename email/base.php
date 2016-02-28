@@ -247,7 +247,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	/**
 	 * sets the bcc-recipients
 	 *
-	 * @param array $recipients an numeric array with the recipients
+	 * @param array &$recipients an numeric array with the recipients
 	 */
 	public final function set_bcc_recipients(&$recipients)
 	{

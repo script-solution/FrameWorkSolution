@@ -194,7 +194,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 * Converts all elements in the array to lower-case. Assumes that the
 	 * array has just one dimension and contains strings only.
 	 * 
-	 * @param array $array the array to be modified
+	 * @param array &$array the array to be modified
 	 * @return array the result-array
 	 */
 	public static function to_lower(&$array)
@@ -212,7 +212,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 * Converts all elements in the array to upper-case. Assumes that the
 	 * array has just one dimension and contains strings only.
 	 * 
-	 * @param array $array the array to be modified
+	 * @param array &$array the array to be modified
 	 * @return array the result-array
 	 */
 	public static function to_upper(&$array)
@@ -230,7 +230,7 @@ final class FWS_Array_Utils extends FWS_UtilBase
 	 * Trims all strings in the given array. Assumes that the array has just one
 	 * dimension and contains strings only.
 	 *
-	 * @param array $array the input-array containing the strings
+	 * @param array &$array the input-array containing the strings
 	 * @return array the result-array
 	 */
 	public static function trim(&$array)

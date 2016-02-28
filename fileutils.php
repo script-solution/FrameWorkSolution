@@ -32,7 +32,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	/**
 	 * Cleans the given path. Forces the use of '/' as separator and removes '..'.
 	 *
-	 * @param string $path the path (will be changed)
+	 * @param string &$path the path (will be changed)
 	 * @return string the cleaned path
 	 */
 	public static function clean_path(&$path)
@@ -51,7 +51,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 * "Clears" the given filename. That means german umlaute will be replaced to the corresponding
 	 * chars (ae,oe,...) and special-chars will be replaced to '_'.
 	 *
-	 * @param string $name your file-name (will be changed)
+	 * @param string &$name your file-name (will be changed)
 	 * @return string the clean filename
 	 */
 	public static function clean_filename(&$name)
@@ -70,7 +70,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	/**
 	 * Ensures that the given path has a trailing slash
 	 * 
-	 * @param string $path the path (will be changed!)
+	 * @param string &$path the path (will be changed!)
 	 * @return string the corrected path
 	 */
 	public static function ensure_trailing_slash(&$path)
@@ -84,7 +84,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	/**
 	 * Ensures that the given path has <b>no</b> trailing slash
 	 *
-	 * @param string $path the path (will be changed!)
+	 * @param string &$path the path (will be changed!)
 	 * @return string the corrected path
 	 */
 	public static function ensure_no_trailing_slash(&$path)
@@ -269,7 +269,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	/**
 	 * Collects the items of the given directory recursivly, if required
 	 *
-	 * @param array $res the result-array
+	 * @param array &$res the result-array
 	 * @param string $directory the directory
 	 * @param boolean $recursive collect recursivly?
 	 * @param boolean $abs use absolute paths that means beginning with <var>$directory</var>?

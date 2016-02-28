@@ -320,7 +320,7 @@ final class FWS_GD_Text extends FWS_Object
 	/**
 	 * Adds padding depending on the styles
 	 *
-	 * @param array $bounds the bounds
+	 * @param array &$bounds the bounds
 	 * @param int $angle the angle
 	 */
 	private function _add_style_padding(&$bounds,$angle)

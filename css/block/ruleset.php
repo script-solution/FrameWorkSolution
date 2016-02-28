@@ -179,7 +179,7 @@ final class FWS_CSS_Block_Ruleset extends FWS_Object implements FWS_CSS_Block
 	/**
 	 * Adds the given one and all "sub-selectors" to the given list
 	 *
-	 * @param array $sels the selector-list
+	 * @param array &$sels the selector-list
 	 * @param FWS_CSS_Selector $sel the selector
 	 */
 	private function _add_selector(&$sels,$sel)

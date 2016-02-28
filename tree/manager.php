@@ -513,7 +513,7 @@ class FWS_Tree_Manager extends FWS_Object
 	/**
 	 * Collects all node-ids to remove
 	 *
-	 * @param array $ids a reference to the array with the ids
+	 * @param array &$ids a reference to the array with the ids
 	 * @param FWS_Tree_Node $node the current node
 	 */
 	private function _collect_remove_ids(&$ids,$node)
@@ -526,7 +526,7 @@ class FWS_Tree_Manager extends FWS_Object
 	/**
 	 * Collects the nodes of the given node recursivly
 	 *
-	 * @param array $result [reference] the result-array
+	 * @param array &$result a reference to the result-array
 	 * @param FWS_Tree_Node $node the node
 	 */
 	private function _get_all_nodes(&$result,$node)

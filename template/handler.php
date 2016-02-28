@@ -549,7 +549,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * regex '^[a-zA-Z0-9_]+$'. This will <b>not</b> be checked for performance issues!
 	 * 
 	 * @param string $name the name of the variable
-	 * @param mixed $value the value to add
+	 * @param mixed &$value the value to add
 	 */
 	public function add_global_ref($name,&$value)
 	{
@@ -567,7 +567,7 @@ final class FWS_Template_Handler extends FWS_Object
 	 * for performance issues!
 	 *
 	 * @param string $name the name of the variable
-	 * @param mixed $value the value
+	 * @param mixed &$value the value
 	 * @param string $template the template to add the variables to (if not set the
 	 * 		current one will be used)
 	 * @param int $number the number of the template (if one template is used more than once)

@@ -46,7 +46,7 @@ interface FWS_Action_Listener
 	 *
 	 * @param int $id the action-id
 	 * @param FWS_Action_Base $action the action-instance
-	 * @param string $message the message that has been returned from the action
+	 * @param string &$message the message that has been returned from the action
 	 */
 	public function after_action_performed($id,$action,&$message);
 }

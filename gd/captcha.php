@@ -970,8 +970,8 @@ final class FWS_GD_Captcha extends FWS_Object
 	 * Adds a TTF-char to the image
 	 * 
 	 * @param int $x the x-position to use
-	 * @param int $width the width of the char
-	 * @param char $char the character that has been created ('' = random)
+	 * @param int &$width the width of the char
+	 * @param char &$char the character that has been created ('' = random)
 	 */
 	private function add_ttf_char($x,&$width,&$char)
 	{
@@ -1006,9 +1006,9 @@ final class FWS_GD_Captcha extends FWS_Object
 	/**
 	 * Creates an image which contains character
 	 * 
-	 * @param int $img_width contains the used image-width after the call
-	 * @param int $img_height contains the used image-height after the call
-	 * @param char $char the character which the image contains ('' = random)
+	 * @param int &$img_width contains the used image-width after the call
+	 * @param int &$img_height contains the used image-height after the call
+	 * @param char &$char the character which the image contains ('' = random)
 	 * @return FWS_GD_Image the created image
 	 */
 	private function create_char_image(&$img_width,&$img_height,&$char)

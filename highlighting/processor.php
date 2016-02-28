@@ -460,7 +460,7 @@ final class FWS_Highlighting_Processor extends FWS_Object
 	 * @param int $type the type of words
 	 * @param int $id the id
 	 * @param string $t the text of the paragraph
-	 * @param array $deniedareas the list with the denied areas
+	 * @param array &$deniedareas the list with the denied areas
 	 * @param boolean $cs match case-sensitive?
 	 * @param boolean $reqword are words required? (word-boundary on each side)
 	 */
@@ -511,7 +511,7 @@ final class FWS_Highlighting_Processor extends FWS_Object
 	/**
 	 * Adds the given area to the areas
 	 *
-	 * @param array $areas the areas
+	 * @param array &$areas the areas
 	 * @param int $start the start-position
 	 * @param int $end the end-position
 	 * @param int $type the highlight-type
