@@ -290,6 +290,7 @@ final class FWS_Tree_Node extends FWS_Object
 	}
 	
 	/**
+	 * @param int $layer the layer
 	 * @return string the XML-representation
 	 */
 	public function to_xml($layer)

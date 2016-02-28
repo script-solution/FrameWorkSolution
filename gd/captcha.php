@@ -717,7 +717,9 @@ final class FWS_GD_Captcha extends FWS_Object
 	/**
 	 * Sets whether the image should be manipulated via a wave
 	 * 
-	 * @param boolean $use_wave
+	 * @param boolean $use_wave whether to use a wave at all
+	 * @param int $amplitude the amplitude of the wave
+	 * @param int $period the period of the wave
 	 */
 	public function set_wave($use_wave,$amplitude = 6,$period = 16)
 	{

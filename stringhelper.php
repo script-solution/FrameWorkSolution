@@ -61,6 +61,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 *
 	 * @param array $elements the elements
 	 * @param string $and the string for "and"
+	 * @param string $quot the string for the quotes
 	 * @return string the enumeration
 	 */
 	public static function get_enum($elements,$and = 'and',$quot = '&quot;')

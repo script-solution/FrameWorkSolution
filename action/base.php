@@ -235,6 +235,7 @@ abstract class FWS_Action_Base extends FWS_Object
 	 * @param boolean $redirect the new value
 	 * @param FWS_URL|string $url the URL to redirect to (may be null to use the first link). May also be
 	 * 	a string, if you want to specify the URL manually.
+	 * @param int $time the redirection delay in seconds
 	 * @see add_link($name,$url)
 	 */
 	protected final function set_redirect($redirect,$url = null,$time = 3)
