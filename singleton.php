@@ -41,7 +41,7 @@ abstract class FWS_Singleton extends FWS_Object
 	/**
 	 * The instance of this class
 	 *
-	 * @var FWS_Singleton
+	 * @var array
 	 */
 	private static $_instances = array();
 	
