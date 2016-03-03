@@ -82,7 +82,9 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 	}
 	
 	/**
-	 * Binds the given value to given index
+	 * Binds the given value to given index. Note that $value can also be an array, in which case
+	 * it will be converted to a comma separated string, i.e. array(1,"A",2) yields "1,'A',2", which
+	 * can be used for "IN (...)".
 	 *
 	 * @param int|string $index the index or a string to replace
 	 * @param mixed $value the value
@@ -111,17 +113,35 @@ abstract class FWS_DB_PreparedStatement extends FWS_Object
 				$p = FWS_String::strpos($sql,'?',$offset);
 				if($p === false)
 					break;
-				$pval = $this->get_value($val);
+				$pval = $this->build_value($val);
 				$sql = FWS_String::substr($sql,0,$p).$pval.FWS_String::substr($sql,$p + 1);
 				$offset = $p + FWS_String::strlen($pval);
 			}
 			else
 			{
-				$pval = $this->get_value($val);
+				$pval = $this->build_value($val);
 				$sql = str_replace($k,$pval,$sql);
 			}
 		}
 		return $sql;
+	}
+	
+	/**
+	 * Builds the value to include into the SQL statement.
+	 *
+	 * @param mixed $val the value
+	 * @return string the value for the SQL statement
+	 */
+	private function build_value($val)
+	{
+		if(is_array($val))
+		{
+			$res = array();
+			foreach($val as $v)
+				$res[] = $this->get_value($v);
+			return implode(',',$res);
+		}
+		return $this->get_value($val);
 	}
 	
 	/**
