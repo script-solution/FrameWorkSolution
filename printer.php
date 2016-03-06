@@ -52,47 +52,62 @@ class FWS_Printer extends FWS_Object
 	 * $p->set_use_html($use_html);
 	 * $p->set_multiline($ml);
 	 * $p->set_dump_only($dump_only);
+	 * $p->set_raw_html($raw_html);
 	 * return (string)$p;
 	 * </code>
 	 *
 	 * @param mixed $var the value
 	 * @param boolean $use_html do you want to use HTML? (-1 decide by SAPI)
 	 * @param boolean $ml build a multiline string?
-	 * @param boolean $dump_only whether only dump() should be used and not __toString()
+	 * @param boolean $dump_only wether only dump() should be used and not __toString()
+	 * @param boolean $raw_html do you want to use RAW-HTML?
 	 * @return string the string representation
 	 */
-	public static function to_string($var,$use_html = -1,$ml = true,$dump_only = false)
+	public static function to_string($var,$use_html = -1,$ml = true,$dump_only = false,$raw_html = false)
 	{
 		$p = new FWS_Printer($var);
 		if($use_html === -1)
+		{
 			$p->set_use_html(php_sapi_name() != 'cli');
+			$p->set_raw_html(php_sapi_name() != 'cli');
+		}
 		else
+		{
 			$p->set_use_html((bool)$use_html);
+			$p->set_raw_html((bool)$raw_html);
+		}
 		$p->set_multiline($ml);
 		$p->set_dump_only($dump_only);
 		return (string)$p;
 	}
 	
 	/**
-	 * Whether HTML is used
+	 * Wether HTML is used
 	 *
 	 * @var boolean
 	 */
 	private $_use_html = true;
 	
 	/**
-	 * Whether multiple lines are created
+	 * Wether multiple lines are created
 	 *
 	 * @var boolean
 	 */
 	private $_multiline = true;
 	
 	/**
-	 * Whether just dump() instead of __toString() will be used
+	 * Wether just dump() instead of __toString() will be used
 	 *
 	 * @var boolean
 	 */
 	private $_dump_only = false;
+	
+	/**
+	 * Wether RAW-HTML is used
+	 *
+	 * @var boolean
+	 */
+	private $_raw_html = true;
 	
 	/**
 	 * The variable to print
@@ -114,7 +129,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean whether just dump() instead of __toString() will be used
+	 * @return boolean wether just dump() instead of __toString() will be used
 	 */
 	public final function get_dump_only()
 	{
@@ -122,7 +137,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets whether just dump() instead of __toString() will be used
+	 * Sets wether just dump() instead of __toString() will be used
 	 * 
 	 * @param boolean $val the new value
 	 */
@@ -132,7 +147,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean whether multiple lines are created
+	 * @return boolean wether multiple lines are created
 	 */
 	public final function get_multiline()
 	{
@@ -140,7 +155,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets whether multiple lines are created
+	 * Sets wether multiple lines are created
 	 * 
 	 * @param boolean $val the new value
 	 */
@@ -150,7 +165,7 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * @return boolean whether HTML is used
+	 * @return boolean wether HTML is used
 	 */
 	public final function get_use_html()
 	{
@@ -158,8 +173,26 @@ class FWS_Printer extends FWS_Object
 	}
 
 	/**
-	 * Sets whether HTML is used
+	 * Sets wether RAW-HTML is used
 	 * 
+	 * @param boolean $val the new value
+	 */
+	public final function set_raw_html($val)
+	{
+		$this->_raw_html = $val ? true : false;
+	}
+	
+	/**
+	 * @return boolean wether RAW-HTML is used
+	 */
+	public final function get_raw_html()
+	{
+		return $this->_raw_html;
+	}
+	
+	/**
+	 * Sets wether HTML is used
+	 *
 	 * @param boolean $val the new value
 	 */
 	public final function set_use_html($val)
@@ -307,8 +340,11 @@ class FWS_Printer extends FWS_Object
 		$str = str_replace("\t",'&nbsp;&nbsp;&nbsp;&nbsp;',$str);
 		if(self::$_layer == 1)
 		{
-			$inline = !$this->_multiline ? 'display: inline; ' : '';
-			$str = '<div style="'.$inline.'font-family: monospace; font-size: 11px;">'.$str.'</div>';
+			if(!$this->_raw_html)
+			{
+				$inline = !$this->_multiline ? 'display: inline; ' : '';
+				$str = '<div style="'.$inline.'font-family: monospace; font-size: 11px;">'.$str.'</div>';
+			}
 		}
 		return $str;
 	}
