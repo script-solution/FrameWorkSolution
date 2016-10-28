@@ -108,9 +108,10 @@ final class FWS_GD_Image extends FWS_Object
 	 *
 	 * @param int $width the width of the image
 	 * @param int $height the height of the image
+	 * @param int $type the type of the image
 	 * @param boolean $truecolor create a truecolor-image?
 	 */
-	public function __construct($width,$height,$truecolor = true)
+	public function __construct($width,$height,$truecolor = true,$type = 0)
 	{
 		parent::__construct();
 		
@@ -122,12 +123,15 @@ final class FWS_GD_Image extends FWS_Object
 		$this->_width = $width;
 		$this->_height = $height;
 		if($truecolor)
-		{
+		{	
 			$this->_image = imagecreatetruecolor($width,$height);
-			imagesavealpha($this->_image,true);
+			if($type == 3)
+				$this->set_alphablending(false);
 		}
 		else
+		{
 			$this->_image = imagecreate($width,$height);
+		}
 	}
 	
 	/**
@@ -183,6 +187,7 @@ final class FWS_GD_Image extends FWS_Object
 	public function set_alphablending($alphablending)
 	{
 		imagealphablending($this->_image,$alphablending);
+		imagesavealpha($this->_image,true);
 	}
 	
 	/**
