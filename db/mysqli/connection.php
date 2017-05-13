@@ -61,7 +61,7 @@ final class FWS_DB_MySQLi_Connection extends FWS_DB_Connection
 	 */
 	public function connect($host,$login,$password)
 	{
-		$this->_con = new mysqli($host,$login,$password);
+		$this->_con = @new mysqli($host,$login,$password);
 		if($this->_con->connect_error)
 		{
 			throw new FWS_DB_Exception_ConnectionFailed(
