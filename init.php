@@ -32,12 +32,12 @@ if(version_compare(PHP_VERSION,'5.2.0','<'))
 /**
  * The version of the framework
  */
-define('FWS_VERSION','FrameWorkSolution v1.45');
+define('FWS_VERSION','FrameWorkSolution v1.46');
 
 /**
  * The version-id of frameworksolution
  */
-define('FWS_VERSION_ID','145');
+define('FWS_VERSION_ID','146');
 
 // include the path-object. we need this for the autoload-function
 include_once(FWS_PATH.'utilbase.php');
