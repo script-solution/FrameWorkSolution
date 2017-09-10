@@ -43,16 +43,16 @@ final class FWS_User_Storage_Empty extends FWS_Object implements FWS_User_Storag
 	}
 
 	/**
-	 * @see FWS_User_Storage::get_hash_of_pw()
+	 * @see FWS_User_Storage::verify_password()
 	 *
-	 * @param string $pw
+	 * @param string &$pw
 	 * @param FWS_User_Data $data
-	 * @return string
+	 * @return int
 	 */
-	public function get_hash_of_pw($pw,$data)
+	public function check_password(&$pw,$data)
 	{
 		// dummy implementation
-		return $pw;
+		return FWS_User_Current::LOGIN_ERROR_PW_INCORRECT;
 	}
 
 	/**

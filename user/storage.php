@@ -50,14 +50,13 @@ interface FWS_User_Storage
 	public function get_userdata_by_name($name);
 	
 	/**
-	 * Returns the hash of the given password. You will receive the password that has been entered
-	 * and should return the hash you would store so that it can be compared with the it
+	 * Verifies the given password
 	 * 
-	 * @param string $pw the entered password
+	 * @param string $pw the entered password; should be changed to the hash
 	 * @param FWS_User_Data $data the user-data
-	 * @return string the hash of the password
+	 * @return int the error code or {@link FWS_User_Current::LOGIN_ERROR_NO_ERROR}
 	 */
-	public function get_hash_of_pw($pw,$data);
+	public function check_password(&$pw,$data);
 	
 	/**
 	 * This method gives you the opportunity to perform additional checks. For example if
