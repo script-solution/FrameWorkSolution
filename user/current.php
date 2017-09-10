@@ -56,6 +56,11 @@ class FWS_User_Current extends FWS_Object
 	const LOGIN_ERROR_PW_INCORRECT						= 2;
 	
 	/**
+	 * The password is needs to be rehashed
+	 */
+	const LOGIN_ERROR_PW_OUTDATED							= 3;
+	
+	/**
 	 * The data of the user
 	 *
 	 * @var FWS_Session_Data
@@ -455,7 +460,7 @@ class FWS_User_Current extends FWS_Object
 		$loggedin = $this->set_userdata(0,$user);
 
 		if($hashpw)
-			$pw = $this->_storage->get_hash_of_pw($pw,$this->_userdata);
+			$loggedin = $this->_storage->check_password($pw,$this->_userdata);
 		
 		if($loggedin == self::LOGIN_ERROR_NO_ERROR)
 		{
