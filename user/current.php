@@ -472,7 +472,7 @@ class FWS_User_Current extends FWS_Object
 			if(empty($pw))
 				$loggedin = self::LOGIN_ERROR_PW_INCORRECT;
 			else
-				$loggedin = $this->check_user($user,$pw);
+				$loggedin = $this->check_user($user,$hashpw ? false : $pw);
 		}
 		
 		// setup user or guest
@@ -576,9 +576,9 @@ class FWS_User_Current extends FWS_Object
 		
 		if($this->_userdata === null)
 			$loggedin = self::LOGIN_ERROR_USER_NOT_FOUND;
-		else if($user && $this->_userdata->get_user_name() != $user)
+		else if($user && $this->_userdata->get_user_name() !== $user)
 			$loggedin = self::LOGIN_ERROR_USER_NAME_INCORRECT;
-		else if($pw && $this->_userdata->get_user_pw() != $pw)
+		else if($pw && $this->_userdata->get_user_pw() !== $pw)
 			$loggedin = self::LOGIN_ERROR_PW_INCORRECT;
 
 		// perform custom checks
