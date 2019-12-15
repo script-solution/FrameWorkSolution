@@ -152,7 +152,8 @@ final class FWS_Input extends FWS_Singleton
 	{
 		parent::__construct();
 		
-		$this->_magic_quotes = get_magic_quotes_gpc();
+		// get_magic_quotes_gpc() is deprecated and magic quotes is always off now
+		$this->_magic_quotes = false;
 	}
 
 	/**
