@@ -152,7 +152,8 @@ final class FWS_Input extends FWS_Singleton
 	{
 		parent::__construct();
 		
-		$this->_magic_quotes = get_magic_quotes_gpc();
+		// get_magic_quotes_gpc() is deprecated and magic quotes is always off now
+		$this->_magic_quotes = false;
 	}
 
 	/**
@@ -288,8 +289,9 @@ final class FWS_Input extends FWS_Singleton
 		$type = $this->_predef_values[$method.$name];
 		if(is_array($type))
 			return $this->correct_var($name,$method,$type[0],$type[1],$default);
-		
-		return $this->get_var($name,$method,$this->_predef_values[$method.$name]);
+
+		$res = $this->get_var($name,$method,$this->_predef_values[$method.$name]);
+		return $res === null ? $default : $res;
 	}
 	
 	/**
