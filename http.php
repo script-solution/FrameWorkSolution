@@ -185,7 +185,7 @@ final class FWS_HTTP extends FWS_Object
 			else
 			{
 				$name = $pre != '' ? urlencode($pre.'['.$k.']') : urlencode($k);
-				$data .= $name.'='.urlencode($v);
+				$data .= $name.'='.($v !== null ? urlencode($v) : '');
 			}
 			
 			if($i < $len - 1)

@@ -488,7 +488,7 @@ final class FWS_GD_Color extends FWS_Object
 		// we shuffle the keys because we want to start with a random color-component
 		// (otherwise the colors would get too equal)
 		shuffle($keys);
-		list(,$first) = each($keys);
+		$first = $keys[0];
 		
 		// generate the first color completly random
 		$color[$first] = mt_rand(0,255);
@@ -496,13 +496,13 @@ final class FWS_GD_Color extends FWS_Object
 		$above = $bg_brightness - $sum > $bg_brightness / 2;
 		
 		// now generate the other colors and try to reach the min-distance
-		while(list(,$key) = each($keys))
+		foreach($keys as $key)
 		{
 			$limit = max(0,min(255,abs(($min_dist - abs($bg_brightness - $sum)) / $multis[$key])));
 			if($above)
-				$color[$key] = mt_rand(0,$limit);
+				$color[$key] = mt_rand(0,(int)$limit);
 			else
-				$color[$key] = mt_rand($limit,255);
+				$color[$key] = mt_rand((int)$limit,255);
 			$sum += $color[$key] * $multis[$key];
 		}
 		

@@ -98,7 +98,12 @@ class FWS_GD_View_Line extends FWS_GD_View
 		$y_step = ($to->get_y() - $y) / count($cfcolors);
 		foreach($cfcolors as $color)
 		{
-			imageline($img,$x,$y,$x + $x_step,$y + $y_step,$color->get_color($img));
+			imageline(
+				$img,
+				(int)$x,(int)$y,
+				(int)($x + $x_step),(int)($y + $y_step),
+				$color->get_color($img)
+			);
 			$x += $x_step;
 			$y += $y_step;
 		}

@@ -121,7 +121,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 			'V','W','X','Y','Z'
 		);
 		$len = count($array);
-		mt_srand((double)microtime() * 1000000);
+		mt_srand((int)((double)microtime() * 1000000));
 		$key = '';
 		for($i = 0;$i < $length;$i++)
 			$key .= $array[mt_rand(0,$len - 1)];
@@ -309,7 +309,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	 */
 	public static function get_clean_date($date)
 	{
-		if(!preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$date))
+		if($date === null || !preg_match('/^\d{2}\.\d{2}\.\d{4}$/',$date))
 			return '';
 	
 		return $date;

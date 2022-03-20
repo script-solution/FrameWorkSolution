@@ -77,16 +77,12 @@ include_once(FWS_Path::server_fw().'helper.php');
 include_once(FWS_Path::server_fw().'string.php');
 include_once(FWS_Path::server_fw().'autoloader.php');
 
-if(!function_exists('__autoload'))
-{
-	function __autoload($item)
-	{
-		// "redirect" the request to our autoloader because we want to support
-		// other loaders. For example one for this framework and one for the project that use this fws.
-		if(!(FWS_AutoLoader::load_item($item)))
-			FWS_Helper::error('The file for item "'.$item.'" could not been found!');
-	}
-}
+spl_autoload_register(function ($item) {
+    // "redirect" the request to our autoloader because we want to support
+    // other loaders. For example one for this framework and one for the project that use this fws.
+    if(!(FWS_AutoLoader::load_item($item)))
+        FWS_Helper::error('The file for item "'.$item.'" could not been found!');
+});
 
 // improve the debugging...
 $debug = FWS_Error_Handler::get_instance();

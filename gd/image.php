@@ -237,12 +237,12 @@ final class FWS_GD_Image extends FWS_Object
 		$height = $this->_height;
 		if($this->is_truecolor())
 		{
-			$nimg = imagecreatetruecolor($width,$height);
+			$nimg = imagecreatetruecolor((int)$width,(int)$height);
 			$trans_colour = imagecolorallocatealpha($nimg,0,0,0,127);
 		}
 		else
 		{
-			$nimg = imagecreate($width,$height);
+			$nimg = imagecreate((int)$width,(int)$height);
 			$trans_colour = imagecolorallocate(
 				$nimg,$bgcolor->get_red(),$bgcolor->get_green(),$bgcolor->get_blue()
 			);
@@ -267,11 +267,11 @@ final class FWS_GD_Image extends FWS_Object
 			for($x = 0;$x < $width;$x++)
 			{
 				if($x2 >= 0 && $x2 < $width && $y2 >= 0 && $y2 < $height)
-					$pixel = imagecolorat($img,$x2,$y2);
+					$pixel = imagecolorat($img,(int)$x2,(int)$y2);
 				else
 					$pixel = $trans_colour;
 				
-				imagesetpixel($nimg,$x,$y,$pixel);
+				imagesetpixel($nimg,(int)$x,(int)$y,$pixel);
 				$x2 += $dx_x;
 				$y2 += $dx_y;
 			}
@@ -337,10 +337,16 @@ final class FWS_GD_Image extends FWS_Object
 		// therefore its better to use 1 by default, I think
 		$mult = 2;
 		if(imageistruecolor($this->_image))
-			$img2 = imagecreatetruecolor($w * $mult, $h * $mult);
+			$img2 = imagecreatetruecolor((int)($w * $mult),(int)($h * $mult));
 		else
-			$img2 = imagecreate($w * $mult, $h * $mult);
-		imagecopyresampled($img2,$this->_image,0,0,$x,$y,$w * $mult,$h * $mult,$w,$h);
+			$img2 = imagecreate((int)($w * $mult),(int)($h * $mult));
+		imagecopyresampled(
+			$img2,$this->_image,
+			0,0,
+			(int)$x,(int)$y,
+			(int)($w * $mult),(int)($h * $mult),
+			(int)$w,(int)$h
+		);
 		
 		// wave horizontal
 		$rperiod = mt_rand($period - 5,$period + 5);
@@ -349,12 +355,12 @@ final class FWS_GD_Image extends FWS_Object
 			imagecopy(
 				$img2,
 				$img2,
-				$x + $i - 2,
-				$y + sin($i / $rperiod) * $amplitude,
-				$x + $i,
-				$y,
+				(int)($x + $i - 2),
+				(int)($y + sin($i / $rperiod) * $amplitude),
+				(int)($x + $i),
+				(int)$y,
 				2,
-				$h * $mult
+				(int)($h * $mult)
 			);
 		}
 		
@@ -365,17 +371,23 @@ final class FWS_GD_Image extends FWS_Object
 			imagecopy(
 				$img2,
 				$img2,
-				$x + sin($i / $rperiod) * $amplitude,
-				$y + $i - 2,
-				$x,
-				$y + $i,
-				$w * $mult,
+				(int)($x + sin($i / $rperiod) * $amplitude),
+				(int)($y + $i - 2),
+				(int)$x,
+				(int)($y + $i),
+				(int)($w * $mult),
 				2
 			);
 		}
 		
 		// Resample it down again
-		imagecopyresampled($this->_image,$img2,$x,$y,0,0,$w,$h,$w * $mult,$h * $mult);
+		imagecopyresampled(
+			$this->_image,$img2,
+			(int)$x,(int)$y,
+			0,0,
+			(int)$w,(int)$h,
+			(int)($w * $mult),(int)($h * $mult)
+		);
 		imagedestroy($img2);
 	}
 	

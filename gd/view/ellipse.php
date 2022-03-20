@@ -121,7 +121,7 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 		{
 			imagefilledarc(
 				$img,
-				$x,$y,$w,$h,
+				(int)$x,(int)$y,(int)$w,(int)$h,
 				$angle,$angle + $step,
 				$color->get_color($img),
 				IMG_ARC_PIE
@@ -146,7 +146,12 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 		$size = $this->_ellipse->get_size();
 		$funcname = 'image'.$func.'ellipse';
 		$img = $this->get_image_res();
-		return $funcname($img,$x,$y,$size->get_width(),$size->get_height(),$color->get_color($img));
+		return $funcname(
+			$img,
+			(int)$x,(int)$y,
+			(int)$size->get_width(),(int)$size->get_height(),
+			$color->get_color($img)
+		);
 	}
 	
 	/**
@@ -174,9 +179,24 @@ class FWS_GD_View_Ellipse extends FWS_GD_View
 		list($w,$h) = $this->_ellipse->get_size()->get();
 		$img = $this->get_image_res();
 		if($func == 'filled')
-			return imagefilledarc($img,$x,$y,$w,$h,$start,$end,$color->get_color($img),$type);
+		{
+			return imagefilledarc(
+				$img,
+				(int)$x,(int)$y,
+				(int)$w,(int)$h,
+				$start,$end,
+				$color->get_color($img),
+				$type
+			);
+		}
 		
-		return imagearc($img,$x,$y,$w,$h,$start,$end,$color->get_color($img));
+		return imagearc(
+			$img,
+			(int)$x,(int)$y,
+			(int)$w,(int)$h,
+			$start,$end,
+			$color->get_color($img)
+		);
 	}
 	
 	protected function get_dump_vars()

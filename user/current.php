@@ -706,7 +706,7 @@ class FWS_User_Current extends FWS_Object
 
 		$ip = getenv('REMOTE_ADDR');
 		$ip = htmlspecialchars($ip,ENT_QUOTES);
-		$ip = !get_magic_quotes_gpc() ? addslashes($ip) : $ip;
+		$ip = addslashes($ip);
 		return $ip;
 	}
 

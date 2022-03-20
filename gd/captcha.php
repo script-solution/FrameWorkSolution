@@ -837,11 +837,11 @@ final class FWS_GD_Captcha extends FWS_Object
 				$charimg = $this->create_char_image($width,$height,$char);
 				
 				// rotate the image
-				$angle = mt_rand(-$this->_angle_difference,$this->_angle_difference);
+				$angle = mt_rand((int)-$this->_angle_difference,(int)$this->_angle_difference);
 				$charimg->rotate($angle,$this->_bg);
 		
 				// copy into main image
-				$y = mt_rand(0,$this->_height - $height);
+				$y = mt_rand(0,(int)($this->_height - $height));
 				imagecopy($imgres,$charimg->get_image(),$x,$y,0,0,$width,$height);
 				$charimg->destroy();
 			}
@@ -865,8 +865,8 @@ final class FWS_GD_Captcha extends FWS_Object
 			for($x = 0;$x < $this->_width;$x += $this->_noise_distance)
 			{
 				$c = $grey_colors[mt_rand(0,9)];
-				$xp = $x + mt_rand(-$this->_noise_distance_diff,$this->_noise_distance_diff);
-				$yp = $y + mt_rand(-$this->_noise_distance_diff,$this->_noise_distance_diff);
+				$xp = $x + mt_rand((int)-$this->_noise_distance_diff,(int)$this->_noise_distance_diff);
+				$yp = $y + mt_rand((int)-$this->_noise_distance_diff,(int)$this->_noise_distance_diff);
 				imagesetpixel($imgres,$xp,$yp,$c->get_color($imgres));
 			}
 		}
@@ -874,20 +874,20 @@ final class FWS_GD_Captcha extends FWS_Object
 		for($i = 0;$i < $this->_number_of_noise_shapes;$i++)
 		{
 			$color = $this->_bg->get_readable_random_foreground();
-			$width = mt_rand($this->_shape_min_size,$this->_shape_max_size);
-			$height = mt_rand($this->_shape_min_size,$this->_shape_max_size);
-			$x = mt_rand(0,$this->_width - $width);
-			$y = mt_rand(0,$this->_height - $height);
+			$width = mt_rand((int)$this->_shape_min_size,(int)$this->_shape_max_size);
+			$height = mt_rand((int)$this->_shape_min_size,(int)$this->_shape_max_size);
+			$x = mt_rand(0,(int)($this->_width - $width));
+			$y = mt_rand(0,(int)($this->_height - $height));
 			$this->draw_shape($this->_img,$x,$y,$width,$height,$color);
 		}
 		
 		// draw the vertical lines
 		for($i = 0;$i < $this->_vertical_lines;$i++)
 		{
-			$ex = mt_rand(-$this->_width / 8,$this->_width + $this->_width / 8);
-			$ey = mt_rand(-$this->_height / 8,$this->_height + $this->_height / 8);
-			$ew = mt_rand($this->_width / 2,$this->_width + $this->_width / 2);
-			$eh = mt_rand($this->_height * 2,$this->_height * 4);
+			$ex = mt_rand((int)(-$this->_width / 8),(int)($this->_width + $this->_width / 8));
+			$ey = mt_rand((int)(-$this->_height / 8),(int)($this->_height + $this->_height / 8));
+			$ew = mt_rand((int)($this->_width / 2),(int)($this->_width + $this->_width / 2));
+			$eh = mt_rand((int)($this->_height * 2),(int)($this->_height * 4));
 			$color = $this->_bg->get_readable_random_foreground();
 			$ellipse = new FWS_GD_Ellipse(new FWS_GD_Point($ex,$ey),new FWS_GD_Dimension($ew,$eh));
 			$this->_g->get_ellipse_view($ellipse)->draw($color);
@@ -896,10 +896,10 @@ final class FWS_GD_Captcha extends FWS_Object
 		// draw the horizontal lines
 		for($i = 0;$i < $this->_horizontal_lines;$i++)
 		{
-			$ex = mt_rand(-$this->_width / 8,$this->_width + $this->_width / 8);
-			$ey = mt_rand(-$this->_height / 8,$this->_height + $this->_height / 8);
-			$ew = mt_rand((int)($this->_width * 1.5),$this->_width * 2);
-			$eh = mt_rand($this->_height / 2,$this->_height + $this->_height / 2);
+			$ex = mt_rand((int)(-$this->_width / 8),(int)($this->_width + $this->_width / 8));
+			$ey = mt_rand((int)(-$this->_height / 8),(int)($this->_height + $this->_height / 8));
+			$ew = mt_rand((int)($this->_width * 1.5),(int)($this->_width * 2));
+			$eh = mt_rand((int)($this->_height / 2),(int)($this->_height + $this->_height / 2));
 			$color = $this->_bg->get_readable_random_foreground();
 			$ellipse = new FWS_GD_Ellipse(new FWS_GD_Point($ex,$ey),new FWS_GD_Dimension($ew,$eh));
 			$this->_g->get_ellipse_view($ellipse)->draw($color);
@@ -908,12 +908,12 @@ final class FWS_GD_Captcha extends FWS_Object
 		// draw some shape-lines through the image
 		for($a = 0;$a < $this->_shape_lines;$a++)
 		{
-			$factor = mt_rand($this->_shape_min_size,$this->_shape_max_size);
-			$x = mt_rand($this->_width / 3,2 * $this->_width / 3);
+			$factor = mt_rand((int)$this->_shape_min_size,(int)$this->_shape_max_size);
+			$x = mt_rand((int)($this->_width / 3),(int)(2 * $this->_width / 3));
 			if($this->_width <= 2 * $this->_height)
-				$y = mt_rand($this->_width / 3,2 * $this->_height / 3);
+				$y = mt_rand((int)($this->_width / 3),(int)(2 * $this->_height / 3));
 			else
-				$y = mt_rand(2 * $this->_height / 3,$this->_width / 3);
+				$y = mt_rand((int)(2 * $this->_height / 3),(int)($this->_width / 3));
 			$color = $this->_bg->get_readable_random_foreground();
 			$down = mt_rand(0,1) == 0;
 			$right = mt_rand(0,1) == 0;
@@ -1135,7 +1135,7 @@ final class FWS_GD_Captcha extends FWS_Object
 					$x,$y + $height,
 					$x + $width,$y + $height
 				);
-				imagefilledpolygon($imgres,$values,3,$color->get_color($imgres));
+				imagefilledpolygon($imgres,$values,$color->get_color($imgres));
 				break;
 			// a filled rectangle
 			case 3:

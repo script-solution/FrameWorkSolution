@@ -139,6 +139,7 @@ final class FWS_DB_MySQLi_ResultSet extends FWS_DB_ResultSet
 		return $this->_res->fetch_fields()[$col]->length;
 	}
 
+	#[ReturnTypeWillChange]
 	public function current()
 	{
 		// already finished?
@@ -150,22 +151,26 @@ final class FWS_DB_MySQLi_ResultSet extends FWS_DB_ResultSet
 		return $this->_rows[$this->_index];
 	}
 
+	#[ReturnTypeWillChange]
 	public function key()
 	{
 		return $this->_index;
 	}
 
+	#[ReturnTypeWillChange]
 	public function next()
 	{
 		if($this->_index + 1 < $this->get_row_count())
 			$this->_index++;
 	}
 
+	#[ReturnTypeWillChange]
 	public function rewind()
 	{
 		$this->_index = 0;
 	}
 
+	#[ReturnTypeWillChange]
 	public function valid()
 	{
 		return $this->_index < $this->get_row_count();

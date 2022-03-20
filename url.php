@@ -432,7 +432,7 @@ class FWS_URL extends FWS_Object
 						$url .= $ek.'='.$vv.$this->_separator;
 				}
 				else
-					$url .= urlencode($k).'='.urlencode($v).$this->_separator;
+					$url .= urlencode($k).'='.($v !== null ? urlencode($v) : '').$this->_separator;
 			}
 			$url = FWS_String::substr($url,0,-FWS_String::strlen($this->_separator));
 		}

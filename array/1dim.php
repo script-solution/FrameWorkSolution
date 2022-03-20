@@ -415,6 +415,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * Rewinds the internal position so that you are at the first element
 	 */
+	#[ReturnTypeWillChange]
 	public final function rewind()
 	{
 		$this->_pos = 0;
@@ -431,6 +432,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * @return mixed the current element in the array or false
 	 */
+	#[ReturnTypeWillChange]
 	public final function current()
 	{
 		if($this->_length == 0)
@@ -445,6 +447,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * @return mixed the current key in the array or false
 	 */
+	#[ReturnTypeWillChange]
 	public final function key()
 	{
 		if($this->_length == 0)
@@ -459,6 +462,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * Moves to the next element in the array
 	 */
+	#[ReturnTypeWillChange]
 	public final function next()
 	{
 		if($this->_pos < $this->_length)
@@ -468,6 +472,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * Moves to the previous element in the array
 	 */
+	#[ReturnTypeWillChange]
 	public final function previous()
 	{
 		if($this->_pos >= 0)
@@ -477,6 +482,7 @@ class FWS_Array_1Dim extends FWS_Object implements Iterator
 	/**
 	 * @return boolean whether there is an element at the current position
 	 */
+	#[ReturnTypeWillChange]
 	public final function valid()
 	{
 		return $this->current() !== false;

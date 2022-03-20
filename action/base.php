@@ -273,9 +273,7 @@ abstract class FWS_Action_Base extends FWS_Object
 				);
 			}
 			
-			reset($this->_links);
-			list(,$first) = each($this->_links);
-			return $first;
+			return reset($this->_links);
 		}
 		
 		return $this->_redirect_url;

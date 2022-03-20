@@ -89,7 +89,7 @@ final class FWS_FileUtils extends FWS_UtilBase
 	 */
 	public static function ensure_no_trailing_slash(&$path)
 	{
-		if(FWS_String::substr($path,-1) == '/')
+		if($path !== null && FWS_String::substr($path,-1) == '/')
 			$path = FWS_String::substr($path,0,-1);
 		
 		return $path;

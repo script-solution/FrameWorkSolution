@@ -150,7 +150,7 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			// draw the rectangle-part
 			imagefilledpolygon(
 				$img,
-				$p,4,
+				$p,
 				$color->get_color($img)
 			);
 			
@@ -226,7 +226,12 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			list($x,$y) = $this->_rect->get_location()->get();
 			list($w,$h) = $this->_rect->get_size()->get();
 			$funcname = 'image'.$func.'rectangle';
-			return $funcname($img,$x,$y,$x + $w,$y + $h,$color->get_color($img));
+			return $funcname(
+				$img,
+				(int)$x,(int)$y,
+				(int)($x + $w),(int)($y + $h),
+				$color->get_color($img)
+			);
 		}
 		
 		$paint_points = $this->get_paint_points($angle,$pos);
@@ -275,8 +280,8 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			{
 				imagefilledarc(
 					$img,
-					$centers[$i],$centers[$i + 1],
-					$dradius,$dradius,
+					(int)$centers[$i],(int)$centers[$i + 1],
+					(int)$dradius,(int)$dradius,
 					$a - $map90,($a + 90) - $map90,
 					$col,
 					IMG_ARC_PIE
@@ -286,8 +291,8 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 			{
 				imagearc(
 					$img,
-					$centers[$i],$centers[$i + 1],
-					$dradius,$dradius,
+					(int)$centers[$i],(int)$centers[$i + 1],
+					(int)$dradius,(int)$dradius,
 					$a - $map90,($a + 90) - $map90,
 					$col
 				);
@@ -314,15 +319,15 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 		
 		// draw the lines
 		if($func == 'filled')
-			imagefilledpolygon($img,$points,count($points) / 2,$col);
+			imagefilledpolygon($img,$points,$col);
 		else
 		{
 			for($i = 0;$i < count($points);$i += 4)
 			{
 				imageline(
 					$img,
-					$points[$i],$points[$i + 1],
-					$points[$i + 2],$points[$i + 3],
+					(int)$points[$i],(int)$points[$i + 1],
+					(int)$points[$i + 2],(int)$points[$i + 3],
 					$col
 				);
 			}
