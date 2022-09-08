@@ -148,11 +148,23 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 				$p[] = $myp;
 			
 			// draw the rectangle-part
-			imagefilledpolygon(
-				$img,
-				$p,
-				$color->get_color($img)
-			);
+			if(version_compare(PHP_VERSION,'8.0.0','<'))
+			{
+				imagefilledpolygon(
+					$img,
+					$p,
+					4,
+					$color->get_color($img)
+				);
+			}
+			else
+			{
+				imagefilledpolygon(
+					$img,
+					$p,
+					$color->get_color($img)
+				);
+			}
 			
 			// move all points to the next step
 			for($i = 0;$i < 8;$i += 2)
@@ -319,7 +331,12 @@ class FWS_GD_View_Rectangle extends FWS_GD_View
 		
 		// draw the lines
 		if($func == 'filled')
-			imagefilledpolygon($img,$points,$col);
+		{
+			if(version_compare(PHP_VERSION,'8.0.0','<'))
+				imagefilledpolygon($img,$points,count($points) / 2,$col);
+			else
+				imagefilledpolygon($img,$points,$col);
+		}
 		else
 		{
 			for($i = 0;$i < count($points);$i += 4)

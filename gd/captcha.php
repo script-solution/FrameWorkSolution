@@ -1135,7 +1135,10 @@ final class FWS_GD_Captcha extends FWS_Object
 					$x,$y + $height,
 					$x + $width,$y + $height
 				);
-				imagefilledpolygon($imgres,$values,$color->get_color($imgres));
+				if(version_compare(PHP_VERSION,'8.0.0','<'))
+					imagefilledpolygon($imgres,$values,3,$color->get_color($imgres));
+				else
+					imagefilledpolygon($imgres,$values,$color->get_color($imgres));
 				break;
 			// a filled rectangle
 			case 3:
