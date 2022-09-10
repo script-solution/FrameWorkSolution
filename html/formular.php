@@ -284,16 +284,24 @@ class FWS_HTML_Formular extends FWS_Object
 	 * 	otherwise it will be treaten as a timestamp, where 0 is the current time
 	 * @param boolean $add_time do you want to add the time to the date-chooser?
 	 * @param boolean $add_no_value do you want to put a "no-value" option to each combo?
-	 * @param int $start_year the year to start with (default 1990)
+	 * @param int $start_year the year to start with (default: current year - 20)
+	 * @param int $end_year the year to end with (default: $start_year + 40)
 	 * @return string the combo-boxes
 	 */
 	public final function get_date_chooser($prefix,$default = 0,$add_time = true,$add_no_value = false,
-		$start_year = 1990)
+		$start_year = -1, $end_year = -1)
 	{
 		$locale = FWS_Props::get()->locale();
+		$now = new FWS_date();
+		if($start_year === -1)
+			$start_year = $now->get_year() - 20;
+		if($end_year === -1)
+			$end_year = $start_year + 20;
 
-		if(!FWS_Helper::is_integer($start_year) || $start_year < 0 || $start_year > 2019)
-			FWS_Helper::def_error('numbetween','start_year',0,2019,$start_year);
+		if(!FWS_Helper::is_integer($start_year) || $start_year < 0)
+			FWS_Helper::def_error('numge0','start_year',$start_year);
+		if(!FWS_Helper::is_integer($end_year) || $end_year < 0)
+			FWS_Helper::def_error('numge0','end_year',$end_year);
 		
 		$hour = -1;
 		$minute = -1;
@@ -325,7 +333,7 @@ class FWS_HTML_Formular extends FWS_Object
 		}
 
 		$result = '';
-		$result .= $this->get_js_calendar($prefix,$start_year,$add_no_value);
+		$result .= $this->get_js_calendar($prefix,$start_year,$end_year,$add_no_value);
 		
 		$separator = $locale->get_date_separator();
 		$date_order = $locale->get_date_order();
@@ -353,7 +361,7 @@ class FWS_HTML_Formular extends FWS_Object
 				
 				case 'Y':
 					$cb = new FWS_HTML_ComboBox($prefix.'year',null,null,$year);
-					$cb->set_options($this->_get_options($start_year,2020,$add_no_value));
+					$cb->set_options($this->_get_options($start_year,$end_year,$add_no_value));
 					$this->_apply_defaults($cb);
 					if($this->_condition)
 						$cb->set_value($this->get_input_value($prefix.'year'));
@@ -483,10 +491,11 @@ EOF;
 	 *
 	 * @param string $prefix the date-prefix
 	 * @param int $start_year the start-year of the year-combo
+	 * @param int $end_year the end-year of the year-combo
 	 * @param boolean $add_no_value whether a "no-value"-entry should be added
 	 * @return string the js-calendar
 	 */
-	protected function get_js_calendar($prefix,$start_year,$add_no_value)
+	protected function get_js_calendar($prefix,$start_year,$end_year,$add_no_value)
 	{
 		static $added_calendar = false;
 		$fwspath = FWS_Path::client_fw();
@@ -532,7 +541,7 @@ cal_{$prefix}.setStartUpFunction(function() {
 	this.setSelectedDate(selYear,selMonth,selDay);
 });
 cal_{$prefix}.setMinYear({$start_year});
-cal_{$prefix}.setMaxYear(2020);
+cal_{$prefix}.setMaxYear({$end_year});
 //-->
 </script>
 EOF;

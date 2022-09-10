@@ -55,7 +55,9 @@ class FWS_AddField_Type_Date extends FWS_AddField_Type_Default
 				$dateVal = array($parts[2],$parts[1],$parts[0]);
 		}
 
-		return $formular->get_date_chooser('add_'.$this->_data->get_name().'_',$dateVal,false,true,1900);
+		$now = new FWS_date();
+		return $formular->get_date_chooser('add_'.$this->_data->get_name().'_',$dateVal,
+			false,false,$now->get_year() - 100,$now->get_year());
 	}
 	
 	protected function is_valid_value_impl($value)
