@@ -167,8 +167,7 @@ final class FWS_DB_MySQL_ResultSet extends FWS_DB_ResultSet
 	#[ReturnTypeWillChange]
 	public function next()
 	{
-		if($this->_index + 1 < $this->_rowcount)
-			$this->_index++;
+		$this->_index++;
 	}
 	
 	#[ReturnTypeWillChange]
