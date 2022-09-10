@@ -177,7 +177,7 @@ abstract class FWS_AddField_Type_Default extends FWS_Object implements FWS_AddFi
 	public function get_value_to_store($value)
 	{
 		$validation = $this->_data->get_validation();
-		if($validation && !preg_match($validation,$value))
+		if($validation && ($value == null || !preg_match($validation,$value)))
 			return '';
 		
 		return $value;

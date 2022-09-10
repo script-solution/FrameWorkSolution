@@ -60,7 +60,7 @@ class FWS_AddField_Type_Date extends FWS_AddField_Type_Default
 	
 	protected function is_valid_value_impl($value)
 	{
-		if(!preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/',$value))
+		if($value == '' || !preg_match('/^\d{4}-\d{1,2}-\d{1,2}$/',$value))
 			return false;
 
 		$parts = explode('-',$value);

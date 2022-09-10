@@ -176,7 +176,7 @@ final class FWS_StringHelper extends FWS_UtilBase
 	{
 		if(FWS_String::substr($hp,0,7) != 'http://')
 			$hp = 'http://'.$hp;
-		if(preg_match('/^http:\/\/\S+?\.\S+$/',$hp))
+		if($hp != '' && preg_match('/^http:\/\/\S+?\.\S+$/',$hp))
 			return $hp;
 	
 		return false;
