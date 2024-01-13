@@ -29,7 +29,7 @@
  * <code>
  * 	public static function get_instance()
  * 	{
- * 		return parent::_get_instance(get_class());
+ * 		return parent::_get_instance(__CLASS__);
  * 	}
  * </code>
  * 
