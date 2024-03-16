@@ -278,7 +278,7 @@ final class FWS_Email_SMTP extends FWS_Email_Base
 			$message = $this->prepare_html_message($this->get_message());
 		else
 			$message = $this->get_message();
-		$message = $headers."\n\n".$message."\r\n.\r\n";
+		$message = $headers."\r\n".$message."\r\n.\r\n";
 
 		// now send the message-body
 		$this->_send_command($message);

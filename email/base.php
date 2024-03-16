@@ -354,10 +354,10 @@ abstract class FWS_Email_Base extends FWS_Object
 	 */
 	protected function build_header($method = 'mail')
 	{
-		$headers = 'From: '.$this->_from."\n";
+		$headers = 'From: '.$this->_from."\r\n";
 
 		if($method == 'smtp' && $this->_recipient != '')
-			$headers .= 'To: <'.$this->_recipient.'>'."\n";
+			$headers .= 'To: <'.$this->_recipient.'>'."\r\n";
 
 		if(($len = count($this->_bcc_recipients)) > 0)
 		{
@@ -368,20 +368,20 @@ abstract class FWS_Email_Base extends FWS_Object
 				if($i < $len - 1)
 					$headers .= ', ';
 			}
-			$headers .= "\n";
+			$headers .= "\r\n";
 		}
 
 		if($method == 'smtp')
-			$headers .= 'Subject: '.$this->_subject."\n";
+			$headers .= 'Subject: '.$this->_subject."\r\n";
 
-		$headers .= 'Return-Path: '.$this->_from."\n";
-		$headers .= 'MIME-Version: 1.0'."\n";
-		$headers .= 'Date: '.gmdate('D, d M Y H:i:s O',time())."\n";
-		$headers .= 'Content-type: '.$this->_content_type.'; charset='.$this->_charset."\n";
-		$headers .= 'Content-transfer-encoding: 8bit'."\n";
-		$headers .= 'X-Priority: 3 (Normal)'."\n";
-		$headers .= 'X-MSMail-Priority: Normal'."\n";
-		$headers .= 'X-Mailer: '.$this->_xmailer."\n";
+		$headers .= 'Return-Path: '.$this->_from."\r\n";
+		$headers .= 'MIME-Version: 1.0'."\r\n";
+		$headers .= 'Date: '.gmdate('D, d M Y H:i:s O',time())."\r\n";
+		$headers .= 'Content-type: '.$this->_content_type.'; charset='.$this->_charset."\r\n";
+		$headers .= 'Content-transfer-encoding: 8bit'."\r\n";
+		$headers .= 'X-Priority: 3 (Normal)'."\r\n";
+		$headers .= 'X-MSMail-Priority: Normal'."\r\n";
+		$headers .= 'X-Mailer: '.$this->_xmailer."\r\n";
 		$headers .= 'Importance: Normal';
 
 		return $headers;
@@ -396,16 +396,16 @@ abstract class FWS_Email_Base extends FWS_Object
 	protected function prepare_html_message($text)
 	{
 		$html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"';
-		$html .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'."\n";
-		$html .= '<html>'."\n";
-		$html .= '<head>'."\n";
+		$html .= ' "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'."\r\n";
+		$html .= '<html>'."\r\n";
+		$html .= '<head>'."\r\n";
 		$html .= '	<meta http-equiv="Content-Type" content="text/html; charset='
-			.$this->_charset.'" />'."\n";
-		$html .= '	<meta http-equiv="Content-Style-Type" content="text/css" />'."\n";
-		$html .= '</head>'."\n";
-		$html .= '<body>'."\n";
+			.$this->_charset.'" />'."\r\n";
+		$html .= '	<meta http-equiv="Content-Style-Type" content="text/css" />'."\r\n";
+		$html .= '</head>'."\r\n";
+		$html .= '<body>'."\r\n";
 		$html .= $text;
-		$html .= '</body>'."\n";
+		$html .= '</body>'."\r\n";
 		$html .= '</html>';
 		return $html;
 	}
