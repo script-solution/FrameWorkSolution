@@ -79,7 +79,7 @@ abstract class FWS_Email_Base extends FWS_Object
 	 *
 	 * @var string
 	 */
-	private $_xmailer = 'FrameWorkSolution';
+	private $_xmailer = FWS_VERSION;
 	
 	/**
 	 * The charset for the email
